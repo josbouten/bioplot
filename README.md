@@ -9,6 +9,7 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 Read the manuals.txt document to find out what the program can do.
+Also take a look at the screendumps in the examples directory.
 
 Installation
 ============
