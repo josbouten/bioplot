@@ -55,6 +55,6 @@ Do mail me a description if you find out how to get things running on
 OSX so that I can include it here.
 
 
-Data file
-=========
+usage
+=====
 See manual.txt
