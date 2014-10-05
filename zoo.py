@@ -440,9 +440,7 @@ class Zoo(Format):
         for pattern in self.data.getMetaDataValues().keys()[:-1]:
             if self.debug:
                 print '_connectMetaValues:pattern:', pattern
-            print '_connectMetaValues:pattern:', pattern
             labels = self.data.getMetaDataValues()[pattern]
-            print '_connectMetaValues:labels:', labels
             for thisLabel in labels:
                 template = self.mkTemplate(thisLabel, pattern)
                 startXy = self._getXyOfPoint4pattern(template, pointsWithAnnotation)

@@ -45,15 +45,19 @@ from sys import exit
 #
 
 parser = optparse.OptionParser(usage='%prog [options] [option <arg1>] [<label1> <label2> <label3> ...]\n\
+bioplot.py version 0.7, Copyright (C) 2014 Jos Bouten\n\
+bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -h\'.\n\
+This is free software, and you are welcome to redistribute it\n\
+under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
-You can contact me at josbouten at gmail dot com."', version='1.0',)
+You can contact me via josbouten at gmail dot com." ', version='1.0',)
 parser.add_option('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
 parser.add_option('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
 parser.add_option('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")
 parser.add_option('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
 parser.add_option('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
 parser.add_option('-e', '--exp', action="store", dest="expName", default='test', help="name of experiment used in plot title, default = test")
-parser.add_option('-f', '--filename', action="store", dest="filename", default='testdata_A.txt', help="filename of data file, default = testdata_A.txt")
+parser.add_option('-f', '--filename', action="store", dest="filename", default='input/testdata_A.txt', help="filename of data file, default = testdata_A.txt")
 parser.add_option('-t', '--type', action="store", dest="dataType", default='type3', help="type of data, default = type3")
 parser.add_option('-d', '--threshold', action="store", dest="threshold", type="float", default=0.7, help="system threshold for ranking plot, default = 0.7")
 parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
