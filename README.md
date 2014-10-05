@@ -1,3 +1,6 @@
+bioplot
+=======
+
 bioplot.py is a program demonstrating several plots that can be used
 when evaluating the performance of a biometric system.
  
