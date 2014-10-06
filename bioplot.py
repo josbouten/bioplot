@@ -45,7 +45,7 @@ from sys import exit
 #
 
 parser = optparse.OptionParser(usage='%prog [options] [option <arg1>] [<label1> <label2> <label3> ...]\n\
-bioplot.py version 0.7, Copyright (C) 2014 Jos Bouten\n\
+bioplot.py version 0.8, Copyright (C) 2014 Jos Bouten\n\
 bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -h\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\

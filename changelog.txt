@@ -39,3 +39,6 @@ Added annotations and comments.
 
 # v0.7 Sun Oct  5 18:49:12 CEST 2014
 Made preparations for storing at github.
+
+# v0.8 Tue Oct  7 01:10:47 CEST 2014
+Added flag for OSX
