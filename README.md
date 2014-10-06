@@ -50,10 +50,18 @@ via the command line interface. There are lots of them.
 
 OSX
 ===
-Haven't tried this yet.
-So basically you are on your own.
-Do mail me a description if you find out how to get things running on
-OSX so that I can include it here.
+On OSX 10.9.5 run these commands:
+
+curl -O https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+pip2 install matplotlib
+sudo git clone https://github.com/josbouten/bioplot.git
+
+Then change the owner of the bioplot directory to your user:
+
+sudo chown -R your-user-name:staff bioplot
+
+From here on, you're ready to go.
 
 
 Usage
