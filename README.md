@@ -54,8 +54,11 @@ OSX
 On OSX 10.9.5 run these commands:
 
 curl -O https://bootstrap.pypa.io/get-pip.py
+
 python get-pip.py
+
 pip2 install matplotlib
+
 sudo git clone https://github.com/josbouten/bioplot.git
 
 Then change the owner of the bioplot directory to your user:
