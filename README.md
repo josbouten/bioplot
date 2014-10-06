@@ -21,9 +21,11 @@ Installation
 Ms Windows
 ==========
 Follow the instructions found here: http://matplotlib.org/users/installing.html
-I've tried anaconda 2.01 (32 bit version) on W7.
+I've tried anaconda 2.01 (32 bit version) on W7 but I've heard that it works
+well with the 64 bit version on W8 as well..
 This will install python 2.7.7 and a load of python modules amongst which numpy, matplotlib, pyplot.
 You will be able to run bioplot.py and do much more pythony things ;-)
+If you get into trouble, talk to your local windows guru. Do not mail me! 
 
 Copy plot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
 bioplot.py is stored) and run the main program ./bioplot.py -h to find out how to use it.
@@ -39,9 +41,10 @@ Then install matplotlib and some other modules using:
 
 sudo apt-get install python-matplotlib python-numpy python-scipy
 
+I tried it on Ubuntu 14.04 and it worked like a charm.
 If you get into trouble, talk to your local linux guru. Do not mail me!
 Next, copy plot.cfg_4_linux to bioplot.cfg
-then run the main program: ./bioplot.py -h to find out how to use it.
+Then run the main program: ./bioplot.py -h to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them.
 
@@ -53,6 +56,6 @@ Do mail me a description if you find out how to get things running on
 OSX so that I can include it here.
 
 
-usage
+Usage
 =====
 See manual.txt
