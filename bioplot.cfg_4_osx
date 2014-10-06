@@ -40,7 +40,7 @@ debug = False
 showConfigInfo = True
 
 ; Are we running on OSX or not?
-runningOSX = False
+runningOSX = True
 
 ; Path to dir where results and plots are stored.
 outputPath = output

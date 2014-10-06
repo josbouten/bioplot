@@ -156,6 +156,12 @@ class Config():
         except Exception:
             self._outputPath = self._outputPathDefault
 
+        self._runningOSXDefault = False
+        try:
+            self._runningOSX = self.config.getboolean('cfg', 'runningOSX')
+        except Exception:
+            self._runningOSX = self._runningOSXDefault
+
         self._useColorsForQuartileRangesDefault = False
         try:
             self._useColorsForQuartileRanges = self.config.getboolean('zoo', 'useColorsForQuartileRanges')
@@ -347,6 +353,9 @@ class Config():
         '''
         return self._outputPath
 
+    def getRunningOSX(self):
+        return self._runningOSX
+
     def getScaleFactor(self):
         '''
         Get scale factor to give the width and heights of ellipses.
@@ -436,6 +445,7 @@ class Config():
         string += ", nrRankingPoints = " + str(self.getNrRankingPoints())
         string += ", opacityLimitFactor = " + str(self.getOpacityLimitFactor())
         string += ", outputPath = " + self.getOutputPath()
+        string += ", runningOSX = " + str(self.getRunningOSX())
         string += ", scaleFactor = " + str(self.getScaleFactor())
         string += ", showAnnotationsAtStartup = " + str(self.getShowAnnotationsAtStartup())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())

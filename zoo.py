@@ -632,7 +632,18 @@ class Zoo(Format):
             ok = True
         xy = (x, y)
         if ok:
-            axes.annotate("%s" % (label),
+            if self.config.getRunningOSX():
+                axes.annotate("%s" % (label),
+                     xy,
+                     bbox=dict(boxstyle="square", fc="0.8"),
+                     xytext=(xText, yText),
+                     xycoords='data',
+                     textcoords='data',
+                     arrowprops=dict(arrowstyle='->'),
+                     horizontalalignment=ha,
+                     verticalalignment=va,)
+            else:
+                axes.annotate("%s" % (label),
                      xy,
                      bbox=dict(boxstyle="square", fc="0.8"),
                      backgroundcolor='yellow',
@@ -647,7 +658,18 @@ class Zoo(Format):
     def _annotateEllipse4References(self, axesZoo, xy, xText, yText, text):
         ha = 'left'
         va = 'bottom'
-        annotation = axesZoo.annotate("%s" % (text),
+        if self.config.getRunningOSX():
+            annotation = axesZoo.annotate("%s" % (text),
+                     xy,
+                     bbox=dict(boxstyle="square", fc="0.8"),
+                     xytext=(xText, yText),
+                     xycoords='data',
+                     textcoords='data',
+                     arrowprops=dict(arrowstyle='->'),
+                     horizontalalignment=ha,
+                     verticalalignment=va,)
+        else:
+            annotation = axesZoo.annotate("%s" % (text),
                      xy,
                      bbox=dict(boxstyle="square", fc="0.8"),
                      backgroundcolor='yellow',
@@ -657,6 +679,7 @@ class Zoo(Format):
                      arrowprops=dict(arrowstyle='->'),
                      horizontalalignment=ha,
                      verticalalignment=va,)
+
         # By default the annotation is not visible
         annotation.set_visible(False)
         return annotation
@@ -670,7 +693,18 @@ class Zoo(Format):
         yText = y + dy
         ha = 'right'
         va = 'bottom'
-        annotation = axes.annotate("%s" % (text),
+        if self.config.getRunningOSX():
+            annotation = axes.annotate("%s" % (text),
+                     xy,
+                     bbox=dict(boxstyle="square", fc="0.8"),
+                     xytext=(xText, yText),
+                     xycoords='data',
+                     textcoords='data',
+                     arrowprops=dict(arrowstyle='->'),
+                     horizontalalignment=ha,
+                     verticalalignment=va,)
+        else:
+            annotation = axes.annotate("%s" % (text),
                      xy,
                      bbox=dict(boxstyle="square", fc="0.8"),
                      backgroundcolor='yellow',
@@ -680,6 +714,7 @@ class Zoo(Format):
                      arrowprops=dict(arrowstyle='->'),
                      horizontalalignment=ha,
                      verticalalignment=va,)
+
         # By default the annotation is not visible
         if self.config.getShowAnnotationsAtStartup():
             annotation.set_visible(True)

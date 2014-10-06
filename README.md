@@ -1,4 +1,4 @@
-bioplot
+
 =======
 
 ![bioplot of 2 data sets](https://github.com/josbouten/bioplot/blob/master/examples/A_and_B_zoo_plot.png "bioplot of 2 data sets")
@@ -42,11 +42,12 @@ Then install matplotlib and some other modules using:
 sudo apt-get install python-matplotlib python-numpy python-scipy
 
 I tried it on Ubuntu 14.04 and it worked like a charm.
-If you get into trouble, talk to your local linux guru. Do not mail me!
 Next, copy plot.cfg_4_linux to bioplot.cfg
 Then run the main program: ./bioplot.py -h to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
-via the command line interface. There are lots of them.
+via the command line interface. There are lots of them.  Their values are shown on the
+commandline whenever you run the program, unless you choose not to via the appropriate
+option in bioplot.cfg
 
 OSX
 ===
@@ -60,9 +61,17 @@ sudo git clone https://github.com/josbouten/bioplot.git
 Then change the owner of the bioplot directory to your user:
 
 sudo chown -R your-user-name:staff bioplot
+Next, copy plot.cfg_4_osx to bioplot.cfg
 
 From here on, you're ready to go.
+Run the main program from a terminal: ./bioplot.py -h to find out how to use it.
+Also look at bioplot.cfg to find out about additional options not available
+via the command line interface.  There are lots of them.  Their values are shown on the
+commandline whenever you run the program, unless you choose not to via the appropriate
+option in bioplot.cfg
 
+Note: in contrast to the example plots supplied labels in plots will appear in 
+black on a grey background.
 
 Usage
 =====

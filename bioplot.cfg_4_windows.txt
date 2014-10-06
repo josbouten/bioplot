@@ -39,6 +39,9 @@ debug = False
 ; Show config info at start of program on commandline
 showConfigInfo = True
 
+; Are we running on OSX or not?
+runningOSX = False
+
 ; Path to dir where results and plots are stored.
 outputPath = output
 
