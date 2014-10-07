@@ -788,8 +788,13 @@ class Zoo(Format):
         else:
             title = "zoo plot for '%s'" % (title)
 
-        axes.text(self.agmsHigh + 0.05 * xRange , self.aim_mi - 0.05 * yRange, title,
-                  bbox={'facecolor': 'black', 'alpha': 0.1, 'pad': 10})
+        if self.config.getRunningOSX():
+            alpha = 0.7
+        else:
+            alpha = 0.1
+
+        axes.text(self.agmsHigh + 0.05 * xRange, self.aim_mi - 0.05 * yRange, title,
+                  bbox={'facecolor': 'white', 'alpha': alpha, 'pad': 10})
 
         axes.set_xlabel('Average Target Match Score')
         axes.set_ylabel('Average Non Target Match Score')
@@ -797,27 +802,27 @@ class Zoo(Format):
         # Phantoms
         self._plotBox(axes, self.agm_mi - 0.1 * xRange, self.aim_mi - 0.1 * yRange, self.agmsLow, self.aimsLow, 'r-')
         axes.text(self.agm_mi - 0.085 * xRange, self.aim_mi - 0.05 * yRange, 'PHANTOMS',
-                  bbox={'facecolor': 'red', 'alpha': 0.1, 'pad': 10})
+                  bbox={'facecolor': 'red', 'alpha': alpha, 'pad': 10})
         # Doves
         self._plotBox(axes, self.agmsHigh, self.aim_mi - 0.1 * yRange, self.agm_ma + 0.1 * xRange, self.aimsLow, 'm-')
         axes.text(self.agm_ma, self.aim_mi - 0.05 * yRange, 'DOVES',
-                  bbox={'facecolor': 'magenta', 'alpha': 0.1, 'pad': 10})
+                  bbox={'facecolor': 'magenta', 'alpha': alpha, 'pad': 10})
         # Worms
         self._plotBox(axes, self.agm_mi - 0.1 * xRange, self.aimsHigh, self.agmsLow, self.aim_ma + 0.1 * yRange, 'g-')
         if yagerStyle:
             axes.text(self.agm_mi - 0.085 * xRange, self.aim_ma + 0.085 * yRange, 'WORMS',
-                      bbox={'facecolor': 'green', 'alpha': 0.1, 'pad': 10})
+                      bbox={'facecolor': 'green', 'alpha': alpha, 'pad': 10})
         else:
             axes.text(self.agm_mi - 0.085 * xRange, self.aim_ma - 0.085 * yRange, 'WORMS',
-                      bbox={'facecolor': 'green', 'alpha': 0.1, 'pad': 10})
+                      bbox={'facecolor': 'green', 'alpha': alpha, 'pad': 10})
         # Chameleons
         self._plotBox(axes, self.agmsHigh, self.aimsHigh, self.agm_ma + 0.1 * xRange, self.aim_ma + 0.1 * yRange, 'b-')
         if yagerStyle:
             axes.text(self.agm_ma, self.aim_ma + 0.085 * yRange, 'CHAMELEONS',
-                      bbox={'facecolor': 'blue', 'alpha': 0.1, 'pad': 10})
+                      bbox={'facecolor': 'blue', 'alpha': alpha, 'pad': 10})
         else:
             axes.text(self.agm_ma, self.aim_ma - 0.085 * yRange, 'CHAMELEONS',
-                      bbox={'facecolor': 'blue', 'alpha': 0.1, 'pad': 10})
+                      bbox={'facecolor': 'blue', 'alpha': alpha, 'pad': 10})
 
         # Last but not least, plot the graph.
         axes.grid()
