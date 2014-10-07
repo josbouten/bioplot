@@ -36,7 +36,7 @@ from alexanderzoo import AlexanderZoo
 from boutenzoo import BoutenZoo
 from histogram import Histogram
 from accuracy import Accuracy
-from ranking import Ranking
+from rankingnew import Ranking
 from version import Version
 from utils import sanitize, showLicense
 from sys import exit, argv
@@ -50,7 +50,7 @@ version = v.getVersion()
 
 parser = optparse.OptionParser(usage="%s [options] [option <arg1>] [<label1> <label2> <label3> ...]\n\
 bioplot.py version %s, Copyright (C) 2014 Jos Bouten\n\
-bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -h\'.\n\
+bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
@@ -74,8 +74,7 @@ if options.showLicense:
     showLicense('LICENSE.txt')
     exit(0)
 
-print "This program was written by Jos Bouten"
-print "You can contact me at josbouten at gmail dot com."
+print "bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
 
 # Name of the experiment, used as title in plots.
 expName = options.expName

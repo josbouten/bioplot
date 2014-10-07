@@ -1,3 +1,6 @@
+# v0.8.1 Tue Oct  7 21:31:13 CEST 2014
+For OSX changed alpha value of title and quartile animal labels.
+
 # v0.8 Tue Oct  7 01:10:47 CEST 2014
 Added flag for OSX
 
