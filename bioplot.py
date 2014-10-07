@@ -37,20 +37,24 @@ from boutenzoo import BoutenZoo
 from histogram import Histogram
 from accuracy import Accuracy
 from ranking import Ranking
+from version import Version
 from utils import sanitize, showLicense
-from sys import exit
+from sys import exit, argv
 
 #
 #  Main
 #
 
-parser = optparse.OptionParser(usage='%prog [options] [option <arg1>] [<label1> <label2> <label3> ...]\n\
-bioplot.py version 0.8, Copyright (C) 2014 Jos Bouten\n\
+v = Version()
+version = v.getVersion()
+
+parser = optparse.OptionParser(usage="%s [options] [option <arg1>] [<label1> <label2> <label3> ...]\n\
+bioplot.py version %s, Copyright (C) 2014 Jos Bouten\n\
 bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -h\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
-You can contact me via josbouten at gmail dot com." ', version='1.0',)
+You can contact me via josbouten at gmail dot com." % (argv[0], version), version='1.0',)
 parser.add_option('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
 parser.add_option('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
 parser.add_option('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")

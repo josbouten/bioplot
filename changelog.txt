@@ -1,7 +1,23 @@
-# v0.1, Sept 2013
-Created code for ranking and accuracy plot.
-Added zoo plot after reading a publication by Yager et al. about their 
-variant on Doddington's zoo.
+# v0.8 Tue Oct  7 01:10:47 CEST 2014
+Added flag for OSX
+
+# v0.7 Sun Oct  5 18:49:12 CEST 2014
+Made preparations for storing at github.
+
+# v0.6 29 Sept 2014
+Moved a lot of functions common to boutenZoo and alexanderZoo to zoo.py
+Added annotations and comments.
+
+# v0.5 21 Sept 2014
+Created zoo, format and data object to make things more OO.
+
+# v0.4 12 Sept 2014
+Added config file 'plot.cfg' containing default settings
+
+# v0.3, 9 Sept 2014
+Added click events. Clicking in zoo plot will show a list of nearest labels including
+their average target and non target score. All labels within 1/10 of the minimum of the
+height or width of an ellipse are shown. Added histograms to zoo plot.
 
 # v0.2, August 2014
 Added 'agm and aim std deviations' to zoo plot after reading Anil Alexander's 
@@ -22,23 +38,7 @@ This scale factor is related to the number of pixels in the display used to plot
 A value of 150 works nicely for a 1600 ... 1280x1024 display.
 To be able to draw them they are scaled.
 
-# v0.3, 9 Sept 2014
-Added click events. Clicking in zoo plot will show a list of nearest labels including
-their average target and non target score. All labels within 1/10 of the minimum of the
-height or width of an ellipse are shown. Added histograms to zoo plot.
-
-# v0.4 12 Sept 2014
-Added config file 'plot.cfg' containing default settings
-
-# v0.5 21 Sept 2014
-Created zoo, format and data object to make things more OO.
-
-# v0.6 29 Sept 2014
-Moved a lot of functions common to boutenZoo and alexanderZoo to zoo.py
-Added annotations and comments.
-
-# v0.7 Sun Oct  5 18:49:12 CEST 2014
-Made preparations for storing at github.
-
-# v0.8 Tue Oct  7 01:10:47 CEST 2014
-Added flag for OSX
+# v0.1, Sept 2013
+Created code for ranking and accuracy plot.
+Added zoo plot after reading a publication by Yager et al. about their 
+variant on Doddington's zoo.
