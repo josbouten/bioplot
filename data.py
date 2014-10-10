@@ -11,8 +11,6 @@ __author__ = 'drs. ing. Jos Bouten'
     of e.g. EER or plot DET-curves etc.
 
 
-
-
     Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
 
     This program is free software; you can redistribute it and/or modify
@@ -31,11 +29,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-# Author: drs. ing. J.S. Bouten
-# August, September 2013
-# email: josbouten@gmail.com
-
-_author_ = 'drs. ing. Jos Bouten'
+# 1st code: August, September 2013
 
 import sqlite3
 import sys
@@ -204,12 +198,12 @@ class Data(Format):
 
     def _decodeType3Results(self, res):
         '''
-        Decoder for NFI-FRITS type results file. Example of the format used:
+        Decoder for cross recognition type results file. Example of the format used:
 
-        80374 0000000017133729a 80359 0000000016842970b 2.1088616847991943 FALSE META_VAL1 META_VAL2
-        148407 0000260007968376b 89823 0000000008087650a 0.33669018745422363 FALSE META_VAL1 META_VAL3
-        179408 03ea7cce-a192626a 80372 0000000016749939b 1.26323664188385 FALSE META_VAL2 META_VAL1
-        80344 0000000016888750a 80344 0000000015560933b 4.423274517059326 TRUE META_VAL2 META_VAL1
+        80374 0000000017133729a 80359 0000000016842970b 2.1088616847991943 FALSE META_VAL1
+        148407 0000260007968376b 89823 0000000008087650a 0.33669018745422363 FALSE META_VAL1
+        179408 03ea7cce-a192626a 80372 0000000016749939b 1.26323664188385 FALSE META_VAL2 
+        80344 0000000016888750a 80344 0000000015560933b 4.423274517059326 TRUE META_VAL2 
         etc.
 
         :param res: list of strings (text lines) of raw data resulting from a series of trials.
@@ -223,10 +217,10 @@ class Data(Format):
         field 5: string: float value: score of trial
         field 6: string: meta data value for the trial
         field 7: string: meta data value for the trial
-        Field 6 and 7 are meant to contrast scores of 2 experiments in the zoo plot.
+        Field 6 can be used to contrast experiments in the zoo plot.
         E.g. group 'male' scores vs 'female' scores.
-        Note: only scores with the same meta values are used in the zoo plots.
-        So 'male male' scores are but 'male female' scores are not used.
+        So if you have 2 experiments where you change one variable, when doing a cross
+        identification test, the meta value can be used to group the experiment's scores.
         '''
 
         totCnt = 0
