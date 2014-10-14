@@ -1,3 +1,4 @@
+=======
 Bioplot
 =======
 
@@ -16,6 +17,10 @@ the Free Software Foundation; either version 2 of the License, or
 Read the manual.txt document to find out what the program can do.
 Also take a look at the screendumps in the examples directory.
 
+.. contents:: On this page:
+
+    :local:
+
 Installation
 ============
 
@@ -31,7 +36,7 @@ If you get into trouble, talk to your local windows guru. Do not mail me!
 Copy plot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
 bioplot.py is stored) and run the main program 
 
-python.exe bioplot.py -h 
+$ python.exe bioplot.py -h 
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -44,13 +49,13 @@ Linux
 You need to have python2.7.x installed. On most linux systems this is the case.
 Then install matplotlib and some other modules using:
 
-sudo apt-get install python-matplotlib python-numpy python-scipy
+$ sudo apt-get install python-matplotlib python-numpy python-scipy
 
 I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy plot.cfg_4_linux to bioplot.cfg
 Then run the main program: 
 
-./bioplot.py -h 
+$ ./bioplot.py -h 
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -62,24 +67,24 @@ OSX
 ===
 On OSX 10.9.5 run these commands:
 
-curl -O https://bootstrap.pypa.io/get-pip.py
+$ curl -O https://bootstrap.pypa.io/get-pip.py
 
-python get-pip.py
+$ python get-pip.py
 
-pip2 install matplotlib
+$ pip2 install matplotlib
 
-sudo git clone https://github.com/josbouten/bioplot.git
+$ sudo git clone https://github.com/josbouten/bioplot.git
 
 Then change the owner of the bioplot directory to your user:
 
-sudo chown -R your-user-name:staff bioplot
+$ sudo chown -R your-user-name:staff bioplot
 
 Next, copy plot.cfg_4_osx to bioplot.cfg
 
 From here on, you're ready to go.
 Run the main program from a terminal: 
 
-./bioplot.py -h 
+$ ./bioplot.py -h 
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
