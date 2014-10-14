@@ -2,6 +2,8 @@
 Bioplot
 =======
 
+.. highlight:: sh
+
 ![bioplot of 2 data sets](https://github.com/josbouten/bioplot/blob/master/examples/A_and_B_zoo_plot.png "bioplot of 2 data sets")
 bioplot.py is a program which can draw several plots that can be used
 when evaluating the performance of a biometric system. The example
@@ -18,7 +20,6 @@ Read the manual.txt document to find out what the program can do.
 Also take a look at the screendumps in the examples directory.
 
 .. contents:: On this page:
-
     :local:
 
 Installation
