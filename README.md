@@ -20,25 +20,6 @@ Also take a look at the screendumps in the examples directory.
 Installation
 ============
 
-Ms Windows
-----------
-Follow the instructions found here: http://matplotlib.org/users/installing.html
-I've tried anaconda 2.01 (32 bit version) on W7 but I've heard that it works
-with the 64 bit version on W8 as well.
-This will install python 2.7.7 and a load of python modules amongst which numpy, matplotlib, pyplot.
-You will be able to run bioplot.py and do much more pythony things ;-)
-If you get into trouble, talk to your local windows guru. Do not mail me! 
-
-Copy plot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
-bioplot.py is stored) and run the main program from that directory to find out how to use it.
-
-<code>python.exe bioplot.py -h</code>
-
-Also look at bioplot.cfg to find out about additional options not available
-via the command line interface. There are lots of them. Their values are shown on the
-commandline whenever you run the program, unless you choose not to via the appropriate
-option in bioplot.cfg
-
 Linux
 -----
 You need to have python2.7.x installed. On most linux systems this is the case.
@@ -55,6 +36,25 @@ Then run the main program:
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them.  Their values are shown on the
+commandline whenever you run the program, unless you choose not to via the appropriate
+option in bioplot.cfg. Finally, there is this manual.txt file you might want to read ...
+
+Ms Windows
+----------
+Follow the instructions found here: http://matplotlib.org/users/installing.html
+I've tried anaconda 2.01 (32 bit version) on W7 but I've heard that it works
+with the 64 bit version on W8 as well.
+This will install python 2.7.7 and a load of python modules amongst which numpy, matplotlib, pyplot.
+You will be able to run bioplot.py and do much more pythony things ;-)
+If you get into trouble, talk to your local windows guru. Do not mail me! 
+
+Copy plot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
+bioplot.py is stored) and run the main program from that directory to find out how to use it.
+
+<code>python.exe bioplot.py -h</code>
+
+Also look at bioplot.cfg to find out about additional options not available
+via the command line interface. There are lots of them. Their values are shown on the
 commandline whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
 
@@ -85,8 +85,8 @@ to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface.  There are lots of them.  Their values are shown on the
 commandline whenever you run the program, unless you choose not to via the appropriate
-option in bioplot.cfg
-
+option in bioplot.cfg. Finally, there is this manual.txt file you might want to read ...
+   
 Note: in contrast to the example plots supplied labels in plots on OSX will appear in
 black on a grey background.
 
