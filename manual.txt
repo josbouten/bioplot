@@ -31,15 +31,15 @@ a command line or build shortcuts which not only start the program but also
 provide the command line options and parameters needed. You're on your
 own here. I'm a command line junky anyway so I did not spend any
 time building a gui. But don't fret. All plots ares shown in an interactive
-window, you can click on that as much as your heart's desire. The interface
+window, you can click on that as much as you like. The interface
 allows you to zoom in, click on a point to see the associated label, save
 the plot in a file etc. etc.
 
-What the program basically does is: read a data file, plot a graph and save
-it in a file. There is a choice to be made what graph you want. 
+What bioplot.py basically does is: read a data file and plot an interactive graph.
+There is a choice to be made what type of graph you want. 
 The data has to be in a specific format. Actually there are 3 types of 
 format allowed. See 'Data Types' below. All plots can be saved. This happens
-automatically as well, but you get more useful results if this happens under 
+automagically as well, but you get more useful results if this happens under 
 your control.
 
 The program does a bit more than its command line arguments suggest.
