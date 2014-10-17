@@ -32,7 +32,7 @@ If you get into trouble, talk to your local windows guru. Do not mail me!
 Copy plot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
 bioplot.py is stored) and run the main program from that directory to find out how to use it.
 
-<code> python.exe bioplot.py -h </code>
+<code> python.exe bioplot.py -h</code>
 
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them. Their values are shown on the
@@ -50,7 +50,7 @@ I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy plot.cfg_4_linux to bioplot.cfg
 Then run the main program: 
 
-<code> $ ./bioplot.py -h </code>
+<code> $ ./bioplot.py -h</code>
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -62,13 +62,13 @@ OSX
 ---
 On OSX 10.9.5 run these commands:
 
-<code> $ curl -O https://bootstrap.pypa.io/get-pip.py
+<code> $ curl -O https://bootstrap.pypa.io/get-pip.py</code>
 
-$ python get-pip.py
+<code>$ python get-pip.py</code>
 
-$ pip2 install matplotlib
+<code>$ pip2 install matplotlib</code>
 
-$ sudo git clone https://github.com/josbouten/bioplot.git </code>
+<code>$ sudo git clone https://github.com/josbouten/bioplot.git</code>
 
 Then change the owner of the bioplot directory to your user:
 
@@ -77,9 +77,9 @@ Then change the owner of the bioplot directory to your user:
 Next, copy plot.cfg_4_osx to bioplot.cfg
 
 From here on, you're ready to go.
-Run the main program from a terminal: 
+Run the main program from a terminal from within the directory where you installed it: 
 
-<code> $ ./bioplot.py -h </code>
+<code> $ ./bioplot.py -h</code>
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
