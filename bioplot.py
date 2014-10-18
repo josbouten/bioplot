@@ -36,7 +36,7 @@ from alexanderzoo import AlexanderZoo
 from boutenzoo import BoutenZoo
 from histogram import Histogram
 from accuracy import Accuracy
-from rankingnew import Ranking
+from ranking import Ranking
 from version import Version
 from utils import sanitize, showLicense
 from sys import exit, argv
