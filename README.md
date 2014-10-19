@@ -55,7 +55,7 @@ I've tried anaconda 2.01 (32 bit version) on W7 but I've heard that it works
 with the 64 bit version on W8 as well.
 This will install python 2.7.7 and a load of python modules amongst which numpy, matplotlib, pyplot.
 You will be able to run bioplot.py and do much more pythony things ;-)
-If you get into trouble, talk to your local windows guru. Do not mail me! 
+If you get into trouble, talk to your local windows guru.
 
 Download the zip file from the github page and unzip its contents to a local directory.
 
