@@ -22,12 +22,12 @@ Installation
 
 Linux
 -----
-You need to have python2.7.x installed. On most linux systems this is the case.
-Then install matplotlib and some other modules using:
+You need to have python2.7.x installed. On most linux systems this is already the case.
+I tried it on Ubuntu 14.04 and it worked like a charm.
+First install git, matplotlib and some other modules using:
 
 <code>$ sudo apt-get install python-matplotlib python-numpy python-scipy git</code>
 
-I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, install bioplot using either git:
 
 <code>$ git clone https://www.github.com/josbouten/bioplot.git</code>
@@ -38,7 +38,7 @@ or download the zip file from github and unzip it in a directory of choice.
 
 Next, copy plot.cfg_4_linux to bioplot.cfg
 
-Then run the main program: 
+Finally run the main program: 
 
 <code>$ ./bioplot.py -h</code>
 
@@ -89,7 +89,7 @@ Then change the owner of the bioplot directory to your user:
 Next, copy plot.cfg_4_osx to bioplot.cfg
 
 From here on, you're ready to go.
-Run the main program from a terminal from within the directory where you installed it: 
+Finally run the main program from a terminal from within the directory where you installed it: 
 
 <code>$ ./bioplot.py -h</code>
 
