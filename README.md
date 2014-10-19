@@ -27,7 +27,7 @@ Then install matplotlib and some other modules using:
 
 <code>$ sudo apt-get install python-matplotlib python-numpy python-scipy git</code>
 
-I tried it on Ubuntu 15.04 and it worked like a charm.
+I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, install bioplot using either git:
 
 <code>$ git clone https://www.github.com/josbouten/bioplot.git</code>
@@ -45,7 +45,7 @@ Then run the main program:
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them.  Their values are shown on the
-commandline whenever you run the program, unless you choose not to via the appropriate
+command line whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg. Finally, there is this manual.txt file you might want to read ...
 
 Ms Windows
@@ -57,7 +57,7 @@ This will install python 2.7.7 and a load of python modules amongst which numpy,
 You will be able to run bioplot.py and do much more pythony things ;-)
 If you get into trouble, talk to your local windows guru. Do not mail me! 
 
-Download the zip file from the github page and unzip it's contents to a local directory.
+Download the zip file from the github page and unzip its contents to a local directory.
 
 Copy plot.cfg_4_windows.txt to bioplot.cfg in this local directory and run the main 
 program from that directory to find out how to use it (and read the manual.txt file).
@@ -67,7 +67,7 @@ program from that directory to find out how to use it (and read the manual.txt f
 
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them. Their values are shown on the
-commandline whenever you run the program, unless you choose not to via the appropriate
+command line whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
 
 OSX
@@ -96,7 +96,7 @@ Run the main program from a terminal from within the directory where you install
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface.  There are lots of them.  Their values are shown on the
-commandline whenever you run the program, unless you choose not to via the appropriate
+command line whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg. Finally, there is this manual.txt file you might want to read ...
    
 Note: in contrast to the example plots supplied labels in plots on OSX will appear in
