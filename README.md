@@ -25,10 +25,19 @@ Linux
 You need to have python2.7.x installed. On most linux systems this is the case.
 Then install matplotlib and some other modules using:
 
-<code>$ sudo apt-get install python-matplotlib python-numpy python-scipy</code>
+<code>$ sudo apt-get install python-matplotlib python-numpy python-scipy git</code>
 
-I tried it on Ubuntu 14.04 and it worked like a charm.
+I tried it on Ubuntu 15.04 and it worked like a charm.
+Next, install bioplot using either git:
+
+<code>$ git clone https://www.github.com/josbouten/bioplot.git</code>
+
+(this will create a directory called 'bioplot')
+
+or download the zip file from github and unzip it in a directory of choice.
+
 Next, copy plot.cfg_4_linux to bioplot.cfg
+
 Then run the main program: 
 
 <code>$ ./bioplot.py -h</code>
@@ -48,8 +57,11 @@ This will install python 2.7.7 and a load of python modules amongst which numpy,
 You will be able to run bioplot.py and do much more pythony things ;-)
 If you get into trouble, talk to your local windows guru. Do not mail me! 
 
-Copy plot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
-bioplot.py is stored) and run the main program from that directory to find out how to use it.
+Download the zip file from the github page and unzip it's contents to a local directory.
+
+Copy plot.cfg_4_windows.txt to bioplot.cfg in this local directory and run the main 
+program from that directory to find out how to use it (and read the manual.txt file).
+
 
 <code>python.exe bioplot.py -h</code>
 
