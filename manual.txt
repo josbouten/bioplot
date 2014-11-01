@@ -1,4 +1,10 @@
 manual.txt
+
+Tue Oct 28 00:05:10 CET 2014: This manual is DEPRICATED. 
+Please read the html version or .rst files.
+
+For windows users: You can read the html manual by double clicking on index.html.
+
 Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
 
 This program is free software; you can redistribute it and/or modify
@@ -75,7 +81,6 @@ Example: cat output/condition_A_limited.txt
 Note that you can switch limiting on or off via setting
 limitStdDevs = False in bioplot.cfg section [zoo].
 
-
 Any plot you produce will be saved to disk as soon as you click on
 the plot (to het the window focus) and press a key.
 Note, it is important to maximise the plot's window to get a
@@ -100,7 +105,7 @@ the window.
 Data files
 ==========
 The command line allows to specify a filename and a type. The type
-by default is 'type3' which corresponds to a text file with 8 fields. You need
+by default is 'type3' which corresponds to a text file with 7 fields. You need
 not specify type3 as it is a default.
 The type3 data file should look like this:
 
@@ -159,12 +164,12 @@ command line.
 
 Example:
 
-python ./biplot -f database -t type1 -e 'data taken from db' -z
+python ./biplot -f database -t type1 -e 'data taken from db' -Z
 
 Obviously you have to adapt the query in data.py to your own needs.
 
-There are 3 data files (of type3) which are meant as examples to play around
-with: testdata_A.txt, testdata_B.txt, testdata_all.txt
+There are 4 data files (of type3) which are meant as examples to play around
+with: testdata_A.txt, testdata_B.txt, testdata_C.txt and testdata_ABC.txt
 
 Example:
 python ./bioplot.py -e "condition A" -f testdata_A.txt -Z
@@ -174,22 +179,54 @@ via email or you can send it to me ( josbouten@gmail.com ) so that I can have a 
 Please consider anonimizing the data before you send it to me by mail! Have a look at
 anonimize.py and adapt it to your needs.
 
+Zooplots
+========
+A zoo plot shows a scatter type plot where on the vertical axis the mean of the non target
+scores and on the horizontal axis the mean target scores are drawn. This leads to
+a plot of dots where each dot represents one speaker ( assuming the data stems from a speaker
+id experiment ).
+An extention of the zoo plots was shown at the IAFPA 2014 conference in Zurich, Switserland
+by Anil Alexander et al. He proposed that adding a measure of the standard deviations of the
+scores used to make the plot will add details of the score distributions of the persons
+to the plot. If the option alexanderStyle in [zoo] is set to True, ellipses are drawn
+at the positions where the points of a traditional zoo plot would be.
+The width and height of the ellipses shown are essentially the standard deviations of the average
+target and average non target scores for a given label. Because these may be much bigger or much
+smaller than the horizontal and vertical scales of the traditional zoo plot, the mean standard
+deviations are scaled by subtracting the overall mean standard deviation and dividing by the
+standard deviation of all standard deviations. This is in essence a normalization procedure.
+The result will be ellipses with a unit width and height and ellipses smaller and bigger than that.
+To be able to actually plot the normalised ellipses, the width is multiplied by the range of
+scores on the horizontal axis and the height is multiplied by the range of the scores on the vertical axis.
+Finally to scale the ellipses their width and height is divided by a scale factor.
+This scale factor is related to the number of pixels in the display used to plot the zoo plot.
+A value of 150 works nicely for a 1600 ... 1280x1024 display.
+
+Note that the shape of the ellipses is mainly due to the difference in range of the vertical and
+horizontal axis. This means that comparing shapes between zoo plots with varying ranges of
+mean target and mean non target scores can be very tricky.
+
 Highlighting labels
 ===================
-If you are curious where the results of a given label are in the zoo plot,
-you can specify them on the command line. If they are in the plot, they will
-be highlighted, e.g.:
+If you click on a data point in the plot, a text label will be shown near the point. This makes
+it possible to find the name of a data point in e.g. the quartile ranges.
+
+If you are curious where the scores of a specific label are in the zoo plot, you need
+not click on all of them to find it. You can specify the labels on the command line.
+If they are in the plot, they will be highlighted. Example:
 
 python ./bioplot.py -e "condition A" -f testdata_A.txt -Z 1130 1062 226
 
-This will highlight label 1130 and 1062 and 226 in the zoo plot compiled from
-the data in 'testdata_A.txt'.
+This will highlight label 1130, 1062 and 226 in the zoo plot compiled from
+the data in 'testdata_A.txt' and dim the colors of the other points in the plot
+making it easy to create a picture for a publication or report. Text labels
+will be displayed near the points selected.
 
 If you want to see the combined results of experiments with the same
 dataset but with some change in parameters, try the dataset which
-combines the 'A' and 'B' experiment:
+combines the 'A', 'B' and 'C' experiment:
 
-python ./bioplot.py -e "exp A vs B" -f testdata_all.txt -Z
+python ./bioplot.py -e "exp A vs B vs C" -f testdata_ABC.txt -Z
 
 The lines between the ellipses connect labels which are equal. This makes
 it easy to see what the effect of the parameter change is.
@@ -228,9 +265,23 @@ Histogram
 =========
 Need I explain?
 
+EER plot
+========
+Will plot a cumulative score plot showing the odds of a false positive and false negative
+versus the raw scores. In order to draw the curves, the number of scores equal to or bigger than
+a threshold are counted. This is done for a number of threshold values. The number can be set via
+nrSamples4Probability in bioplot.cgf in section [probability]. The default is 250 steps.
+
+Tippett plot
+===========
+Will plot a tippet plot showing the odds of a false positive and false negative
+versus the raw scores. In order to draw the curves, the number of scores equal to or bigger than
+a threshold are counted. This is done for a number of threshold values. The number can be set via
+nrSamples4Probability in bioplot.cgf in section [probability]. The default is 250 steps.
+
 Known Issues
 ============
-In data.py the following character sequences are used to group data: '_#_' and '@'.
+In data.py the following characters are used to group data: _#_
 If they are in your data set, either change your data set or change the characters
 in format.py and choose non ambiguous replacements.
 
