@@ -4,7 +4,7 @@ Added matrix plot.
 Changed names of all plot routines.
 Removed kernel function from histogram. There is only so much
 a single gaussian can model.
-Added rst and html manual making the manual.txt file superflous.
+Added rst and html manual making the manual.txt file superfluous.
 
 # v0.8.1 Tue Oct  7 21:31:13 CEST 2014
 For OSX changed alpha value of title and quartile animal labels.
