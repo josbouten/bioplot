@@ -39,15 +39,34 @@ debug = False
 ; Show config info at start of program on commandline
 showConfigInfo = True
 
-; Are we running on OSX or not?
-runningOSX = False
-
 ; Path to dir where results and plots are stored.
 outputPath = output
 
+; Are we running on OSX or not?
+runningOSX = False
+
+; Save all scores to text file separated in target and non target scores per meta value.
+saveScores = True
+
+[data]
+; minimum value we expect for a score in type3 data.
+minimum4Type3 = -1.0E+99
+; maximum value we expect for a score in type3 data.
+maximum4Type3 = 1.0E+99
+
+; minimum value we expect for a score in type2 data.
+minimum4Type2 = -1.0E+99
+; maximum value we expect for a score in type2 data.
+maximum4Type2 = 1.0E+99
+
+; minimum value we expect for a score in type1 data.
+minimum4Type1 = -1.0E+99
+; maximum value we expect for a score in type1 data.
+maximum4Type1 = 1.0E+99
+
 [zoo]
 ; Show ellipses at position of data points representing standard deviation of target and non target scores
-; as published by Alexander et al. @ IAFPA conference Zurich, 2014
+; as published by Alexander et al. @ IAFPA conference Zurich, Switserland, 2014
 alexanderStyle = True
 
 ; Show labels for data points within quartile ranges
@@ -58,6 +77,9 @@ boutenStyle = True
 
 ; Show histogram of shift of points depending on meta data values.
 showCircularHistogram = False
+
+; Show EER values
+showEerValues = True
 
 ; Draw lines between labels with opposing metadata values
 interconnectMetaValues = True
@@ -88,9 +110,9 @@ showAnnotationsAtStartup = False
 showReference = True
 
 ; Do not show text with reference ellipses
-showTextAtReferenceAtStartup = True
+showTextAtReferenceAtStartup = False
 
-; Show kernel in zoo histogram
+; Show kernel in zoo histogram in Bouten style zoo plots.
 showKernelInHist = True
 
 ; Show mean of average target and non target points as a black dot.
@@ -151,3 +173,31 @@ nrPoints = 100
 nrPoints = 100
 
 maxNrSteps = 100
+
+[matrix]
+; Not used at the moment:
+; In the cross identification plot, we want at least
+; this number of scores per label, otherwise skip
+; the label.
+; minNrScores4MatrixPlot = 25
+
+; color map of the plot
+; Choose a colormap: Greys, Spectral, gist_ncar, hsv, gist_rainbow or prism
+matrixColorMap = Greys
+
+; When set to True: combine matrices (if there are multiple
+; because of different meta values) in a square or oblong matrix,
+; otherwise make a horizontal bar or vertical column of matrices.
+combineMatrices = True
+
+; Show labels at tick marks
+showMatrixLabels = True
+
+; rotate xtick labels at a degree
+labelAngle = 70
+
+[probability]
+; Number of threshold values used to calculate P(defense)
+; and P(prosecution) from target and non target scores
+; per meta value.
+nrSamples4Probability = 500
