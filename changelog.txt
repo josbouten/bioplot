@@ -1,45 +1,40 @@
+# v0.9 Fri Oct 24 20:57:54 CEST 2014
+Added cumulative score plot / EER plot and Tippett plot.
+Added matrix plot.
+Changed names of all plot routines.
+Removed kernel function from histogram. There is only so much
+a single gaussian can model.
+Added rst and html manual making the manual.txt file superflous.
+
 # v0.8.1 Tue Oct  7 21:31:13 CEST 2014
 For OSX changed alpha value of title and quartile animal labels.
 
 # v0.8 Tue Oct  7 01:10:47 CEST 2014
-Added flag for OSX
+Added flag for OSX.
 
 # v0.7 Sun Oct  5 18:49:12 CEST 2014
 Made preparations for storing at github.
 
-# v0.6 29 Sept 2014
+# v0.6 Sept 29 2014
 Moved a lot of functions common to boutenZoo and alexanderZoo to zoo.py
 Added annotations and comments.
 
-# v0.5 21 Sept 2014
+# v0.5 Sept 21 2014
 Created zoo, format and data object to make things more OO.
 
-# v0.4 12 Sept 2014
-Added config file 'plot.cfg' containing default settings
+# v0.4 Sept 12 2014
+Added config file 'plot.cfg' containing default settings.
 
-# v0.3, 9 Sept 2014
+# v0.3, Sept 9 2014
 Added click events. Clicking in zoo plot will show a list of nearest labels including
 their average target and non target score. All labels within 1/10 of the minimum of the
-height or width of an ellipse are shown. Added histograms to zoo plot.
+height or width of an ellipse are shown.
+Keys in other plots will save the file.
+Added histograms (normal and cumulative) to zoo plot.
 
 # v0.2, August 2014
 Added 'agm and aim std deviations' to zoo plot after reading Anil Alexander's 
 abstract for a paper he submitted to IAFPA 2014, Zurich, Switserland.
-
-The width and height of the ellipses shown are essentially the standard deviations of the average
-target and average non target scores for a given label. Because these may be much bigger or much
-smaller than the horizontal and vertical scales of the traditional zoo plot, the mean standard
-deviations are scaled by subtracting the overall mean standard deviation and dividing by the
-standard deviation of all standard deviations. this is in essence a normalization procedure.
-The result will be ellipses with a unit width and height and ellipses smaller and bigger than that.
-To be able to actually plot the normalised ellipses, the width is multiplied by the range of
-scores on the horizontal axis and the height is multiplied by the range of the scores on the vertical axis.
-Note that the shape of the ellipses is mainly due to the difference in range of the vertical and
-horizontal axis. Comparing shapes between zoo plots can be tricky.
-Finally to scale the ellipses their width and height is divided by a scale factor.
-This scale factor is related to the number of pixels in the display used to plot the zoo plot.
-A value of 150 works nicely for a 1600 ... 1280x1024 display.
-To be able to draw them they are scaled.
 
 # v0.1, Sept 2013
 Created code for ranking and accuracy plot.
