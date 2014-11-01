@@ -2,6 +2,9 @@
 
 __author__ = 'drs. ing. Jos Bouten'
 
+import sys
+import hashlib
+
 '''
     anonimize.py
 
@@ -25,33 +28,59 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-import sys
-
-import hashlib
-m = hashlib.md5()
-filename = sys.argv[1]
-
-try:
-    f = open(filename, 'rt')
-except Exception, e:
-    print e
+def usage():
+    print sys.argv[0], '<input filename> <output filename>'
     sys.exit(1)
-else:
-    lines = f.readlines()
 
-for line in lines:
-    line = line.strip()
-    tmp = line.split()
-    l1 = tmp[0]
-    l2 = tmp[2]
-    file1 = tmp[1]
-    m.update(file1)
-    file1n = m.hexdigest() + '.wav'
-    file2 = tmp[3]
-    m.update(file2)
-    file2n = m.hexdigest() + '.wav'
-    score = tmp[4]
-    truth = tmp[5]
-    m1 = tmp[6]
-    m2 = tmp[7]
-    print l1, file1n, l2, file2n, score, truth, m1, m2
+def anonimize(string):
+    m = hashlib.md5()
+    m.update(string)
+    return m.hexdigest()
+
+#
+# MAIN
+#
+
+
+if len(sys.argv) < 2:
+    usage()
+else:
+    inFilename = sys.argv[1]
+    outFilename = sys.argv[2]
+
+    # Read data from input file
+    try:
+        fIn = open(inFilename, 'rt')
+    except Exception, e:
+        print e
+        sys.exit(1)
+    else:
+        lines = fIn.readlines()
+        fIn.close()
+
+    # Open output file and write data to it
+    try:
+        fo = open(outFilename, 'wt')
+    except Exception, e:
+        print e
+        sys.exit(1)
+    else:
+        for line in lines:
+            line = line.strip()
+            tmp = line.split()
+            l1 = tmp[0]
+            filename1 = tmp[1]
+            l2 = tmp[2]
+            filename2 = tmp[3]
+            score = tmp[4]
+            truth = tmp[5]
+            metaValue = tmp[6]
+
+            # The filenames contains some private info,
+            # therefore we anonymize them
+            filename1Anon = anonimize(filename1)
+            filename2Anon = anonimize(filename2)
+
+            # print plain and anonymized labels
+            fo.write("%s %s %s %s %s %s %s\n" % (l1, filename1Anon, l2, filename2Anon, score, truth, metaValue))
+        fo.close()
