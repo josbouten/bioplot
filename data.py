@@ -662,9 +662,14 @@ class Data(Format):
             print 'writeScores2file', e
             sys.exit(1)
 
+        scoresPerMetaValue = collections.defaultdict(list)
         for el in k:
-            _scores = scoreDict[el]
-            filename = dataOutputPath + path.sep + expName + '_' + self._format.getMetaFromPattern(el) + extention
+            scores = scoreDict[el]
+            metaValue = self._format.getMetaFromPattern(el)
+            scoresPerMetaValue[metaValue].append(scores)
+        for metaValue in scoresPerMetaValue:
+            scores = scoresPerMetaValue[metaValue]
+            filename = dataOutputPath + path.sep + expName + '_' + metaValue + extention
             # We do not like spaces in file names.
             # Sorry windows dudes and dudettes !
             filename = sanitize(filename)
@@ -673,11 +678,11 @@ class Data(Format):
                     print 'data.writeScores2file:writing to:', filename
                 try:
                     f = open(filename, 'w')
-                    for score in _scores:
+                    for score in scores:
                         f.write("%s\n" % str(score))
                     f.close()
                 except IOError, e:
                     print e
                     sys.exit(1)
-        else:
-            print "File %s already exists." % (filename)
+            else:
+                print "File %s already exists." % (filename)
