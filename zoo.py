@@ -33,10 +33,12 @@ import collections
 from format import Format
 from math import sqrt, atan2, sin
 import matplotlib.pyplot as plt
+from eer import Eer
 from matplotlib.patches import Ellipse
 from utils import sanitize
+from probability import Probability
 
-class Zoo(Format):
+class Zoo(Format, Probability):
     def __init__(self, data, config, debug):
         Format.__init__(self, debug)
         self.data = data
@@ -120,7 +122,7 @@ class Zoo(Format):
         if self.debug:
             print 'zoo._write2file: path:', path
 
-        thisPlotTitle = sanitize(self.data.title)
+        thisPlotTitle = sanitize(self.data.getTitle())
 
         #
         #  Worms
@@ -195,20 +197,20 @@ class Zoo(Format):
             limited = True
         return value, limited
 
-    def _computeZooStats(self):
+    def computeZooStats(self):
         '''
         Compute mean target scores and mean non target scores to be used in zoo plot (Yaget et al.)
         '''
         self.aimsv = {}
         self.agmsv = {}
 
-        for pattern in self.data.getMetaDataValues():
+        for metaValue in self.data.getMetaDataValues():
             for keyPlusPattern in self.data.getTargetScores().keys():
-                if pattern in keyPlusPattern:
+                if metaValue in keyPlusPattern:
                     #print 'computeZooStats:agmsv:pattern:', pattern, 'keyPlusPattern:', keyPlusPattern
                     self.agmsv[keyPlusPattern] = self.data.compAverageScore(self.data.getTargetScores()[keyPlusPattern])
             for keyPlusPattern in self.data.getNonTargetScores().keys():
-                if pattern in keyPlusPattern:
+                if metaValue in keyPlusPattern:
                     #print 'computeZooStats:aimsv:pattern:', pattern, 'keyPlusPattern:', keyPlusPattern
                     self.aimsv[keyPlusPattern] = self.data.compAverageScore(self.data.getNonTargetScores()[keyPlusPattern])
         for pattern in self.agmsv:
@@ -217,14 +219,14 @@ class Zoo(Format):
 
         if len(self.person) == 0:
             print "Error:Unable to compute zoo statistics."
-            print '_computeZooStats:len(agmsv):', len(self.agmsv)
-            print '_computeZooStats:len(aimsv):', len(self.aimsv)
+            print 'computeZooStats:len(agmsv):', len(self.agmsv)
+            print 'computeZooStats:len(aimsv):', len(self.aimsv)
             sys.exit(1)
 
         if self.debug:
             print 'len(self.person): ', len(self.person)
-            print '_computeZooStats:len(agmsv):', len(self.agmsv)
-            print '_computeZooStats:len(aimsv):', len(self.aimsv)
+            print 'computeZooStats:len(agmsv):', len(self.agmsv)
+            print 'computeZooStats:len(aimsv):', len(self.aimsv)
 
         self.aimsLow = stats.scoreatpercentile(self.aimsv.values(), 25)
         self.aimsHigh = stats.scoreatpercentile(self.aimsv.values(), 75)
@@ -233,23 +235,22 @@ class Zoo(Format):
 
         # Compute min and max aim and agm values irrespective
         # of values for target and non target experiments.
-        self.aim_mi = self.agm_mi = 1.0E99
-        self.aim_ma = self.agm_ma = -1.0E99
+        self.aim_mi = self.agm_mi = self.data.getMaximum4ThisType()
+        self.aim_ma = self.agm_ma = self.data.getMinimum4ThisType()
         for pattern in self.agmsv.keys():
-            self.agm_mi, self.agm_ma = self.data.minmax(self.agmsv[pattern], self.agm_mi, self.agm_ma)
+            self.agm_mi, self.agm_ma = self.data.minMax(self.agmsv[pattern], self.agm_mi, self.agm_ma)
         for pattern in self.aimsv.keys():
-            self.aim_mi, self.aim_ma = self.data.minmax(self.aimsv[pattern], self.aim_mi, self.aim_ma)
+            self.aim_mi, self.aim_ma = self.data.minMax(self.aimsv[pattern], self.aim_mi, self.aim_ma)
 
         if self.debug:
-            print '_computeZooStats: agm_mi, agm_ma:', self.agm_mi, self.agm_ma
-            print '_computeZooStats: aim_mi, aim_ma:', self.aim_mi, self.aim_ma
+            print 'computeZooStats: agm_mi, agm_ma:', self.agm_mi, self.agm_ma
+            print 'computeZooStats: aim_mi, aim_ma:', self.aim_mi, self.aim_ma
 
-
-    def _computeZooStatsAlexanderStyle(self):
+    def computeZooStatsAlexanderStyle(self):
         '''
         Compute statistics to plot ellipses in zooplot as published by Alexander et al. IAFPA Zurich, 2014
         '''
-        self._computeZooStats()
+        self.computeZooStats()
         # Now we need the std for width and height
         # of the ellipses we want to draw in the plot.
         self.aimsStdDev = collections.defaultdict(float)
@@ -262,15 +263,15 @@ class Zoo(Format):
         # labels: p1000, p1001, p1002 etc.
         self.labels = self.data.getTargetLabels()
         if self.debug:
-            print '_computeZooStatsAlexanderStyle for agms'
+            print 'computeZooStatsAlexanderStyle for agms'
 
-        # stdDevs are computed per label, irrespective of the meta data values
+        # stdDevs are computed per label.
         for label in self.labels:
             if label in self.data.getLabelsWithTargetScores():
                 self.agmsStdDev[label] = numpy.std(self.data.getTargetScores4Label(label))
                 allTargetStdDevs.append(self.agmsStdDev[label])
         if self.debug:
-            print '_computeZooStatsAlexanderStyle for aims'
+            print 'computeZooStatsAlexanderStyle for aims'
         for label in self.labels:
             if label in self.data.getLabelsWithNonTargetScores():
                 self.aimsStdDev[label] = numpy.std(self.data.getNonTargetScores4Label(label))
@@ -281,8 +282,8 @@ class Zoo(Format):
         self.unitMeanTargetStdDev = numpy.average(allTargetStdDevs)
         self.unitMeanNonTargetStdDev = numpy.average(allNonTargetStdDevs)
         #
-        # Central point of the plot is determined by the mean of agms and aims
-        # This point is plotted as a black dot and is meant as a reference
+        # Central point of the plot is determined by the mean of agms and aims.
+        # This point is plotted as a black dot and is meant as a reference.
         self.meanAgms = self.data.compAverageScore(self.agmsv.values())
         self.meanAims = self.data.compAverageScore(self.aimsv.values())
         if self.debug:
@@ -342,9 +343,9 @@ class Zoo(Format):
     def isNear(self, x1, y1, (x2, y2), thresholdX, thresholdY):
         dX = (x2 - x1)
         dY = (y2 - y1)
-        #print dX, thresholdX, dY, thresholdY
-        # If label is within 0.1 of unit std, to position
-        # then return True, else False
+
+        # If label is within 0.1 of unit std to position
+        # then return True, else False.
         if abs(dX) < abs(thresholdX) and abs(dY) < abs(thresholdY):
             return True
         else:
@@ -398,7 +399,7 @@ class Zoo(Format):
 
 
     def saveExceptionalAnimals(self):
-        # Do the WWF thing!
+        # Save the animals. Do the WWF thing!
         # See also http://www.worldwildlife.org
 
         # Chameleons
@@ -437,7 +438,7 @@ class Zoo(Format):
         allAngles = []
         allDistances = []
         # We traverse over all patterns except the last.
-        for pattern in self.data.getMetaDataValues().keys()[:-1]:
+        for pattern in sorted(self.data.getMetaDataValues().keys()[:-1]):
             if self.debug:
                 print '_connectMetaValues:pattern:', pattern
             labels = self.data.getMetaDataValues()[pattern]
@@ -471,9 +472,7 @@ class Zoo(Format):
         deltaZoo = self._compScore(allAngles, allDistances)
         if self.debug:
             print '_connectMetaValues:Score: ', deltaZoo
-
         return allAngles, allDistances, deltaZoo
-
 
     def _compScore(self, angles, distances):
 
@@ -739,21 +738,61 @@ class Zoo(Format):
             width = float((self.agm_ma - self.agm_mi) / 20.0)
             delta = 0
             boxes = []
-            xBase = self.agm_ma - width
             yBase = self.aim_mi
 
             if self.debug:
                 print 'drawLegend:self.colors.items():', colors.items()
                 print 'drawLegend:self.colors.keys():', colors.keys()
-            for key in sorted(colors.keys()):
-                Color = colors[key]
-                points = [[xBase, yBase + delta], [xBase, yBase + incr + delta], [xBase + width, yBase + incr + delta],
-                          [xBase + width, yBase + delta], [xBase, yBase + delta]]
-                rect = plt.Polygon(points, closed=True, fill=True, color=Color)
-                boxes.append(rect)
-                plt.text(xBase + 1.3 * width, yBase + incr + delta, self.prettyfy(key))
-                delta += 1.5 * incr
-                plt.gca().add_patch(rect)
+
+            if self.config.getShowEerValues():
+                xBase = self.agm_ma
+                eerObject = Eer(self.data, self.config, self.debug)
+                eerData = eerObject.computeProbabilities(self.eerFunc)
+
+                ret = []
+                for key in sorted(colors.keys()):
+                    for metaValue, PD, PP, X in eerData:
+                        if key == metaValue:
+                            eerValue, score = eerObject.computeEer(PD, PP, X)
+                            ret.append((key, eerValue))
+                            break
+                m = 0
+                text = []
+                for (key, eer) in ret:
+                    eerStr = ", Eer: %.2f%s" % (eer * 100.0, '%')
+                    text.append(self.prettyfy(key) + eerStr)
+                    lt = len(text)
+                    m = max(lt, m)
+
+                cnt = 0
+                for (key, eer) in ret:
+                    offset = width * (m + 1) # add 1 to prevent text to cross rhs edge of plot area.
+                    Color = colors[key]
+                    points = [[xBase - offset, yBase + delta],
+                              [xBase - offset, yBase + incr + delta],
+                              [xBase + width / 1.5 - offset, yBase + incr + delta],
+                              [xBase + width / 1.5 - offset, yBase + delta],
+                              [xBase - offset, yBase + delta]]
+                    rect = plt.Polygon(points, closed=True, fill=True, color=Color)
+                    boxes.append(rect)
+                    plt.text(xBase + width - offset, yBase + incr + delta, text[cnt])
+                    delta += 1.5 * incr
+                    plt.gca().add_patch(rect)
+                    cnt += 1
+            else:
+                xBase = self.agm_ma - width
+                for key in sorted(colors.keys()):
+                    Color = colors[key]
+                    points = [[xBase, yBase + delta],
+                              [xBase, yBase + incr + delta],
+                              [xBase + width, yBase + incr + delta],
+                              [xBase + width, yBase + delta],
+                              [xBase, yBase + delta]]
+                    rect = plt.Polygon(points, closed=True, fill=True, color=Color)
+                    boxes.append(rect)
+                    plt.text(xBase + 1.3 * width, yBase + incr + delta, self.prettyfy(key))
+                    delta += 1.5 * incr
+                    plt.gca().add_patch(rect)
 
 
     def _plotAxes(self, comment, yagerStyle, title, axes):
@@ -942,7 +981,7 @@ class Zoo(Format):
                     else:
                         annotation = self._annotateEllipse(xy, xRange, yRange, thisLabel, axesZoo)
                         self._pointsWithAnnotation.append([point, annotation, template, xy])
-                        if thisLabel in self.data.getAlwaysShowTheseLabels():
+                        if thisLabel in self.data.getLabelsToShowAlways():
                             annotation.set_visible(True)
                     count += 1
         if self.debug:

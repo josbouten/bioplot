@@ -125,7 +125,7 @@ class BoutenZoo(Zoo):
         axes.grid(True)
 
 
-    def plotZoo(self):
+    def plot(self):
         yagerStyle = self.config.getYagerStyle()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
         self.annotateQuartileMembers = self.config.getAnnnotateQuartileMembers()
@@ -134,7 +134,7 @@ class BoutenZoo(Zoo):
         if self.config.getAlexanderStyle():
             self.aimsStdDev = []
             self.agmsStdDev = []
-            self._computeZooStatsAlexanderStyle()
+            self.computeZooStatsAlexanderStyle()
             thisPlot, axesZoo, axesHistX, axesHistY, axesHistC = self._prepareFigs()
             self._plotZooAlexanderStyle(axesZoo, yagerStyle)
             if self.config.getInterconnectMetaValues():
@@ -144,7 +144,7 @@ class BoutenZoo(Zoo):
                         c = CircularHistPlot(self.debug)
                         c.plot(allAngles, deltaZoo, axesHistC)
         else:
-            self._computeZooStats()
+            self.computeZooStats()
             thisPlot, axesZoo, axesHistX, axesHistY, axesHistC = self._prepareFigs()
             self._plotZooTraditional(axesZoo, yagerStyle)
 
@@ -166,6 +166,8 @@ class BoutenZoo(Zoo):
         # Do the WWF-thing!
         self.saveExceptionalAnimals()
         plt.show(block=True)
+        plt.show(block=True)
+
 
     def _plotZooAlexanderStyle(self, axesZoo, yagerStyle=False):
         # plot a list of ellipses each visualising a score distribution for a target
@@ -213,7 +215,7 @@ class BoutenZoo(Zoo):
 
 
     def _onMouseEvent(self, event):
-        # We do not want the annotations to reappear after the first click
+        # We do not want the annotations to reappear after the first click.
         self.config.setShowAnnotationsAtStartup(False)
 
         if event.xdata is not None and event.ydata is not None:
@@ -235,7 +237,6 @@ class BoutenZoo(Zoo):
                         annotation.set_visible(True)
             if self.config.getShowReference:
                 # check whether we clicked near the reference ellipses.
-                threshold = 0.3 * min(self.unitTargetStdDev, self.unitNonTargetStdDev)
                 xRange = abs(self.agm_ma - self.agm_mi)
                 yRange = abs(self.aim_ma - self.aim_mi)
                 thresholdX = 3 * xRange / self.config.getScaleFactor()

@@ -49,7 +49,7 @@ class AlexanderZoo(Zoo):
 
         if self.debug:
             print 'nrMeta:', self.data.getNrDistinctMetaDataValues()
-        self._title = data.title
+        self._title = data.getTitle()
         colorMap = plt.get_cmap(self.config.getColorMap())
         self.colors = assignColors2MetaDataValue(self.data.getMetaDataValues(), colorMap)
         self.nrColors = len(self.colors.keys())
@@ -58,7 +58,7 @@ class AlexanderZoo(Zoo):
             print 'nr colors:', self.nrColors
 
 
-    def plotZoo(self):
+    def plot(self):
         yagerStyle = self.config.getYagerStyle()
         alexanderStyle = self.config.getAlexanderStyle()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
@@ -71,7 +71,7 @@ class AlexanderZoo(Zoo):
             if self.config.getInterconnectMetaValues():
                 self._connectMetaValues(self._pointsWithAnnotation)
         else:
-            self._computeZooStats()
+            self.computeZooStats()
             self._plotZooTraditional(yagerStyle)
 
         # Gather some stats
@@ -80,7 +80,7 @@ class AlexanderZoo(Zoo):
 
 
     def _plotZooAlexanderStyle(self, yagerStyle=False):
-        self._computeZooStatsAlexanderStyle()
+        self.computeZooStatsAlexanderStyle()
         # plot a list of ellipses each visualising a score distribution for a target
         self.fig = plt.figure()
         self.drawLegend(self.colors)

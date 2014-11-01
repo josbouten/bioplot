@@ -33,7 +33,7 @@ from matplotlib.ticker import FuncFormatter
 import matplotlib.mlab as mlab
 from format import Format
 from event import Event
-from utils import assignColors2MetaDataValue, assignColors
+from utils import assignColors2MetaDataValue
 
 class Histogram(Event, Format):
     def __init__(self, data, config, type = 'normal', debug=True, useMeta=False):
@@ -42,42 +42,36 @@ class Histogram(Event, Format):
         self.config = config
         self.type = type
         self.debug = debug
-        self.title = self.data.title
+        self.title = self.data.getTitle()
         self.useMeta = useMeta
+        self.plotType = "histogram_plot"
 
     def _to_percent(self, y, position):
         # Ignore the passed in position. This has the effect of scaling the default tick locations.
         s = str(100 * y)
 
-        # The percent symbol needs escaping in latex
+        # The percent symbol needs escaping in latex.
         if matplotlib.rcParams['text.usetex'] == True:
             return s + r'$\%$'
         else:
             return s + '%'
 
-    def _extractValues(self, listOflists):
-        ret = []
-        for el in listOflists.values():
-            ret += el
-        return ret
-
-    def plotHistogram(self):
+    def plot(self):
         if self.useMeta:
             self.plotHistogramWithMeta()
         else:
-            self.plotType = "histogram_plot"
-            targetScores = self._extractValues(self.data.getTargetScores())
-            nonTargetScores = self._extractValues(self.data.getNonTargetScores())
+            targetScores = self.data.getTargetScoreValues()
+            nonTargetScores = self.data.getNonTargetScoreValues()
 
             self.fig = plt.figure()
-            self.event = Event(self.config, self.fig, self.data.title, self.plotType, self.debug)
+            self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
             self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
 
             nrBins = self.config.getNrBins()
             # Make a normed histogram. It'll be multiplied by 100 later.
             if self.type == 'cumulative':
                 plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), color='red', alpha=1.0, histtype='step', cumulative=-1)
-                plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), color='green', alpha=0.7, histtype='step', cumulative = True)
+                plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), color='green', alpha=0.7, histtype='step', cumulative=True)
                 plt.title(r"Cumulative histogram for '%s'" % (self.title))
             else:
                 n, bins2, patches = plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), color='red', alpha=1.0)
@@ -106,23 +100,21 @@ class Histogram(Event, Format):
 
     def plotHistogramWithMeta(self):
         self.plotType = "histogram_plot"
-        targetScores = self._extractValues(self.data.getTargetScores())
-        nonTargetScores = self._extractValues(self.data.getNonTargetScores())
-
+        targetScores = self.data.getTargetScoreValues()
+        nonTargetScores = self.data.getNonTargetScoreValues()
         self.fig = plt.figure()
-        self.event = Event(self.config, self.fig, self.data.title, self.plotType, self.debug)
+        self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
 
         nrBins = self.config.getNrBins()
         # Make a normed histogram. It'll be multiplied by 100 later.
         if self.type == 'cumulative':
             plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), facecolor='red', alpha=1.0, histtype='step', cumulative=-1)
-            plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), facecolor='green', alpha=0.7, histtype='step', cumulative = True)
+            plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), facecolor='green', alpha=0.7, histtype='step', cumulative=True)
             plt.title(r"Cumulative histogram for '%s'" % (self.title))
         else:
             if self.config.getShowMetaInHist():
                 # Split target and non target scores per meta data value
-                #v alueSet = self._getDistinct(self.data._metaDataValues.values())
                 valueSet = self.data.getMetaDataValues().keys()
                 if self.debug:
                     print 'valueSet:', valueSet
@@ -171,12 +163,13 @@ class Histogram(Event, Format):
                     print "len(allData): %d\nnrBins: %d" % (len(allData), self.config.getNrBins())
                     print "allLabels: %s" % (allLabels)
                     pass
-                plt.legend()
+                else:
+                    plt.title(r"Histogram for '%s'" % (self.title))
+                    plt.legend()
             else:
                 plt.hist(nonTargetScores, self.config.getNrBins(), normed=self.config.getNormHist(), facecolor='red', alpha=1.0)
                 plt.hist(targetScores, self.config.getNrBins(), normed=self.config.getNormHist(), facecolor='green', alpha=0.7)
                 plt.title(r"Histogram for '%s'" % (self.title))
         plt.grid(True)
-        plt.xlabel('Target and Non Target Scores for all Meta Values')
+        plt.xlabel('Target and Non Target Scores')
         plt.show()
-

@@ -45,8 +45,8 @@ class Format():
         '''
         Return label part of a pattern.
 
-        :param pattern: '1025_#_24_1_21@24_1_21'
-        :return: ['1025', '24_1_21@24_1_21']
+        :param pattern: '1025_#_24_1_21'
+        :return: ['1025', '24_1_21']
         '''
         tmp = pattern.split(self.LABEL_SEPARATOR)
         return tmp[0]
@@ -55,8 +55,8 @@ class Format():
         '''
         Return meta data value part of a pattern
 
-        :param pattern: '1025_#_24_1_21@24_1_21'
-        :return: ['1025', '24_1_21@24_1_21']
+        :param pattern: '1025_#_24_1_21'
+        :return: ['1025', '24_1_21']
         '''
         tmp = template.split(self.LABEL_SEPARATOR)
         return tmp[1]

@@ -78,6 +78,12 @@ class Config():
         except Exception:
             self._colorLookUpTable = self._colorLookUpTableDefault
 
+        self._combineMatricesDefault = False
+        try:
+            self._combineMatrices = self.config.getboolean('matrix', 'combineMatrices')
+        except Exception:
+            self._combineMatrices = self._combineMatricesDefault
+
         # If set to true, debug will make all object produce lots of info
         # which may be of use when debugging the program.
         self._debugDefault = False
@@ -98,11 +104,65 @@ class Config():
         except Exception:
             self._interconnectMetaValues = self._interconnectMetaValuesDefault
 
+        self._labelAngleDefault = 70
+        try:
+            self._labelAngle = self.config.getint('matrix', 'labelAngle')
+        except Exception:
+            self._labelAngle = self._labelAngleDefault
+
         self._limitStdDevsDefault = True
         try:
             self._limitStdDevs = self.config.getboolean('zoo', 'limitStdDevs')
         except Exception:
             self._limitStdDevs = True
+
+        self._matrixColorMapDefault = 'Greys'
+        try:
+            self._matrixColorMap = self.config.get('matrix', 'matrixColorMap')
+        except Exception:
+            self._matrixColorMap = self._matrixColorMapDefault
+
+        self._maximum4Type1Default = 1.0E+99
+        try:
+            self._maximum4Type1 = self.config.getfloat('data', 'maximum4Type1')
+        except Exception:
+            self._maximum4Type1 = self._maximum4Type1Default
+
+        self._maximum4Type2Default = 1.0E+99
+        try:
+            self._maximum4Type2 = self.config.getfloat('data', 'maximum4Type2')
+        except Exception:
+            self._maximum4Type2 = self._maximum4Type2Default
+
+        self._maximum4Type3Default = 1.0E+99
+        try:
+            self._maximum4Type3 = self.config.getfloat('data', 'maximum4Type3')
+        except Exception:
+            self._maximum4Type3 = self._maximum4Type3Default
+
+        self._minimum4Type1Default = -1.0E+99
+        try:
+            self._minimum4Type1 = self.config.getfloat('data', 'minimum4Type1')
+        except Exception:
+            self._minimum4Type1 = self._minimum4Type1Default
+
+        self._minimum4Type2Default = -1.0E+99
+        try:
+            self._minimum4Type2 = self.config.getfloat('data', 'minimum4Type2')
+        except Exception:
+            self._minimum4Type2 = self._minimum4Type2Default
+
+        self._minimum4Type3Default = -1.0E+99
+        try:
+            self._minimum4Type3 = self.config.getfloat('data', 'minimum4Type3')
+        except Exception:
+            self._minimum4Type3 = self._minimum4Type3Default
+
+        self._minNrScores4MatrixPlotDefault = 3
+        try:
+            self._minNrScores4MatrixPlot = self.config.getint('matrix', 'minNrScores4MatrixPlot')
+        except Exception:
+            self._minNrScores4MatrixPlot = self._minNrScores4MatrixPlotDefault
 
         ''' max nr steps in ranking plot '''
         self._maxNrStepsDefault = 500
@@ -141,6 +201,11 @@ class Config():
         except Exception:
             self._nrRankingPoints = self._nrRankingPointsDefault
 
+        self._nrSamples4EERDefault = 200
+        try:
+            self._nrSamples4Probability = self.config.getint('probability', 'nrSamples4Probability')
+        except Exception:
+            self._nrSamples4Probability = self._nrSamples4EERDefault
 
         self._opacityLimitFactorDefault = 0.75
         try:
@@ -156,23 +221,18 @@ class Config():
         except Exception:
             self._outputPath = self._outputPathDefault
 
-        self._runningOSXDefault = False
-        try:
-            self._runningOSX = self.config.getboolean('cfg', 'runningOSX')
-        except Exception:
-            self._runningOSX = self._runningOSXDefault
-
-        self._useColorsForQuartileRangesDefault = False
-        try:
-            self._useColorsForQuartileRanges = self.config.getboolean('zoo', 'useColorsForQuartileRanges')
-        except Exception:
-            self._useColorsForQuartileRanges = self._useColorsForQuartileRangesDefault
-
         # How wide and high do we want the ellipses in the zoo plot to be.
         # Since they cover 3 std's at max we normalize their height and width values
         # to the figure's full resolution width (assuming a square plot)
         # and multiply by a scaleFactor to make them visible as not too small and
         # not too bit
+
+        self._saveScoresDefault = True
+        try:
+            self._saveScores = self.config.getboolean('cfg', 'saveScores')
+        except Exception:
+            self._saveScores = self._saveScoresDefault
+
         self._scaleFactorDefault = 150
         try:
             self._scaleFactor = self.config.getint('zoo', 'scaleFactor')
@@ -198,11 +258,23 @@ class Config():
         except Exception:
             self._showConfigInfo = self._showConfigInfoDefault
 
+        self._showEerValuesDefault = False
+        try:
+            self._showEerValues = self.config.getboolean('zoo', 'showEerValues')
+        except Exception:
+            self._showEerValues = self._showEerValuesDefault
+
         self._showKernelInHistDefault = True
         try:
             self._showKernelInHist = self.config.getboolean('zoo', 'showKernelInHist')
         except Exception:
             self._showKernelInHist = self._showKernelInHistDefault
+
+        self._showMatrixLabelsDefault = True
+        try:
+            self._showMatrixLabels =  self.config.getboolean('matrix', 'showMatrixLabels')
+        except Exception:
+            self._showMatrixLabels = self._showMatrixLabelsDefault
 
         self._showMetaInHistDefault = True
         try:
@@ -234,6 +306,18 @@ class Config():
             self._spacing = self.config.getfloat('layout', 'spacing')
         except Exception:
             self._spacing = self._spacingDefault
+
+        self._runningOSXDefault = False
+        try:
+            self._runningOSX = self.config.getboolean('cfg', 'runningOSX')
+        except Exception:
+            self._runningOSX = self._runningOSXDefault
+
+        self._useColorsForQuartileRangesDefault = False
+        try:
+            self._useColorsForQuartileRanges = self.config.getboolean('zoo', 'useColorsForQuartileRanges')
+        except Exception:
+            self._useColorsForQuartileRanges = self._useColorsForQuartileRangesDefault
 
         self._useOpacityForBigEllipsesDefault = True
         try:
@@ -309,6 +393,9 @@ class Config():
         '''
         return self._colorLookUpTable
 
+    def getCombineMatrices(self):
+        return self._combineMatrices
+
     def getDebug(self):
         return self._debug
 
@@ -318,11 +405,38 @@ class Config():
     def getInterconnectMetaValues(self):
         return self._interconnectMetaValues
 
+    def getLabelAngle(self):
+        return self._labelAngle
+
     def getLimitStdDevs(self):
         return self._limitStdDevs
 
+    def getMatrixColorMap(self):
+        return self._matrixColorMap
+
+    def getMaximum4Type1(self):
+        return self._maximum4Type1
+
+    def getMaximum4Type2(self):
+        return self._maximum4Type2
+
+    def getMaximum4Type3(self):
+        return self._maximum4Type3
+
     def getMaxNrSteps(self):
         return self._maxNrSteps
+
+    def getMinimum4Type1(self):
+        return self._minimum4Type1
+
+    def getMinimum4Type2(self):
+        return self._minimum4Type2
+
+    def getMinimum4Type3(self):
+        return self._minimum4Type3
+
+    def getMinNrScores4MatrixPlot(self):
+        return self._minNrScores4MatrixPlot
 
     def getNoHistAnnot(self):
         return self._noHistAnnot
@@ -338,6 +452,9 @@ class Config():
 
     def getNrRankingPoints(self):
         return self._nrRankingPoints
+
+    def getNrSamples4Probability(self):
+        return self._nrSamples4Probability
 
     def getOpacityLimitFactor(self):
         if self._opacityLimitFactor > 1.0:
@@ -355,6 +472,9 @@ class Config():
 
     def getRunningOSX(self):
         return self._runningOSX
+
+    def getSaveScores(self):
+        return self._saveScores
 
     def getScaleFactor(self):
         '''
@@ -374,8 +494,14 @@ class Config():
     def getShowConfigInfo(self):
         return self._showConfigInfo
 
+    def getShowEerValues(self):
+        return self._showEerValues
+
     def getShowKernelInHist(self):
         return self._showKernelInHist
+
+    def getShowMatrixLabels(self):
+        return self._showMatrixLabels
 
     def getShowMetaInHist(self):
         return self._showMetaInHist
@@ -421,36 +547,55 @@ class Config():
 
     # SETTERS
 
+    def setMinNrScores4MatrixPlot(self, value):
+        if isinstance(value, int):
+            self._minNrScores4MatrixPlot = value
+
     def setShowConfigInfo(self, value):
-        self._showConfigInfo = False
+        if isinstance(value, bool):
+            self._showConfigInfo = value
 
     def setShowAnnotationsAtStartup(self, value):
-        self._showAnnotationsAtStartup = value
+        if isinstance(value, bool):
+            self._showAnnotationsAtStartup = value
 
     def toString(self):
-        string = "annotateQuartileMembers = " + str(self.getAnnnotateQuartileMembers())
-        string += ", alexanderStyle = " + str(self.getAlexanderStyle())
+        string  = "alexanderStyle = " + str(self.getAlexanderStyle())
         string += ", allowDups = " + str(self.getAllowDups())
+        string += ", annotateQuartileMembers = " + str(self.getAnnnotateQuartileMembers())
         string += ", boutenStyle = " + str(self.getBoutenStyle())
         string += ", colorMap = " + str(self.getColorMap())
+        string += ", combineMatrices = " + str(self.getCombineMatrices())
         string += ", debug = " + str(self.getDebug())
         string += ", dimmingFactor = " + str(self.getDimmingFactor())
         string += ", interconnectMetaValues = " + str(self.getInterconnectMetaValues())
+        string += ", labelAngle = " + str(self.getLabelAngle())
         string += ", limitStdDevs = " + str(self.getLimitStdDevs())
+        string += ", matrixColorMap = " + str(self.getMatrixColorMap())
+        string += ", maximum4Type1 = " + str(self.getMaximum4Type1())
+        string += ", maximum4Type2 = " + str(self.getMaximum4Type2())
+        string += ", maximum4Type3 = " + str(self.getMaximum4Type3())
+        string += ", minimum4Type1 = " + str(self.getMinimum4Type1())
+        string += ", minimum4Type2 = " + str(self.getMinimum4Type2())
+        string += ", minimum4Type3 = " + str(self.getMinimum4Type3())
         string += ", maxNrSteps = " + str(self.getMaxNrSteps())
+        string += ", minNrScores4MatrixPlot =" + str(self.getMinNrScores4MatrixPlot())
         string += ", noHistAnnot = " + str(self.getNoHistAnnot())
         string += ", normHist = " + str(self.getNormHist())
         string += ", nrAccPoints = " + str(self.getNrAccPoints())
         string += ", nrBins = " + str(self.getNrBins())
         string += ", nrRankingPoints = " + str(self.getNrRankingPoints())
+        string += ", nrSamples4Probability = " + str(self.getNrSamples4Probability())
         string += ", opacityLimitFactor = " + str(self.getOpacityLimitFactor())
         string += ", outputPath = " + self.getOutputPath()
         string += ", runningOSX = " + str(self.getRunningOSX())
+        string += ", saveScores = " + str(self.getSaveScores())
         string += ", scaleFactor = " + str(self.getScaleFactor())
         string += ", showAnnotationsAtStartup = " + str(self.getShowAnnotationsAtStartup())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())
         string += ", showConfigInfo = " + str(self.getShowConfigInfo())
         string += ", showKernelInHist = " + str(self.getShowKernelInHist())
+        string += ", showMatrixLabels = " + str(self.getShowMatrixLabels())
         string += ", showMetaInHist = " + str(self.getShowMetaInHist())
         string += ", showReference = " + str(self.getShowReference())
         string += ", showTextAtReferenceAtStartup = " + str(self.getShowTextAtReferenceAtStartup())

@@ -34,9 +34,12 @@ from data import Data
 
 from alexanderzoo import AlexanderZoo
 from boutenzoo import BoutenZoo
+from eer import Eer
+from tippett import Tippett
 from histogram import Histogram
 from accuracy import Accuracy
 from ranking import Ranking
+from matrix import MatrixPlot
 from version import Version
 from utils import sanitize, showLicense
 from sys import exit, argv
@@ -54,17 +57,21 @@ bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l\'.
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
-You can contact me via josbouten at gmail dot com." % (argv[0], version), version='1.0',)
+You can contact me via josbouten at gmail dot com." % (argv[0], version), version="This is bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version,)
 parser.add_option('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
 parser.add_option('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
+parser.add_option('-E', '--eer', action="store_true", dest="plotEer", help="show EER plot")
+parser.add_option('-T', '--tippet', action="store_true", dest="plotTippet", help="show Tippett plot")
+parser.add_option('-M', '--matrix', action="store_true", dest="plotMatrix", help="show matrix plot")
 parser.add_option('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")
 parser.add_option('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
 parser.add_option('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
 parser.add_option('-e', '--exp', action="store", dest="expName", default='test', help="name of experiment used in plot title, default = test")
-parser.add_option('-f', '--filename', action="store", dest="filename", default='input/testdata_A.txt', help="filename of data file, default = testdata_A.txt")
+parser.add_option('-f', '--filename', action="store", dest="filename", default='input/testdata_A.txt', help="filename of data file, default = input/testdata_A.txt")
 parser.add_option('-t', '--type', action="store", dest="dataType", default='type3', help="type of data, default = type3")
 parser.add_option('-d', '--threshold', action="store", dest="threshold", type="float", default=0.7, help="system threshold for ranking plot, default = 0.7")
 parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
+parser.add_option('-V', action="store_true", dest="showVersion", help="show version info")
 options, remainder = parser.parse_args()
 
 
@@ -74,9 +81,13 @@ if options.showLicense:
     showLicense('LICENSE.txt')
     exit(0)
 
+if options.showVersion:
+    print "This is bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
+    exit(0)
+
 print "bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
 
-# Name of the experiment, used as title in plots.
+# Name of the experiment, used as _title in plots.
 expName = options.expName
 
 # We do not like spaces!
@@ -91,33 +102,50 @@ config = Config()
 debug = config.getDebug()
 
 data = Data(config, expName, threshold, dataType, debug, filename)
-data.writeScores2file(data.getTargetScores(), expName + '_target.txt')
-data.writeScores2file(data.getNonTargetScores(), expName + '_non_target.txt')
+
+if config.getSaveScores():
+    # Write data to text files sorted by meta values.
+    data.writeScores2file(data.getTargetScores(), expName, '_target.txt')
+    data.writeScores2file(data.getNonTargetScores(), expName, '_non_target.txt')
 
 if len(remainder) > 0:
     data.setLabelsToShowAlways(remainder)
 
 if options.plotZoo:
-    if config.getBoutenStyle() == True:
+    if config.getBoutenStyle() is True:
        zoo = BoutenZoo(data, config, debug)
-       zoo.plotZoo()
+       zoo.plot()
     else:
        zoo = AlexanderZoo(data, config, debug)
-       zoo.plotZoo()
+       zoo.plot()
 
 if options.plotAccuracy:
     accuracy = Accuracy(data, config, debug)
-    accuracy.plotAccuracy()
+    accuracy.plot()
 
 if options.plotRanking:
     ranking = Ranking(data, config, debug)
-    ranking.plotRanking()
+    ranking.plot()
+
+if options.plotEer:
+    eer = Eer(data, config, debug)
+    eer.plot()
+
+if options.plotTippet:
+    tippet = Tippett(data, config, debug)
+    tippet.plot()
+
 
 if options.plotHistCum:
-    # Interested in EER, then plot a cumulative histogram of the scores.
-    histo = Histogram(data, config, 'cumulative', debug)
-    histo.plotHistogram()
+    # Interested in EER plot? Then plot a cumulative histogram of the scores.
+    # More crude than eer.plot and not differentiating between meta values.
+    histogram = Histogram(data, config, 'cumulative', debug)
+    histogram.plot()
 
 if options.plotHist:
-    histo = Histogram(data, config, 'normal', debug, useMeta=True)
-    histo.plotHistogram()
+    histogram = Histogram(data, config, 'normal', debug, useMeta=True)
+    histogram.plot()
+
+if options.plotMatrix:
+    matrix = MatrixPlot(data, config, debug)
+    matrix.plot()

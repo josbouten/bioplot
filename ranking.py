@@ -36,6 +36,7 @@ class Ranking():
         self.data = data
         self.config = config
         self.debug = debug
+        self.title = self.data.getTitle()
 
     def _findType(self, data, seek):
         '''
@@ -91,7 +92,7 @@ class Ranking():
         '''
         if self.debug:
             print("You pressed key {:s}".format(event.key))
-        filename = self.data.title + "_" + self.plotType + '.png'
+        filename = self.title + "_" + self.plotType + '.png'
         filename = sanitize(filename)
 
         try:
@@ -114,7 +115,7 @@ class Ranking():
 
     def getNrLabels(self, ranking, thisRank):
         '''
-          Count the number of labels at or below this rank.
+        Count the number of labels at or below this rank.
 
         :param  ranking: list of ranking positions
         :param  thisRank: integer: rank value used as threshold
@@ -133,14 +134,14 @@ class Ranking():
                 s = s + "P(r<=%d)=%d%s " % (p, y[p], "%")
         return s
 
-    def plotRanking(self):
+    def plot(self):
         '''
-            Cumulative Ranking Plot
+        Cumulative Ranking Plot
         '''
         self.plotType = "ranking_plot"
         self.ranking, self.maxRank = self.computeRanking()
         self.fig = plt.figure()
-        self.event = Event(self.config, self.fig, self.data.title, self.plotType, self.debug)
+        self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         nr = len(self.ranking)
         x = []
@@ -155,7 +156,7 @@ class Ranking():
         axes.plot(x, y, color)
         axes.set_xlim(0, self.maxRank * 1.05)
         axes.set_ylim(0, 100)
-        axes.set_title("Ranking plot for '%s'" % self.data.title)
+        axes.set_title("Ranking plot for '%s'" % self.title)
         plt.xlabel("Rank %s" % self._mkPercentString(y))
         plt.ylabel('Probability')
         plt.grid()

@@ -46,6 +46,7 @@ def showLicense(filename):
 def sanitize(filename):
     filename = filename.replace(' ', '_')
     filename = filename.replace(',', '_')
+    filename = filename.replace("'", '')
     filename = filename.replace(':', '_')
     filename = filename.replace(';', '_')
     filename = filename.replace('__', '_')
@@ -93,16 +94,4 @@ def assignColors2MetaDataValue(setOfValues, cmap):
         (R, G, B, A) = cmap(int(ll[cnt]))
         cols[el] = (R, G, B)
         cnt += 1
-    return cols
-
-
-def assignColors(nr, cmap):
-    ll = linspace(1, 255, nr)
-    # Assign colors to the labels.
-    cols = {}
-    cnt = 0
-    for el in range(nr):
-        (R, G, B, A) = cmap(int(ll[cnt]))
-        cnt += 1
-        cols[el] = (R, G, B)
     return cols

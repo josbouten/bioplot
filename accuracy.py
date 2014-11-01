@@ -93,7 +93,7 @@ class Accuracy():
         return 100 * randomAcc, 100 * balancedAcc
 
 
-    def plotAccuracy(self):
+    def plot(self):
         '''
         Compute statistics to plot the random accuracy versus the score threshold.
 
@@ -104,28 +104,26 @@ class Accuracy():
         x = []
         yAcc = []
         yBacc = []
-        self.data.ma = float(self.data.ma)
-        threshold = self.data.mi
+        threshold = self.data.getMin()
         # Range of the scores in 100 steps.
-        increment = (self.data.ma - self.data.mi) / self.config.getNrAccPoints()
-        while threshold <= float(self.data.ma):
+        increment = (float(self.data.getMax()) - self.data.getMin()) / self.config.getNrAccPoints()
+        while threshold <= float(self.data.getMax()):
             accuracy, balancedAccuracy = self.compAcc(threshold)
             yAcc.append(accuracy)
             yBacc.append(balancedAccuracy)
             x.append(threshold)
             threshold += increment
         self.fig = plt.figure()
-        self.event = Event(self.config, self.fig, self.data.title, self.plotType, self.debug)
+        self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
-        color = 'r+-'
         pAcc, = axes.plot(x, yAcc, 's-', color='green')
         pBacc, = axes.plot(x, yBacc, 'o-', color='red')
         plt.legend([pAcc, pBacc], ['random accuracy', 'balanced accuracy'])
-        axes.set_xlim(0, self.data.ma)
+        axes.set_xlim(0, self.data.getMax())
         axes.set_ylim(0, 100)
-        axes.set_title("Accuracy vs Threshold for '%s'" % self.data.title)
+        axes.set_title("Accuracy vs Threshold for '%s'" % self.data.getTitle())
         lt = self.data._compLen(self.targetScores)
         ln = self.data._compLen(self.nonTargetScores)
         plt.xlabel("Threshold (#t: %d, #nt: %d)" % (lt, ln))
