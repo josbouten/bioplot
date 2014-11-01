@@ -4,8 +4,11 @@ Bioplot
 
 ![bioplot of 2 data sets](https://github.com/josbouten/bioplot/blob/master/examples/A_and_B_zoo_plot.png "bioplot of 2 data sets")
 bioplot.py is a program which can draw several plots that can be used
-when evaluating the performance of a biometric system. The example
-picture shows a so called zoo plot.
+when evaluating the performance of a biometric system. 
+The plot types currently supported are:
+accuracy plot, cumulative score distribution plot, EER plot, histogram, matrix plot,
+ranking plot, tippett plot and zoo plot.
+The example picture shows a so called zoo plot.
  
 Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
 
@@ -26,7 +29,7 @@ You need to have python2.7.x installed. On most linux systems this is already th
 I tried it on Ubuntu 14.04 and it worked like a charm.
 First install git, matplotlib and some other modules using:
 
-<code>$ sudo apt-get install python-matplotlib python-numpy python-scipy git</code>
+<code>$ sudo apt-get install python-matplotlib python-numpy python-scipy git python-sklearn</code>
 
 Next, install bioplot using either git:
 
@@ -104,4 +107,4 @@ black on a grey background.
 
 Usage
 -----
-See manual.txt
+See rst or html documentation and bioplot.cfg.
