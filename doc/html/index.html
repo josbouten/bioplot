@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to bioplot’s documentation! &mdash; bioplot 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="bioplot 0.9 documentation" href="#" />
+    <link rel="next" title="INSTALL" href="install.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="install.html" title="INSTALL"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">bioplot 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-bioplot-s-documentation">
+<h1>Welcome to bioplot&#8217;s documentation!<a class="headerlink" href="#welcome-to-bioplot-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">INSTALL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ms-windows">Ms Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#linux">Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrixplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#highlighting-labels">Highlighting labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bioplot.cfg.html">bioplot.cfg</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>Copyright (C) 2014 Jos Bouten ( <a class="reference external" href="mailto:josbouten&#37;&#52;&#48;gmail&#46;com">josbouten<span>&#64;</span>gmail<span>&#46;</span>com</a> )</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.</p>
+</div>
+<div class="section" id="bioplot">
+<h1>bioplot<a class="headerlink" href="#bioplot" title="Permalink to this headline">¶</a></h1>
+<p>You will not be able to use this program or any of its parts to slay a dragon, that
+I&#8217;m sure of, and I do not guarantee that it is fit for any other purpose at all, but
+I would appreciate if you would include a reference to this code and my name
+in any publications you may write using it&#8217;s features or add a source reference
+to your code if you include some part(s) of this code in yours.</p>
+<p>bioplot.py is a program which can draw several plots that can be used
+when evaluating the performance of a biometric system. It reads settings from the file &#8216;bioplot.cfg&#8217;.
+These settings may be used to determine the way information is shown in a plot, what directory plot files are written to etc.</p>
+<p>The plot types currently supported are:
+accuracy plot, cumulative score distribution plot, EER plot, histogram, matrix plot,
+ranking plot, tippett plot and zoo plot.</p>
+<p>Please read INSTALL.txt, this html documentation (note that the file &#8216;manual.txt&#8217; is obsolete) and bioplot.cfg before you try to use
+&#8216;bioplot.py&#8217;. You&#8217;ll learn more of the program&#8217;s potential than from its command line help message.</p>
+<p>&#64;Windows dudes and dudettes: I&#8217;m afraid you have to run the program by hand from
+a command line or build shortcuts which not only start the program but also
+provide the command line options and parameters needed. You&#8217;re on your
+own here. I&#8217;m a command line junky anyway so I did not spend any
+time building a gui. But don&#8217;t fret. All plots ares shown in an interactive
+window, you can click on that as much as you like. The interface
+allows you to zoom in, click on a point to see the associated label, save
+the plot in a file etc. etc.</p>
+<p>What bioplot.py basically does is: read a data file and plot an interactive graph.
+There is a choice to be made what type of graph you want.
+The data has to be in a specific format. Actually there are 3 types of
+format allowed. See &#8216;Data Files&#8217; below. All plots can be saved. This happens
+automagically as well, but you get more useful results if this happens under
+your control.</p>
+<p>The program does a bit more than its command line arguments suggest.
+You will notice this when you run it. It will for instance store all the
+target and non target scores it distills from the data file you pass
+to it and write them in text files (unless you set saveScores to False in bioplot.cfg). You can use these for further
+processing. The experiment name you specify is used as part
+of the filename: &lt;exp_name&gt;_&lt;meta_value&gt;_non_target.txt, &lt;exp_name&gt;_&lt;meta_value&gt;_target.txt.
+The files are stored in the directory specified by &#8216;outputPath&#8217; in
+bioplot.cfg in it&#8217;s [cfg] section. The default will be &#8216;output&#8217; in
+the current directory. You can change this behaviour in bioplot.cfg via the following settings:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<span class="n">outputPath</span> <span class="o">=</span> <span class="n">output</span>
+<span class="n">saveScores</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>If you run the program again using the same experiment
+name, the scores are not saved anew, saving some processing time.
+If you want to have new versions of these files, you need to delete
+them before running bioplot.py again.</p>
+<p>Next, if you choose to plot a zoo plot, the labels which fall within the
+doves, chameleons, worms and phantom quartiles are saved in individual
+text files: &lt;exp_name&gt;_chameleons.txt, &lt;exp_name&gt;_doves.txt,
+&lt;exp_name&gt;_phantoms.txt and &lt;exp_name&gt;_worms.txt.
+This automatically documents all outliers.</p>
+<p>The labels with a standard deviation for their target scores or their
+non target scores bigger than the unit standard deviation are stored
+in a file &lt;exp name&gt;_limited.txt together with the violating score (have a look
+at the <a class="reference internal" href="zooplot.html#rst-zooplot"><em>Zoo plot</em></a> page for a general understanding of how the plot is made).</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>cat output/condition_A_limited.txt
+
+1096 target std dev: 6.01978718893
+335 non target std dev: 6.71906032808
+</pre></div>
+</div>
+<p>Note that you can switch limiting on or off via setting limitStdDevs = False in bioplot.cfg section [zoo].</p>
+<p>Any plot you produce will be saved to disk as soon as you click on
+the plot (to het the window focus) and press a key.
+Note, it is important to maximise the plot&#8217;s window to get a
+proper layout of all elements in the plot! If you maximise and
+press &#8216;s&#8217;, you will be presented with a menu which will allow you
+to save the plot anywhere you choose to.
+If you press a different key, the plot will be saved locally in
+the directory specified by outputPath.
+This happens any time you press a key except l, k, g, s, f:</p>
+<p>Note: l, k, g, s and f are predefined keys of the gui.
+With them you can:</p>
+<div class="highlight-python"><div class="highlight"><pre>g: toggle grid on / off
+k: toggle between lin horizontal scale and log horizontal scale
+l: toggle between lin vertical scale and log vertical scale
+s: open save menu
+f: toggle between standard size and full screen
+</pre></div>
+</div>
+<p>Any other key will make that the file is saved in its current dimensions.
+To get a nice plot it is wise to maximise and then press any key. Then close
+the window.</p>
+</div>
+<div class="section" id="data-files">
+<h1>Data files<a class="headerlink" href="#data-files" title="Permalink to this headline">¶</a></h1>
+<p>The command line allows to specify a filename and a type. The
+default type is &#8216;type3&#8217; which corresponds to a text file with 7 fields. You need
+not specify type3 as it is a default.
+The type3 data file should contain data in a format like this example:</p>
+<div class="highlight-python"><div class="highlight"><pre>803742 17133729a.wav 80359 16842970b.wav 2.108616847991943 FALSE META_VAL1
+148407 47968376b.wav 89823 08087650a.wav 0.336018745422363 FALSE META_VAL3
+179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2
+803442 48588750a.wav 80344 15560933b.wav 4.423274517059326 TRUE  META_VAL2
+</pre></div>
+</div>
+<p>Separation by comma&#8217;s is also accepted.
+This can be mixed as in:</p>
+<div class="highlight-python"><div class="highlight"><pre>803742,17133729a.wav,80359,16842970b.wav,2.108616847991943,FALSE,META_VAL1
+148407,47968376b.wav,89823,08087650a.wav,0.336018745422363,FALSE,META_VAL3
+179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2
+803442,48588750a.wav,80344,15560933b.wav,4.423274517059326,TRUE, META_VAL2
+</pre></div>
+</div>
+<p>field 1: string: label identifying a person (training data)</p>
+<p>field 2: string: name of data file containing biometric features or raw data originating from the person denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
+<p>field 3: string: label identifying a person (test data)</p>
+<p>field 4: string: name of data file containing biometric features or raw data originating from the person denoted by field 3 used for training the reference model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
+<p>field 5: string: floating point value: score of trial</p>
+<p>field 6: string: meta data value for the experiment</p>
+<p>Field 6 can be used to contrast scores of experiments in most plots.</p>
+<p>So if you have 2 experiments where you change one variable, when doing a cross
+identification test, the meta value can be used to group the experiment&#8217;s scores.</p>
+<p>E.g. you run an experiment with gender as the main variable an you collect scores of male
+to male and female to female comparisons. You need to set the meta value for each score
+accordingly. The meta value field allows bioplot to distinguish
+between the two conditions and it will in essence plot 2 plots in one overview.
+If the same label occurs on more than one occasion in the score list with different meta
+values, then the points in a zoo plot with corresponding labels are interconnected
+(see interconnectMetaValues setting in bioplot.cfg under [zoo]) . This makes it easy
+to see what the effect of an individual label is when changing the experiment&#8217;s condition.</p>
+<p>Field 6 must be present. If you don&#8217;t want to contrast experiments, then give all lines
+the same meta value. Any string of characters (excluding white space) will do except
+the special characters mentioned below under &#8216;Known Issues&#8217;.</p>
+<p>File type &#8216;type2&#8217; is a variant of a file based data format:</p>
+<div class="highlight-python"><div class="highlight"><pre>62124-0 62124-1 0.383234709501  META_VAL1
+62124-0 62124-3 0.325683742762  META_VAL1
+62124-0 80491-2 0.239269435406  META_VAL2
+62124-0 64568-2 0.19219391048   META_VAL1
+62124-0 64568-3 0.125796630979  META_VAL1
+62124-0 77223-1 0.0895956531167 META_VAL2
+</pre></div>
+</div>
+<p>In this format basically format type3&#8217;s field 1 and 2 are combined into the first field.
+The same goes for type3&#8217;s field 3 and 4, who are combined in field 2. You can use the corresponding code in data.py to adapt to your specific data file format OR write some code to map it to a type3 format file.</p>
+<p>File &#8216;type1&#8217; is a database (sqlite) based data format and meant as an example on how to
+use bioplot in combination with a database of scores. Specify &#8216;database&#8217; as filename on the
+command line.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -f database -t type1 -e &#39;data taken from db&#39; -Z
+</pre></div>
+</div>
+<p>You will have to adapt the query in the function _readFromDatabase in data.py to your own needs.</p>
+<p>There are 4 data files (of type3) which are meant as examples to play around
+with: testdata_A.txt, testdata_B.txt, testdata_C.txt and testdata_ABC.txt</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -f testdata_A.txt -Z
+</pre></div>
+</div>
+<p>If you experience any difficulties reading your data file, we can either discuss this
+via email or you can send it to me ( <a class="reference external" href="mailto:josbouten&#37;&#52;&#48;gmail&#46;com">josbouten<span>&#64;</span>gmail<span>&#46;</span>com</a> ) so that I can have a look at it.
+Please consider anonimizing the data before you send it to me by mail! Have a look at
+anonimize.py and adapt it to your needs.</p>
+<p>Finally:</p>
+<p>If you have any questions or feature requests (no guarantees!) or find any bugs,
+you can contact me at <a class="reference external" href="mailto:josbouten&#37;&#52;&#48;gmail&#46;com">josbouten<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to bioplot&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#bioplot">bioplot</a></li>
+<li><a class="reference internal" href="#data-files">Data files</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="next chapter">INSTALL</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="install.html" title="INSTALL"
+             >next</a> |</li>
+        <li><a href="#">bioplot 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Jos Bouten.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

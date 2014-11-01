@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>INSTALL &mdash; bioplot 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="bioplot 0.9 documentation" href="index.html" />
+    <link rel="next" title="Accuracy plot" href="accuracy.html" />
+    <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="accuracy.html" title="Accuracy plot"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to bioplot’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="install">
+<h1>INSTALL<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ms-windows">
+<h2>Ms Windows<a class="headerlink" href="#ms-windows" title="Permalink to this headline">¶</a></h2>
+<p>Follow the instructions found here: <a class="reference external" href="http://matplotlib.org/users/installing.html">http://matplotlib.org/users/installing.html</a>
+I&#8217;ve tried anaconda 2.01 (32 bit version) on W7 but I&#8217;ve heard that it works
+with the 64 bit version on W8 as well.
+This will install python 2.7.7 and a load of python modules amongst which numpy, matplotlib, pyplot.
+You will be able to run bioplot.py and do much more pythony things ;-)
+If you get into trouble, talk to your local windows guru. Do not mail me!</p>
+<p>Copy bioplot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
+bioplot.py is stored):</p>
+<div class="highlight-python"><div class="highlight"><pre>copy bioplot.cfg_4_windows.txt bioplot.cfg
+</pre></div>
+</div>
+<p>And change any settings in it relevant to your use case.
+From here on, you&#8217;re ready to go. Run the main program from a terminal:</p>
+<div class="highlight-python"><div class="highlight"><pre>python.exe bioplot.py -h
+</pre></div>
+</div>
+<p>to find out how to use it.
+Also look at bioplot.cfg to find out about additional options not available
+via the command line interface. There are lots of them. Their values are shown on the
+commandline whenever you run the program, unless you choose not to via the appropriate
+option in bioplot.cfg</p>
+</div>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>You need to have python2.7.x installed. On most linux systems this is the case.
+Then install matplotlib and some other modules using:</p>
+<p>sudo apt-get install python-matplotlib python-numpy python-scipy</p>
+<p>I tried it on Ubuntu 14.04 and it worked like a charm.
+Next, copy bioplot.cfg_4_linux to bioplot.cfg:</p>
+<div class="highlight-python"><div class="highlight"><pre>cp bioplot.cfg_4_linux bioplot.cfg
+</pre></div>
+</div>
+<p>And change any settings in it relevant to your use case.</p>
+<p>Then run the main program:</p>
+<div class="highlight-python"><div class="highlight"><pre>./bioplot.py -h
+</pre></div>
+</div>
+<p>to find out how to use it.
+Also look at bioplot.cfg to find out about additional options not available
+via the command line interface. There are lots of them.  Their values are shown on the
+commandline whenever you run the program, unless you choose not to via the appropriate
+option in bioplot.cfg</p>
+</div>
+<div class="section" id="osx">
+<h2>OSX<a class="headerlink" href="#osx" title="Permalink to this headline">¶</a></h2>
+<p>On OSX 10.9.5 run these commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>curl -O https://bootstrap.pypa.io/get-pip.py
+
+python get-pip.py
+
+pip2 install matplotlib
+
+sudo git clone https://github.com/josbouten/bioplot.git
+</pre></div>
+</div>
+<p>Then change the owner of the bioplot directory to your user:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo chown -R your-user-name:staff bioplot
+</pre></div>
+</div>
+<p>Next, copy plot.cfg_4_osx to bioplot.cfg:</p>
+<div class="highlight-python"><div class="highlight"><pre>cp plot.cfg_4_osx bioplot.cfg
+</pre></div>
+</div>
+<p>And change any settings in it relevant to your use case.</p>
+<p>From here on, you&#8217;re ready to go. Run the main program from a terminal:</p>
+<div class="highlight-python"><div class="highlight"><pre>./bioplot.py -h
+</pre></div>
+</div>
+<p>to find out how to use it.
+Also look at bioplot.cfg to find out about additional options not available
+via the command line interface.  There are lots of them.  Their values are shown on the
+commandline whenever you run the program, unless you choose not to via the appropriate
+option in bioplot.cfg</p>
+<p>Note: in contrast to the example plots supplied labels in plots on OSX will appear in
+black on a grey background. In order to make labels readable the following flag should be set
+in bioplot.cfg:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">INSTALL</a><ul>
+<li><a class="reference internal" href="#ms-windows">Ms Windows</a></li>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#osx">OSX</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to bioplot&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="accuracy.html"
+                        title="next chapter">Accuracy plot</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/install.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="accuracy.html" title="Accuracy plot"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to bioplot’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Jos Bouten.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
