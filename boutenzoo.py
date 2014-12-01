@@ -166,7 +166,6 @@ class BoutenZoo(Zoo):
         # Do the WWF-thing!
         self.saveExceptionalAnimals()
         plt.show(block=True)
-        plt.show(block=True)
 
 
     def _plotZooAlexanderStyle(self, axesZoo, yagerStyle=False):

@@ -24,7 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="bioplot 0.9 documentation" href="index.html" />
-    <link rel="prev" title="Histogram" href="histogram.html" /> 
+    <link rel="next" title="bioplot.cfg" href="bioplot.cfg.html" />
+    <link rel="prev" title="Zoo plot" href="zooplot.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +35,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="histogram.html" title="Histogram"
+          <a href="bioplot.cfg.html" title="bioplot.cfg"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="zooplot.html" title="Zoo plot"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
       </ul>
@@ -47,8 +51,18 @@
             
   <div class="section" id="known-issues">
 <h1>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="data-separation-character">
+<h2>data separation character<a class="headerlink" href="#data-separation-character" title="Permalink to this headline">¶</a></h2>
 <p>In data.py the following characters are used to group data: _#_
 If they are in your data set, e.g. as part of a label or meta data value, either change your data set or change the characters in format.py and choose non ambiguous replacements.</p>
+</div>
+<div class="section" id="matplotlib">
+<h2>matplotlib<a class="headerlink" href="#matplotlib" title="Permalink to this headline">¶</a></h2>
+<p>The software works well with matplotlib-1.3.1. With older versions (like 0.99.3) you may encounter that plt.show(block=True) leads to an error message. Either upgrade matplotlib or change the statement to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -57,9 +71,21 @@ If they are in your data set, e.g. as part of a label or meta data value, either
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Known Issues</a><ul>
+<li><a class="reference internal" href="#data-separation-character">data separation character</a></li>
+<li><a class="reference internal" href="#matplotlib">matplotlib</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="histogram.html"
-                        title="previous chapter">Histogram</a></p>
+  <p class="topless"><a href="zooplot.html"
+                        title="previous chapter">Zoo plot</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bioplot.cfg.html"
+                        title="next chapter">bioplot.cfg</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/issues.txt"
@@ -89,7 +115,10 @@ If they are in your data set, e.g. as part of a label or meta data value, either
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="histogram.html" title="Histogram"
+          <a href="bioplot.cfg.html" title="bioplot.cfg"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="zooplot.html" title="Zoo plot"
              >previous</a> |</li>
         <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
       </ul>
