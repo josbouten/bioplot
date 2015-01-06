@@ -79,17 +79,17 @@ On OSX 10.9.5 run these commands:
 
 <code>$ curl -O https://bootstrap.pypa.io/get-pip.py</code>
 
-<code>$ python get-pip.py</code>
+<code>$ sudo python get-pip.py</code>
 
-<code>$ pip2 install matplotlib</code>
+<code>$ sudo pip2 install matplotlib</code>
 
-<code>$ sudo git clone https://github.com/josbouten/bioplot.git</code>
+<code>$ git clone https://github.com/josbouten/bioplot.git</code>
 
 Then change the owner of the bioplot directory to your user:
 
 <code>$ sudo chown -R your-user-name:staff bioplot</code>
 
-Next, copy plot.cfg_4_osx to bioplot.cfg
+Next, copy bioplot.cfg_4_osx to bioplot.cfg
 
 From here on, you're ready to go.
 Finally run the main program from a terminal from within the directory where you installed it: 
