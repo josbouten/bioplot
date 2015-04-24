@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Zoo plot &mdash; bioplot 0.9 documentation</title>
+    <title>Zoo plot &mdash; bioplot 0.9.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.9',
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.1 documentation" href="index.html" />
     <link rel="next" title="Known Issues" href="issues.html" />
     <link rel="prev" title="Tippett plot" href="tippettplot.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,14 +40,14 @@
         <li class="right" >
           <a href="tippettplot.html" title="Tippett plot"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="zoo-plot">
 <span id="rst-zooplot"></span><h1>Zoo plot<a class="headerlink" href="#zoo-plot" title="Permalink to this headline">¶</a></h1>
@@ -63,7 +61,11 @@ To get bioplot to show this legacy type zoo plot, set the following option in bi
 <span class="n">alexanderStyle</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
-<img alt="_images/exp_zoo_plot.png" src="_images/exp_zoo_plot.png" />
+<p>Run this command:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A, B and C&quot; -f input/testdata_ABC.txt -Z
+</pre></div>
+</div>
+<img alt="_images/condition_ABC_no_alexander_zoo_plot.png" src="_images/condition_ABC_no_alexander_zoo_plot.png" />
 <p>An extention of the zoo plots was shown at the IAFPA 2014 conference in Zurich, Switserland
 by Anil Alexander et al. They proposed that adding a measure of the standard deviations of the
 scores used to make the plot will add details of the score distributions of the persons
@@ -91,7 +93,7 @@ Spectral, gist_ncar, hsv, gist_rainbow or prism and set colorMap in bioplot.cfg:
 <span class="n">colorMap</span> <span class="o">=</span> <span class="n">hsv</span>
 </pre></div>
 </div>
-<img alt="_images/exp_zoo_plot_01.png" src="_images/exp_zoo_plot_01.png" />
+<img alt="_images/condition_ABC_alexander_zoo_plot.png" src="_images/condition_ABC_alexander_zoo_plot.png" />
 <p>Note that the shape of the ellipses is influenced by the difference in range of the vertical and
 horizontal axis. This means that comparing shapes between zoo plots with varying ranges of
 mean target and mean non target scores can be very tricky.</p>
@@ -109,7 +111,8 @@ it possible to find the name of a data point in e.g. the quartile ranges.</p>
 <p>If you are curious where the scores of a specific label are in the zoo plot, you need
 not click on all of them to find it. You can specify the labels on the command line.
 If they are in the plot, they will be highlighted. Example:</p>
-<div class="highlight-python"><pre>python ./bioplot.py -e "condition A and B" -f testdata_AB.txt -Z 1100 1131 1042</pre>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -f testdata_AB.txt -Z 1100 1131 1042
+</pre></div>
 </div>
 <p>This will highlight label 1100, 1131 and 1042 in the zoo plot compiled from
 the data in &#8216;testdata_AB.txt&#8217; and dim the colors of the other points in the plot
@@ -117,8 +120,11 @@ making it easy to create a picture for a publication or report. Text labels
 will be displayed near the points selected.</p>
 <img alt="zoo plot for experiment with condition A and B" src="_images/condition_A_and_B_zoo_plot.png" />
 <p>The lines between the ellipses connect labels which are equal. This makes
-it easy to see what the effect of the parameter change is. Set interconnectMetaValues = True
-in bioplot.cfg to acchieve this.</p>
+it easy to see what the effect of the parameter change is.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<span class="n">interconnectMetaValues</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
 <img alt="zoo plot for experiment with condition A and B" src="_images/condition_A_and_B_zoo_plot_01.png" />
 </div>
 <div class="section" id="zooplots-combined-with-histograms">
@@ -138,7 +144,7 @@ in bioplot.cfg to acchieve this.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -155,12 +161,14 @@ in bioplot.cfg to acchieve this.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="issues.html"
                         title="next chapter">Known Issues</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/zooplot.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/zooplot.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -177,7 +185,7 @@ in bioplot.cfg to acchieve this.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -189,12 +197,12 @@ in bioplot.cfg to acchieve this.</p>
         <li class="right" >
           <a href="tippettplot.html" title="Tippett plot"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, drs. ing. J.S. Bouten.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

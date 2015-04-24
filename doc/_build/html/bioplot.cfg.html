@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>bioplot.cfg &mdash; bioplot 0.9 documentation</title>
+    <title>bioplot.cfg &mdash; bioplot 0.9.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.9',
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,11 +23,11 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.1 documentation" href="index.html" />
     <link rel="prev" title="Known Issues" href="issues.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -38,20 +36,20 @@
         <li class="right" >
           <a href="issues.html" title="Known Issues"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="bioplot-cfg">
 <h1>bioplot.cfg<a class="headerlink" href="#bioplot-cfg" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><pre>; This file contains flags and values used by bioplot.py
+<div class="highlight-python"><div class="highlight"><pre>; This file contains flags and values used by bioplot.py
 ; All values here are defaults also contained in the program itself.
-; You can use this file to change the program's default behaviour.
+; You can use this file to change the program&#39;s default behaviour.
 ;
 ; Note: all options are CaSe sensitive !
 
@@ -73,7 +71,7 @@
 
 
 [cfg]
-; If set to True 'allowDups' allows for both scores in a symmetric trial to be used.
+; If set to True &#39;allowDups&#39; allows for both scores in a symmetric trial to be used.
 ; This means that the score of P vs Q and the score of Q vs P is used.
 ; Otherwise only the first encountered in the raw scores is used.
 allowDups = False
@@ -248,7 +246,8 @@ labelAngle = 70
 ; Number of threshold values used to calculate P(defense)
 ; and P(prosecution) from target and non target scores
 ; per meta value.
-nrSamples4Probability = 500</pre>
+nrSamples4Probability = 500
+</pre></div>
 </div>
 </div>
 
@@ -256,17 +255,19 @@ nrSamples4Probability = 500</pre>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="issues.html"
                         title="previous chapter">Known Issues</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/bioplot.cfg.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/bioplot.cfg.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -283,7 +284,7 @@ nrSamples4Probability = 500</pre>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -292,12 +293,12 @@ nrSamples4Probability = 500</pre>
         <li class="right" >
           <a href="issues.html" title="Known Issues"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, drs. ing. J.S. Bouten.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

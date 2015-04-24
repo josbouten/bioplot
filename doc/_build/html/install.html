@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>INSTALL &mdash; bioplot 0.9 documentation</title>
+    <title>INSTALL &mdash; bioplot 0.9.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.9',
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.1 documentation" href="index.html" />
     <link rel="next" title="Accuracy plot" href="accuracy.html" />
     <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,14 +40,14 @@
         <li class="right" >
           <a href="index.html" title="Welcome to bioplot’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="install">
 <h1>INSTALL<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
@@ -62,11 +60,13 @@ You will be able to run bioplot.py and do much more pythony things ;-)
 If you get into trouble, talk to your local windows guru. Do not mail me!</p>
 <p>Copy bioplot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
 bioplot.py is stored):</p>
-<div class="highlight-python"><pre>copy bioplot.cfg_4_windows.txt bioplot.cfg</pre>
+<div class="highlight-python"><div class="highlight"><pre>copy bioplot.cfg_4_windows.txt bioplot.cfg
+</pre></div>
 </div>
 <p>And change any settings in it relevant to your use case.
 From here on, you&#8217;re ready to go. Run the main program from a terminal:</p>
-<div class="highlight-python"><pre>python.exe bioplot.py -h</pre>
+<div class="highlight-python"><div class="highlight"><pre>python.exe bioplot.py -h
+</pre></div>
 </div>
 <p>to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -81,11 +81,13 @@ Then install matplotlib (e.g. version 1.3.1 or higher) and some other modules us
 <p>sudo apt-get install python-matplotlib python-numpy python-scipy</p>
 <p>I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy bioplot.cfg_4_linux to bioplot.cfg:</p>
-<div class="highlight-python"><pre>cp bioplot.cfg_4_linux bioplot.cfg</pre>
+<div class="highlight-python"><div class="highlight"><pre>cp bioplot.cfg_4_linux bioplot.cfg
+</pre></div>
 </div>
 <p>And change any settings in it relevant to your use case.</p>
 <p>Then run the main program:</p>
-<div class="highlight-python"><pre>./bioplot.py -h</pre>
+<div class="highlight-python"><div class="highlight"><pre>./bioplot.py -h
+</pre></div>
 </div>
 <p>to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -96,23 +98,27 @@ option in bioplot.cfg</p>
 <div class="section" id="osx">
 <h2>OSX<a class="headerlink" href="#osx" title="Permalink to this headline">¶</a></h2>
 <p>On OSX 10.9.5 run these commands:</p>
-<div class="highlight-python"><pre>curl -O https://bootstrap.pypa.io/get-pip.py
+<div class="highlight-python"><div class="highlight"><pre>curl -O https://bootstrap.pypa.io/get-pip.py
 
 python get-pip.py
 
 pip2 install matplotlib
 
-sudo git clone https://github.com/josbouten/bioplot.git</pre>
+sudo git clone https://github.com/josbouten/bioplot.git
+</pre></div>
 </div>
 <p>Then change the owner of the bioplot directory to your user:</p>
-<div class="highlight-python"><pre>sudo chown -R your-user-name:staff bioplot</pre>
+<div class="highlight-python"><div class="highlight"><pre>sudo chown -R your-user-name:staff bioplot
+</pre></div>
 </div>
 <p>Next, copy plot.cfg_4_osx to bioplot.cfg:</p>
-<div class="highlight-python"><pre>cp plot.cfg_4_osx bioplot.cfg</pre>
+<div class="highlight-python"><div class="highlight"><pre>cp plot.cfg_4_osx bioplot.cfg
+</pre></div>
 </div>
 <p>And change any settings in it relevant to your use case.</p>
 <p>From here on, you&#8217;re ready to go. Run the main program from a terminal:</p>
-<div class="highlight-python"><pre>./bioplot.py -h</pre>
+<div class="highlight-python"><div class="highlight"><pre>./bioplot.py -h
+</pre></div>
 </div>
 <p>to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -133,7 +139,7 @@ in bioplot.cfg:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -151,12 +157,14 @@ in bioplot.cfg:</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="accuracy.html"
                         title="next chapter">Accuracy plot</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/install.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -173,7 +181,7 @@ in bioplot.cfg:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -185,12 +193,12 @@ in bioplot.cfg:</p>
         <li class="right" >
           <a href="index.html" title="Welcome to bioplot’s documentation!"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, drs. ing. J.S. Bouten.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

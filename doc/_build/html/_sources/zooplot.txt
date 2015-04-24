@@ -12,7 +12,11 @@ To get bioplot to show this legacy type zoo plot, set the following option in bi
     [zoo]
     alexanderStyle = False
 
-.. image:: images/exp_zoo_plot.png
+Run this command: ::
+
+    python ./bioplot.py -e "condition A, B and C" -f input/testdata_ABC.txt -Z
+
+.. image:: images/condition_ABC_no_alexander_zoo_plot.png
 
 An extention of the zoo plots was shown at the IAFPA 2014 conference in Zurich, Switserland
 by Anil Alexander et al. They proposed that adding a measure of the standard deviations of the
@@ -42,7 +46,7 @@ Spectral, gist_ncar, hsv, gist_rainbow or prism and set colorMap in bioplot.cfg:
     [cfg]
     colorMap = hsv
 
-.. image:: images/exp_zoo_plot_01.png
+.. image:: images/condition_ABC_alexander_zoo_plot.png
 
 Note that the shape of the ellipses is influenced by the difference in range of the vertical and
 horizontal axis. This means that comparing shapes between zoo plots with varying ranges of
@@ -77,8 +81,10 @@ will be displayed near the points selected.
    :alt: zoo plot for experiment with condition A and B
 
 The lines between the ellipses connect labels which are equal. This makes
-it easy to see what the effect of the parameter change is. Set interconnectMetaValues = True
-in bioplot.cfg to acchieve this.
+it easy to see what the effect of the parameter change is. ::
+
+    [zoo]
+    interconnectMetaValues = True
 
 .. image:: images/condition_A_and_B_zoo_plot_01.png
    :alt: zoo plot for experiment with condition A and B

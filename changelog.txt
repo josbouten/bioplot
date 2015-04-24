@@ -1,3 +1,7 @@
+# v0.9.1 Fri April 24 CEST 2015
+Scores written to <project>_target.txt and <project>_non_target.txt are now in one column in stead of
+in sets.
+
 # v0.9 Fri Oct 24 20:57:54 CEST 2014
 Added cumulative score plot / EER plot and Tippett plot.
 Added matrix plot.

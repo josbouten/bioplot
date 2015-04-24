@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to bioplot’s documentation! &mdash; bioplot 0.9 documentation</title>
+    <title>Welcome to bioplot’s documentation! &mdash; bioplot 0.9.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.9',
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,11 +23,11 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9 documentation" href="#" />
+    <link rel="top" title="bioplot 0.9.1 documentation" href="#" />
     <link rel="next" title="INSTALL" href="install.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -38,14 +36,14 @@
         <li class="right" >
           <a href="install.html" title="INSTALL"
              accesskey="N">next</a> |</li>
-        <li><a href="#">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="welcome-to-bioplot-s-documentation">
 <h1>Welcome to bioplot&#8217;s documentation!<a class="headerlink" href="#welcome-to-bioplot-s-documentation" title="Permalink to this headline">¶</a></h1>
@@ -61,7 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrixplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrix plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
@@ -72,6 +70,7 @@
 <li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">data separation character</a></li>
 <li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib">matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#osx">OSX</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bioplot.cfg.html">bioplot.cfg</a></li>
@@ -81,9 +80,9 @@
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
 </ul>
 </div>
 <div class="section" id="license">
@@ -156,12 +155,13 @@ This automatically documents all outliers.</p>
 <p>The labels with a standard deviation for their target scores or their
 non target scores bigger than the unit standard deviation are stored
 in a file &lt;exp name&gt;_limited.txt together with the violating score (have a look
-at the <a class="reference internal" href="zooplot.html#rst-zooplot"><em>Zoo plot</em></a> page for a general understanding of how the plot is made).</p>
+at the <a class="reference internal" href="zooplot.html#rst-zooplot"><span>Zoo plot</span></a> page for a general understanding of how the plot is made).</p>
 <p>Example:</p>
-<div class="highlight-python"><pre>cat output/condition_A_limited.txt
+<div class="highlight-python"><div class="highlight"><pre>cat output/condition_A_limited.txt
 
 1096 target std dev: 6.01978718893
-335 non target std dev: 6.71906032808</pre>
+335 non target std dev: 6.71906032808
+</pre></div>
 </div>
 <p>Note that you can switch limiting on or off via setting limitStdDevs = False in bioplot.cfg section [zoo].</p>
 <p>Any plot you produce will be saved to disk as soon as you click on
@@ -175,11 +175,12 @@ the directory specified by outputPath.
 This happens any time you press a key except l, k, g, s, f:</p>
 <p>Note: l, k, g, s and f are predefined keys of the gui.
 With them you can:</p>
-<div class="highlight-python"><pre>g: toggle grid on / off
+<div class="highlight-python"><div class="highlight"><pre>g: toggle grid on / off
 k: toggle between lin horizontal scale and log horizontal scale
 l: toggle between lin vertical scale and log vertical scale
 s: open save menu
-f: toggle between standard size and full screen</pre>
+f: toggle between standard size and full screen
+</pre></div>
 </div>
 <p>Any other key will make that the file is saved in its current dimensions.
 To get a nice plot it is wise to maximise and then press any key. Then close
@@ -191,17 +192,19 @@ the window.</p>
 default type is &#8216;type3&#8217; which corresponds to a text file with 7 fields. You need
 not specify type3 as it is a default.
 The type3 data file should contain data in a format like this example:</p>
-<div class="highlight-python"><pre>803742 17133729a.wav 80359 16842970b.wav 2.108616847991943 FALSE META_VAL1
+<div class="highlight-python"><div class="highlight"><pre>803742 17133729a.wav 80359 16842970b.wav 2.108616847991943 FALSE META_VAL1
 148407 47968376b.wav 89823 08087650a.wav 0.336018745422363 FALSE META_VAL3
 179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2
-803442 48588750a.wav 80344 15560933b.wav 4.423274517059326 TRUE  META_VAL2</pre>
+803442 48588750a.wav 80344 15560933b.wav 4.423274517059326 TRUE  META_VAL2
+</pre></div>
 </div>
 <p>Separation by comma&#8217;s is also accepted.
 This can be mixed as in:</p>
-<div class="highlight-python"><pre>803742,17133729a.wav,80359,16842970b.wav,2.108616847991943,FALSE,META_VAL1
+<div class="highlight-python"><div class="highlight"><pre>803742,17133729a.wav,80359,16842970b.wav,2.108616847991943,FALSE,META_VAL1
 148407,47968376b.wav,89823,08087650a.wav,0.336018745422363,FALSE,META_VAL3
 179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2
-803442,48588750a.wav,80344,15560933b.wav,4.423274517059326,TRUE, META_VAL2</pre>
+803442,48588750a.wav,80344,15560933b.wav,4.423274517059326,TRUE, META_VAL2
+</pre></div>
 </div>
 <p>field 1: string: label identifying a person (training data)</p>
 <p>field 2: string: name of data file containing biometric features or raw data originating from the person denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
@@ -224,12 +227,13 @@ to see what the effect of an individual label is when changing the experiment&#8
 the same meta value. Any string of characters (excluding white space) will do except
 the special characters mentioned below under &#8216;Known Issues&#8217;.</p>
 <p>File type &#8216;type2&#8217; is a variant of a file based data format:</p>
-<div class="highlight-python"><pre>62124-0 62124-1 0.383234709501  META_VAL1
+<div class="highlight-python"><div class="highlight"><pre>62124-0 62124-1 0.383234709501  META_VAL1
 62124-0 62124-3 0.325683742762  META_VAL1
 62124-0 80491-2 0.239269435406  META_VAL2
 62124-0 64568-2 0.19219391048   META_VAL1
 62124-0 64568-3 0.125796630979  META_VAL1
-62124-0 77223-1 0.0895956531167 META_VAL2</pre>
+62124-0 77223-1 0.0895956531167 META_VAL2
+</pre></div>
 </div>
 <p>In this format basically format type3&#8217;s field 1 and 2 are combined into the first field.
 The same goes for type3&#8217;s field 3 and 4, who are combined in field 2. You can use the corresponding code in data.py to adapt to your specific data file format OR write some code to map it to a type3 format file.</p>
@@ -237,13 +241,15 @@ The same goes for type3&#8217;s field 3 and 4, who are combined in field 2. You 
 use bioplot in combination with a database of scores. Specify &#8216;database&#8217; as filename on the
 command line.</p>
 <p>Example:</p>
-<div class="highlight-python"><pre>python ./bioplot.py -f database -t type1 -e 'data taken from db' -Z</pre>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -f database -t type1 -e &#39;data taken from db&#39; -Z
+</pre></div>
 </div>
 <p>You will have to adapt the query in the function _readFromDatabase in data.py to your own needs.</p>
 <p>There are 4 data files (of type3) which are meant as examples to play around
 with: testdata_A.txt, testdata_B.txt, testdata_C.txt and testdata_ABC.txt</p>
 <p>Example:</p>
-<div class="highlight-python"><pre>python ./bioplot.py -e "condition A" -f testdata_A.txt -Z</pre>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -f testdata_A.txt -Z
+</pre></div>
 </div>
 <p>If you experience any difficulties reading your data file, we can either discuss this
 via email or you can send it to me ( <a class="reference external" href="mailto:josbouten&#37;&#52;&#48;gmail&#46;com">josbouten<span>&#64;</span>gmail<span>&#46;</span>com</a> ) so that I can have a look at it.
@@ -258,13 +264,11 @@ you can contact me at <a class="reference external" href="mailto:josbouten&#37;&
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to bioplot&#8217;s documentation!</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Welcome to bioplot&#8217;s documentation!</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 <li><a class="reference internal" href="#license">License</a></li>
 <li><a class="reference internal" href="#bioplot">bioplot</a></li>
@@ -274,12 +278,14 @@ you can contact me at <a class="reference external" href="mailto:josbouten&#37;&
   <h4>Next topic</h4>
   <p class="topless"><a href="install.html"
                         title="next chapter">INSTALL</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -296,7 +302,7 @@ you can contact me at <a class="reference external" href="mailto:josbouten&#37;&
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -305,12 +311,12 @@ you can contact me at <a class="reference external" href="mailto:josbouten&#37;&
         <li class="right" >
           <a href="install.html" title="INSTALL"
              >next</a> |</li>
-        <li><a href="#">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, drs. ing. J.S. Bouten.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

@@ -106,4 +106,4 @@ black on a grey background.
 
 Usage
 -----
-See rst or html documentation and bioplot.cfg.
+See rst or html documentation (in doc/_build/html/) and bioplot.cfg.

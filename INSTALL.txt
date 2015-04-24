@@ -56,7 +56,7 @@ sudo chown -R your-user-name:staff bioplot
 Next, copy plot.cfg_4_osx to bioplot.cfg
 
 From here on, you're ready to go.
-Run the main program from a terminal: 
+Run the main program from a terminal like so
 
 ./bioplot.py -h 
 

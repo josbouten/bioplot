@@ -1,5 +1,5 @@
-Matrixplot
-==========
+Matrix plot
+===========
 
 A matrix plot can be used to compare scores of different experiments with eachother. It is also usefull to display correlations. If the scores contain labels compared to other labels each comparison resulting in one score, then the plot will show a correlation plot. If labels are compared to multiple instances of other labels, each resulting in groups of scores, then these groups are averages.
 To differentiate between experiments the meta value field of the data file is used. 
@@ -28,4 +28,3 @@ If you want to see some labels in the plot, add the following to bioplot.cfg: ::
 The matrices above contain artifical data. In real experiments not all labels may have the same number of scores. This may be due to data shortage, a model not being computed etc. In that case bioplot will accept the scores that exist and plot as many as possible. This is visible in the matrices below. On the right hand side data that is missing is replaced by some average value. The scaling of the grey values is not influenced by these values.
 
 .. image:: images/real_data_matrix_plot.png
-    

@@ -32,7 +32,7 @@ class Version():
 
     def getVersion(self):
         '''
-        return the version number of the first version
+        Return the version number of the first version
         description in the changelog.txt file encountered.
         '''
         version = '?'

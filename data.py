@@ -234,7 +234,7 @@ class Data(Format):
         '''
         Compute minimum and maximum value from a list of scores.
 
-        :param scoreList: list of scores
+        :param score: list of scores
         :return: minimum value and maximum value
         '''
         mi = min(score, mi)
@@ -386,7 +386,7 @@ class Data(Format):
     def _decodeType2Results(self, res):
         '''
         Yet another results format
-        :param results:
+        :param res:
         :return:
         '''
         targetCnt = 0
@@ -650,7 +650,6 @@ class Data(Format):
         '''
         Write scores to a file
         :param scoreDict: dict of scores, key = label
-        :param filename: string, name of file to write data to
         :return: not a thing
         '''
         dataOutputPath = self.config.getOutputPath()
@@ -679,7 +678,8 @@ class Data(Format):
                 try:
                     f = open(filename, 'w')
                     for score in scores:
-                        f.write("%s\n" % str(score))
+                        for el in score:
+                            f.write("%s\n" % str(el))
                     f.close()
                 except IOError, e:
                     print e

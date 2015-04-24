@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Histogram &mdash; bioplot 0.9 documentation</title>
+    <title>Histogram &mdash; bioplot 0.9.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.9',
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,35 +23,39 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9 documentation" href="index.html" />
-    <link rel="next" title="Matrixplot" href="matrixplot.html" />
+    <link rel="top" title="bioplot 0.9.1 documentation" href="index.html" />
+    <link rel="next" title="Matrix plot" href="matrixplot.html" />
     <link rel="prev" title="EER plot" href="eerplot.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="matrixplot.html" title="Matrixplot"
+          <a href="matrixplot.html" title="Matrix plot"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="eerplot.html" title="EER plot"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="histogram">
 <h1>Histogram<a class="headerlink" href="#histogram" title="Permalink to this headline">¶</a></h1>
 <p>Nothing much to say about histograms. Here is an example:</p>
+<p>Run this command:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -f input/testdata_A.txt -H
+</pre></div>
+</div>
 <img alt="_images/condition_A_histogram_plot.png" src="_images/condition_A_histogram_plot.png" />
 <p>You can set the  number of bins used in bioplot.cfg:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">histogram</span><span class="p">]</span>
@@ -63,7 +65,11 @@
 <p>The window showing the plot allows one to zoom in as shown in this example:</p>
 <img alt="_images/condition_A_histogram_plot_detail.png" src="_images/condition_A_histogram_plot_detail.png" />
 <p>Bioplot can produce cumulative plots as well. But they do not look very nice.
-Have a look at <a class="reference internal" href="eerplot.html#eerplot-label"><em>EER plot</em></a>, this looks much nicer and in fact shows the same information.</p>
+Have a look at <a class="reference internal" href="eerplot.html#eerplot-label"><span>EER plot</span></a>, this looks much nicer and in fact shows the same information.</p>
+<p>Run this command:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -f input/testdata_A.txt -C
+</pre></div>
+</div>
 <img alt="_images/condition_A_cumulative_histogram_plot.png" src="_images/condition_A_cumulative_histogram_plot.png" />
 </div>
 
@@ -71,20 +77,22 @@ Have a look at <a class="reference internal" href="eerplot.html#eerplot-label"><
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="eerplot.html"
                         title="previous chapter">EER plot</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="matrixplot.html"
-                        title="next chapter">Matrixplot</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/histogram.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter">Matrix plot</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/histogram.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -101,24 +109,24 @@ Have a look at <a class="reference internal" href="eerplot.html#eerplot-label"><
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="matrixplot.html" title="Matrixplot"
+          <a href="matrixplot.html" title="Matrix plot"
              >next</a> |</li>
         <li class="right" >
           <a href="eerplot.html" title="EER plot"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">bioplot 0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, drs. ing. J.S. Bouten.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
