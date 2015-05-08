@@ -12,7 +12,7 @@ __author__ = 'drs. ing. Jos Bouten'
     Finally, show lines interconnecting the point with equal labels to show the effect
     of changing a variable in an experimental.
 
-    Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -165,7 +165,8 @@ class BoutenZoo(Zoo):
         self._plotHistogram(nonTargetHistData, 'non target', axesHistY, 'horizontal')
         # Do the WWF-thing!
         self.saveExceptionalAnimals()
-        plt.show(block=True)
+        #plt.show(block=True)
+        plt.show()
 
 
     def _plotZooAlexanderStyle(self, axesZoo, yagerStyle=False):

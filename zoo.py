@@ -7,7 +7,7 @@ _author_ = 'drs. ing. Jos Bouten'
 
     Basic object which is super to the boutenzoo and alexanderzoo objects
 
-    Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -631,7 +631,7 @@ class Zoo(Format, Probability):
             ok = True
         xy = (x, y)
         if ok:
-            if self.config.getRunningOSX():
+            if self.config.getRunningOSX() or self.config.getRunningWindows():
                 axes.annotate("%s" % (label),
                      xy,
                      bbox=dict(boxstyle="square", fc="0.8"),
@@ -657,7 +657,7 @@ class Zoo(Format, Probability):
     def _annotateEllipse4References(self, axesZoo, xy, xText, yText, text):
         ha = 'left'
         va = 'bottom'
-        if self.config.getRunningOSX():
+        if self.config.getRunningOSX() or self.config.getRunningWindows():
             annotation = axesZoo.annotate("%s" % (text),
                      xy,
                      bbox=dict(boxstyle="square", fc="0.8"),
@@ -692,7 +692,7 @@ class Zoo(Format, Probability):
         yText = y + dy
         ha = 'right'
         va = 'bottom'
-        if self.config.getRunningOSX():
+        if self.config.getRunningOSX() or self.config.getRunningWindows():
             annotation = axes.annotate("%s" % (text),
                      xy,
                      bbox=dict(boxstyle="square", fc="0.8"),
@@ -827,7 +827,7 @@ class Zoo(Format, Probability):
         else:
             title = "zoo plot for '%s'" % (title)
 
-        if self.config.getRunningOSX():
+        if self.config.getRunningOSX() or self.config.getRunningWindows():
             alpha = 0.7
         else:
             alpha = 0.1

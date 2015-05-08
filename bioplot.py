@@ -10,7 +10,7 @@ __author__ = 'drs. ing. Jos Bouten'
     when evaluating the performance of a biometric system.
 
 
-    Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -70,6 +70,7 @@ parser.add_option('-e', '--exp', action="store", dest="expName", default='test',
 parser.add_option('-f', '--filename', action="store", dest="filename", default='input/testdata_A.txt', help="filename of data file, default = input/testdata_A.txt")
 parser.add_option('-t', '--type', action="store", dest="dataType", default='type3', help="type of data, default = type3")
 parser.add_option('-d', '--threshold', action="store", dest="threshold", type="float", default=0.7, help="system threshold for ranking plot, default = 0.7")
+parser.add_option('-c', '--config', action="store", dest="configFilename", help="use alternative config file")
 parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
 parser.add_option('-V', action="store_true", dest="showVersion", help="show version info")
 options, remainder = parser.parse_args()
@@ -97,8 +98,10 @@ dataType = options.dataType
 # Threshold used by biometric system to make a decision
 # only of interest if you want to plot the systems Accuracy.
 threshold = options.threshold
-
-config = Config()
+if options.configFilename:
+    config = Config(options.configFilename)
+else:
+    config = Config()
 debug = config.getDebug()
 
 data = Data(config, expName, threshold, dataType, debug, filename)

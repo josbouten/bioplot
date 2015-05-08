@@ -8,7 +8,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
     Parse and read values from config file 'bioplot.cfg'
 
-    Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,11 +30,12 @@ import ConfigParser
 import sys
 
 class Config():
-    def __init__(self):
+    def __init__(self, thisConfigFilename='bioplot.cfg'):
+        self.configFilename = thisConfigFilename
         self.config = ConfigParser.RawConfigParser()
 
         try:
-            self.config.read('bioplot.cfg')
+            self.config.read(self.configFilename)
         except ConfigParser.ParsingError, e:
             print e
             sys.exit(1)
@@ -307,6 +308,12 @@ class Config():
         except Exception:
             self._spacing = self._spacingDefault
 
+        self._runningWindowsDefault = False
+        try:
+            self._runningWindows = self.config.getboolean('cfg', 'runningWindows')
+        except Exception:
+            self._runningWindows = self._runningWindowsDefault
+
         self._runningOSXDefault = False
         try:
             self._runningOSX = self.config.getboolean('cfg', 'runningOSX')
@@ -470,6 +477,9 @@ class Config():
         '''
         return self._outputPath
 
+    def getRunningWindows(self):
+        return self._runningWindows
+
     def getRunningOSX(self):
         return self._runningOSX
 
@@ -588,6 +598,7 @@ class Config():
         string += ", nrSamples4Probability = " + str(self.getNrSamples4Probability())
         string += ", opacityLimitFactor = " + str(self.getOpacityLimitFactor())
         string += ", outputPath = " + self.getOutputPath()
+        string += ", runningWindows = " + str(self.getRunningWindows())
         string += ", runningOSX = " + str(self.getRunningOSX())
         string += ", saveScores = " + str(self.getSaveScores())
         string += ", scaleFactor = " + str(self.getScaleFactor())

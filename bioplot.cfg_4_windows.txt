@@ -45,6 +45,13 @@ outputPath = output
 ; Are we running on OSX or not?
 runningOSX = False
 
+; Are we running on Microsoft Windows or not?
+; The Labels by default show black text on a yellow background.
+; The yellow background may be too large for the text.
+; If so, set runningWindows to True, this will change the yellow
+; background into a grey one and make the background fit the text in size.
+runningWindows = True
+
 ; Save all scores to text file separated in target and non target scores per meta value.
 saveScores = True
 

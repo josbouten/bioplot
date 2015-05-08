@@ -7,7 +7,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
     Object which contains the version number of the program.
 
-    Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

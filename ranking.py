@@ -5,7 +5,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
     Object to compile a ranking list and generate a ranking plot.
 
-    Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
