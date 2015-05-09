@@ -74,7 +74,7 @@ maximum4Type1 = 1.0E+99
 [zoo]
 ; Show ellipses at position of data points representing standard deviation of target and non target scores
 ; as published by Alexander et al. @ IAFPA conference Zurich, Switserland, 2014
-alexanderStyle = False
+alexanderStyle = True
 
 ; Show labels for data points within quartile ranges
 annotateQuartileMembers = True
