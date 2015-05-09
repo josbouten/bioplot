@@ -50,7 +50,7 @@ Spectral, gist_ncar, hsv, gist_rainbow or prism and set colorMap in bioplot.cfg:
 
 Note that the shape of the ellipses is influenced by the difference in range of the vertical and
 horizontal axis. This means that comparing shapes between zoo plots with varying ranges of
-mean target and mean non target scores can be very tricky.
+mean target and mean non target scores can be very tricky. The lines between the ellipses connect ellipses for the same label.
 
 The grey/black ellipse in the center of the quartiles denotes the mean of all ellipses. The 3 red ellipses on the lower
 left are meant as reference points. Their sizes measure (from smallest to largest ellipse): mean - 2 standard deviations, mean, mean + 2 standard deviations. If you do not want these in your plot make the following setting: ::
