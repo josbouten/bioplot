@@ -10,7 +10,7 @@ accuracy plot, cumulative score distribution plot, EER plot, histogram, matrix p
 ranking plot, tippett plot and zoo plot.
 The example picture shows a so called zoo plot.
  
-Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
+Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
