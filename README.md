@@ -106,6 +106,8 @@ black on a grey background.
 
 Usage
 -----
+READ THE DOCS!
+
 Windows users:
 
 Copy and paste this line into internet explorer:
