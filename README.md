@@ -120,15 +120,17 @@ harmless, and helpfull, so you can enable it without any risks.
 
 OSX users:
 
-Copy and paste this line into safari:
+Copy and paste this line:
 
 <code>file:///Volume/Users/\<user name\>/bioplot/doc/\_build/html/index.html</code>
 
-into safari.
+into whatever browser you use.
+
+Make sure you change \<user name\> into the appropriate name.
 
 Linux users:
 
-Copy and paste this line into your browser:
+Copy and paste this line:
 
 <code>file:///home/users/\<user name\>/bioplot/doc/\_build/html/index.html</code>
 
