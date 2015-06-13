@@ -4,10 +4,10 @@ INSTALL
 Ms Windows
 ----------
 Follow the instructions found here: http://matplotlib.org/users/installing.html.
-I've tried anaconda 2.01 (32 bit version) on W7 but I've heard that it works on XP and with the 64 bit version on W8 as well.
-This will install python 2.7.7 and a load of python modules amongst which numpy, matplotlib, pyplot.
+I've tried anaconda 2.01 (32 bit version) on W7 32 bits, and I've heard that it works on XP and with the 64 bit version on W8 as well. Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well. So it seems you can choose whatever version of windows you like. Anaconda will install python 2.7.x and a load of python modules amongst which numpy, matplotlib, pyplot.
 You will be able to run bioplot.py and do much more pythony things ;-)
-If you get into trouble, talk to your local windows guru. Do not mail me! 
+
+Download the zip file from the github page and unzip its contents to a local directory.
 
 Copy bioplot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
 bioplot.py is stored): ::
@@ -22,7 +22,7 @@ From here on, you're ready to go. Run the main program from a terminal: ::
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them. Their values are shown on the
-commandline whenever you run the program, unless you choose not to via the appropriate
+command line whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
 
 Linux
