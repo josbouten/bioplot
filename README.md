@@ -110,9 +110,9 @@ Windows users:
 
 Copy and paste this line into internet explorer:
 
-<code>file:///C:\Users\<user name>\bioplot\doc\_build\html\index.html</code>
+<code>file:///C:\Users\\<user name\>\bioplot\doc\\_build\html\index.html</code>
 
-Make sure you change <user name> into the appropriate name.
+Make sure you change \<user name\> into the appropriate name.
 You can also navigate to the html directory and double clicking on index.html.
 Internet Explorer may indicate that some active X element or script was blocked.
 This is caused by the search function in the bioplot docs. This function is perfectly 
@@ -122,7 +122,7 @@ OSX users:
 
 Copy and paste this line into safari:
 
-<code>file:///Volume/Users/<username>/bioplot/doc/_build/html/index.html</code>
+<code>file:///Volume/Users/\<user name\>/bioplot/doc/\_build/html/index.html</code>
 
 into safari.
 
@@ -130,9 +130,9 @@ Linux users:
 
 Copy and paste this line into your browser:
 
-<code>file:///home/users/<username>/bioplot/doc/_build/html/index.html</code>
+<code>file:///home/users/\<user name\>/bioplot/doc/\_build/html/index.html</code>
 
 into whatever browser you use.
 
-Make sure you change <user name> into the appropriate name.
+Make sure you change \<user name\> into the appropriate name.
 
