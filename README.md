@@ -120,7 +120,7 @@ harmless, and helpfull, so you can enable it without any risks.
 
 OSX users:
 
-Copy and paste this line into safari explorer:
+Copy and paste this line into safari:
 
 <code>file:///Volume/Users/<username>/bioplot/doc/_build/html/index.html</code>
 
