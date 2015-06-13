@@ -110,7 +110,7 @@ Windows users:
 
 Copy and paste this line into internet explorer:
 
-<code>file:///C:\Users\\<user name\>\bioplot\doc\\_build\html\index.html</code>
+<code>file:///C:\Users\user name\bioplot\doc\\_build\html\index.html</code>
 
 Make sure you change \<user name\> into the appropriate name.
 You can also navigate to the html directory and double clicking on index.html.
