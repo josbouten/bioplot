@@ -49,7 +49,7 @@ to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them.  Their values are shown on the
 command line whenever you run the program, unless you choose not to via the appropriate
-option in bioplot.cfg. Finally, there is this manual.txt file you might want to read ...
+option in bioplot.cfg. Finally, there is the html doc you might want to read ...
 
 Ms Windows
 ----------
@@ -62,7 +62,7 @@ If you get into trouble, talk to your local windows guru.
 Download the zip file from the github page and unzip its contents to a local directory.
 
 Copy plot.cfg_4_windows.txt to bioplot.cfg in this local directory and run the main 
-program from that directory to find out how to use it (and read the manual.txt file).
+program from that directory to find out how to use it (and read the html doc).
 
 
 <code>python.exe bioplot.py -h</code>
@@ -99,11 +99,40 @@ to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface.  There are lots of them.  Their values are shown on the
 command line whenever you run the program, unless you choose not to via the appropriate
-option in bioplot.cfg. Finally, there is this manual.txt file you might want to read ...
+option in bioplot.cfg. Finally, there is the html doc you might want to read ...
    
 Note: in contrast to the example plots supplied labels in plots on OSX will appear in
 black on a grey background.
 
 Usage
 -----
-See rst or html documentation (in doc/_build/html/) and bioplot.cfg.
+Windows users:
+
+Copy and paste this line into internet explorer:
+
+<code>file:///C:\Users\<user name>\bioplot\doc\_build\html\index.html</code>
+
+Make sure you change <user name> into the appropriate name.
+You can also navigate to the html directory and double clicking on index.html.
+Internet Explorer may indicate that some active X element or script was blocked.
+This is caused by the search function in the bioplot docs. This function is perfectly 
+harmless, and helpfull, so you can enable it without any risks.
+
+OSX users:
+
+Copy and paste this line into internet explorer:
+
+<code>file:///Volume/Users/<username>/bioplot/doc/_build/html/index.html</code>
+
+into safari.
+
+Linux users:
+
+Copy and paste this line into your browser:
+
+<code>file:///home/users/<username>/bioplot/doc/_build/html/index.html</code>
+
+into whatever browser you use.
+
+Make sure you change <user name> into the appropriate name.
+

@@ -3,7 +3,7 @@ INSTALL
 
 Ms Windows
 ----------
-Follow the instructions found here: http://matplotlib.org/users/installing.html
+Follow the instructions found here: http://matplotlib.org/users/installing.html.
 I've tried anaconda 2.01 (32 bit version) on W7 but I've heard that it works on XP and with the 64 bit version on W8 as well.
 This will install python 2.7.7 and a load of python modules amongst which numpy, matplotlib, pyplot.
 You will be able to run bioplot.py and do much more pythony things ;-)

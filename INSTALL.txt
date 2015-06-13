@@ -18,6 +18,18 @@ via the command line interface. There are lots of them. Their values are shown o
 commandline whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
 
+Finally take a look at the docs:
+
+Copy and paste this line into internet explorer:
+
+file:///C:\Users\<user name>\bioplot\doc\_build\html\index.html
+
+Make sure you change <user name> into the appropriate name.
+You can also navigate to the html directory and double clicking on index.html.
+Internet Explorer may indicate that some active X element or script was blocked.
+This is caused by the search function in the bioplot docs. This function is perfectly 
+harmless (and helpfull), so you can enable it without any risks.
+
 Linux
 =====
 You need to have python2.7.x installed. On most linux systems this is the case.
@@ -36,6 +48,13 @@ Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them.  Their values are shown on the
 commandline whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
+Finally have a look at the docs: copy and paste this line:
+
+file:///home/<user name>/bioplot/doc/_build/html/index.html
+
+into whatever browser you use.
+
+Make sure you change <user name> into the appropriate name.
 
 OSX
 ===
@@ -66,5 +85,12 @@ via the command line interface.  There are lots of them.  Their values are shown
 commandline whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
 
+Finally have a look at the docs: copy and paste this line into internet explorer:
+
+file:///Volume/Users/<username>/bioplot/doc/_build/html/index.html
+
+into safari.
+
 Note: in contrast to the example plots supplied labels in plots on OSX will appear in
 black on a grey background.
+

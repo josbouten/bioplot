@@ -226,7 +226,7 @@ Example: ::
   python ./bioplot.py -e "condition A" -f testdata_A.txt -Z
 
 If you experience any difficulties reading your data file, we can either discuss this
-via email or you can send it to me ( josbouten@gmail.com ) so that I can have a look at it.
+via email or you can send it to me ( josbouten at gmail dot com ) so that I can have a look at it.
 Please consider anonimizing the data before you send it to me by mail! Have a look at
 anonimize.py and adapt it to your needs.
 
@@ -234,4 +234,4 @@ anonimize.py and adapt it to your needs.
 Finally:
 
 If you have any questions or feature requests (no guarantees!) or find any bugs,
-you can contact me at josbouten@gmail.com
+you can contact me at josbouten at gmail dot com.
