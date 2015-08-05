@@ -1,3 +1,20 @@
+# v0.9.3 August 2015
+Added EER and Cllr to legend of Zooplot for multi and single condition experiments.
+Added UPDATE section to docs.
+Added screen resolution variable to config file to properly position legend text.
+Added choise for number of bins in histogram.
+Added threading to writing target and non target data to disk.
+Expanded use of meta data specific results in zoo plot.
+Added nr of targets and nr of non targets to animal files.
+Added nr of targets and nr of non targets to labels in zoo plot.
+Added stdev scores to labels in zoo plot.
+When adding labels to the command line, the connecting lines are fatter and less opaque then for the other labels.
+Replaced use of color map by list of user defined colours (in hex or decimal).
+Legend is placed in inner most quartile in zoo plot.
+Reworked opacity calculations.
+Removed type2 data support. Added some comments on how to reformat data to type3.
+Repaired some minor bugs.
+
 # v0.9.2 Fri May 8 2015
 Added ability to choose a config file from the prompt.
 Added flag for running Windows.
