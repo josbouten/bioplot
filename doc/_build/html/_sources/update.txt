@@ -8,7 +8,7 @@ Keep a copy of bioplot.cfg with your latest settings before updating anything.
 If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
 If you want to replace the bioplot version with a new one download the latest zip file from the github page and unzip its contents to the directory bioplot is in.
 
-Merge bioplot.cfg_4_windows.txt with your own bioplot.cfg and save the combined content in bioplot.cfg.
+Merge your favourite settings in the saved version of bioplot.cfg with the new one.
 
 From here on, you're ready to go. 
 Look at the docs and bioplot.cfg to find out about new functions and settings.
