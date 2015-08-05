@@ -41,9 +41,10 @@ from random import random
 from format import Format
 
 class MatrixData(Format):
-    def __init__(self, config, debug=True):
-        Format.__init__(self, debug)
-        self._config = config
+    def __init__(self, thisConfig, thisDebug=True):
+        self.debug = thisDebug
+        Format.__init__(self, self.debug)
+        self._config = thisConfig
         # N must be bigger than 3 otherwise the matrix will be all white.
         self._N = 4
         self._metaValues = ['condA', 'condB', 'condC', 'condD', 'condE', 'condF']
