@@ -26,10 +26,10 @@ import numpy as np
 '''
 
 class Probability:
-    def __init__(self, data, config, debug=True):
-        self.data = data
-        self.config = config
-        self.debug = debug
+    def __init__(self, thisData, thisConfig, thisDebug=True):
+        self.data = thisData
+        self.config = thisConfig
+        self.debug = thisDebug
 
     def _findEqualOrBigger(self, li, value):
         return [i for (i, val) in enumerate(li) if val >= value ]
@@ -72,7 +72,7 @@ class Probability:
         else:
             x = indices[1] - 1
             y = PD[indices[1]]
-        return x, y
+        return int(x), y
 
     def eerFunc(self, ts, lt):
         return 1.0 - ts / lt
@@ -113,7 +113,7 @@ class Probability:
         if self.debug:
             print 'compProbs:index2score:', index2score
             print 'compProbs:eer:', eer
-        score = X[round(index2score)]
+        score = X[index2score]
         return eer, score, PD, PP, X
 
     def compProbs(self, targetScores, nonTargetScores, func):
@@ -149,12 +149,20 @@ class Probability:
         return PD, PP, X
 
     def computeEer(self, PD, PP, X):
-        index2score, eer = self._intersectionPoint(PD, PP)
-        if self.debug:
-            print 'compProbs:index2score:', index2score
-            print 'compProbs:eer:', eer
-        score = X[round(index2score)]
-        return eer, score
+        try:
+            index2score, eer = self._intersectionPoint(PD, PP)
+        except Exception, e:
+            print 'probability.py: Exception in computeEer:', e
+            print 'probability.py: You may have too few data points to compute an eer value.'
+            # Rethrow the exception
+            raise
+        else:
+            if self.debug:
+                print 'compProbs:index2score:', index2score
+                print 'compProbs:eer:', eer
+            score = X[index2score]
+            return eer, score
+        return 1.0, 0.0
 
     def getScores(self, dict):
         ret = []
@@ -176,8 +184,9 @@ class Probability:
         for metaValue in self.data.getMetaDataValues():
             targetScores = self.data.getTargetScores()
             targetScoreValues = self._extractValues(targetScores, metaValue)
-            nonTargetScores = self.data.getNonTargetScores()
-            nonTargetScoreValues = self._extractValues(nonTargetScores, metaValue)
-            PD, PP, X = self.compProbs(targetScoreValues, nonTargetScoreValues, func)
-            probData.append((metaValue, PD, PP, X))
+            if len(targetScoreValues) > 0:
+                nonTargetScores = self.data.getNonTargetScores()
+                nonTargetScoreValues = self._extractValues(nonTargetScores, metaValue)
+                PD, PP, X = self.compProbs(targetScoreValues, nonTargetScoreValues, func)
+                probData.append((metaValue, PD, PP, X))
         return probData
