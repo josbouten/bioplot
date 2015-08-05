@@ -185,8 +185,8 @@ alpha4UnitCircles = 0.5
 ; If set to some other value, the color will be defined by [zoo] labelColor
 animalColors = multi
 
-; Show labels for data points. The old label 'annotateEllipses' is depricated.
-annotateEllipses = True
+; Show labels for data points. 
+annotateEllipses = False
 
 ; Add target and non target score histogram to zoo plot
 boutenStyle = True
