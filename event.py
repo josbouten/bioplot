@@ -29,12 +29,12 @@ from os import makedirs
 from utils import sanitize
 
 class Event():
-    def __init__(self, config, fig, title, plotType, debug):
-        self.config = config
-        self.fig = fig
-        self.title = title
-        self.plotType = plotType
-        self.debug = debug
+    def __init__(self, thisConfig, thisFig, thisTitle, thisPlotType, thisDebug):
+        self.config = thisConfig
+        self.fig = thisFig
+        self.title = thisTitle
+        self.plotType = thisPlotType
+        self.debug = thisDebug
 
     def onEvent(self, event):
         '''
