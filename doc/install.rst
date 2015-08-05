@@ -4,7 +4,10 @@ INSTALL
 Ms Windows
 ----------
 Follow the instructions found here: http://matplotlib.org/users/installing.html.
-I've tried anaconda 2.01 (32 bit version) on W7 32 bits, and I've heard that it works on XP and with the 64 bit version on W8 as well. Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well. So it seems you can choose whatever version of windows you like. Anaconda will install python 2.7.x and a load of python modules amongst which numpy, matplotlib, pyplot.
+I've tried anaconda 2.01 (32 bit version) on W7 32 bits, and I've heard that it works on XP and with the 64 bit
+version on W8 as well. Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
+So it seems you can choose whatever version of windows you like. Anaconda will install python 2.7.x and a load of
+python modules amongst which numpy, matplotlib, pyplot.
 You will be able to run bioplot.py and do much more pythony things ;-)
 
 Download the zip file from the github page and unzip its contents to a local directory.
@@ -33,7 +36,7 @@ Then install matplotlib (e.g. version 1.3.1 or higher) and some other modules us
 sudo apt-get install python-matplotlib python-numpy python-scipy
 
 I tried it on Ubuntu 14.04 and it worked like a charm.
-Next, copy bioplot.cfg_4_linux to bioplot.cfg: ::
+Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link): ::
 
     cp bioplot.cfg_4_linux bioplot.cfg
 
@@ -65,7 +68,7 @@ Then change the owner of the bioplot directory to your user: ::
 
     sudo chown -R your-user-name:staff bioplot
 
-Next, copy plot.cfg_4_osx to bioplot.cfg: ::
+Next, copy plot.cfg_4_osx to bioplot.cfg (or make a link): ::
 
     cp plot.cfg_4_osx bioplot.cfg
 
@@ -86,4 +89,5 @@ black on a grey background. In order to make labels readable the following flag 
 in bioplot.cfg: ::
 
     [cfg] 
-    runningOSX = True 
+    runningOSX = True
+
