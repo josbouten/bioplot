@@ -1,7 +1,7 @@
 Bioplot
 =======
 
-![bioplot of 2 data sets](https://github.com/josbouten/bioplot/blob/master/examples/A_and_B_zoo_plot.png "bioplot of 2 data sets")
+![bioplot of 2 data sets](https://github.com/josbouten/bioplot/blob/master/examples/showcase_zoo_plot.png "bioplot of 2 data sets")
 bioplot.py is a program which can draw several plots that can be used
 when evaluating the performance of a biometric system. 
 The plot types currently supported are:
