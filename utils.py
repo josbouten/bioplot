@@ -25,8 +25,11 @@ __author__ = 'drs. ing. Jos Bouten'
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 '''
 
-from numpy import linspace
+from numpy import arange
 from sys import exit
+
+import matplotlib.pyplot as plt
+
 
 def showLicense(filename):
     try:
@@ -43,6 +46,7 @@ def showLicense(filename):
         for line in lines:
             print line.strip()
 
+
 def sanitize(filename):
     filename = filename.replace(' ', '_')
     filename = filename.replace(',', '_')
@@ -51,6 +55,7 @@ def sanitize(filename):
     filename = filename.replace(';', '_')
     filename = filename.replace('__', '_')
     return filename
+
 
 def convert(value):
     '''
@@ -71,7 +76,7 @@ def convert(value):
     except Exception:
         pass
 
-    # But maybe it is an integer
+    # But maybe it is an integer.
     try:
         value = int(value)
         return value
@@ -81,17 +86,45 @@ def convert(value):
     # Otherwise it must be a string
     return value
 
-def assignColors2MetaDataValue(setOfValues, cmap):
+
+def assignColors2MetaDataValue(setOfMetaDataValues, listOfColorTuples):
     cols = {}
-    listOfValues = list(setOfValues)
-    num = len(listOfValues) + 1
+    listOfMetaDataValues = list(setOfMetaDataValues)
+    num = len(listOfMetaDataValues) + 1
     # Sort the labels
-    listOfValues.sort()
-    ll = linspace(1, 255, num)
+    listOfMetaDataValues.sort()
     cnt = 0
     # Assign colors to the labels.
-    for el in listOfValues:
-        (R, G, B, A) = cmap(int(ll[cnt]))
-        cols[el] = (R, G, B)
+    for el in listOfMetaDataValues:
+        thisColor = listOfColorTuples[cnt]
+        cols[el] = thisColor
         cnt += 1
+        # If there are not enough colors, wrap around.
+        if cnt == len(listOfColorTuples):
+            cnt = 0
     return cols
+
+
+def plotIt(y, title=None):
+    '''
+    plot a signal
+    '''
+    fig = plt.figure()
+    axes = fig.add_subplot(111)
+    color = 'r+-'
+    x = arange(len(y))
+    axes.plot(x, y, color)
+    if title:
+        axes.set_title(title)
+    plt.show()
+
+
+def write2file(filename, thisList):
+    try:
+        f = open(filename, 'wt')
+        for el in thisList:
+            f.write("%s\n" % el)
+        f.close()
+    except Exception, e:
+        print e
+        exit(1)
