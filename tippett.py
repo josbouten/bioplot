@@ -29,10 +29,10 @@ from probability import Probability
 '''
 
 class Tippett(Probability):
-    def __init__(self, data, config, debug=True):
-        self.data = data
-        self.config = config
-        self.debug = debug
+    def __init__(self, thisData, thisConfig, thisDebug=True):
+        self.data = thisData
+        self.config = thisConfig
+        self.debug = thisDebug
         self.plotType = 'tippett_plot'
         Probability.__init__(self, self.data, self.config, self.debug)
 
