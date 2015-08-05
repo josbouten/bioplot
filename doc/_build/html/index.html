@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to bioplot’s documentation! &mdash; bioplot 0.9.2 documentation</title>
+    <title>Welcome to bioplot’s documentation! &mdash; bioplot 0.9.3 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.2',
+        VERSION:     '0.9.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9.2 documentation" href="#" />
+    <link rel="top" title="bioplot 0.9.3 documentation" href="#" />
     <link rel="next" title="INSTALL" href="install.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="install.html" title="INSTALL"
              accesskey="N">next</a> |</li>
-        <li><a href="#">bioplot 0.9.2 documentation</a> &raquo;</li> 
+        <li><a href="#">bioplot 0.9.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,6 +56,10 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#any-os">Any OS</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a></li>
@@ -63,16 +67,34 @@
 <li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#unit-and-mean-reference">Unit and mean reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zooplot.html#highlighting-labels">Highlighting labels</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zooplot.html#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">data separation character</a></li>
-<li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib-in-osx-and-ms-windows">matplotlib in OSX and Ms Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="bioplot.cfg.html">bioplot.cfg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#settings-file">settings file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#accuracy">[accuracy]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#cfg">[cfg]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#data">[data]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#histogram">[histogram]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#layout">[layout]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#matrix">[matrix]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#metacolors">[metacolors]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#probability">[probability]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#zoo">[zoo]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">Data separation character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib-on-osx-and-ms-windows">Matplotlib on OSX and Ms Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#implementation-notes">Implementation notes</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -86,7 +108,7 @@
 </div>
 <div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
-<p>Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )</p>
+<p>Copyright (C) 2014, 2015 Jos Bouten ( josbouten at gmail dot com )</p>
 <p>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -108,7 +130,9 @@ in any publications you may write using it&#8217;s features or add a source refe
 to your code if you include some part(s) of this code in yours.</p>
 <p>bioplot.py is a program which can draw several plots that can be used
 when evaluating the performance of a biometric system. It reads settings from the file &#8216;bioplot.cfg&#8217;.
-These settings may be used to determine the way information is shown in a plot, what directory plot files are written to etc.</p>
+But using the -f option you can specify your own settings file.
+These settings may be used to determine the way information is shown in a plot, what directory plot files
+are written to etc.</p>
 <p>The plot types currently supported are:
 accuracy plot, cumulative score distribution plot, EER plot, histogram, matrix plot,
 ranking plot, tippett plot and zoo plot.</p>
@@ -140,10 +164,12 @@ the current directory. You can change this behaviour in bioplot.cfg via the foll
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">outputPath</span> <span class="o">=</span> <span class="n">output</span>
 <span class="n">saveScores</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">alwasySave</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>If you run the program again using the same experiment
-name, the scores are not saved anew, saving some processing time.
+name, the scores are not saved anew, saving some processing time, unless you set alwaysSave = True in [cfg].
+The default value is False as it is expected that you will run bioplot several times with the same data.
 If you want to have new versions of these files, you need to delete
 them before running bioplot.py again.</p>
 <p>Next, if you choose to plot a zoo plot, the labels which fall within the
@@ -191,30 +217,31 @@ the window.</p>
 default type is &#8216;type3&#8217; which corresponds to a text file with 7 fields. You need
 not specify type3 as it is a default.
 The type3 data file should contain data in a format like this example:</p>
-<div class="highlight-python"><div class="highlight"><pre>803742 17133729a.wav 80359 16842970b.wav 2.108616847991943 FALSE META_VAL1
-148407 47968376b.wav 89823 08087650a.wav 0.336018745422363 FALSE META_VAL3
-179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2
-803442 48588750a.wav 80344 15560933b.wav 4.423274517059326 TRUE  META_VAL2
+<div class="highlight-python"><div class="highlight"><pre>803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
+148407 47968376b.wav 898232 08087650a.wav 0.336018745422363 FALSE META_VAL3
+179408 34192626a.wav 803721 16749939b.wav 1.263523664188385 FALSE META_VAL2
+803442 48588750a.wav 803442 15560933b.wav 4.423274517059326 TRUE  META_VAL2
 </pre></div>
 </div>
 <p>Separation by comma&#8217;s is also accepted.
 This can be mixed as in:</p>
-<div class="highlight-python"><div class="highlight"><pre>803742,17133729a.wav,80359,16842970b.wav,2.108616847991943,FALSE,META_VAL1
-148407,47968376b.wav,89823,08087650a.wav,0.336018745422363,FALSE,META_VAL3
-179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2
-803442,48588750a.wav,80344,15560933b.wav,4.423274517059326,TRUE, META_VAL2
+<div class="highlight-python"><div class="highlight"><pre>803742,17133729a.wav,803593,16842970b.wav,2.108616847991943,FALSE,META_VAL1
+148407,47968376b.wav,898232,08087650a.wav,0.336018745422363,FALSE,META_VAL3
+179408 34192626a.wav 803721 16749939b.wav 1.263523664188385 FALSE META_VAL2
+803442,48588750a.wav,803442,15560933b.wav,4.423274517059326,TRUE, META_VAL2
 </pre></div>
 </div>
-<p>field 1: string: label identifying a person (training data)</p>
-<p>field 2: string: name of data file containing biometric features or raw data originating from the person denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
-<p>field 3: string: label identifying a person (test data)</p>
-<p>field 4: string: name of data file containing biometric features or raw data originating from the person denoted by field 3 used for training the reference model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
-<p>field 5: string: floating point value: score of trial</p>
-<p>field 6: string: meta data value for the experiment</p>
-<p>Field 6 can be used to contrast scores of experiments in most plots.</p>
+<p>field 1: string: label identifying a subject (training data).</p>
+<p>field 2: string: name of data file containing biometric features or raw data originating from the subject denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
+<p>field 3: string: label identifying a subject (test data).</p>
+<p>field 4: string: name of data file containing biometric features or raw data originating from the subject denoted by field 3 used for training the reference model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
+<p>field 5: string: floating point value: score of trial.</p>
+<p>field 6: boolean: ground truth.</p>
+<p>field 7: meta data value for the experiment.</p>
+<p>Field 7 can be used to contrast scores of experiments in most plots.</p>
 <p>So if you have 2 experiments where you change one variable, when doing a cross
 identification test, the meta value can be used to group the experiment&#8217;s scores.</p>
-<p>E.g. you run an experiment with gender as the main variable an you collect scores of male
+<p>E.g. you run an experiment with gender as the main variable and you collect scores of male
 to male and female to female comparisons. You need to set the meta value for each score
 accordingly. The meta value field allows bioplot to distinguish
 between the two conditions and it will in essence plot 2 plots in one overview.
@@ -222,28 +249,18 @@ If the same label occurs on more than one occasion in the score list with differ
 values, then the points in a zoo plot with corresponding labels are interconnected
 (see interconnectMetaValues setting in bioplot.cfg under [zoo]) . This makes it easy
 to see what the effect of an individual label is when changing the experiment&#8217;s condition.</p>
-<p>Field 6 must be present. If you don&#8217;t want to contrast experiments, then give all lines
+<p>Field 7 must be present. If you don&#8217;t want to contrast experiments, then give all lines
 the same meta value. Any string of characters (excluding white space) will do except
 the special characters mentioned below under &#8216;Known Issues&#8217;.</p>
-<p>File type &#8216;type2&#8217; is a variant of a file based data format:</p>
-<div class="highlight-python"><div class="highlight"><pre>62124-0 62124-1 0.383234709501  META_VAL1
-62124-0 62124-3 0.325683742762  META_VAL1
-62124-0 80491-2 0.239269435406  META_VAL2
-62124-0 64568-2 0.19219391048   META_VAL1
-62124-0 64568-3 0.125796630979  META_VAL1
-62124-0 77223-1 0.0895956531167 META_VAL2
-</pre></div>
-</div>
-<p>In this format basically format type3&#8217;s field 1 and 2 are combined into the first field.
-The same goes for type3&#8217;s field 3 and 4, who are combined in field 2. You can use the corresponding code in data.py to adapt to your specific data file format OR write some code to map it to a type3 format file.</p>
-<p>File &#8216;type1&#8217; is a database (sqlite) based data format and meant as an example on how to
-use bioplot in combination with a database of scores. Specify &#8216;database&#8217; as filename on the
-command line.</p>
+<p>File type &#8216;type2&#8217; is deprecated as of august 2015.</p>
+<p>File &#8216;type1&#8217; is a database based data format and meant as an example on how to use bioplot in combination with a
+database of scores. Specify &#8216;database&#8217; as filename on the command line.</p>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -f database -t type1 -e &#39;data taken from db&#39; -Z
 </pre></div>
 </div>
-<p>You will have to adapt the query in the function _readFromDatabase in data.py to your own needs.</p>
+<p>You will have to adapt the query in the function _readFromDatabase and the function
+_decodeType1Results in data.py to your own needs.</p>
 <p>There are 4 data files (of type3) which are meant as examples to play around
 with: testdata_A.txt, testdata_B.txt, testdata_C.txt and testdata_ABC.txt</p>
 <p>Example:</p>
@@ -308,11 +325,11 @@ you can contact me at josbouten at gmail dot com.</p>
         <li class="right" >
           <a href="install.html" title="INSTALL"
              >next</a> |</li>
-        <li><a href="#">bioplot 0.9.2 documentation</a> &raquo;</li> 
+        <li><a href="#">bioplot 0.9.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2015, drs. ing. J.S. Bouten.
+        &copy; Copyright 2015, Jos S. Bouten.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>

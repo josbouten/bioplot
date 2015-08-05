@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>EER plot &mdash; bioplot 0.9.3 documentation</title>
+    <title>UPDATE &mdash; bioplot 0.9.3 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="bioplot 0.9.3 documentation" href="index.html" />
-    <link rel="next" title="Histogram" href="histogram.html" />
-    <link rel="prev" title="Accuracy plot" href="accuracy.html" /> 
+    <link rel="next" title="Accuracy plot" href="accuracy.html" />
+    <link rel="prev" title="INSTALL" href="install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,10 +35,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="histogram.html" title="Histogram"
+          <a href="accuracy.html" title="Accuracy plot"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="accuracy.html" title="Accuracy plot"
+          <a href="install.html" title="INSTALL"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
       </ul>
@@ -49,19 +49,34 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="eer-plot">
-<span id="eerplot-label"></span><h1>EER plot<a class="headerlink" href="#eer-plot" title="Permalink to this headline">¶</a></h1>
-<p>Will plot a cumulative score plot showing the odds of a false positive and false negative
-versus the raw scores. In order to draw the curves, the number of scores equal to or bigger than
-a threshold are counted. This is done for a number of threshold values. The number can be set via
-nrSamples4Probability in bioplot.cgf in section [probability]. The default is 250 steps.</p>
-<p>Example command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -f input/testdata_AB.txt -E
+  <div class="section" id="update">
+<h1>UPDATE<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="any-os">
+<h2>Any OS<a class="headerlink" href="#any-os" title="Permalink to this headline">¶</a></h2>
+<p>Keep a copy of bioplot.cfg with your latest settings before updating anything.</p>
+<p>If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
+If you want to replace the bioplot version with a new one download the latest zip file from the github page and unzip its contents to the directory bioplot is in.</p>
+<p>Merge bioplot.cfg_4_windows.txt with your own bioplot.cfg and save the combined content in bioplot.cfg.</p>
+<p>From here on, you&#8217;re ready to go.
+Look at the docs and bioplot.cfg to find out about new functions and settings.</p>
+<p>When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg. So in case of OSX use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
-<img alt="_images/condition_A_and_B_eer_plot.png" src="_images/condition_A_and_B_eer_plot.png" />
-<p>All plots are shown in a window that allows you to zoom in on events. Here the plot is zoomed in around the intersection points of the graphs.</p>
-<img alt="_images/condition_A_and_B_eer_plot_zoom.png" src="_images/condition_A_and_B_eer_plot_zoom.png" />
+<p>Or use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>Do not forget to set your screen&#8217;s resolution in [cfg].screenResolution (in this example it is set to 1600x1200).</p>
+<div class="highlight-python"><div class="highlight"><pre>[cfg]
+screenResolution = 1600x1200
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -70,15 +85,23 @@ nrSamples4Probability in bioplot.cgf in section [probability]. The default is 25
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">UPDATE</a><ul>
+<li><a class="reference internal" href="#any-os">Any OS</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="accuracy.html"
-                        title="previous chapter">Accuracy plot</a></p>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">INSTALL</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="histogram.html"
-                        title="next chapter">Histogram</a></p>
+  <p class="topless"><a href="accuracy.html"
+                        title="next chapter">Accuracy plot</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/eerplot.txt"
+    <li><a href="_sources/update.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -105,10 +128,10 @@ nrSamples4Probability in bioplot.cgf in section [probability]. The default is 25
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="histogram.html" title="Histogram"
+          <a href="accuracy.html" title="Accuracy plot"
              >next</a> |</li>
         <li class="right" >
-          <a href="accuracy.html" title="Accuracy plot"
+          <a href="install.html" title="INSTALL"
              >previous</a> |</li>
         <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
       </ul>

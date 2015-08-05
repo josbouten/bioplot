@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    install
+   update
    accuracy
    eerplot
    histogram
@@ -19,8 +20,9 @@ Contents:
    rankingplot
    tippettplot
    zooplot
+   tools
+   settings
    issues
-   bioplot.cfg
 
 Indices and tables
 ==================
@@ -32,7 +34,7 @@ Indices and tables
 License
 =======
 
-Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
+Copyright (C) 2014, 2015 Jos Bouten ( josbouten at gmail dot com )
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -58,7 +60,9 @@ to your code if you include some part(s) of this code in yours.
 
 bioplot.py is a program which can draw several plots that can be used
 when evaluating the performance of a biometric system. It reads settings from the file 'bioplot.cfg'.
-These settings may be used to determine the way information is shown in a plot, what directory plot files are written to etc.
+But using the -f option you can specify your own settings file.
+These settings may be used to determine the way information is shown in a plot, what directory plot files
+are written to etc.
 
 The plot types currently supported are:
 accuracy plot, cumulative score distribution plot, EER plot, histogram, matrix plot,
@@ -96,9 +100,11 @@ the current directory. You can change this behaviour in bioplot.cfg via the foll
    [cfg]
    outputPath = output
    saveScores = True
+   alwasySave = False
 
 If you run the program again using the same experiment
-name, the scores are not saved anew, saving some processing time.
+name, the scores are not saved anew, saving some processing time, unless you set alwaysSave = True in [cfg].
+The default value is False as it is expected that you will run bioplot several times with the same data.
 If you want to have new versions of these files, you need to delete
 them before running bioplot.py again.
 
@@ -152,37 +158,39 @@ default type is 'type3' which corresponds to a text file with 7 fields. You need
 not specify type3 as it is a default.
 The type3 data file should contain data in a format like this example: ::
 
-    803742 17133729a.wav 80359 16842970b.wav 2.108616847991943 FALSE META_VAL1 
-    148407 47968376b.wav 89823 08087650a.wav 0.336018745422363 FALSE META_VAL3 
-    179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2 
-    803442 48588750a.wav 80344 15560933b.wav 4.423274517059326 TRUE  META_VAL2 
+    803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
+    148407 47968376b.wav 898232 08087650a.wav 0.336018745422363 FALSE META_VAL3
+    179408 34192626a.wav 803721 16749939b.wav 1.263523664188385 FALSE META_VAL2
+    803442 48588750a.wav 803442 15560933b.wav 4.423274517059326 TRUE  META_VAL2
 
 Separation by comma's is also accepted.
 This can be mixed as in: ::
 
-    803742,17133729a.wav,80359,16842970b.wav,2.108616847991943,FALSE,META_VAL1 
-    148407,47968376b.wav,89823,08087650a.wav,0.336018745422363,FALSE,META_VAL3 
-    179408 34192626a.wav 80372 16749939b.wav 1.263523664188385 FALSE META_VAL2 
-    803442,48588750a.wav,80344,15560933b.wav,4.423274517059326,TRUE, META_VAL2 
+    803742,17133729a.wav,803593,16842970b.wav,2.108616847991943,FALSE,META_VAL1
+    148407,47968376b.wav,898232,08087650a.wav,0.336018745422363,FALSE,META_VAL3
+    179408 34192626a.wav 803721 16749939b.wav 1.263523664188385 FALSE META_VAL2
+    803442,48588750a.wav,803442,15560933b.wav,4.423274517059326,TRUE, META_VAL2
 
-field 1: string: label identifying a person (training data)
+field 1: string: label identifying a subject (training data).
 
-field 2: string: name of data file containing biometric features or raw data originating from the person denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set. 
+field 2: string: name of data file containing biometric features or raw data originating from the subject denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set. 
 
-field 3: string: label identifying a person (test data)
+field 3: string: label identifying a subject (test data).
 
-field 4: string: name of data file containing biometric features or raw data originating from the person denoted by field 3 used for training the reference model. In the example you see a wav-file, but this can be any string identifying a file or feature set.                            
+field 4: string: name of data file containing biometric features or raw data originating from the subject denoted by field 3 used for training the reference model. In the example you see a wav-file, but this can be any string identifying a file or feature set.                            
 
-field 5: string: floating point value: score of trial
+field 5: string: floating point value: score of trial.
 
-field 6: string: meta data value for the experiment
+field 6: boolean: ground truth.
 
-Field 6 can be used to contrast scores of experiments in most plots.
+field 7: meta data value for the experiment.
+
+Field 7 can be used to contrast scores of experiments in most plots.
 
 So if you have 2 experiments where you change one variable, when doing a cross
 identification test, the meta value can be used to group the experiment's scores.
 
-E.g. you run an experiment with gender as the main variable an you collect scores of male
+E.g. you run an experiment with gender as the main variable and you collect scores of male
 to male and female to female comparisons. You need to set the meta value for each score 
 accordingly. The meta value field allows bioplot to distinguish
 between the two conditions and it will in essence plot 2 plots in one overview.
@@ -191,32 +199,21 @@ values, then the points in a zoo plot with corresponding labels are interconnect
 (see interconnectMetaValues setting in bioplot.cfg under [zoo]) . This makes it easy
 to see what the effect of an individual label is when changing the experiment's condition.
 
-Field 6 must be present. If you don't want to contrast experiments, then give all lines
+Field 7 must be present. If you don't want to contrast experiments, then give all lines
 the same meta value. Any string of characters (excluding white space) will do except 
 the special characters mentioned below under 'Known Issues'.
 
-File type 'type2' is a variant of a file based data format: ::
+File type 'type2' is deprecated as of august 2015.
 
-    62124-0 62124-1 0.383234709501  META_VAL1
-    62124-0 62124-3 0.325683742762  META_VAL1
-    62124-0 80491-2 0.239269435406  META_VAL2
-    62124-0 64568-2 0.19219391048   META_VAL1
-    62124-0 64568-3 0.125796630979  META_VAL1
-    62124-0 77223-1 0.0895956531167 META_VAL2
-
-In this format basically format type3's field 1 and 2 are combined into the first field.
-The same goes for type3's field 3 and 4, who are combined in field 2. You can use the corresponding code in data.py to adapt to your specific data file format OR write some code to map it to a type3 format file.
-
-File 'type1' is a database (sqlite) based data format and meant as an example on how to
-use bioplot in combination with a database of scores. Specify 'database' as filename on the
-command line.
+File 'type1' is a database based data format and meant as an example on how to use bioplot in combination with a
+database of scores. Specify 'database' as filename on the command line.
 
 Example: ::
 
   python ./bioplot.py -f database -t type1 -e 'data taken from db' -Z
 
-You will have to adapt the query in the function _readFromDatabase in data.py to your own needs.
-
+You will have to adapt the query in the function _readFromDatabase and the function
+_decodeType1Results in data.py to your own needs.
 
 There are 4 data files (of type3) which are meant as examples to play around
 with: testdata_A.txt, testdata_B.txt, testdata_C.txt and testdata_ABC.txt
