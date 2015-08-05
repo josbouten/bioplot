@@ -28,36 +28,34 @@ __author__ = 'drs. ing. Jos Bouten'
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+    bottom_h = left_h = zleft + zwidth + spacing
+    rectZoo = [zleft, zbottom, zwidth, zheight]
+    rectHistx = [zleft, bottom_h, zwidth, xheight]
+    rectHisty = [left_h, zbottom, ywidth, zheight]
+
 '''
 import matplotlib.pyplot as plt
-from event import Event
 from matplotlib.ticker import NullFormatter
+
+from event import Event
 from zoo import Zoo
 from circularhist import CircularHistPlot
-from utils import assignColors2MetaDataValue
+
 
 class BoutenZoo(Zoo):
-    def __init__(self, data, config, debug):
-        Zoo.__init__(self, data, config, debug)
-        self.data = data
-        self.config = config
-        self.debug = debug
+    def __init__(self, thisData, thisConfig, thisDebug):
+        self.data = thisData
+        self.config = thisConfig
+        self.debug = thisDebug
+        Zoo.__init__(self, self.data, self.config, self.debug)
 
         self.title = self.data.getTitle()
         # All ellipses will have their own annotation.
         self._pointsWithAnnotation = []
         # Directory to store animal data.
-        self._outputPath = config.getOutputPath()
-
-        if self.debug:
-            print 'nrMeta:', self.data.getNrDistinctMetaDataValues()
-        colorMap = plt.get_cmap(self.config.getColorMap())
-        self.colors = assignColors2MetaDataValue(self.data.getMetaDataValues(), colorMap)
-        self.nrColors = len(self.colors.keys())
-        if self.debug:
-            print 'colors:', self.colors
-            print 'nr colors:', len(self.colors.keys())
-
+        self._outputPath = self.config.getOutputPath()
+        self.aimsStdDev = []
+        self.agmsStdDev = []
 
     def _prepareFigs(self):
         zleft = self.config.getZleft()
@@ -91,18 +89,19 @@ class BoutenZoo(Zoo):
         axesHisty.xaxis.set_major_formatter(nullfmt)
 
         axesHistc = None
-        if self.config.getInterconnectMetaValues():
-            if self.config.getShowCircularHistogram():
-                axesHistc = self.fig.add_axes(rectHistc, polar=True)
-                axesHistc.set_xlabel('Distribution of Slopes.')
-                axesHistc.yaxis.set_major_formatter(nullfmt)
-                axesHistc.xaxis.set_major_formatter(nullfmt)
+        nr = len(self.data.getMetaDataValues())
+        if nr == 2:
+            if self.config.getInterconnectMetaValues():
+                if self.config.getShowCircularHistogram():
+                    axesHistc = self.fig.add_axes(rectHistc, polar=True)
+                    axesHistc.set_xlabel('Distribution of Slopes.')
+                    axesHistc.yaxis.set_major_formatter(nullfmt)
+                    axesHistc.xaxis.set_major_formatter(nullfmt)
         return self.fig, axesZoo, axesHistx, axesHisty, axesHistc
 
-
-    def _plotHistogram(self, histData, extraLabel, axes, orientation):
+    def _plotHistogram(self, histData, extraLabel, axes, orientation, nrDataElements):
         self.plotType = "histogram_plot"
-        nrBins = self.config.getNrBins()
+        nrBins = self.config.getNrBins(nrDataElements)
         allData = []
         allLabels = []
         allColors = []
@@ -117,60 +116,57 @@ class BoutenZoo(Zoo):
             except Exception:
                 pass
         try:
-            n, bins, patches = axes.hist(allData, nrBins, normed=self.config.getNormHist(), color=allColors, alpha=alpha, orientation=orientation, label=allLabels)
+            n, bins, patches = axes.hist(allData, bins=nrBins, normed=self.config.getNormHist(), color=allColors,
+                                         alpha=alpha, orientation=orientation, label=allLabels)
         except Exception:
             print "Error: could not plot histogram for %s values." % (extraLabel)
             pass
         axes.legend()
         axes.grid(True)
 
-
     def plot(self):
         yagerStyle = self.config.getYagerStyle()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
-        self.annotateQuartileMembers = self.config.getAnnnotateQuartileMembers()
+        self.annotateEllipses = self.config.getAnnnotateEllipses()
         self.fig = plt.figure(1, figsize=(8, 8))
+        self.computeZooStatsAlexanderStyle()
 
+        thisPlot, axesZoo, axesHistX, axesHistY, axesHistC = self._prepareFigs()
+        self._plotZooAlexanderStyle(axesZoo, yagerStyle)
         if self.config.getAlexanderStyle():
-            self.aimsStdDev = []
-            self.agmsStdDev = []
-            self.computeZooStatsAlexanderStyle()
-            thisPlot, axesZoo, axesHistX, axesHistY, axesHistC = self._prepareFigs()
-            self._plotZooAlexanderStyle(axesZoo, yagerStyle)
             if self.config.getInterconnectMetaValues():
                 allAngles, allDistances, deltaZoo = self._connectMetaValues(self._pointsWithAnnotation, axesZoo)
-                if self.config.getShowCircularHistogram():
+                if self.config.getShowCircularHistogram() and len(self.data.getMetaDataValues()) == 2:
                     if len(allAngles) > 0:
-                        c = CircularHistPlot(self.debug)
-                        c.plot(allAngles, deltaZoo, axesHistC)
-        else:
-            self.computeZooStats()
-            thisPlot, axesZoo, axesHistX, axesHistY, axesHistC = self._prepareFigs()
-            self._plotZooTraditional(axesZoo, yagerStyle)
+                        if axesHistC:
+                            c = CircularHistPlot(self.debug)
+                            c.plot(allAngles, deltaZoo, axesHistC)
 
         valueSet = self.data.getMetaDataValues().keys()
         targetHistData = {}
         nonTargetHistData = {}
+        maxNrT = 0
+        maxNrNt = 0
         for value in valueSet:
             targetHistData[value] = []
             nonTargetHistData[value] = []
             for label in self.data.getTargetLabels():
                 template = label + self.LABEL_SEPARATOR + value
                 targetHistData[value] += self.data.getTargetScores()[template]
+                maxNrT = max(maxNrT, len(targetHistData[value]))
             for label in self.data.getNonTargetLabels():
                 template = label + self.LABEL_SEPARATOR + value
                 nonTargetHistData[value] += self.data.getNonTargetScores()[template]
-
-        self._plotHistogram(targetHistData, 'target', axesHistX, 'vertical')
-        self._plotHistogram(nonTargetHistData, 'non target', axesHistY, 'horizontal')
+                maxNrNt = max(maxNrNt, len(nonTargetHistData[value]))
+        self._plotHistogram(targetHistData, 'target', axesHistX, 'vertical', maxNrT)
+        self._plotHistogram(nonTargetHistData, 'non target', axesHistY, 'horizontal', maxNrNt)
         # Do the WWF-thing!
         self.saveExceptionalAnimals()
-        #plt.show(block=True)
+        # plt.show(block=True)
         plt.show()
 
-
     def _plotZooAlexanderStyle(self, axesZoo, yagerStyle=False):
-        # plot a list of ellipses each visualising a score distribution for a target
+        # Plot a list of ellipses each visualising a score distribution for a target.
         self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
 
         # For saving the pic we use a generic event object
@@ -185,34 +181,6 @@ class BoutenZoo(Zoo):
         else:
             comment = '(inverse y-axis)'
         self._plotAxes(comment, yagerStyle, self.title, axesZoo)
-
-
-    def  _plotZooTraditional(self, axes, yagerStyle=False):
-        # Legend has already been drawn in prepareFigs()
-        if self.debug:
-            print '_plotZooTraditionalaimsv:', len(self.aimsv), 'agmsv:', len(self.agmsv)
-        self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
-        self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
-        allAgmsv = []
-        allAimsv = []
-        allColors = []
-        for template in self.agmsv.keys():
-            if template in self.aimsv.keys():
-                pattern = self.getMetaFromPattern(template)
-                try:
-                    allColors.append(self.colors[pattern])
-                except Exception:
-                    pass
-                else:
-                    allAgmsv.append(self.agmsv[template])
-                    allAimsv.append(self.aimsv[template])
-        axes.scatter(allAgmsv, allAimsv, color=allColors, marker='o', linewidth=0.5)
-        if yagerStyle:
-            comment = ''
-        else:
-            comment = '(inverse y-axis)'
-        self._plotAxes(comment, yagerStyle, self.title, axes)
-
 
     def _onMouseEvent(self, event):
         # We do not want the annotations to reappear after the first click.
@@ -230,15 +198,15 @@ class BoutenZoo(Zoo):
             for (annotation, xy) in self.referencesWithAnnotation:
                 annotation.set_visible(False)
 
-            # Make the points close to the click visible.
+            # Make the points close to the clicked position visible.
             for (patternFound, x, y) in labelsCloseBy:
                 for point, annotation, pattern, xy in self._pointsWithAnnotation:
                     if patternFound == pattern:
                         annotation.set_visible(True)
             if self.config.getShowReference:
-                # check whether we clicked near the reference ellipses.
-                xRange = abs(self.agm_ma - self.agm_mi)
-                yRange = abs(self.aim_ma - self.aim_mi)
+                # Check whether we clicked near the reference ellipses.
+                xRange = abs(self.agm_maxAll - self.agm_minAll)
+                yRange = abs(self.aim_maxAll - self.aim_minAll)
                 thresholdX = 3 * xRange / self.config.getScaleFactor()
                 thresholdY = 3 * yRange / self.config.getScaleFactor()
                 for (annotation, xy) in self.referencesWithAnnotation:
@@ -246,4 +214,3 @@ class BoutenZoo(Zoo):
                     if self.isNear(event.xdata, event.ydata, xy, thresholdX, thresholdY):
                         annotation.set_visible(True)
             plt.draw()
-
