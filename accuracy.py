@@ -27,16 +27,13 @@ __author__ = 'drs. ing. Jos Bouten'
 '''
 
 import matplotlib.pyplot as plt
-import sys
-import os.path
-from os import makedirs
 from event import Event
 
 class Accuracy():
-    def __init__(self, data, config, debug=True):
-        self.data = data
-        self.config = config
-        self.debug = debug
+    def __init__(self, thisData, thisConfig, thisDebug=True):
+        self.data = thisData
+        self.config = thisConfig
+        self.debug = thisDebug
         self.targetScores = self.data.getTargetScores()
         self.nonTargetScores = self.data.getNonTargetScores()
 
