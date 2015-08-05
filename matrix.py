@@ -23,24 +23,27 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-from format import Format
-from config import Config
-import matplotlib.pyplot as plt
-from matplotlib.ticker import NullFormatter
 import numpy as np
 from collections import Counter, defaultdict
 from math import sqrt
-from event import Event
+
+import matplotlib.pyplot as plt
+from matplotlib.ticker import NullFormatter
+
 from pylab import gca
 import pylab
 
-class MatrixPlot(Format):
+from format import Format
+from config import Config
+from event import Event
 
-    def __init__(self, data, config, debug=True):
-        Format.__init__(self, debug)
-        self.data = data
-        self.config = config
-        self.debug = debug
+
+class MatrixPlot(Format):
+    def __init__(self, thisData, thisConfig, thisDebug=True):
+        Format.__init__(self, thisDebug)
+        self.data = thisData
+        self.config = thisConfig
+        self.debug = thisDebug
         self.colorMap = plt.get_cmap(self.config.getMatrixColorMap())
         self.SPECIAL_SCORE = 12345
         self.plotType = 'matrix_plot'
@@ -55,8 +58,8 @@ class MatrixPlot(Format):
         x = sqrt(nr)
         if int(x) == x:
             return True, int(x), int(x)
-        if (nr / 2.0) - int(nr/2) == 0:
-            return True, 2, int(nr/2)
+        if (nr / 2.0) - int(nr / 2) == 0:
+            return True, 2, int(nr / 2)
         return False, 0, 0
 
     def plot(self):
@@ -126,15 +129,15 @@ class MatrixPlot(Format):
             # gca().xaxis.set_major_formatter(nullfmt)
             # gca().xaxis.set_minor_formatter(nullfmt)
             pos = np.arange(len(tickLabels))
-            #pylab.xticks(pos, tickLabels)
+            # pylab.xticks(pos, tickLabels)
             pylab.xticks(pos, tickLabels, rotation=self.config.getLabelAngle())
             pylab.yticks(pos, tickLabels)
-            #plt.title("matrix plot for %s" % self.title)
+            # plt.title("matrix plot for %s" % self.title)
             self.event = Event(self.config, fig, self.title, self.plotType, self.debug)
             fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
-            #fig, ax = plt.subplots(1, 1, figsize=(5, 5))
+            # fig, ax = plt.subplots(1, 1, figsize=(5, 5))
 
-            ax.imshow(bigMatrix, cmap=self.colorMap, alpha = 1.0, interpolation='nearest', origin='upper', norm=None,
+            ax.imshow(bigMatrix, cmap=self.colorMap, alpha=1.0, interpolation='nearest', origin='upper', norm=None,
                       vmin=overallMin, vmax=overallMax, shape=(dim1, nrOfMetaValues * dim2), filternorm=1)
             ax.set_title(title, fontsize=18, color="red")
         else:
@@ -145,17 +148,18 @@ class MatrixPlot(Format):
             nullfmt = NullFormatter()
             if dim1 >= dim2:
                 fig, ax = plt.subplots(1, nrOfMetaValues, squeeze=False, figsize=(5 * nrOfMetaValues, 5))
-                #plt.title("matrix plot for %s" % self.title)
+                # plt.title("matrix plot for %s" % self.title)
                 self.event = Event(self.config, fig, self.title, self.plotType, self.debug)
                 fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
-                plt.subplots_adjust(wspace=0,hspace=0)
+                plt.subplots_adjust(wspace=0, hspace=0)
                 # Plot each matrix individually, but use overallMin, overallMax to normalize them.
                 xx = 0
                 for (matrix, metaValue, tickLabels) in matrixAccu:
                     if self.debug:
                         print 'plot, metaValue:', metaValue, 'minScore:', overallMin, 'maxScore:', overallMax
                     # Plot matrices in separate figures OR combine all of them in one big square matrix ?
-                    im = ax[0, xx].imshow(matrix, cmap=self.colorMap, origin='lower', norm=None, vmin=overallMin, vmax=overallMax)
+                    im = ax[0, xx].imshow(matrix, cmap=self.colorMap, origin='lower', norm=None, vmin=overallMin,
+                                          vmax=overallMax)
                     pos = np.arange(len(tickLabels))
                     # No labels.
                     gca().yaxis.set_major_formatter(nullfmt)
@@ -170,23 +174,24 @@ class MatrixPlot(Format):
                     im.set_interpolation('none')
                     cnt += 1
             else:
-            # If the vertical dimension of a matrix is smaller than the horizontal one, then
-            # the matrices are best visible when plotted above each other.
+                # If the vertical dimension of a matrix is smaller than the horizontal one, then
+                # the matrices are best visible when plotted above each other.
                 fig, ax = plt.subplots(nrOfMetaValues, 1, squeeze=False, figsize=(5 * nrOfMetaValues, 5))
                 pos = np.arange(len(tickLabels))
                 pylab.yticks(pos, tickLabels)
                 plt.xticks(pos, tickLabels, rotation=70)
-                #plt.title("matrix plot for %s" % self.title)
+                # plt.title("matrix plot for %s" % self.title)
                 self.event = Event(self.config, fig, self.title, self.plotType, self.debug)
                 fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
-                plt.subplots_adjust(wspace=0,hspace=0)
+                plt.subplots_adjust(wspace=0, hspace=0)
                 # Plot each matrix individually, but use overallMin, overallMax to normalize them.
                 yy = 0
                 for (matrix, metaValue, tickLabels) in matrixAccu:
                     if self.debug:
                         print 'plot, metaValue:', metaValue, 'minScore:', overallMin, 'maxScore:', overallMax
                     # Plot matrices in separate figures OR combine all of them in one big square matrix ?
-                    im = ax[yy, 0].imshow(matrix, cmap=self.colorMap, origin='lower', norm=None, vmin=overallMin, vmax=overallMax)
+                    im = ax[yy, 0].imshow(matrix, cmap=self.colorMap, origin='lower', norm=None, vmin=overallMin,
+                                          vmax=overallMax)
                     # No labels.
                     pos = np.arange(len(tickLabels))
                     pylab.xticks(pos, tickLabels, rotation=self.config.getLabelAngle())
@@ -279,7 +284,7 @@ class MatrixPlot(Format):
             i += 1
             tickLabels.append(label1)
         # Now we need to make sure the gaps do not interfere with
-        # the gray values the real score get.
+        # the gray values the real scores get.
         # So we replace SPECIAL_SCORE with a less conspicuous value.
         # Use np.where to do this more quickly?
         for i in range(vCount):
@@ -288,9 +293,11 @@ class MatrixPlot(Format):
                     matrix[i, j] = (overallMa + overallMi) / 2
         return matrix, mi, ma, tickLabels
 
+
 if __name__ == '__main__':
 
     from matrixdata import MatrixData
+
     config = Config()
     config.setMinNrScores4MatrixPlot(3)
     data = MatrixData(config)
