@@ -736,7 +736,7 @@ class Zoo(Format, Probability, Cllr):
         xOffset = dx
         yOffset = dy
         if where == 'lt':
-            y -= height / 2
+            # y -= height / 2
             xText = x + xOffset
             if xText < self.agm_mi[metaValue]:
                 xText = self.agm_mi[metaValue]
@@ -747,7 +747,7 @@ class Zoo(Format, Probability, Cllr):
             va = 'bottom'
             ok = True
         if where == 'rt':
-            y -= height / 2
+            # y -= height / 2
             xText = x + xOffset
             if xText > self.agm_ma[metaValue]:
                 xText = self.agm_ma[metaValue]
@@ -758,7 +758,7 @@ class Zoo(Format, Probability, Cllr):
             va = 'bottom'
             ok = True
         if where == 'lb':
-            y += height / 2
+            # y += height / 2
             xText = x + xOffset
             if xText < self.agm_mi[metaValue]:
                 xText = self.agm_mi[metaValue]
@@ -769,7 +769,7 @@ class Zoo(Format, Probability, Cllr):
             va = 'top'
             ok = True
         if where == 'rb':
-            y += height / 2
+            # y += height / 2
             xText = x + xOffset
             ddx = 0
             if xText > self.agm_ma[metaValue]:
