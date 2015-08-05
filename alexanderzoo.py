@@ -3,7 +3,6 @@
 __author__ = 'drs. ing. Jos Bouten'
 
 '''
-
     alexanderzoo.py
 
     Object which can plot a traditional Yager et al style zoo plot or
@@ -29,50 +28,39 @@ __author__ = 'drs. ing. Jos Bouten'
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 '''
-
 import matplotlib.pyplot as plt
 from event import Event
 from zoo import Zoo
-from utils import assignColors2MetaDataValue
+import collections
 
 class AlexanderZoo(Zoo):
-    def __init__(self, data, config, debug):
-        Zoo.__init__(self, data, config, debug)
-        self.config = config
-        self.data = data
-        self.debug = debug
+    def __init__(self, thisData, thisConfig, thisDebug):
+        Zoo.__init__(self, thisData, thisConfig, thisDebug)
+        self.config = thisConfig
+        self.data = thisData
+        self.debug = thisDebug
         # All ellipses will have their own annotation.
         self._pointsWithAnnotation = []
-        self.interconnectMetaValues = self.config.getInterconnectMetaValues()
         # Directory to store animal data.
         self._outputPath = self.config.getOutputPath()
 
         if self.debug:
             print 'nrMeta:', self.data.getNrDistinctMetaDataValues()
-        self._title = data.getTitle()
-        colorMap = plt.get_cmap(self.config.getColorMap())
-        self.colors = assignColors2MetaDataValue(self.data.getMetaDataValues(), colorMap)
-        self.nrColors = len(self.colors.keys())
-        if self.debug:
-            print 'colors:', self.colors
-            print 'nr colors:', self.nrColors
+        self._title = self.data.getTitle()
+
+        self.aimsStdDev = collections.defaultdict(float)
+        self.agmsStdDev = collections.defaultdict(float)
 
 
     def plot(self):
         yagerStyle = self.config.getYagerStyle()
-        alexanderStyle = self.config.getAlexanderStyle()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
-        self.annotateQuartileMembers = self.config.getAnnnotateQuartileMembers()
+        self.annotateEllipses = self.config.getAnnnotateEllipses()
 
-        if alexanderStyle:
-            self.aimsStdDev = []
-            self.agmsStdDev = []
-            self._plotZooAlexanderStyle(yagerStyle)
+        self._plotZooAlexanderStyle(yagerStyle)
+        if self.config.getAlexanderStyle():
             if self.config.getInterconnectMetaValues():
                 self._connectMetaValues(self._pointsWithAnnotation)
-        else:
-            self.computeZooStats()
-            self._plotZooTraditional(yagerStyle)
 
         # Gather some stats
         self.saveExceptionalAnimals()
@@ -100,36 +88,6 @@ class AlexanderZoo(Zoo):
             comment = '(inverse y-axis)'
         self._plotAxes(comment, yagerStyle, self._title, axes)
 
-
-    def _plotZooTraditional(self, yagerStyle=False):
-        self.fig = plt.figure()
-        axes = self.fig.add_subplot(111)
-        self.drawLegend(self.colors)
-        if self.debug:
-            print 'aimsv:', len(self.aimsv), 'agmsv:', len(self.agmsv)
-        self.event = Event(self.config, self.fig, self._title, self.plotType, self.debug)
-        self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
-        allAgmsv = []
-        allAimsv = []
-        allColors = []
-        for template in self.agmsv.keys():
-            if template in self.aimsv.keys():
-                pattern = self.getMetaFromPattern(template)
-                try:
-                    allColors.append(self.colors[pattern])
-                except Exception:
-                    pass
-                else:
-                    allAgmsv.append(self.agmsv[template])
-                    allAimsv.append(self.aimsv[template])
-        axes.scatter(allAgmsv, allAimsv, color=allColors, marker='o', linewidth=0.5)
-        if yagerStyle:
-            comment = ''
-        else:
-            comment = '(inverse y-axis)'
-        self._plotAxes(comment, yagerStyle, self._title, axes)
-
-
     def _onMouseEvent(self, event):
         # We do not want the annotations to reappear after the first click
         self.config.setShowAnnotationsAtStartup(False)
@@ -146,15 +104,15 @@ class AlexanderZoo(Zoo):
             for (annotation, xy) in self.referencesWithAnnotation:
                 annotation.set_visible(False)
 
-            # Make the points close to the click visible.
+            # Make the points close to the clicked position visible.
             for (patternFound, x, y) in labelsCloseBy:
                 for point, annotation, pattern, xy in self._pointsWithAnnotation:
                     if patternFound == pattern:
                         annotation.set_visible(True)
             if self.config.getShowReference:
                 # check whether we clicked near the reference ellipses.
-                xRange = abs(self.agm_ma - self.agm_mi)
-                yRange = abs(self.aim_ma - self.aim_mi)
+                xRange = abs(self.agm_maxAll - self.agm_minAll)
+                yRange = abs(self.aim_maxAll - self.aim_minAll)
                 thresholdX = 3 * xRange / self.config.getScaleFactor()
                 thresholdY = 3 * yRange / self.config.getScaleFactor()
                 for (annotation, xy) in self.referencesWithAnnotation:
