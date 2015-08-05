@@ -23,15 +23,14 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 import numpy as np
+
 import matplotlib.pyplot as plt
-from matplotlib.ticker import NullFormatter
-from matplotlib.pyplot import rc
+
 
 class CircularHistPlot():
-    def __init__(self, debug=True):
-        self.debug = debug
+    def __init__(self, thisDebug=True):
+        self.debug = thisDebug
         self.bottom = 0.2
-
 
     def plot(self, angles, score, axes=plt):
         N = len(angles)
@@ -51,7 +50,6 @@ class CircularHistPlot():
         for r, bar in zip(hist, bars):
             bar.set_facecolor(plt.cm.jet(r))
             bar.set_alpha(0.8)
-
 
     def test(self):
         N = 80
