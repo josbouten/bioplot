@@ -26,8 +26,26 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-import matplotlib
 import numpy
+
+import matplotlib
+
+'''
+
+To suppress warnings like this:
+/usr/lib/pymodules/python2.7/matplotlib/cbook.py:1711: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
+  result = np.zeros(new_shape, a.dtype)
+we need to add filter out this specific warning using:
+
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+'''
+
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 import matplotlib.mlab as mlab
@@ -35,15 +53,16 @@ from format import Format
 from event import Event
 from utils import assignColors2MetaDataValue
 
+
 class Histogram(Event, Format):
-    def __init__(self, data, config, type = 'normal', debug=True, useMeta=False):
-        Format.__init__(self, debug)
-        self.data = data
-        self.config = config
-        self.type = type
-        self.debug = debug
+    def __init__(self, thisData, thisConfig, thisType='normal', thisDebug=True, thisUseMeta=False):
+        Format.__init__(self, thisDebug)
+        self.data = thisData
+        self.config = thisConfig
+        self.type = thisType
+        self.debug = thisDebug
         self.title = self.data.getTitle()
-        self.useMeta = useMeta
+        self.useMeta = thisUseMeta
         self.plotType = "histogram_plot"
 
     def _to_percent(self, y, position):
@@ -67,15 +86,20 @@ class Histogram(Event, Format):
             self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
             self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
 
-            nrBins = self.config.getNrBins()
+            nrDataElements = max(len(targetScores), len(nonTargetScores))
+            nrBins = self.config.getNrBins(nrDataElements)
             # Make a normed histogram. It'll be multiplied by 100 later.
             if self.type == 'cumulative':
-                plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), color='red', alpha=1.0, histtype='step', cumulative=-1)
-                plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), color='green', alpha=0.7, histtype='step', cumulative=True)
+                plt.hist(nonTargetScores, bins=nrBins, normed=self.config.getNormHist(), color='red', alpha=1.0,
+                         histtype='step', cumulative=-1)
+                plt.hist(targetScores, bins=nrBins, normed=self.config.getNormHist(), color='green', alpha=0.7,
+                         histtype='step', cumulative=True)
                 plt.title(r"Cumulative histogram for '%s'" % (self.title))
             else:
-                n, bins2, patches = plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), color='red', alpha=1.0)
-                n, bins1, patches = plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), color='green', alpha=0.7)
+                n, bins2, patches = plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), color='red',
+                                             alpha=1.0)
+                n, bins1, patches = plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), color='green',
+                                             alpha=0.7)
                 if self.config.getShowKernelInHist():
                     mu1 = numpy.average(targetScores)
                     sigma1 = numpy.std(targetScores)
@@ -86,7 +110,8 @@ class Histogram(Event, Format):
                     sigma2 = numpy.std(nonTargetScores)
                     y2 = mlab.normpdf(bins2, mu2, sigma2)
                     plt.plot(bins2, y2, 'b--')
-                    plt.title(r"Histogram for '%s': mu, sigma = (%0.2f, %0.2f) (%0.2f, %0.2f)" % (self.title, mu1, sigma1, mu2, sigma2))
+                    plt.title(r"Histogram for '%s': mu, sigma = (%0.2f, %0.2f) (%0.2f, %0.2f)" % (
+                    self.title, mu1, sigma1, mu2, sigma2))
                 else:
                     plt.title(r"Histogram for '%s" % (self.title))
             plt.grid(True)
@@ -106,11 +131,14 @@ class Histogram(Event, Format):
         self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
 
-        nrBins = self.config.getNrBins()
+        suggestedNrBins = max(len(targetScores), len(nonTargetScores))
+        nrBins = self.config.getNrBins(suggestedNrBins)
         # Make a normed histogram. It'll be multiplied by 100 later.
         if self.type == 'cumulative':
-            plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), facecolor='red', alpha=1.0, histtype='step', cumulative=-1)
-            plt.hist(targetScores, nrBins, normed=self.config.getNormHist(), facecolor='green', alpha=0.7, histtype='step', cumulative=True)
+            plt.hist(nonTargetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='red', alpha=1.0,
+                     histtype='step', cumulative=-1)
+            plt.hist(targetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='green', alpha=0.7,
+                     histtype='step', cumulative=True)
             plt.title(r"Cumulative histogram for '%s'" % (self.title))
         else:
             if self.config.getShowMetaInHist():
@@ -120,8 +148,8 @@ class Histogram(Event, Format):
                     print 'valueSet:', valueSet
                 targetHistData = {}
                 nonTargetHistData = {}
-                colorMap = plt.get_cmap(self.config.getColorMap())
-                self.colors = assignColors2MetaDataValue(self.data.getMetaDataValues(), colorMap)
+                metaColors = self.config.getMetaColors()
+                self.colors = assignColors2MetaDataValue(self.data.getMetaDataValues(), metaColors)
                 self.nrColors = len(self.colors.keys())
                 if self.debug:
                     print 'colors:', self.colors
@@ -157,7 +185,7 @@ class Histogram(Event, Format):
                 if self.debug:
                     print 'allColors:', allColors
                 try:
-                    plt.hist(allData, self.config.getNrBins(), normed=self.config.getNormHist(), alpha=alpha, label=allLabels)
+                    plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels)
                 except Exception:
                     print "Error: could not plot histogram!"
                     print "len(allData): %d\nnrBins: %d" % (len(allData), self.config.getNrBins())
@@ -167,8 +195,8 @@ class Histogram(Event, Format):
                     plt.title(r"Histogram for '%s'" % (self.title))
                     plt.legend()
             else:
-                plt.hist(nonTargetScores, self.config.getNrBins(), normed=self.config.getNormHist(), facecolor='red', alpha=1.0)
-                plt.hist(targetScores, self.config.getNrBins(), normed=self.config.getNormHist(), facecolor='green', alpha=0.7)
+                plt.hist(nonTargetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='red', alpha=1.0)
+                plt.hist(targetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='green', alpha=0.7)
                 plt.title(r"Histogram for '%s'" % (self.title))
         plt.grid(True)
         plt.xlabel('Target and Non Target Scores')
