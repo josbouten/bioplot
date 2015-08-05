@@ -26,8 +26,8 @@ __author__ = 'drs. ing. Jos Bouten'
 '''
 
 class Format():
-    def __init__(self, debug=True):
-        self.debug = debug
+    def __init__(self, thisDebug=True):
+        self.debug = thisDebug
         # The separators should be characters that will
         # NOT be part of the meta data values in the
         # raw data file.
@@ -61,8 +61,8 @@ class Format():
         tmp = template.split(self.LABEL_SEPARATOR)
         return tmp[1]
 
-    def mkTemplate(self, label, pattern):
-        return label + self.LABEL_SEPARATOR + pattern
+    def mkTemplate(self, label, metaValue):
+        return label + self.LABEL_SEPARATOR + metaValue
 
     def prettyfy(self, pattern):
         return pattern.replace('_', ' ')
