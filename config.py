@@ -32,7 +32,7 @@ import numpy as np
 import os.path
 
 class Config():
-    def __init__(self, thisConfigFilename='bioplot.cfg'):
+    def __init__(self, thisConfigFilename):
         self.configFilename = thisConfigFilename
         self.config = ConfigParser.RawConfigParser()
         self._fileNotFound = False
@@ -44,7 +44,7 @@ class Config():
                 print e
                 sys.exit(1)
         else:
-            print "Error reading %s, file not found." % self.configFilename
+            print "Error reading '%s', file not found." % self.configFilename
             self._fileNotFound = True
 
         # Show vertical axis as in Alexander et al [2014].
@@ -313,7 +313,7 @@ class Config():
         except Exception:
             self._showEdgeColor = self._showEdgeColorDefault
 
-        self._showMinCllrValuesDefault = True
+        self._showMinCllrValuesDefault = False
         try:
             self._showMinCllrValues = self.config.getboolean('zoo', 'showMinCllrValues')
         except Exception:
@@ -405,7 +405,7 @@ class Config():
         except Exception:
             self._runningOSX = self._runningOSXDefault
 
-        self._useColorsForQuartileRangesDefault = False
+        self._useColorsForQuartileRangesDefault = True
         try:
             self._useColorsForQuartileRanges = self.config.getboolean('zoo', 'useColorsForQuartileRanges')
         except Exception:
@@ -779,7 +779,7 @@ class Config():
         string += ", metaColors = " + str(self.getMetaColors())
         string += ", minimum4Type1 = " + str(self.getMinimum4Type1())
         string += ", minimum4Type3 = " + str(self.getMinimum4Type3())
-        string += ", minNrScores4MatrixPlot =" + str(self.getMinNrScores4MatrixPlot())
+        string += ", minNrScores4MatrixPlot = " + str(self.getMinNrScores4MatrixPlot())
         string += ", minimumOpacityValue = " + str(self.getMinimumOpacityValue())
         string += ", minStdDev = " + str(self.getMinStdDev())
         string += ", noHistAnnot = " + str(self.getNoHistAnnot())

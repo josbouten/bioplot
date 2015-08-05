@@ -45,12 +45,12 @@ from utils import sanitize, showLicense
 
 def printConfig(theseOptions, thisConfig):
     if thisConfig.getFileNotFound():
-        print "Config info taken from default values:\n%s" % thisConfig.toString()
+        print "Config info taken from 'default values':\n%s" % thisConfig.toString()
     else:
         if theseOptions.configFilename:
-            print "Config info as read from %s:\n%s" % (theseOptions.configFilename, thisConfig.toString())
+            print "Config info as read from '%s':\n%s" % (theseOptions.configFilename, thisConfig.toString())
         else:
-            print "Config info taken from default values:\n%s" % thisConfig.toString()
+            print "Config info taken from 'default values':\n%s" % thisConfig.toString()
 
 #
 #  Main
@@ -84,7 +84,7 @@ parser.add_option('-t', '--type', action="store", dest="dataType", default='type
                   help="type of data, default = type3")
 parser.add_option('-d', '--threshold', action="store", dest="threshold", type="float", default=0.7,
                   help="system threshold for ranking plot, default = 0.7")
-parser.add_option('-c', '--config', action="store", dest="configFilename", help="use alternative config file")
+parser.add_option('-c', '--config', action="store", dest="configFilename", default='bioplot.cfg', help="use alternative config file")
 parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
 parser.add_option('-s', '--settings', action="store_true", dest="showOptions", help="show settings only")
 parser.add_option('-q', '--quiet', action="store_true", dest="quiet", help="do not show settings")
@@ -115,10 +115,7 @@ dataType = options.dataType
 # only of interest if you want to plot the systems Accuracy.
 threshold = options.threshold
 
-if options.configFilename:
-    config = Config(options.configFilename)
-else:
-    config = Config()
+config = Config(options.configFilename)
 
 debug = config.getDebug()
 
@@ -132,6 +129,8 @@ if options.showOptions:
 
 if config.getShowConfigInfo():
     printConfig(options, config)
+
+print "Reading data from '%s'." % options.filename
 
 data = Data(config, expName, threshold, dataType, debug, filename)
 

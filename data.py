@@ -25,7 +25,6 @@ __author__ = 'drs. ing. Jos Bouten'
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
 '''
 
 # Author: drs. ing. J.S. Bouten
@@ -94,6 +93,8 @@ class Data(Format):
 
         # If the user did not specify a filename, we assume a database as the source.
         if self._source == 'database':
+            print "You need to add some code for this to work!"
+            sys.exit(1)
             res = self._readFromDatabase()
         else:
             res = self._readFromFile(self._source)
@@ -472,7 +473,7 @@ class Data(Format):
                 res.append(line.strip())
             return res
         except IOError, e:
-            print 'Data.readFromFile:', e
+            print e
             sys.exit(1)
 
 
