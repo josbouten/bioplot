@@ -3,7 +3,8 @@ TODO
 sorting of labels in animal text files.
 - labels are sorted as strings, this results in odd sequences if labels are numbers
 
-check getters in data.py
-
 To be implemented:
 We do not want a ticker on the radial axis.
+
+Difference in length of labels in legend will influence the layout of the legend
+Compute max length first and adapt formatting.
