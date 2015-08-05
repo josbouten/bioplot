@@ -24,11 +24,10 @@ __author__ = 'drs. ing. Jos Bouten'
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 '''
-from sys import exit
 
 class Version():
-    def __init__(self, debug=False):
-        self.debug = debug
+    def __init__(self, thisDebug=False):
+        self.debug = thisDebug
 
     def getVersion(self):
         '''
