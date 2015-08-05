@@ -3,9 +3,9 @@
 # __author__ = 'drs. ing. Jos Bouten'
 
 '''
-    Tool to convert the output of sretools to bioplot type3 data format.
+    Tool to convert the output of sretools (D. van Leeuwen) to bioplot type3 data format.
 
-    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class tool:
     def __init__(self, thisDebug):
         self.debug = thisDebug
 
-    def readFromFile(self, filename):
+    def readFromFile(self, thisFilename):
         '''
         Read raw lines of text from a text file.
         Strip lines of CR/LF
@@ -36,7 +36,7 @@ class tool:
         :return: list of strings
         '''
         try:
-            f = open(filename, 'r')
+            f = open(thisFilename, 'r')
             lines = f.readlines()
             f.close()
             res = []
@@ -69,4 +69,3 @@ if __name__ == '__main__':
             print idTrain, filenaam, idTest, 'bla', score, truth, metaValue
     else:
         usage()
-
