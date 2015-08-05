@@ -32,10 +32,10 @@ import sys
 from utils import sanitize
 
 class Ranking():
-    def __init__(self, data, config, debug=True):
-        self.data = data
-        self.config = config
-        self.debug = debug
+    def __init__(self, thisData, thisConfig, thisDebug=True):
+        self.data = thisData
+        self.config = thisConfig
+        self.debug = thisDebug
         self.title = self.data.getTitle()
 
     def _findType(self, data, seek):
