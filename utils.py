@@ -30,23 +30,6 @@ from sys import exit
 
 import matplotlib.pyplot as plt
 
-
-def showLicense(filename):
-    try:
-        f = open(filename, 'rt')
-    except Exception, e:
-        print e
-        print "You should have received a copy of the GNU General Public License along \
-                with this program; if not, write to the Free Software Foundation, Inc., \
-                51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA."
-        exit(1)
-    else:
-        lines = f.readlines()
-        f.close()
-        for line in lines:
-            print line.strip()
-
-
 def sanitize(filename):
     filename = filename.replace(' ', '_')
     filename = filename.replace(',', '_')
@@ -118,6 +101,23 @@ def plotIt(y, title=None):
         axes.set_title(title)
     plt.show()
 
+
+def plotIt2(y1, y2, label1, label2):
+    '''
+    plot 2 signals
+    '''
+    if len(y1) < len(y2):
+        x = arange(len(y1))
+    else:
+        x = arange(len(y2))
+    fig = plt.figure()
+    axes = fig.add_subplot(111)
+    color = 'r+-'
+    axes.plot(x, y1[0:len(x)], color, label=label1)
+    color = 'go-'
+    axes.plot(x, y2[0:len(x)], color, label=label2)
+    axes.legend()
+    plt.show()
 
 def write2file(filename, thisList):
     try:
