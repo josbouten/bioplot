@@ -31,6 +31,7 @@ import sys
 import numpy as np
 import os.path
 
+
 class Config():
     def __init__(self, thisConfigFilename):
         self.configFilename = thisConfigFilename
@@ -54,7 +55,7 @@ class Config():
         except Exception:
             self._alexanderStyle = self._alexanderStyleDefault
 
-        self._alpha4ReferencesDefault = 0.5
+        self._alpha4ReferencesDefault = 1.0
         try:
             self._alpha4ReferenceCircles = self.config.getfloat('zoo', 'alpha4ReferenceCircles')
         except Exception:
@@ -65,7 +66,6 @@ class Config():
             self._alpha4UnitCircles = self.config.getfloat('zoo', 'alpha4UnitCircles')
         except Exception:
             self._alpha4UnitCircles = self._alpha4UnitCirclesDefault
-
 
         self._alwaysSaveDefault = True
         try:
@@ -91,12 +91,12 @@ class Config():
             self._animalColors = self._animalColorsDefault
 
 
-        # Show labels for data points within quartile ranges
+        # Show labels for data points within quartile ranges.
         self._annotateEllipsesDefault = False
         try:
-            self._annotateEllipses = self.config.getboolean('zoo', 'annotateEllipses')
+            self._annotateEllipsesInQuartiles = self.config.getboolean('zoo', 'annotateEllipsesInQuartiles')
         except Exception:
-            self._annotateEllipses = self._annotateEllipsesDefault
+            self._annotateEllipsesInQuartiles = self._annotateEllipsesDefault
 
         self._boutenStyleDefault = True
         try:
@@ -105,13 +105,13 @@ class Config():
             self._boutenStyle = self._boutenStyleDefault
 
         self._colorsDefault = [("IWouldCallThisBlueIsh", "3399FF"),
-                              ("Orangy", "255, 125, 10"),
-                              ("rustLike", "96, 17, 0"),
-                              ("someSortOfPink", "255, 54, 160"),
-                              ("OneOf50ShadesOfGrey", "10, 5, 8"),
-                              ("someWhatBlue", "1414FF"),
-                              ("definatelyGreen", "0, 255, 0"),
-                              ("definatelyRed", "255, 0, 0")]
+                               ("Orangy", "255, 125, 10"),
+                               ("rustLike", "96, 17, 0"),
+                               ("someSortOfPink", "255, 54, 160"),
+                               ("OneOf50ShadesOfGrey", "10, 5, 8"),
+                               ("someWhatBlue", "1414FF"),
+                               ("definatelyGreen", "0, 255, 0"),
+                               ("definatelyRed", "255, 0, 0")]
         try:
             self._colors = self.config.items("metacolors")
         except Exception:
@@ -185,6 +185,9 @@ class Config():
         except Exception:
             self._maximum4Type3 = self._maximum4Type3Default
 
+        # Set maximum and minimum value of normalized stdevs.
+        # This is necessary to be able to draw negative widths and heights
+        # of ellipses after normalization.
         self._maxStdDevDefault = 6.0
         try:
             self._maxStdDev = self.config.getfloat('zoo', 'maxStdDev')
@@ -313,6 +316,19 @@ class Config():
         except Exception:
             self._showEdgeColor = self._showEdgeColorDefault
 
+        # Feature meant for debugging only.
+        self._showEqualAxesDefault = False
+        try:
+            self._showEqualAxes = self.config.getboolean('layout', 'showEqualAxes')
+        except Exception:
+            self._showEqualAxes = self._showEqualAxesDefault
+
+        self._showHelperCirclesDefault = True
+        try:
+            self._showHelperCircles = self.config.getboolean('zoo', 'showHelperCircles')
+        except Exception:
+            self._showHelperCircles = self._showHelperCirclesDefault
+
         self._showMinCllrValuesDefault = False
         try:
             self._showMinCllrValues = self.config.getboolean('zoo', 'showMinCllrValues')
@@ -340,13 +356,14 @@ class Config():
 
         self._showMatrixLabelsDefault = True
         try:
-            self._showMatrixLabels =  self.config.getboolean('matrix', 'showMatrixLabels')
+            self._showMatrixLabels = self.config.getboolean('matrix', 'showMatrixLabels')
         except Exception:
             self._showMatrixLabels = self._showMatrixLabelsDefault
 
         self._showAverageTargetAndNonTargetMatchScoresDefault = True
         try:
-            self._showAverageTargetAndNonTargetMatchScores = self.config.getboolean('zoo', 'showAverageTargetAndNonTargetMatchScores')
+            self._showAverageTargetAndNonTargetMatchScores = self.config.getboolean('zoo',
+                                                                                    'showAverageTargetAndNonTargetMatchScores')
         except Exception:
             self._showAverageTargetAndNonTargetMatchScores = self._showAverageTargetAndNonTargetMatchScoresDefault
 
@@ -460,10 +477,6 @@ class Config():
         except Exception:
             self._zHeight = self._zHeightDefault
 
-        # Show all info on the command line.
-        # if self.getShowConfigInfo():
-        #     print 'Config info:', self.toString()
-
     # GETTERS
 
     def getAlexanderStyle(self):
@@ -481,8 +494,8 @@ class Config():
         else:
             return False
 
-    def getAnnnotateEllipses(self):
-        return self._annotateEllipses
+    def getAnnotateEllipsesInQuartiles(self):
+        return self._annotateEllipsesInQuartiles
 
     def getAllwaysSave(self):
         return self._alwaysSave
@@ -499,7 +512,7 @@ class Config():
             if len(tmp) < 3:
                 return None
             else:
-                color = (float(tmp[0].strip())/255.0, float(tmp[1].strip())/255.0, float(tmp[2].strip())/255.0)
+                color = (float(tmp[0].strip()) / 255.0, float(tmp[1].strip()) / 255.0, float(tmp[2].strip()) / 255.0)
         else:
             # this must be hex in 6 digits, like 0FA232
             if len(colorValue) < 6:
@@ -508,7 +521,7 @@ class Config():
                 rValue = int(colorValue[0:2], 16)
                 gValue = int(colorValue[2:4], 16)
                 bValue = int(colorValue[4:6], 16)
-                color = (float(rValue)/255.0, float(gValue)/255.0, float(bValue)/255.0)
+                color = (float(rValue) / 255.0, float(gValue) / 255.0, float(bValue) / 255.0)
         return color
 
     def getCombineMatrices(self):
@@ -597,7 +610,7 @@ class Config():
             if "sqrt" in configNrBins:
                 nrBins = int(np.sqrt(nrDataElements))
             elif "rice" in configNrBins:
-                nrBins = int(2 * np.power(nrDataElements, 1.0/3.0))
+                nrBins = int(2 * np.power(nrDataElements, 1.0 / 3.0))
             elif "sturges" in configNrBins:
                 # Sturges, see https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width
                 nrBins = np.log2(nrDataElements) + 1
@@ -682,6 +695,12 @@ class Config():
     def getShowEdgeColor(self):
         return self._showEdgeColor
 
+    def getShowEqualAxes(self):
+        return self._showEqualAxes
+
+    def getShowHelperCircles(self):
+        return self._showHelperCircles
+
     def getShowMatrixLabels(self):
         return self._showMatrixLabels
 
@@ -753,30 +772,30 @@ class Config():
         if isinstance(value, bool):
             self._showAnnotationsAtStartup = value
 
-    # Get info.
-
+    # Print all settings.
     def toString(self):
-        string  = "alexanderStyle = " + str(self.getAlexanderStyle())
+        string = "alexanderStyle = " + str(self.getAlexanderStyle())
         string += ", alwaysSave = " + str(self.getAllwaysSave())
         string += ", allowDups = " + str(self.getAllowDups())
         string += ", alpha4References = " + str(self.getAlpha4ReferenceCircles())
         string += ", alpha4UnitCircles = " + str(self.getAlpha4UnitCircles())
         string += ", animalColors = " + str(self.getAnimalColors())
-        string += ", annotateEllipses = " + str(self.getAnnnotateEllipses())
+        string += ", annotateEllipsesInQuartiles = " + str(self.getAnnotateEllipsesInQuartiles())
         string += ", boutenStyle = " + str(self.getBoutenStyle())
         string += ", combineMatrices = " + str(self.getCombineMatrices())
         string += ", debug = " + str(self.getDebug())
         string += ", dimmingFactor = " + str(self.getDimmingFactor())
         string += ", interconnectMetaValues = " + str(self.getInterconnectMetaValues())
         string += ", labelAngle = " + str(self.getLabelAngle())
-        string += ", labelColor = " + str(self.getLabelColor())        
+        string += ", labelColor = " + str(self.getLabelColor())
         string += ", limitStdDevs = " + str(self.getLimitStdDevs())
         string += ", lineWidth = " + str(self.getLineWidth())
         string += ", matrixColorMap = " + str(self.getMatrixColorMap())
         string += ", maximum4Type1 = " + str(self.getMaximum4Type1())
         string += ", maximum4Type3 = " + str(self.getMaximum4Type3())
         string += ", maxStdDev = " + str(self.getMaxStdDev())
-        string += ", metaColors = " + str(self.getMetaColors())
+        if self.getDebug():
+            string += ", metaColors = " + str(self.getMetaColors())
         string += ", minimum4Type1 = " + str(self.getMinimum4Type1())
         string += ", minimum4Type3 = " + str(self.getMinimum4Type3())
         string += ", minNrScores4MatrixPlot = " + str(self.getMinNrScores4MatrixPlot())
@@ -785,7 +804,7 @@ class Config():
         string += ", noHistAnnot = " + str(self.getNoHistAnnot())
         string += ", normHist = " + str(self.getNormHist())
         string += ", nrAccPoints = " + str(self.getNrAccPoints())
-        string += ", nrBins = " + str(self._getNrBins()) # use private function here!
+        string += ", nrBins = " + str(self._getNrBins())  # use private function here!
         string += ", nrSamples4Probability = " + str(self.getNrSamples4Probability())
         string += ", opacity4Ellipses = " + str(self.getOpacity4Ellipses())
         string += ", outputPath = " + self.getOutputPath()
@@ -795,12 +814,16 @@ class Config():
         string += ", scaleFactor = " + str(self.getScaleFactor())
         string += ", screenResolution = " + str(self.getScreenResolutionString())
         string += ", showAnnotationsAtStartup = " + str(self.getShowAnnotationsAtStartup())
-        string += ", showAverageTargetAndNonTargetMatchScores = " + str(self.getShowAverageTargetAndNonTargetMatchScores())
+        string += ", showAverageTargetAndNonTargetMatchScores = " + str(
+            self.getShowAverageTargetAndNonTargetMatchScores())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())
         string += ", showCllrValues = " + str(self.getShowCllrValues())
         string += ", showConfigInfo = " + str(self.getShowConfigInfo())
-        string += ", getShowEdgeColor = " + str(self.getShowEdgeColor())
+        string += ", showEdgeColor = " + str(self.getShowEdgeColor())
         string += ", showEerValues = " + str(self.getShowEerValues())
+        if self.getDebug():
+            string += ", showEqualAxes = " + str(self.getShowEqualAxes())  # debug only function
+        string += ", showHelperCircles = " + str(self.getShowHelperCircles())
         string += ", showKernelInHist = " + str(self.getShowKernelInHist())
         string += ", showMatrixLabels = " + str(self.getShowMatrixLabels())
         string += ", showMetaInHist = " + str(self.getShowMetaInHist())
@@ -833,7 +856,7 @@ class Config():
         for line in lines:
             f.write(line + "\n")
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     config = Config()
     print 'main:', config.toString()
