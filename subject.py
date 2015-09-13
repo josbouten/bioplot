@@ -33,10 +33,20 @@ class Subject(Format):
         self._numberOfNonTargets = thisNumberOfNonTargets
         self.debug = thisDebug
 
-        self._agmStdDev = None
-        self._aimStdDev = None
-        self._soLonly = False
+        self._agmStdDev = 0.0
+        self._aimStdDev = 0.0
+        self._singleTargetScore = False
+        self._singleNonTargetScore = False
+        # wasLimited can be used to display points that were limited in stdev in a
+        # different way than other points.
+        self._wasLimited = False
 
+    # Getters
+    def getAgmsv(self):
+        return self._agmsv
+
+    def getAgmStdDev(self):
+        return self._agmStdDev
 
     def getAimsv(self):
         return self._aimsv
@@ -44,17 +54,8 @@ class Subject(Format):
     def getAimStdDev(self):
         return self._aimStdDev
 
-    def getAgmsv(self):
-        return self._agmsv
-
-    def getAgmStdDev(self):
-        return self._agmStdDev
-
     def getLabel(self):
         return self.getLabelFromPattern(self.getPattern())
-
-    def getSingleScore(self):
-        return self._soLonly
 
     def getNumberOfNonTargets(self):
         return self._numberOfNonTargets
@@ -69,6 +70,16 @@ class Subject(Format):
         # Pattern is label of subject combined with meta data tag.
         return self._pattern
 
+    def getSingleTargetScore(self):
+        return self._singleTargetScore
+
+    def getSingleNonTargetScore(self):
+        return self._singleNonTargetScore
+
+    def getWasLimited(self):
+        return self._wasLimited
+
+    # Setters
     def setAgmsv(self, thisAgmsv):
         self._agmsv = thisAgmsv
 
@@ -81,12 +92,18 @@ class Subject(Format):
     def setAimStdDev(self, value):
         self._aimStdDev = value
 
-    def setSingleScore(self, boolean):
-        self._soLonly = boolean
+    def setSingleTargetScore(self, boolean):
+        self._singleTargetScore = boolean
+
+    def setSingleNonTargetScore(self, boolean):
+        self._singleNonTargetScore = boolean
 
     def setNumberOfTargets(self, thisNumber):
         self._numberOfTargets = thisNumber
 
     def setNumberOfNonTargets(self, thisNumber):
         self._numberOfNonTargets = thisNumber
+
+    def setWasLimited(self, value):
+        self._wasLimited = value
 
