@@ -37,7 +37,7 @@ class AsyncWrite(threading.Thread):
 
     def run(self):
         if self.debug:
-            print "Writing data to: %s.", self.filename
+            print "Writing data to: %s." % self.filename
         try:
             f = open(self.filename, 'w')
             for score in self.scores:
