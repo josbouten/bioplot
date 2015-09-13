@@ -30,6 +30,9 @@ Internet Explorer may indicate that some active X element or script was blocked.
 This is caused by the search function in the bioplot docs. This function is perfectly 
 harmless (and helpfull), so you can enable it without any risks.
 
+Since there is no way for me to know who downloaded bioplot, other than the downlaoder telling me,
+send me an email if you want to be kept in the loop with changes or updates.
+
 Linux
 =====
 You need to have python2.7.x installed. On most linux systems this is the case.
@@ -55,6 +58,9 @@ file:///home/<user name>/bioplot/doc/_build/html/index.html
 into whatever browser you use.
 
 Make sure you change <user name> into the appropriate name.
+
+Since there is no way for me to know who downloaded bioplot, other than the downlaoder telling me,
+send me an email if you want to be kept in the loop with changes or updates.
 
 OSX
 ===
@@ -94,3 +100,5 @@ into safari.
 Note: in contrast to the example plots supplied labels in plots on OSX will appear in
 black on a grey background.
 
+Since there is no way for me to know who downloaded bioplot, other than the downlaoder telling me,
+send me an email if you want to be kept in the loop with changes or updates.
