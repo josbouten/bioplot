@@ -127,7 +127,7 @@ class BoutenZoo(Zoo):
     def plot(self):
         yagerStyle = self.config.getYagerStyle()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
-        self.annotateEllipses = self.config.getAnnnotateEllipses()
+        self.annotateEllipsesInQuartiles = self.config.getAnnotateEllipsesInQuartiles()
         self.fig = plt.figure(1, figsize=(8, 8))
         self.computeZooStatsAlexanderStyle()
 
@@ -139,8 +139,8 @@ class BoutenZoo(Zoo):
                 if self.config.getShowCircularHistogram() and len(self.data.getMetaDataValues()) == 2:
                     if len(allAngles) > 0:
                         if axesHistC:
-                            c = CircularHistPlot(self.debug)
-                            c.plot(allAngles, deltaZoo, axesHistC)
+                            c = CircularHistPlot(allAngles, deltaZoo, axesHistC, self.debug)
+                            c.plot()
 
         valueSet = self.data.getMetaDataValues().keys()
         targetHistData = {}
