@@ -27,6 +27,9 @@ import warnings
 import matplotlib.pyplot as plt
 from event import Event
 from probability import Probability
+import numpy as np
+import listutils as lu
+from utils import assignColors2MetaDataValue
 
 class Eer(Probability):
     def __init__(self, thisData, thisConfig, thisDebug=True):
@@ -36,6 +39,77 @@ class Eer(Probability):
         self.plotType = 'eer_plot'
         Probability.__init__(self, self.data, self.config, self.debug)
 
+    def _intersectionPoint(self, PD, PP):
+        indices = lu.findEqual(PD, PP)
+        if len(indices) == 0:
+            indices = lu.findElementsBiggerInList(PD, PP)
+            # get last element
+            ind1 = indices[-1]
+            ind2 = ind1 + 1
+            c11 = PD[ind1]
+            c12 = PD[ind2]
+            c21 = PP[ind1]
+            c22 = PP[ind2]
+            x = (c21 - c11) / (c12 - c11 - c22 + c21)
+            y = c11 + (c12 - c11) * x
+            x = x + ind1 - 1
+        else:
+            x = indices[1] - 1
+            y = PD[indices[1]]
+        return int(x), y
+
+    def eerResample_org(self, targetScores, nonTargetScores):
+
+        '''
+            Compute eer and score at which eer point lies from target and non target scores.
+            for j = 1 : length(Xx)
+              PP(j) = 1 - (length(find(target_scores >= Xx(j))) / length(target_scores))
+              PD(j) = length(find(non_target_scores >= Xx(j))) / length(non_target_scores)
+            end
+
+        '''
+
+        mi = self.data.getMin()
+        ma = self.data.getMax()
+        range = abs(ma - mi)
+
+        # We want N steps on the score (horizontal) axis.
+        N = self.config.getNrSamples4Probability()
+
+        lt = len(targetScores) * 1.0
+        lnt = len(nonTargetScores) * 1.0
+        X = np.arange(mi, ma, range / N)
+        lx = len(X)
+        PD = np.zeros(lx)
+        PP = np.zeros(lx)
+        for j in np.arange(lx):
+            ts = len(lu.findIndex2EqualOrBigger(targetScores, X[j])) * 1.0
+            nts = len(lu.findIndex2EqualOrBigger(nonTargetScores, X[j])) * 1.0
+            PP[j] = self.eerFunc(ts, lt)
+            PD[j] = nts / lnt
+        index2score, eer = self._intersectionPoint(PD, PP)
+        if self.debug:
+            print 'compProbs:index2score:', index2score
+            print 'compProbs:eer:', eer
+        score = X[index2score]
+        return eer, score, PD, PP, X
+
+    def computeEer(self, PD, PP, X):
+        try:
+            index2score, eer = self._intersectionPoint(PD, PP)
+        except Exception, e:
+            print 'probability.py: Exception in computeEer:', e
+            print 'probability.py: You may have too few data points to compute an eer value.'
+            # Rethrow the exception
+            raise
+        else:
+            if self.debug:
+                print 'compProbs:index2score:', index2score
+                print 'compProbs:eer:', eer
+            score = X[index2score]
+            return eer, score
+        return 1.0, 0.0
+
     def plot(self):
         self.fig = plt.figure()
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
@@ -43,17 +117,20 @@ class Eer(Probability):
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
         eerData = self.computeProbabilities(self.eerFunc)
+        metaDataValues = self.data.getMetaDataValues()
+        metaColors = self.config.getMetaColors()
+        colors = assignColors2MetaDataValue(metaDataValues, metaColors)
         for (metaValue, PD, PP, X) in eerData:
             try:
                 eer, score = self.computeEer(PD, PP, X)
             except Exception:
                 print "Eer: problem computing EER for %s" % metaValue
-                pFr, = axes.plot(X, PP, 's-', label="P(pros), %s Eer: undefined" % (metaValue))
-                pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue)
+                pFr, = axes.plot(X, PP, 's-', label="P(pros), %s Eer: undefined" % (metaValue), color=colors[metaValue])
+                pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue, color=colors[metaValue])
             else:
-                pFr, = axes.plot(X, PP, 's-', label="P(pros), %s Eer: %0.2f%s at %0.2f" % (metaValue, eer * 100, '%', score))
-                pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue)
-        plt.legend()
+                pFr, = axes.plot(X, PP, 's-', label="P(pros), %s Eer: %0.2f%s at %0.2f" % (metaValue, eer * 100, '%', score), color=colors[metaValue])
+                pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue, color=colors[metaValue])
+        plt.legend(loc=5) # position logend at center right
         axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
         plt.xlabel('Threshold (raw score)')
         plt.ylabel('Probability (cumulative distribution function)')
