@@ -186,7 +186,13 @@ class Histogram(Format):
                 if self.debug:
                     print 'allColors:', allColors
                 try:
-                    plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels, color=allColors)
+                    if len(self.colors) > 1:
+                        # If we pair colours, this makes it difficult to distinguish between target and non target
+                        # scores for one label.
+                        # plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels, color=allColors)
+                        plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels)
+                    else:
+                        plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels)
                 except Exception:
                     print "Error: could not plot histogram!"
                     print "len(allData): %d\nnrBins: %d" % (len(allData), self.config.getNrBins())
