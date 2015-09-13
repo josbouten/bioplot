@@ -26,22 +26,24 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-
 class CircularHistPlot():
-    def __init__(self, thisDebug=True):
+    def __init__(self, theseAngles, theseScores, theseAxes=plt, thisDebug=True):
+        self.angles = theseAngles
+        self.score = theseScores
+        self.axes = theseAxes
         self.debug = thisDebug
         self.bottom = 0.2
 
-    def plot(self, angles, score, axes=plt):
-        N = len(angles)
+    def plot(self):
+        N = len(self.angles)
         if self.debug:
             print 'CircularHistPlot: N:', N
-        hist, bin_edges = np.histogram(angles, bins=N, normed=True, density=False)
+        hist, bin_edges = np.histogram(self.angles, bins=N, normed=True, density=False)
         maxHeight = max(hist) * 1.0
         theta = np.linspace(0.0, 2 * np.pi, N, endpoint=False)
         width = 2 * np.pi / N
-        bars = axes.bar(theta, hist / maxHeight, width=width, bottom=self.bottom)
-        axes.set_xlabel("Distribution of slopes. $\\delta$ = %0.5f" % (score))
+        bars = self.axes.bar(theta, hist / maxHeight, width=width, bottom=self.bottom)
+        self.axes.set_xlabel("Distribution of slopes. $\\delta$ = %0.5f" % (self.score))
 
         # To be implemented:
         # We do not want a ticker on the radial axis.
@@ -51,15 +53,15 @@ class CircularHistPlot():
             bar.set_facecolor(plt.cm.jet(r))
             bar.set_alpha(0.8)
 
-    def test(self):
-        N = 80
-        score = 1.0012345
-        radii = np.random.rand(N)
-        axes = plt.subplot(111, polar=True)
-        self.plot(radii, score, axes)
-        plt.show()
+def testCircularPlot():
+    N = 80
+    score = 1.0012345
+    radii = np.random.rand(N)
+    axes = plt.subplot(111, polar=True)
+    c = CircularHistPlot(radii, score, axes)
+    c.plot()
+    plt.show()
 
 
 if __name__ == '__main__':
-    c = CircularHistPlot()
-    c.test()
+    testCircularPlot()
