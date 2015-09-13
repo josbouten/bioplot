@@ -5,13 +5,13 @@ Data separation character
 -------------------------
 In data.py the following characters are used to group data: _#_
 If they are in your data set, e.g. as part of a label or meta data value, either change your data set or change the
-characters in format.py and choose non ambiguous replacements.
+definition of the separation characters in format.py and choose non ambiguous replacements.
 
 Matplotlib on OSX and Ms Windows
 --------------------------------
 The software works well with matplotlib-1.3.1. Some matplotlib versions that are out there will show a plot on the
- screen and then exit immediately. If you encounter this, let me know. This can be easily helped. Given that I encountered
- this only with older versions of matplotlib I have not implemented any measures for it in the current version of bioplot.
+screen and then exit immediately. If you encounter this, let me know. This can be easily helped. Given that I encountered
+this only with older versions of matplotlib I have not implemented any measures for it in the current version of bioplot.
 
 The Labels by default show black text on a yellow background. The yellow background may be too large for the text on
 Ms Windows platforms when using matplotlib 1.4.3 however. If so, set cfg.runningWindows to True, this will change the

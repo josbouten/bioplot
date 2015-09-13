@@ -28,6 +28,14 @@ via the command line interface. There are lots of them. Their values are shown o
 command line whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
 
+Set your screen's resolution in [cfg] using screenResolution (in this example it is set to 1600x1200). ::
+
+    [cfg]
+    screenResolution = 1600x1200
+
+Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
+send me an email if you want to be kept in the loop with changes or updates.
+
 Linux
 -----
 You need to have python2.7.x installed. On most linux systems this is the case.
@@ -51,6 +59,14 @@ Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them.  Their values are shown on the
 commandline whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg
+
+Set your screen's resolution in [cfg] using screenResolution (in this example it is set to 1600x1200). ::
+
+    [cfg]
+    screenResolution = 1600x1200
+
+Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
+send me an email if you want to be kept in the loop with changes or updates.
 
 OSX
 ---
@@ -91,3 +107,10 @@ in bioplot.cfg: ::
     [cfg] 
     runningOSX = True
 
+Set your screen's resolution in [cfg] using screenResolution (in this example it is set to 1600x1200). ::
+
+    [cfg]
+    screenResolution = 1600x1200
+
+Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
+send me an email if you want to be kept in the loop with changes or updates.

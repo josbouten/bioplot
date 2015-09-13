@@ -1,3 +1,5 @@
+.. _rst_settings:
+
 Settings
 ========
 
@@ -175,6 +177,10 @@ Spacing between zoo plot and left side of histograms in boutenZoo. ::
 
   spacing = 0.02
 
+Resolution of screen used width x height, eg 1280x1024 ::
+
+    screenResolution = 1600x1024
+
 [matrix]
 --------
 Not working at the moment:
@@ -210,12 +216,15 @@ canvas is white and you would not see much of a label then.
 From a perceptual point you should avoide pure Blue
 in combination with other colors as the human eye does not focus
 blue light in the same way as the other colours because of chromatic aberation
-when viewing multiple colours at the same time.
+when viewing multiple colours at the same time. Blue will be less visible because
+it will not be in focus when other colours are near it.
 The meta data values are sorted alphabetically.
 The colors are used in the sequence they are listed here.
 Note that the labels are of no consequence! They are there for your convenience.
 Values should be in R,G,B format specifying integer values
-or hexadecimal values (6 digits). Search for color values on the web using 'html colors' as the search string
+or hexadecimal values (6 digits). Have a look at http://colorbrewer2.org. I'm certain
+you will get inspired to use some nice colours in the plots.
+Alternatively you can search for color values on the web using 'html colors' as the search string
 and you will find various lists and examples. ::
 
     Orangy = 255,125,10
@@ -242,9 +251,9 @@ as published by Alexander et al. @ IAFPA conference Zurich, Switzerland, 2014. :
 
   alexanderStyle = True
 
-Transparency value for reference circles. ::
+Transparency value for inner most reference circle. ::
 
-    alpha4References = 0.3
+    alpha4References = 1.0
 
 Transparency value for unit circles. ::
 
@@ -256,9 +265,9 @@ When set to single, all will be grey. ::
     animalColors = multi
 
 
-Show labels for data points. The old label 'annotateEllipses' is depricated.::
+Show labels for quartile data points at startup. ::
 
-  annotateEllipses = True
+  annotateEllipsesInQuartiles = False
 
 Add target and non target score histogram to zoo plot. ::
 
@@ -289,8 +298,8 @@ Width of lines interconnecting ellipses in zoo plot. ::
 
     lineWidth = 1.2
 
-Maximum value of the stdev for an ellipse in the zoo plot.
-Values any higher are limited to this number. ::
+Maximum width/height in standard deviations allowed for an ellipse in the zoo plot.
+Values any higher are limited to this number of standard deviations. ::
 
  maxStdDev = 6.0
 
@@ -337,13 +346,21 @@ Show Cllr values in legend of relevant plots. ::
 
     showCllrValues = True
 
-Show EER values in legend of relevant plots. ::
+Show EER values in legend of relevant plots.
+Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
+The data points nearest to the crossing point are used and the crossing point is computed via interpolation. ::
 
     showEerValues = True
 
 Show edge of ellipse in same color as ellipse (otherwise black). ::
 
     showEdgeColor = False
+
+Show circles around unit ellipse that can be used to resize the plot so that the unit circle
+will be shown as a circle. This will make it easier to interpret the std values for average target vs
+average non target data points. ::
+
+    showHelperCircles = True
 
 Show min Cllr values in legend of relevant plots. ::
 

@@ -2,6 +2,9 @@
 
 Zoo plot
 ========
+
+Traditional plot
+----------------
 A zoo plot shows a scatter type plot where on the vertical axis the mean of the non target
 scores and on the horizontal axis the mean target scores are drawn for each label. This leads to
 a plot of dots where each dot represents the scores for one subject. The plot below shows an example with one dataset.
@@ -9,7 +12,7 @@ The zoo's special animals are coloured differently to make them stand out more.
 
 Run this command: ::
 
-    python ./bioplot.py -e "condition A" -f input/testdata_A.txt -Z
+    python ./bioplot.py -e "condition A" -i input/testdata_A.txt -Z
 
 .. image:: images/condition_A_traditional_zoo_plot.png
 
@@ -18,10 +21,20 @@ The legend shows the eer and cllr values for the respective conditions.
 
 Run this command: ::
 
-    python ./bioplot.py -e "condition A, B and C" -f input/testdata_ABC.txt -Z
+    python ./bioplot.py -e "condition A, B and C" -i input/testdata_ABC.txt -Z
 
 .. image:: images/condition_ABC_traditional_zoo_plot.png
 
+
+You can choose which error measures to show in the plot by setting any of the options below to true: ::
+
+    [zoo]
+    showCllrValue = True
+    showEERValue = True
+    showMinCllrValues = True
+
+Tall thin animals
+-----------------
 An extention of the zoo plots was shown at the IAFPA 2014 conference in Zurich, Switserland
 by Anil Alexander et al. They proposed that adding a measure of the standard deviations of the
 scores used to make the plot will add details of the score distributions of the subjects
@@ -31,36 +44,66 @@ The width and height of the ellipses shown are essentially the standard deviatio
 target and average non target scores for a given label. Because these may be much bigger or much
 smaller than the horizontal and vertical scales of the traditional zoo plot, the mean standard
 deviations are scaled by subtracting the overall mean standard deviation and dividing by the
-standard deviation of all standard deviations. This is in essence a normalization procedure.
+standard deviation of all standard deviations. So they will be centered around zero.
+This is in essence a normalization procedure.
 The result will be ellipses with a unit width and height and ellipses smaller and bigger than that.
 To be able to actually plot the normalised ellipses, the width is multiplied by the range of
 scores on the horizontal axis and the height is multiplied by the range of the scores on the vertical axis.
 Finally to scale the ellipses their width and height is divided by a scale factor.
 This scale factor is related to the number of pixels in the display used to plot the zoo plot.
 A value of 150 works nicely for a 1600 ... 1280x1024 display.
-To get this type of plot set the following option in your settings file: ::
+To get this type of plot set the following options in your settings file: ::
 
     [zoo]
     alexanderStyle = True
+    scaleFactor = 150
+
+Set the screen resolution in layout: ::
+
+    [layout]
+    screenResolution = 1600x1024
+
 
 .. image:: images/condition_ABC_alexander_zoo_plot.png
 
-If you don't like the colors used, specify your own list in the section [metacolors] of the settings file.
-Different colors make it possible to combine multiple data sets in one plot.
+Yager and Dunstone
+------------------
+Yager and Dunstone show the worms and chameleons at the top of the plot and the phantoms and doves below them.
+If you prefer this layout set yagerstyle to True in the config file (the default is False). ::
+
+    [zoo]
+    yagerstyle = True
+
+Helper circles
+--------------
+Initially in a zoo plot helper ellipses are shown around the unit ellipse. If you resize the plot so that
+they become circles, it will be easier to interpret the plotted data points and the shapes of the data points
+will become independent of the screen dimensions. If you save a plot when resized in the way suggested you
+will be able to compare zoo plots made from different data sets more easily. The helper ellipses will disappear as soon
+as you click in the plot. Note, only if the std deviations of the average target scores are similar to standard
+deviations of the average non target scores this will help. If this is not the case, then the ranges of the vertical
+and horizontal axes differ too much to be able to resize the plot to a square.
+
+.. image:: images/experiment_x_small.png
+
+Colours
+-------
+If you don't like the colours used, specify your own list in the section [metacolours] of the settings file.
+Different colours make it possible to combine multiple data sets in one plot.
 Note: don't use white or some very light colour as the plot's
 canvas is white and you would not see much of a label then.
 From a perceptual point you should avoide pure Blue
-in combination with other colors as the human eye does not focus
+in combination with other colours as the human eye does not focus
 blue light in the same way as the other colours because of chromatic aberation
 when viewing multiple colours at the same time.
 The meta data values are sorted alphabetically.
-The colors are used in the sequence they are listed here.
+The colours are used in the sequence they are listed here.
 Note that the labels are of no consequence! They are there for your convenience.
 Values should be in R,G,B format specifying integer values
-or hexadecimal values (6 digits). Search for color values on the web using 'html colors' as the search string
+or hexadecimal values (6 digits). Search for colour values on the web using 'html colours' as the search string
 and you will find various lists and examples. ::
 
-    [metacolors]
+    [metacolours]
     IWouldCallThisBlueIsh = 3399FF
     Orangy = 255,125,10
     rustLike = 96,17,0
@@ -97,10 +140,10 @@ If you are curious where the scores of a specific label are in the zoo plot, you
 not click on all of them to find it. You can specify the labels on the command line.
 If they are in the plot, they will be highlighted. Example: ::
 
-    python ./bioplot.py -e "condition A and B" -f input/testdata_AB.txt -Z 1100 1109 1042
+    python ./bioplot.py -e "condition A and B" -i input/testdata_AB.txt -Z 1100 1109 1042
 
 This will highlight label 1100, 1109 and 1042 in the zoo plot compiled from
-the data in 'testdata_AB.txt' and dim the colors of the other points in the plot
+the data in 'testdata_AB.txt' and dim the colours of the other points in the plot
 making it easy to create a picture for a publication or report. Text labels
 will be displayed near the points selected.
 
@@ -120,15 +163,45 @@ it easy to see what the effect of the parameter change is. ::
 Zooplots combined with Histograms
 ---------------------------------
 
-In the plot shown below the zoo plot is bordered by histograms showing the distributions of the target and non target scores. In this zoo plot 2 data sets are shown combined. The points corresponding with one label are interconneted. To get bioplot to show this, set the following option in bioplot.cfg: ::
+In the plot shown below the zoo plot is bordered by histograms showing the distributions of the target and non target
+scores. Note that the minimum and maximum values in the histograms are based on raw scores and the axes of the zoo plot
+are based on mean scores. This causes the axes to differ and therefore the peak of the histogram is not alligned with the center
+of the zoo plot. In this example this is clearly visible for the non target scores. In this zoo plot 2 data sets
+are shown combined. The points corresponding with one label are interconneted. To get bioplot to show this, set the
+following option in bioplot.cfg: ::
 
     [zoo]
     boutenStyle = True
+    interconnectMetaValues = True
 
 .. image:: images/A_and_B_zoo_plot.png
+
+To get a sort of quantification of the idea of change in position in the plot a histogram can be added.
+The black ellipses show the mean values of all target and non target mean scores. The histogram shows the distribution of angles
+of slopes the ellipses for a given subject moved on from one experiment's results to the other. Bear in mind that due
+to the difference in axes the angles can not be read from the zoo plot easily.
+Any movement to the upper right of the plot means increase in recognition. Any movement from the outskirts to the
+imaginary diagonal of the plot is an increase in calibration.
+A system's discrimination appears to be proportional to the distance to the upper right corner of the plot
+(where the Doves are) and its calibration appears to be proportional to the distance of a data point to the imaginary
+diagonal one can draw from the lower left to the upper right of the plot.
+The delta value tries to capture this by averaging all movements towards the upper right of the plot.
+The movement is measured by multiplying the absolute movement of an ellipses by the sine of the angle
+of movement to the horizontal axis. Note that this measure is computed between conditions sorted in alphabetical order.
+E.g. in the conditionA and conditionB data plot, the delta is computed for movement of ellipses from conditionA to conditionB.
+
+.. image:: images/condition_AB_bouten_zoo_plot.png
 
 The interface used to display the plots allows the user to zoom in on any part of the plots shown.
 
 .. image:: images/condition_A_and_B_zoo_plot_zoom.png
 
+Labels
+------
+In some of the plots above you have seen examples of labels shown when you click on the plot. The information shown can
+be configured via the config file. You can choose among these: ::
 
+    [zoo]
+    showStdDev = True
+    showNrTargetsAndNonTargets = True
+    showAverageTargetAndNonTargetMatchScores = True

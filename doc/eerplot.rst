@@ -1,4 +1,4 @@
-.. _eerplot-label:
+.. _rst_eerplot:
 
 EER plot
 ========
@@ -7,10 +7,12 @@ Will plot a cumulative score plot showing the odds of a false positive and false
 versus the raw scores. In order to draw the curves, the number of scores equal to or bigger than
 a threshold are counted. This is done for a number of threshold values. The number can be set via
 nrSamples4Probability in bioplot.cgf in section [probability]. The default is 250 steps.
+The EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
+The data points nearest to the crossing point are used and the crossing point is computed via interpolation.
 
 Example command: ::
 
-    python ./bioplot.py -e "condition A and B" -f input/testdata_AB.txt -E
+    python ./bioplot.py -e "condition A and B" -i input/testdata_AB.txt -E
 
 .. image:: images/condition_A_and_B_eer_plot.png
 
