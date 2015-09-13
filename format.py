@@ -7,6 +7,8 @@ __author__ = 'drs. ing. Jos Bouten'
 
     Object to handle basic data formats
 
+    Inherited by subject.py, matrix.py, histogram.py, data.py.
+
     Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
@@ -39,6 +41,7 @@ class Format():
         1087_#_B
         1025_#_A
         1113_#_C
+        1025_#_24_1_21
         '''
 
     def getLabelFromPattern(self, pattern):
@@ -46,17 +49,17 @@ class Format():
         Return label part of a pattern.
 
         :param pattern: '1025_#_24_1_21'
-        :return: ['1025', '24_1_21']
+        :return: '1025'
         '''
         tmp = pattern.split(self.LABEL_SEPARATOR)
         return tmp[0]
 
     def getMetaFromPattern(self, template):
         '''
-        Return meta data value part of a pattern
+        Return meta data value part of a pattern.
 
         :param pattern: '1025_#_24_1_21'
-        :return: ['1025', '24_1_21']
+        :return: '24_1_21'
         '''
         tmp = template.split(self.LABEL_SEPARATOR)
         return tmp[1]
