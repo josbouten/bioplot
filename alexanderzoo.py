@@ -55,7 +55,7 @@ class AlexanderZoo(Zoo):
     def plot(self):
         yagerStyle = self.config.getYagerStyle()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
-        self.annotateEllipses = self.config.getAnnnotateEllipses()
+        self.annotateEllipses = self.config.getAnnotateEllipsesInQuartiles()
 
         self._plotZooAlexanderStyle(yagerStyle)
         if self.config.getAlexanderStyle():
@@ -81,6 +81,8 @@ class AlexanderZoo(Zoo):
         self.fig.canvas.mpl_connect('button_press_event', self._onMouseEvent)
 
         axes = self.fig.add_subplot(111)
+        # axes.set_autoscale_on(False)
+        # plt.xlim(-2.0, -1.0)
         self._plotDistributions(self.colors, axes)
         if yagerStyle:
             comment = ''
