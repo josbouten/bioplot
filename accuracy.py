@@ -117,7 +117,8 @@ class Accuracy():
         axes = self.fig.add_subplot(111)
         pAcc, = axes.plot(x, yAcc, 's-', color='green')
         pBacc, = axes.plot(x, yBacc, 'o-', color='red')
-        plt.legend([pAcc, pBacc], ['random accuracy', 'balanced accuracy'])
+        # Position legend at lower right of plot.
+        plt.legend([pAcc, pBacc], ['random accuracy', 'balanced accuracy'], loc=4)
         axes.set_xlim(0, self.data.getMax())
         axes.set_ylim(0, 100)
         axes.set_title("Accuracy vs Threshold for '%s'" % self.data.getTitle())
