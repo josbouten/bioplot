@@ -1,9 +1,7 @@
 #!/usr/bin/env python2.7
 
-# __author__ = 'drs. ing. Jos Bouten'
-
 '''
-    Tool to convert the output of sretools (D. van Leeuwen) to bioplot type3 data format.
+    Tool to convert the input data for sretools (D. van Leeuwen) to bioplot data format.
 
     Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
 
@@ -23,49 +21,93 @@
 '''
 
 import sys
+import csv
+import optparse
+from license import License
 
-class tool:
-    def __init__(self, thisDebug):
+class SreData:
+    def __init__(self, thisInputFilename, thisMetaValue, thisDebug):
+        self.inputFilename = thisInputFilename
+        self.metaValue = thisMetaValue
         self.debug = thisDebug
 
-    def readFromFile(self, thisFilename):
+    def convert2bioplot(self, thisFilename='stdout'):
         '''
-        Read raw lines of text from a text file.
-        Strip lines of CR/LF
-        :param filename: string: name of file containing text
-        :return: list of strings
-        '''
-        try:
-            f = open(thisFilename, 'r')
-            lines = f.readlines()
-            f.close()
-            res = []
-            for line in lines:
-                res.append(line.strip())
-            return res
-        except IOError, e:
-            print 'Data.readFromFile:', e
-            sys.exit(1)
+        Tspid,Tfrid,Mspid,Mfrid,score,target
+        114849,0000000005712904a,114849,0000000005713112b,5.368496418,TRUE
+        114849,0000000005712904a,114853,0000000005281055b,1.67685461,FALSE
+        114849,0000000005712904a,114853,0000000005288357b,1.363172889,FALSE
+        114849,0000000005712904a,114854,0000000005133202a,-0.024709666,FALSE
 
-def usage():
-    print sys.argv[0], '<input file>'
+
+        into
+        114849 0000000005713112b 114849 0000000005712904a 5.368496418  TRUE  META_VALUE
+        114853 0000000005281055b 114849 0000000005712904a 1.67685461   FALSE META_VALUE
+        114853 0000000005288357b 114849 0000000005712904a 1.363172889  FALSE META_VALUE
+        114854 0000000005133202a 114849 0000000005712904a -0.024709666 FALSE META_VALUE
+
+        :param thisFilename:
+        :return:
+        '''
+        '''
+        :param thisFilename:
+        :return:
+        '''
+        if thisFilename != 'stdout':
+            try:
+                f = open(thisFilename, 'wt')
+            except Exception, e:
+                print e
+                sys.exit(1)
+        delimiter = ','
+        with open(self.inputFilename, 'rb') as csvfile:
+            spamreader = csv.reader(csvfile, delimiter=delimiter, strict=True)
+            for row in spamreader:
+                # Skip first line
+                if not 'Tspid' in row[0]:
+                    idTest = row[0]
+                    testFilename = row[1]
+                    idTrain = row[2]
+                    trainFilename = row[3]
+                    score = row[4]
+                    truth = row[5]
+                    if thisFilename != 'stdout':
+                        f.write("%s %s %s %s %s %s %s\n" % \
+                            (idTrain, trainFilename, idTest, testFilename, str(score), truth, self.metaValue))
+                    else:
+                        print idTrain, trainFilename, idTest, testFilename, str(score), truth, self.metaValue
+        if thisFilename != 'stdout':
+            f.close()
 
 if __name__ == '__main__':
+    version = "0.1"
+    parser = optparse.OptionParser(usage="%s [options filename] \n\
+    sretools2bioplot.py version %s, Copyright (C) 2015 Jos Bouten\n\
+    sretools2bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `sretools2bioplot.py -l\'.\n\
+    This is free software, and you are welcome to redistribute it\n\
+    under certain conditions; type `sretools2bioplot.py -l\' for details.\n\
+    This program was written by Jos Bouten.\n\
+    You can contact me via josbouten at gmail dot com." % (sys.argv[0], version),
+    version="This is sretools2bioplot.py version %s, Copyright (C) 2015 Jos Bouten" % version, )
+    parser.add_option('-i', '--input', action="store", dest="inputfile", help="input file name")
+    parser.add_option('-o', '--output', action="store", dest="outputfile", help="output file name")
+    parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
+    options, remainder = parser.parse_args()
 
-    if len(sys.argv) > 1:
-        filename = sys.argv[1]
-        t = tool(True)
-        lines = t.readFromFile(filename)
-        for line in lines:
-            tmp = line.split(',')
-            filenaam = tmp[1]
-            score = tmp[6]
-            truth = tmp[7]
-            metaValue = tmp[2] + '_' + tmp[4] + tmp[5]
-            #idTrain = tmp[3] + '_' + metaValue
-            #idTest = tmp[0] + '_' + tmp[2]
-            idTrain = tmp[3]
-            idTest = tmp[0]
-            print idTrain, filenaam, idTest, 'bla', score, truth, metaValue
-    else:
-        usage()
+    # Let's handle any request for the license first.
+    # We stop the program after that.
+    debug = False
+    if options.showLicense:
+        l = License('LICENSE.txt', debug)
+        l.showLicense()
+        exit(0)
+
+    if options.inputfile:
+        metaValue = 'META'
+        sData = SreData(options.inputfile, metaValue, debug)
+        if options.outputfile:
+            # Print converted data to file
+            sData.convert2bioplot(options.outputfile)
+        else:
+            # Print to standard output device.
+            sData.convert2bioplot('stdout')
