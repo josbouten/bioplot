@@ -54,7 +54,7 @@ from event import Event
 from utils import assignColors2MetaDataValue
 
 
-class Histogram(Event, Format):
+class Histogram(Format):
     def __init__(self, thisData, thisConfig, thisType='normal', thisDebug=True, thisUseMeta=False):
         Format.__init__(self, thisDebug)
         self.data = thisData
@@ -115,6 +115,7 @@ class Histogram(Event, Format):
                 else:
                     plt.title(r"Histogram for '%s" % (self.title))
             plt.grid(True)
+            plt.legend()
             plt.xlabel('red: non target scores, green: target scores')
             plt.ylabel('Probability')
 
@@ -185,7 +186,7 @@ class Histogram(Event, Format):
                 if self.debug:
                     print 'allColors:', allColors
                 try:
-                    plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels)
+                    plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels, color=allColors)
                 except Exception:
                     print "Error: could not plot histogram!"
                     print "len(allData): %d\nnrBins: %d" % (len(allData), self.config.getNrBins())
