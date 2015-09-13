@@ -3,7 +3,7 @@ __author__ = 'drs. ing. Jos Bouten'
 '''
     ranking.py
 
-    Object to compile a ranking list and generate a ranking plot.
+    Class to compile a ranking list and generate a ranking plot.
 
     Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
@@ -25,11 +25,8 @@ __author__ = 'drs. ing. Jos Bouten'
 
 from collections import OrderedDict
 import matplotlib.pyplot as plt
-import os.path
-from os import makedirs
 from event import Event
-import sys
-from utils import sanitize
+from utils import assignColors2MetaDataValue
 
 class Ranking():
     def __init__(self, thisData, thisConfig, thisDebug=True):
@@ -40,11 +37,11 @@ class Ranking():
 
     def _findType(self, data, seek):
         '''
-        Find the first occurrence of 'seek' in the ordered list of keys in dict 'data'
+        Find the first occurrence of 'seek' in the ordered list of keys in dict 'data'.
         A partial occurrence of seek is accepted.
-        :param data: list of dicts
-        :param seek: text string
-        :return: int: index to position in ordered version of dict 'data'
+        :param data: list of dicts.
+        :param seek: text string.
+        :return: int: index to position in ordered version of dict 'data'.
         '''
         odata = OrderedDict(sorted(data.items(), key=lambda x: x[1], reverse=True))
         index = 1
@@ -56,13 +53,14 @@ class Ranking():
             print '_find:found:', index
         return index
 
-    def computeRanking(self):
+    def computeRanking(self, metaValue):
         '''
         Compute the ranking position for all labels available in self.labels from their scores.
 
-        :return: dict of ranking positions for key = label
+        :return: dict of ranking positions for key = label.
         '''
-        print 'Computing ranking'
+        if self.debug:
+            print 'Computing ranking'
 
         self.labels = self.data.getTargetLabels()
         ranking = {}
@@ -70,7 +68,7 @@ class Ranking():
         cnt = 0
         for label in self.labels:
             try:
-                thisRank = self._findType(dict(self.data.getResultsOrg()[label]), label)
+                thisRank = self._findType(dict(self.data.getResults4Subject()[metaValue, label]), label)
                 ranking[label] = thisRank
                 maxRank = max(maxRank, thisRank)
                 cnt += 1
@@ -81,37 +79,6 @@ class Ranking():
             print 'computeRanking.max:', maxRank
             print 'computeRanking:number of ranks found:', cnt
         return ranking, maxRank
-
-    def _onEvent(self, event):
-        '''
-        Callback function handling button presses
-        Will write figure to disk.
-
-        :param event: button code
-        :return: nothing
-        '''
-        if self.debug:
-            print("You pressed key {:s}".format(event.key))
-        filename = self.title + "_" + self.plotType + '.png'
-        filename = sanitize(filename)
-
-        try:
-            if not os.path.exists(self.config.getBasePath()):
-                makedirs(self.config.getBasePath())
-        except Exception, e:
-            print e
-            sys.exit(1)
-
-        # Note: l, k, g, s and f are predefined keys
-        # With them you can:
-        # k: toggle between lin horizontal scale and log horizontal scale
-        # l: toggle between lin vertical scale and log vertical scale
-        # s: open save menu
-        # f: toggle between standard size and full screen
-
-        path = self.config.getBasePath() + os.path.sep + filename
-        self.fig.savefig(path, bbox_inches=0)
-        print 'Figure was saved to:', path
 
     def getNrLabels(self, ranking, thisRank):
         '''
@@ -138,26 +105,35 @@ class Ranking():
         '''
         Cumulative Ranking Plot
         '''
-        self.plotType = "ranking_plot"
-        self.ranking, self.maxRank = self.computeRanking()
         self.fig = plt.figure()
+        self.plotType = "ranking_plot"
         self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
-        nr = len(self.ranking)
-        x = []
-        y = []
-        increment = 1
-        # range of the scores in 100 steps
-        for thisRank in range(1, self.maxRank, increment):
-            y.append(float(self.getNrLabels(self.ranking, thisRank)) / float(nr) * 100.0)
-            x.append(thisRank)
         axes = self.fig.add_subplot(111)
-        color = 'r+-'
-        axes.plot(x, y, color)
-        axes.set_xlim(0, self.maxRank * 1.05)
-        axes.set_ylim(0, 100)
-        axes.set_title("Ranking plot for '%s'" % self.title)
-        plt.xlabel("Rank %s" % self._mkPercentString(y))
+        metaColors = self.config.getMetaColors()
+        metaDataValues = self.data.getMetaDataValues()
+        self.colors = assignColors2MetaDataValue(metaDataValues, metaColors)
+        self.nrColors = len(self.colors.keys())
+        only_once = True
+        for metaValue in metaDataValues:
+            ranking, maxRank = self.computeRanking(metaValue)
+            nr = len(ranking)
+            x = []
+            y = []
+            increment = 1
+            # range of the scores in 100 steps
+            for thisRank in range(1, maxRank, increment):
+                y.append(float(self.getNrLabels(ranking, thisRank)) / float(nr) * 100.0)
+                x.append(thisRank)
+            axes.plot(x, y, "o-", color=self.colors[metaValue], label=metaValue)
+            if only_once:
+                axes.set_xlim(0, maxRank * 1.05)
+                axes.set_ylim(0, 100)
+                axes.set_title("Ranking plot for '%s'" % self.title)
+                plt.xlabel("Rank %s" % self._mkPercentString(y))
+                only_once = False
+            print metaValue
         plt.ylabel('Probability')
+        axes.legend(loc=5)
         plt.grid()
         plt.show()
