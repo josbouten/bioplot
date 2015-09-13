@@ -1,10 +1,6 @@
 __author__ = 'jos'
 #!/usr/bin/env python
 
-import matplotlib.pyplot as plt
-from event import Event
-from probability import Probability
-
 '''
     tippet.py
 
@@ -28,6 +24,11 @@ from probability import Probability
 
 '''
 
+import matplotlib.pyplot as plt
+from event import Event
+from probability import Probability
+from utils import assignColors2MetaDataValue
+
 class Tippett(Probability):
     def __init__(self, thisData, thisConfig, thisDebug=True):
         self.data = thisData
@@ -44,9 +45,12 @@ class Tippett(Probability):
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
         eerData = self.computeProbabilities(self.tippetFunc)
+        metaDataValues = self.data.getMetaDataValues()
+        metaColors = self.config.getMetaColors()
+        colors = assignColors2MetaDataValue(metaDataValues, metaColors)
         for (metaValue, PD, PP, X) in eerData:
-            pFr, = axes.plot(X, PP, 's-', label="P(pros), %s" % (metaValue))
-            pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue)
+            pFr, = axes.plot(X, PP, 's-', label="P(pros), %s" % (metaValue), color=colors[metaValue])
+            pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue, color=colors[metaValue])
         plt.legend()
         axes.set_title("Tippett Plot: P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
         plt.xlabel('score')
