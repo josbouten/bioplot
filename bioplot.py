@@ -41,7 +41,9 @@ from accuracy import Accuracy
 from ranking import Ranking
 from matrix import MatrixPlot
 from version import Version
-from utils import sanitize, showLicense
+from utils import sanitize
+from license import License
+
 
 def printConfig(theseOptions, thisConfig):
     if thisConfig.getFileNotFound():
@@ -52,6 +54,7 @@ def printConfig(theseOptions, thisConfig):
         else:
             print "Config info taken from 'default values':\n%s" % thisConfig.toString()
 
+
 #
 #  Main
 #
@@ -60,8 +63,8 @@ v = Version()
 version = v.getVersion()
 
 parser = optparse.OptionParser(usage="%s [options] [option <arg1>] [<label1> <label2> <label3> ...]\n\
-bioplot.py version %s, Copyright (C) 2014 Jos Bouten\n\
-bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l\'.\n\
+bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten\n\
+This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
@@ -78,24 +81,25 @@ parser.add_option('-H', '--histogram', action="store_true", dest="plotHist", hel
 parser.add_option('-k', '--kernel', action="store_true", dest="plotKernel", help="show kernel estimate in histogram")
 parser.add_option('-e', '--exp', action="store", dest="expName", default='test',
                   help="name of experiment used in plot title, default = test")
-parser.add_option('-f', '--filename', action="store", dest="filename", default='input/testdata_A.txt',
+parser.add_option('-i', '--inputfile', action="store", dest="filename", default='input/testdata_A.txt',
                   help="filename of data file, default = input/testdata_A.txt")
 parser.add_option('-t', '--type', action="store", dest="dataType", default='type3',
-                  help="type of data, default = type3")
+                  help="type of data, default = type3, use 'database' if you want to read data from a database.")
 parser.add_option('-d', '--threshold', action="store", dest="threshold", type="float", default=0.7,
                   help="system threshold for ranking plot, default = 0.7")
-parser.add_option('-c', '--config', action="store", dest="configFilename", default='bioplot.cfg', help="use alternative config file")
+parser.add_option('-c', '--config', action="store", dest="configFilename", default='bioplot.cfg',
+                  help="use alternative config file")
 parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
 parser.add_option('-s', '--settings', action="store_true", dest="showOptions", help="show settings only")
 parser.add_option('-q', '--quiet', action="store_true", dest="quiet", help="do not show settings")
 parser.add_option('-V', action="store_false", dest="showVersion", help="show version info")
 options, remainder = parser.parse_args()
 
-
 # Let's handle any request for the license first.
 # We stop the program after that.
 if options.showLicense:
-    showLicense('LICENSE.txt')
+    l = License('LICENSE.txt')
+    l.showLicense()
     exit(0)
 
 if options.showVersion:
@@ -109,6 +113,7 @@ expName = options.expName
 
 # We do not like spaces!
 filename = sanitize(options.filename)
+#filename = options.filename
 dataType = options.dataType
 
 # Threshold used by biometric system to make a decision
@@ -173,7 +178,7 @@ if options.plotHistCum:
     histogram.plot()
 
 if options.plotHist:
-    # Show histogram for data split by meta data value
+    # Show histogram for data split by meta data value.
     useMeta = True
     if options.plotKernel:
         # Add all target and non target data together, i.e. do not use meta data label info.
