@@ -1,7 +1,5 @@
 #!/usr/bin/env python2.7
 
-_author_ = 'drs. ing. Jos Bouten'
-
 '''
     zoo.py
 
