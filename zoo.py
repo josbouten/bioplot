@@ -30,7 +30,7 @@ from os import makedirs
 from scipy import stats
 import numpy
 import collections
-from math import sqrt, atan2, sin
+from math import sqrt, atan2, sin, tan, pi
 
 import matplotlib.pyplot as plt
 
@@ -65,18 +65,21 @@ class Zoo(Format, Probability, Cllr):
         self.referencesWithAnnotation = []
         self.subject = []
         self._pointsWithAnnotation = []
-        self.annotateEllipses = self.config.getAnnnotateEllipses()
+        self.annotateEllipsesInQuartiles = self.config.getAnnotateEllipsesInQuartiles()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
         self.subjects = {}
         self.aimsv = {}
         self.agmsv = {}
+        # Keep track of the subject labels.
+        self.labels = set()
+        # Keep track of the number of scores per label
         self.lenAgmsv = {}
         self.lenAimsv = {}
 
-        self.unitTargetStdDev = collections.defaultdict(list)
-        self.unitNonTargetStdDev = collections.defaultdict(list)
-        self.unitMeanTargetStdDev = collections.defaultdict(list)
-        self.unitMeanNonTargetStdDev = collections.defaultdict(list)
+        self.agmStdDevStdDev = collections.defaultdict(list)
+        self.aimStdDevStdDev = collections.defaultdict(list)
+        self.agmMeanStdDev = collections.defaultdict(list)
+        self.aimMeanStdDev = collections.defaultdict(list)
 
         self.agmStdDevMin = collections.defaultdict(list)
         self.agmStdDevMax = collections.defaultdict(list)
@@ -101,6 +104,20 @@ class Zoo(Format, Probability, Cllr):
         self.agmsLow = collections.defaultdict(list)
         self.agmsHigh = collections.defaultdict(list)
 
+        self.xScaleFactor = collections.defaultdict(list)
+        self.xScaleFactorAll = 1E099
+        # xFactor? Yep, even zoo plots need to have a certain X-factor.
+        # McElderry for ever !
+        self.yScaleFactor = collections.defaultdict(list)
+        self.yScaleFactorAll = 1E099
+
+        # Initialize ranges
+
+        self.yRange = collections.defaultdict(list)
+        self.xRange = collections.defaultdict(list)
+        self.yRangeAll = 0.0
+        self.xRangeAll = 0.0
+
         metaDataValues = self.data.getMetaDataValues()
         metaColors = self.config.getMetaColors()
         self.colors = assignColors2MetaDataValue(metaDataValues, metaColors)
@@ -108,6 +125,16 @@ class Zoo(Format, Probability, Cllr):
         if self.debug:
             print 'colors:', self.colors
             print 'nr colors:', len(self.colors.keys())
+
+        # We need to assess each ellipse's area to choose its opacity.
+        self.minSurfaceArea = collections.defaultdict(list)
+        self.maxSurfaceArea = collections.defaultdict(list)
+        self.surfaceAreaRange = collections.defaultdict(list)
+
+        # Ellipses meant to use as an aid for the user to resize the
+        # zoo plot so that it becomes square. In that way the user
+        # can more easily interpret the std values.
+        self.helperCircles = []
 
     def getWorms(self):
         return self._worms
@@ -144,7 +171,7 @@ class Zoo(Format, Probability, Cllr):
             f = open(filename, 'wt')
             comment = "# label, metavalue"
             comment += ", average_target_score, average_non_target_score"
-            comment += ", #target_scores, #non_target_scores"
+            comment += ", nr_of_target_scores, nr_of_non_target_scores"
             comment += ", average_target_score_stdev, average_non_target_score_stdev"
             f.write("%s\n" % comment)
             for subject in subjects:
@@ -174,7 +201,7 @@ class Zoo(Format, Probability, Cllr):
 
         path = self.config.getOutputPath() + os.path.sep
         if self.debug:
-            print 'zoo._writeLimited2file: path:', path
+            print 'zoo.writeAnimals2file: path:', path
 
         thisPlotTitle = sanitize(self.data.getTitle())
 
@@ -232,24 +259,6 @@ class Zoo(Format, Probability, Cllr):
         else:
             print 'No computed std dev values were limited.'
 
-    def _limit(self, value, maxLevel, minLevel):
-        '''
-        Limit value to a maximum or minimum value.
-
-        :param value: float: number to be limited
-        :param maxLevel: float: maximum value
-        :param minLevel: float: minimum value
-        :return: float: limited value
-        '''
-        limited = False
-        if value > maxLevel:
-            value = maxLevel
-            limited = True
-        if value < minLevel:
-            value = minLevel
-            limited = True
-        return value, limited
-
     def _getValuesFromListOfDicts(self, thisDict, metaValue):
         ret = []
         for key in thisDict:
@@ -259,34 +268,34 @@ class Zoo(Format, Probability, Cllr):
 
     def computeZooStats(self):
         '''
-        Compute mean target scores and mean non target scores to be used in zoo plot (Yaget et al.)
+
+        Compute mean target scores and mean non target scores to be used in zoo plot (Yagert et al.).
+
         '''
 
         for metaValue in self.data.getMetaDataValues():
             for subjectLabelPlusMetaValue in self.data.getTargetScores().keys():
                 if metaValue in subjectLabelPlusMetaValue:
-                    # print 'computeZooStats:agmsv:subjectLabelPlusMetaValue:', subjectLabelPlusMetaValue, 'subjectLabelPlusMetaValue:', subjectLabelPlusMetaValue
                     elements = self.data.getTargetScores()[subjectLabelPlusMetaValue]
                     self.agmsv[subjectLabelPlusMetaValue] = self.data.compAverageScore(elements)
                     self.lenAgmsv[subjectLabelPlusMetaValue] = len(elements)
-                    # else:
                     #     print "Only 1 target value for %s" % subjectLabelPlusMetaValue
             for subjectLabelPlusMetaValue in self.data.getNonTargetScores().keys():
                 if metaValue in subjectLabelPlusMetaValue:
                     elements = self.data.getNonTargetScores()[subjectLabelPlusMetaValue]
                     self.aimsv[subjectLabelPlusMetaValue] = self.data.compAverageScore(elements)
                     self.lenAimsv[subjectLabelPlusMetaValue] = len(elements)
-                    # else:
                     #     print "Only 1 non target value for %s" % subjectLabelPlusMetaValue
         for subjectLabelPlusMetaValue in self.agmsv:
             if subjectLabelPlusMetaValue in self.aimsv:
+                # There must be at least one agms and aims value for the data to be used in the zoo plot.
                 subject = Subject(subjectLabelPlusMetaValue, self.agmsv[subjectLabelPlusMetaValue],
                                   self.aimsv[subjectLabelPlusMetaValue], self.lenAgmsv[subjectLabelPlusMetaValue],
                                   self.lenAimsv[subjectLabelPlusMetaValue], self.debug)
                 self.subjects[subjectLabelPlusMetaValue] = subject
 
         if len(self.subjects) == 0:
-            print "Error:Unable to compute zoo statistics."
+            print "Error: Unable to compute zoo statistics."
             print "No labels were found for which there are target AND non target scores."
             sys.exit(1)
 
@@ -297,14 +306,14 @@ class Zoo(Format, Probability, Cllr):
         for metaValue in self.data.getMetaDataValues():
             aimsValues = self._getValuesFromListOfDicts(self.aimsv, metaValue)
             if not len(aimsValues) > 1:
-                print "Not enough data to plot zoo for %s" % metaValue
+                print "Not enough data to draw a zoo plot for %s." % metaValue
                 break
             # Compute quartile ranges.
             self.aimsLow[metaValue] = stats.scoreatpercentile(aimsValues, 25)
             self.aimsHigh[metaValue] = stats.scoreatpercentile(aimsValues, 75)
             agmsValues = self._getValuesFromListOfDicts(self.agmsv, metaValue)
             if not len(agmsValues) > 1:
-                print "Not enough data to plot zoo for %s" % metaValue
+                print "Not enough data to draw a zoo plot for %s." % metaValue
                 break
             self.agmsLow[metaValue] = stats.scoreatpercentile(agmsValues, 25)
             self.agmsHigh[metaValue] = stats.scoreatpercentile(agmsValues, 75)
@@ -321,6 +330,14 @@ class Zoo(Format, Probability, Cllr):
                 self.aim_mi[metaValue], self.aim_ma[metaValue] = \
                     self.data.minMax(self.aimsv[subjectLabelPlusMetaValue], self.aim_mi[metaValue],
                                      self.aim_ma[metaValue])
+
+            if self.config.getShowEqualAxes():
+                # Force all plot so be square
+                mi = min(self.aim_mi[metaValue], self.agm_mi[metaValue])
+                self.aim_mi[metaValue] = self.agm_mi[metaValue] = mi
+                ma = max(self.aim_ma[metaValue], self.agm_ma[metaValue])
+                self.aim_ma[metaValue] = self.agm_ma[metaValue] = ma
+
             # We need the absolute max and min values for combining all metaValue data in one plot.
             self.aim_maxAll = max(self.aim_maxAll, self.aim_ma[metaValue])
             self.aim_minAll = min(self.aim_minAll, self.aim_mi[metaValue])
@@ -328,9 +345,15 @@ class Zoo(Format, Probability, Cllr):
             self.agm_minAll = min(self.agm_minAll, self.agm_mi[metaValue])
             if self.debug:
                 print "computeZooStats: %s agm_mi, agm_ma: %f %f" % (
-                metaValue, self.agm_mi[metaValue], self.agm_ma[metaValue])
+                    metaValue, self.agm_mi[metaValue], self.agm_ma[metaValue])
                 print "computeZooStats: %s aim_mi, aim_ma: %f %f" % (
-                metaValue, self.aim_mi[metaValue], self.aim_ma[metaValue])
+                    metaValue, self.aim_mi[metaValue], self.aim_ma[metaValue])
+        if self.debug:
+            print "computeZooStats: agm_minAll, agm_maxAll: %f %f" % (self.agm_minAll, self.agm_maxAll)
+            print "computeZooStats: aim_minAll, aim_maxAll: %f %f" % (self.aim_minAll, self.aim_maxAll)
+
+    def _sign(self, value):
+        return cmp(value, 0)
 
     def computeZooStatsAlexanderStyle(self):
         '''
@@ -346,8 +369,6 @@ class Zoo(Format, Probability, Cllr):
 
         # labels: p1000, p1001, p1002 etc.
         self.labels = self.data.getTargetLabels()
-        if self.debug:
-            print 'computeZooStatsAlexanderStyle for agms'
 
         for metaValue in self.data.getMetaDataValues():
             self.agmStdDevMin[metaValue] = self.config.getMaxStdDev()
@@ -362,63 +383,53 @@ class Zoo(Format, Probability, Cllr):
             targetScores4ThisSubject = self.data.getTargetScores()[thisKey]
             if len(targetScores4ThisSubject) > 1:
                 stdDev = numpy.std(targetScores4ThisSubject)
+                self.agmStdDevMin[metaValue] = min(self.agmStdDevMin[metaValue], stdDev)
+                self.agmStdDevMax[metaValue] = max(self.agmStdDevMax[metaValue], stdDev)
+                subject.setAgmStdDev(stdDev)
             else:
-                stdDev = self.config.getMinStdDev()
-            self.agmStdDevMin[metaValue] = min(self.agmStdDevMin[metaValue], stdDev)
-            self.agmStdDevMax[metaValue] = max(self.agmStdDevMax[metaValue], stdDev)
-            subject.setAgmStdDev(stdDev)
+                subject.setSingleTargetScore(True)
+                # value for stdDev will be set to unit value later.
 
-            # non target std for each meta value
+            # Non target std for each meta value
             nonTargetScores4ThisSubject = self.data.getNonTargetScores()[thisKey]
             if len(nonTargetScores4ThisSubject) > 1:
                 stdDev = numpy.std(nonTargetScores4ThisSubject)
+                self.aimStdDevMin[metaValue] = min(self.aimStdDevMin[metaValue], stdDev)
+                self.aimStdDevMax[metaValue] = max(self.aimStdDevMax[metaValue], stdDev)
+                subject.setAimStdDev(stdDev)
             else:
-                stdDev = self.config.getMinStdDev()
-            self.aimStdDevMin[metaValue] = min(self.aimStdDevMin[metaValue], stdDev)
-            self.aimStdDevMax[metaValue] = max(self.aimStdDevMax[metaValue], stdDev)
-            subject.setAimStdDev(stdDev)
+                subject.setSingleNonTargetScore(True)
+                # value for stdDev will be set to unit value later.
 
-        if self.config.getLimitStdDevs():
-            # We may need to limit certain stdevs to a max or min value.
-            # After this we collect the stdev values in order
-            # to compute corrected means and std devs of these stdevs
-            # to have proper unit values for scaling
-            for thisKey in self.subjects.keys():
-                subject = self.subjects[thisKey]
-                metaValue = subject.getMetaValue()
-
-                # All stdev values bigger than MAX and smaller than MIN are set to either MAX or MIN.
-                unlimitedValue = subject.getAgmStdDev()
-                limitedValue, valueWasLimited = self._limit(subject.getAgmStdDev(), self.config.getMaxStdDev(),
-                                                     self.config.getMinStdDev())
-                if valueWasLimited:
-                    self._addLimited(subject)
-                    subject.setAgmStdDev(limitedValue)
-                    allTargetStdDevs[metaValue].append(limitedValue)
-                else:
-                    allTargetStdDevs[metaValue].append(unlimitedValue)
-
-                unlimitedValue = subject.getAimStdDev()
-                limitedValue, valueWasLimited = self._limit(subject.getAimStdDev(), self.config.getMaxStdDev(),
-                                                     self.config.getMinStdDev())
-                if valueWasLimited:
-                    subject.setAimStdDev(limitedValue)
-                    self._addLimited(subject)
-                    allNonTargetStdDevs[metaValue].append(limitedValue)
-                else:
-                    allNonTargetStdDevs[metaValue].append(unlimitedValue)
-        else:
-            for thisKey in self.subjects.keys():
-                subject = self.subjects[thisKey]
-                metaValue = subject.getMetaValue()
+        for thisKey in self.subjects.keys():
+            subject = self.subjects[thisKey]
+            metaValue = subject.getMetaValue()
+            if not subject.getSingleTargetScore():
+                # Only use data for subjects with more than one target score.
                 allTargetStdDevs[metaValue].append(subject.getAgmStdDev())
+            if not subject.getSingleNonTargetScore():
+                # Only use data for subjects with more than one non target score.
                 allNonTargetStdDevs[metaValue].append(subject.getAimStdDev())
 
         for metaValue in self.data.getMetaDataValues():
-            self.unitTargetStdDev[metaValue] = numpy.std(allTargetStdDevs[metaValue])
-            self.unitNonTargetStdDev[metaValue] = numpy.std(allNonTargetStdDevs[metaValue])
-            self.unitMeanTargetStdDev[metaValue] = numpy.average(allTargetStdDevs[metaValue])
-            self.unitMeanNonTargetStdDev[metaValue] = numpy.average(allNonTargetStdDevs[metaValue])
+            # If there are subjects with only one target or non target score, we
+            # can not compute the StdDev of the StdDev
+            if len(allTargetStdDevs[metaValue]) > 0:
+                self.agmStdDevStdDev[metaValue] = numpy.std(allTargetStdDevs[metaValue])
+                self.agmMeanStdDev[metaValue] = numpy.average(allTargetStdDevs[metaValue])
+            else:
+                # We assume the std of all stds to be 1 = unity if we have only one score.
+                self.agmStdDevStdDev[metaValue] = 1.0
+                self.agmMeanStdDev[metaValue] = 0.0
+
+            if len(allNonTargetStdDevs[metaValue]) > 0:
+                self.aimStdDevStdDev[metaValue] = numpy.std(allNonTargetStdDevs[metaValue])
+                self.aimMeanStdDev[metaValue] = numpy.average(allNonTargetStdDevs[metaValue])
+            else:
+                # We assume the std of all stds to be 1 = unity if we have only one score.
+                self.aimStdDevStdDev[metaValue] = 1.0
+                self.aimMeanStdDev[metaValue] = 0.0
+
             # Central point of the plot is determined by the mean of agms and aims per meta data value.
             # This point is plotted as a black dot and is meant as a reference.
             theseAgmsValues = self.data.getTargetScores4MetaValue(metaValue)
@@ -427,22 +438,50 @@ class Zoo(Format, Probability, Cllr):
             self.meanAims[metaValue] = self.data.compAverageScore(theseAimValues)
             if self.debug:
                 print "central point for %s will be at: %f %f" % (
-                metaValue, self.meanAgms[metaValue], self.meanAims[metaValue])
+                    metaValue, self.meanAgms[metaValue], self.meanAims[metaValue])
 
-        # At max we plot 3 x normalized std dev = 3.
+        maxStdDev = self.config.getMaxStdDev()
+        # Normalize stdev of all subjects.
+        # Note, stdev values will be centered around zero after normalization.
         for thisKey in self.subjects.keys():
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
-            agmStdDev = self.config.getMaxStdDev() + (subject.getAgmStdDev() -
-                        self.unitMeanTargetStdDev[metaValue]) / self.unitTargetStdDev[metaValue]
+
+            if not subject.getSingleTargetScore():
+                # Normalize std dev.: (x - mu) / std
+                agmStdDev = (subject.getAgmStdDev() - self.agmMeanStdDev[metaValue]) / self.agmStdDevStdDev[metaValue]
+            else:
+                # Set value for stdDev to unit value.
+                agmStdDev = self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[metaValue]
             subject.setAgmStdDev(agmStdDev)
-            aimStdDev = self.config.getMaxStdDev() + (subject.getAimStdDev() -
-                        self.unitMeanNonTargetStdDev[metaValue]) / self.unitNonTargetStdDev[metaValue]
+
+            if not subject.getSingleNonTargetScore():
+                # Normalize std dev.: (x - mu) / std
+                aimStdDev = (subject.getAimStdDev() - self.aimMeanStdDev[metaValue]) / self.aimStdDevStdDev[metaValue]
+            else:
+                # Set value for stdDev to unit value.
+                aimStdDev = self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[metaValue]
             subject.setAimStdDev(aimStdDev)
 
-        self.minSurfaceArea = collections.defaultdict(list)
-        self.maxSurfaceArea = collections.defaultdict(list)
-        self.surfaceAreaRange = collections.defaultdict(list)
+        # If the user wants to, the stdev values can be limited to a certain maximum value.
+        if self.config.getLimitStdDevs():
+            for thisKey in self.subjects.keys():
+                if not subject.getSingleTargetScore() and not subject.getSingleNonTargetScore():
+                    subject = self.subjects[thisKey]
+                    agmStdDev = subject.getAgmStdDev()
+                    if abs(agmStdDev) > maxStdDev:
+                        agmStdDev = self._sign(agmStdDev) * maxStdDev
+                        subject.setAgmStdDev(agmStdDev)
+                        subject.setWasLimited(True)
+                        # Add subject to exclusive set.
+                        self._addLimited(subject)
+                    aimStdDev = subject.getAimStdDev()
+                    if abs(aimStdDev) > maxStdDev:
+                        aimStdDev = self._sign(aimStdDev) * maxStdDev
+                        subject.setAimStdDev(aimStdDev)
+                        subject.setWasLimited(True)
+                        # Add subject to exclusive set.
+                        self._addLimited(subject)
 
         for metaValue in self.data.getMetaDataValues():
             self.minSurfaceArea[metaValue] = 1.0E99
@@ -453,15 +492,37 @@ class Zoo(Format, Probability, Cllr):
         for thisKey in self.subjects.keys():
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
-            self.minSurfaceArea[metaValue] = min(self.minSurfaceArea[metaValue], subject.getAgmStdDev() * subject.getAimStdDev())
-            self.maxSurfaceArea[metaValue] = max(self.maxSurfaceArea[metaValue], subject.getAgmStdDev() * subject.getAimStdDev())
+            self.minSurfaceArea[metaValue] = min(self.minSurfaceArea[metaValue],
+                                                 subject.getAgmStdDev() * subject.getAimStdDev())
+            self.maxSurfaceArea[metaValue] = max(self.maxSurfaceArea[metaValue],
+                                                 subject.getAgmStdDev() * subject.getAimStdDev())
 
+        # Surface area of ellipses is used to normalise opacity against size in order to
+        # make small ellipses visible even if they are overlapped by larger ones.
         for metaValue in self.data.getMetaDataValues():
             self.surfaceAreaRange[metaValue] = (self.maxSurfaceArea[metaValue] - self.minSurfaceArea[metaValue])
             self.agm_mi[metaValue], self.agm_ma[metaValue] = \
                 self.data.minMax2(self.agmsv, metaValue, self.agm_mi[metaValue], self.agm_ma[metaValue])
             self.aim_mi[metaValue], self.aim_ma[metaValue] = \
                 self.data.minMax2(self.aimsv, metaValue, self.aim_mi[metaValue], self.aim_ma[metaValue])
+
+        # We need to know what the ranges are to be able to plot the ellipses, labels etc.
+        for metaValue in self.data.getMetaDataValues():
+            self.xRange[metaValue] = 1E-99
+            self.yRange[metaValue] = 1E-99
+
+        for metaValue in self.data.getMetaDataValues():
+            self.xRange[metaValue] = max(self.xRange[metaValue], abs(self.agm_ma[metaValue] - self.agm_mi[metaValue]))
+            self.yRange[metaValue] = max(self.yRange[metaValue], abs(self.aim_ma[metaValue] - self.aim_mi[metaValue]))
+            self.xRangeAll = max(self.xRangeAll, self.xRange[metaValue])
+            self.yRangeAll = max(self.yRangeAll, self.yRange[metaValue])
+
+        for metaValue in self.data.getMetaDataValues():
+            # JSB: je zou hiermee willen kunnen schalen zodat b.v. 100 ellipsen naast elkaar passen.
+            self.xScaleFactor[metaValue] = self.xRange[metaValue] / self.config.getScaleFactor()
+            self.yScaleFactor[metaValue] = self.yRange[metaValue] / self.config.getScaleFactor()
+        self.xScaleFactorAll = self.xRangeAll / self.config.getScaleFactor()
+        self.yScaleFactorAll = self.yRangeAll / self.config.getScaleFactor()
 
         if self.debug:
             for metaValue in self.data.getMetaDataValues():
@@ -475,8 +536,8 @@ class Zoo(Format, Probability, Cllr):
                 print "aim_ma[%s]: %f" % (metaValue, self.aim_ma[metaValue])
 
     def isNear(self, x1, y1, (x2, y2), thresholdX, thresholdY):
-        dX = (x2 - x1)
-        dY = (y2 - y1)
+        dX = x2 - x1
+        dY = y2 - y1
 
         # If label is within 0.1 of unit std to position
         # then return True, else False.
@@ -494,25 +555,26 @@ class Zoo(Format, Probability, Cllr):
         :return: list: list of labels within 0.1 unit std of position clicked.
         '''
         if self.debug:
-            print "unitNonTargetStdDev:", self.unitNonTargetStdDev
-            print "unitTargetStdDev:", self.unitTargetStdDev
-            print "unitMeanNonTargetStdDev:", self.unitMeanNonTargetStdDev
-            print "unitMeanTargetStdDev:", self.unitMeanTargetStdDev
+            print "aimStdDevStdDev:", self.aimStdDevStdDev
+            print "agmStdDevStdDev:", self.agmStdDevStdDev
+            print "aimMeanStdDev:", self.aimMeanStdDev
+            print "agmMeanStdDev:", self.agmMeanStdDev
         ret = []
-        for pattern in self.agmsv:
-            x2 = self.agmsv[pattern]
-            # pattern might not be in aimsv
-            try:
-                y2 = self.aimsv[pattern]
-            except Exception:
-                pass
-            else:
-                xRange = abs(self.agm_maxAll - self.agm_minAll)
-                yRange = abs(self.aim_maxAll - self.aim_minAll)
-                thresholdX = 3 * xRange / self.config.getScaleFactor()
-                thresholdY = 3 * yRange / self.config.getScaleFactor()
-                if self.isNear(x1, y1, (x2, y2), thresholdX, thresholdY):
-                    ret.append((pattern, x2, y2))
+        for thisKey in self.subjects.keys():
+            subject = self.subjects[thisKey]
+            metaValue = subject.getMetaValue()
+            pattern = subject.getPattern()
+            x2 = subject.getAgmsv()
+            y2 = subject.getAimsv()
+            thresholdX = 0.2 * self.agmStdDevStdDev[metaValue]
+            thresholdY = 0.2 * self.aimStdDevStdDev[metaValue]
+            if self.isNear(x1, y1, (x2, y2), thresholdX, thresholdY):
+                ret.append((pattern, x2, y2))
+
+        # Make all visible ellipses meant to help the user make a
+        # square plot invisible again.
+        for el in self.helperCircles:
+            el.set_visible(False)
         return ret
 
     def _getXyOfPoint4pattern(self, pattern, pointsWithAnnotation):
@@ -613,13 +675,11 @@ class Zoo(Format, Probability, Cllr):
         return allAngles, allDistances, deltaZoo
 
     def _compScore(self, angles, distances):
-
         # Score is computed as follows:
         # s = 1/N * sum( delta_distance_i * sin(Alpha_i) + delta_distance_i)
         # This is done for i = 0 .. length(delta_distances)
         # Delta distance is the difference in distance of two points to the diagonal.
         # S expresses the gain ( or loss ) in recognition when changing meta values.
-
         totScore = 0.0
         for a, d in zip(angles, distances):
             totScore += d * sin(a) + d
@@ -647,48 +707,64 @@ class Zoo(Format, Probability, Cllr):
                 allDistances.append(distance)
         return allAngles, allDistances
 
-    def _plotReferenceEllipses(self, axes, xRange, yRange):
+    def _plotReferenceEllipses(self, axes):
         '''
-        plot reference ellipse with size corresponding to -2, 0 and 2 x std (i.e. mean)
+        Plot reference ellipse with size corresponding to -2, 0 and 2 x std (i.e. mean).
         :param axes: axes object of the plot
-        :param xRange: total x range of the data plotted
-        :param yRange: total y range of the data plotted
         :return: Not a thing
         '''
-
         angle = 0.0
         alpha = self.config.getAlpha4ReferenceCircles()
+        alphaDecrement = (alpha - 0.1) / 3.0
+        # It should be possible to show 20 meta value reference ellipses next to eachother.
+        offset = baseOffset = self.xRangeAll / 20.0
+        stdDevOffset = 0.5 * self.config.getMaxStdDev()
         if self.config.getShowReference():
-            baseOffset = 5 * xRange / self.config.getScaleFactor()
-            offset = baseOffset
             for metaValue in self.data.getMetaDataValues():
                 onlyOnce = True
-                for width in [5, 3, 1]:
-                    thisWidth = width * xRange / self.config.getScaleFactor()
-                    thisHeight = width * yRange / self.config.getScaleFactor()
-
-                    # x = self.agm_mi[metaValue]
-                    # y = self.aim_ma[metaValue] - (self.aim_ma[metaValue] - self.aim_mi[metaValue]) / 20.0
-                    x = self.agm_minAll + offset
-                    y = self.aim_maxAll - (self.aim_maxAll - self.aim_minAll) / 30.0
-                    # TOT HIER EN NIET VERDER
-                    # Waarom zit de ellipse niet op de onderste lijn?
-                    y = self.aim_maxAll
-
+                # Show ellipse for mu - 2 stdev, mu, mu + 2 stdev
+                # In order to draw ellipses that represent a negative stdev, we
+                # add maxStdDev as an offset. So mu -2s can be plotted and is
+                # thinner/taller than mu or mu + 2 stdev ellipses.
+                x = self.agm_minAll + offset
+                y = self.aim_maxAll
+                for refEllipseStdDev in [-2, 0, 2]:
+                    # thisWidth = (self.agmMeanStdDev[metaValue] + factor * self.agmStdDevStdDev[metaValue]) * self.xScaleFactorAll
+                    # thisHeight = (self.aimMeanStdDev[metaValue] + factor * self.aimStdDevStdDev[metaValue]) * self.yScaleFactorAll
+                    thisWidth = (stdDevOffset + refEllipseStdDev * self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[
+                        metaValue]) * self.xScaleFactorAll
+                    thisHeight = (
+                                     stdDevOffset + refEllipseStdDev * self.aimMeanStdDev[metaValue] /
+                                     self.aimStdDevStdDev[
+                                         metaValue]) * self.yScaleFactorAll
+                    #thisWidth = (stdDevOffset + refEllipseStdDev) / self.agmStdDevStdDev[metaValue] * self.xScaleFactorAll
+                    #thisHeight = (stdDevOffset + refEllipseStdDev) / self.aimStdDevStdDev[metaValue] * self.yScaleFactorAll
+                    thisWidth = (stdDevOffset + refEllipseStdDev * self.agmStdDevStdDev[metaValue]) * self.xScaleFactorAll
+                    thisHeight = (stdDevOffset + refEllipseStdDev * self.aimStdDevStdDev[metaValue]) * self.yScaleFactorAll
                     e = Ellipse((x, y), thisWidth, thisHeight, angle)
                     e.set_facecolor(self.colors[metaValue])
                     e.set_alpha(alpha)
                     axes.add_artist(e)
-                # Create some distance between the unit circles
-                offset += 1.2 * baseOffset
+                    # Make next ellipse less opaque.
+                    alpha -= alphaDecrement
+                    if alpha < 0.1:
+                        alpha = 0.1
+                # Create some distance between different metavalue unit circles.
+                offset += baseOffset
 
                 experimentText = "points for experiment: %s.\n" % str(metaValue)
+
                 if onlyOnce:
-                    text = "These 3 ellipses are meant as scaled reference\n" + \
-                           experimentText + \
-                           "From the inner to the outer ellipse\n" + \
-                           "they are sized $\\mu$-$2\\sigma$, $\\mu$ and $\\mu$+$2\\sigma$."
                     onlyOnce = False
+                    if len(self.colors) > 1:
+                        text = "These 3 ellipses are meant as scaled reference\n" + \
+                               experimentText + \
+                               "From the inner to the outer ellipse\n" + \
+                               "they are sized $\\mu$-$2\\sigma$, $\\mu$ and $\\mu$+$2\\sigma$."
+                    else:
+                        text = "These 3 ellipses are meant as scaled reference\npoints for this experiment.\n" + \
+                               "From the inner to the outer ellipse\n" + \
+                               "they are sized $\\mu$-$2\\sigma$, $\\mu$ and $\\mu$+$2\\sigma$."
                     xOffset = abs(self.agm_ma[metaValue] - self.agm_mi[metaValue]) / 5.0
                     yOffset = abs(self.aim_ma[metaValue] - self.aim_mi[metaValue]) / 10.0
                     xText = x + xOffset
@@ -700,111 +776,111 @@ class Zoo(Format, Probability, Cllr):
                     else:
                         annotation.set_visible(False)
 
-        if self.config.getShowUnitDataPoint():
-            alpha = self.config.getAlpha4UnitCircles()
-            for metaValue in self.data.getMetaDataValues():
-                xOffset = abs(self.agm_ma[metaValue] - self.agm_mi[metaValue]) / 15.0
-                yOffset = abs(self.aim_ma[metaValue] - self.aim_mi[metaValue]) / 7.0
+    def _plotUnitEllipses(self, axes):
+        alpha = self.config.getAlpha4UnitCircles()
+        angle = 0.0
+        # The width/height where the normalized data is 0 standard deviations lies at w = maxStdDev
+        stdDevOffset = 0.5 * self.config.getMaxStdDev()
+        for metaValue in self.data.getMetaDataValues():
+            xOffset = abs(self.agm_ma[metaValue] - self.agm_mi[metaValue]) / 15.0
+            yOffset = abs(self.aim_ma[metaValue] - self.aim_mi[metaValue]) / 7.0
 
-                # Plot a black dot at the mean value spot of the plot.
-                thisWidth = 3 * xRange / self.config.getScaleFactor()
-                thisHeight = 3 * yRange / self.config.getScaleFactor()
-                (x, y) = (self.meanAgms[metaValue], self.meanAims[metaValue])
-                e = Ellipse((x, y), thisWidth, thisHeight, angle)
-                e.set_facecolor('black')
-                e.set_alpha(alpha)
-                axes.add_artist(e)
-                text = "This black ellipse is meant as a reference\npoint for experiment: %s.\nIt represents the mean of all data points shown." % metaValue
-                xText = x + xOffset
-                yText = y + yOffset
-                annotation = self._annotateEllipse4References(axes, (x, y), xText, yText, text)
-                self.referencesWithAnnotation.append((annotation, (x, y)))
-                if self.config.getShowTextAtReferenceAtStartup():
-                    annotation.set_visible(True)
-                else:
-                    annotation.set_visible(False)
-
-    def _annotateEllipseInQuartile(self, xy, height, label, metaValue, where, axes=plt):
-        (x, y) = xy
-        dx = x + self.meanAgms[metaValue]
-        dy = y + self.meanAims[metaValue]
-        xText = 0
-        yText = 0
-        ha = ''
-        va = ''
-        ok = False
-        xOffset = dx
-        yOffset = dy
-        if where == 'lt':
-            # y -= height / 2
-            xText = x + xOffset
-            if xText < self.agm_mi[metaValue]:
-                xText = self.agm_mi[metaValue]
-            yText = y + yOffset
-            if yText < self.aim_mi[metaValue]:
-                yText = self.aim_mi[metaValue]
-            ha = 'right'
-            va = 'bottom'
-            ok = True
-        if where == 'rt':
-            # y -= height / 2
-            xText = x + xOffset
-            if xText > self.agm_ma[metaValue]:
-                xText = self.agm_ma[metaValue]
-            yText = y + yOffset
-            if yText < self.aim_mi[metaValue]:
-                yText = self.aim_mi[metaValue]
-            ha = 'left'
-            va = 'bottom'
-            ok = True
-        if where == 'lb':
-            # y += height / 2
-            xText = x + xOffset
-            if xText < self.agm_mi[metaValue]:
-                xText = self.agm_mi[metaValue]
-            yText = y + yOffset
-            if yText < self.aim_mi[metaValue]:
-                yText = self.aim_mi[metaValue]
-            ha = 'right'
-            va = 'top'
-            ok = True
-        if where == 'rb':
-            # y += height / 2
-            xText = x + xOffset
-            ddx = 0
-            if xText > self.agm_ma[metaValue]:
-                xText = self.agm_ma[metaValue]
-            yText = y + yOffset - ddx
-            if yText > self.aim_ma[metaValue]:
-                yText = self.aim_ma[metaValue]
-            ha = 'left'
-            va = 'top'
-            ok = True
-        xy = (x, y)
-        if ok:
-            if self.config.getRunningOSX() or self.config.getRunningWindows():
-                axes.annotate("%s" % (label),
-                              xy,
-                              bbox=dict(boxstyle="square", fc="0.8"),
-                              xytext=(xText, yText),
-                              xycoords='data',
-                              textcoords='data',
-                              arrowprops=dict(arrowstyle='->'),
-                              horizontalalignment=ha,
-                              verticalalignment=va,
-                              multialignment='left', )
+            # Plot a black dot at the mean value spot of the plot.
+            # thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[
+            #     metaValue]) * self.xScaleFactorAll
+            # thisHeight = (stdDevOffset + self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[
+            #     metaValue]) * self.yScaleFactorAll
+            thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue]) * self.xScaleFactorAll
+            thisHeight = (stdDevOffset + self.aimMeanStdDev[metaValue]) * self.yScaleFactorAll
+            (x, y) = (self.meanAgms[metaValue], self.meanAims[metaValue])
+            e = Ellipse((x, y), thisWidth, thisHeight, angle)
+            e.set_facecolor('black')
+            e.set_alpha(alpha)
+            axes.add_artist(e)
+            if len(self.colors) > 1:
+                text = "This dark ellipse is meant as a reference point\nfor data set: '%s'.\nIts width and height are " \
+                       "the mean value of the normalized stdevs,\nso it represents a data point for which $\\mu$ = 0.\n" \
+                       "It is shown here at the center of all data points\nfor data set '%s'.\n" \
+                       "Note, if you resize the plot so that this ellipse becomes a perfect circle,\n" \
+                       "it will make the interpretation of the plot independent of the screen geometry." % (
+                           metaValue, metaValue)
             else:
-                axes.annotate("%s" % (label),
-                              xy,
-                              bbox=dict(boxstyle="square", fc="0.8"),
-                              backgroundcolor='yellow',
-                              xytext=(xText, yText),
-                              xycoords='data',
-                              textcoords='data',
-                              arrowprops=dict(arrowstyle='->'),
-                              horizontalalignment=ha,
-                              verticalalignment=va,
-                              multialignment='left', )
+                text = "This dark ellipse is meant as a reference point for this data set.\nIts width and height are " \
+                       "the mean value of the normalized stdevs,\nso it represents a data point for which $\\mu$ = 0.\n" \
+                       "It is shown here at the center of all data points.\n" \
+                       "Note, if you resize the plot so that this ellipse becomes a perfect circle,\n" \
+                       "it will make the interpretation of the plot independent of the screen geometry."
+            xText = x + xOffset
+            yText = y + yOffset
+            annotation = self._annotateEllipse4References(axes, (x, y), xText, yText, text)
+            self.referencesWithAnnotation.append((annotation, (x, y)))
+            if self.config.getShowTextAtReferenceAtStartup():
+                annotation.set_visible(True)
+            else:
+                annotation.set_visible(False)
+
+    def _plotHelperCircles(self, axes):
+        angle = 0.0
+        # The width/height where the normalized data is 0 standard deviations lies at w = maxStdDev
+        stdDevOffset = 0.5 * self.config.getMaxStdDev()
+        for metaValue in self.data.getMetaDataValues():
+            # thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[
+            #     metaValue]) * self.xScaleFactorAll
+            # thisHeight = (stdDevOffset + self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[
+            #     metaValue]) * self.yScaleFactorAll
+            thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue]) * self.xScaleFactorAll
+            thisHeight = (stdDevOffset + self.aimMeanStdDev[metaValue]) * self.yScaleFactorAll
+            (x, y) = (self.meanAgms[metaValue], self.meanAims[metaValue])
+            radius = max(thisWidth, thisHeight)
+            i = 1
+            while x + i * radius < self.agm_maxAll:
+                if self.debug:
+                    print "_plotHelperCircles", x + i * radius, self.agm_maxAll
+                # for i in [4, 8, 12, 16, 20]:
+                e = Ellipse((x, y), i * radius, i * radius, angle)
+                # No need to fill the ellipse.
+                e.set_facecolor('none')
+                # Let's make them black.
+                e.set_edgecolor('k')
+                # Make it less conspicuous.
+                e.set_alpha(0.5)
+                # Choose from solid, dashed, dashdot or dotted.
+                e.set_linestyle('dashed')
+                self.helperCircles.append(e)
+                axes.add_artist(e)
+                i += 1
+
+    def _annotateEllipseInQuartile(self, xy, xRange, hx, hy, text, axes=plt):
+        (x, y) = xy
+        factor = tan(pi / 3.0)
+        if x < hx:
+            xOffset = xRange / 20
+        else:
+            xOffset = -xRange / 10
+        if y > hy:
+            yOffset = -xRange / 150 * factor
+        else:
+            yOffset = xRange / 150 * factor
+        xText = x + xOffset
+        yText = y + yOffset
+
+        if self.config.getRunningOSX() or self.config.getRunningWindows():
+            axes.annotate("%s" % (text),
+                          xy,
+                          bbox=dict(boxstyle="square", fc="0.8"),
+                          xytext=(xText, yText),
+                          xycoords='data',
+                          textcoords='data',
+                          arrowprops=dict(arrowstyle='->'))
+        else:
+            axes.annotate("%s" % (text),
+                          xy,
+                          bbox=dict(boxstyle="square", fc="0.8"),
+                          backgroundcolor='yellow',
+                          xytext=(xText, yText),
+                          xycoords='data',
+                          textcoords='data',
+                          arrowprops=dict(arrowstyle='->'))
 
     def _annotateEllipse4References(self, axesZoo, xy, xText, yText, text):
         ha = 'left'
@@ -831,22 +907,25 @@ class Zoo(Format, Probability, Cllr):
                                           horizontalalignment=ha,
                                           verticalalignment=va, )
 
-        # By default the annotation is not visible
+        # By default the annotation is not visible.
         annotation.set_visible(False)
         return annotation
 
-    def _annotateEllipse(self, xy, xRange, yRange, text, axes=plt):
-        """
-
-        :rtype : annotation object
-        """
+    def _annotateEllipse(self, xy, xRange, hx, hy, text, axes=plt):
         (x, y) = xy
-        dx = xRange / 20
-        dy = yRange / 15
-        xText = x + dx
-        yText = y + dy
-        ha = 'right'
-        va = 'bottom'
+        factor = tan(pi / 3.0)
+        if x < hx:
+            xOffset = xRange / 20
+        else:
+            xOffset = -xRange / 10
+        if y > hy:
+            yOffset = -xRange / 50 * factor
+        else:
+            yOffset = xRange / 50 * factor
+        xText = x + xOffset
+        yText = y + yOffset
+        angle = 0
+        # angle = 45.0 / xRange * (x - xRange) + 45.0
         if self.config.getRunningOSX() or self.config.getRunningWindows():
             annotation = axes.annotate("%s" % (text),
                                        xy,
@@ -854,10 +933,8 @@ class Zoo(Format, Probability, Cllr):
                                        xytext=(xText, yText),
                                        xycoords='data',
                                        textcoords='data',
-                                       arrowprops=dict(arrowstyle='->'),
-                                       horizontalalignment=ha,
-                                       verticalalignment=va,
-                                       multialignment='left', )
+                                       rotation=angle,
+                                       arrowprops=dict(arrowstyle='->'))
         else:
             annotation = axes.annotate("%s" % (text),
                                        xy,
@@ -866,10 +943,8 @@ class Zoo(Format, Probability, Cllr):
                                        xytext=(xText, yText),
                                        xycoords='data',
                                        textcoords='data',
-                                       arrowprops=dict(arrowstyle='->'),
-                                       horizontalalignment=ha,
-                                       verticalalignment=va,
-                                       multialignment='left', )
+                                       rotation=angle,
+                                       arrowprops=dict(arrowstyle='->'))
 
         # By default the annotation is not visible.
         if self.config.getShowAnnotationsAtStartup():
@@ -882,7 +957,7 @@ class Zoo(Format, Probability, Cllr):
         '''
         Draw a color legend for the metadata on the upper right
         side of the plot, if the metadata can be grouped in more
-        than one group.
+        than one group. Only show the meta value if there are more than one.
         '''
 
         nrColors = len(colors)
@@ -901,11 +976,12 @@ class Zoo(Format, Probability, Cllr):
             print 'drawLegend:self.colors.keys():', colors.keys()
 
         legendText = defaultdict(list)
-        # Add meta condition value name to legend text.
-        for thisMetaValue in sorted(colors.keys()):
-            legendText[thisMetaValue].append(thisMetaValue)
+        # Add meta condition value name to legend text if there are more than one meta values.
+        if len(colors) > 1:
+            for thisMetaValue in sorted(colors.keys()):
+                legendText[thisMetaValue].append(thisMetaValue)
 
-        # Compute and show the EER value if so desired
+        # Compute and show the EER value if so desired.
         if self.config.getShowEerValues():
             eerObject = Eer(self.data, self.config, self.debug)
             eerData = eerObject.computeProbabilities(self.eerFunc)
@@ -925,7 +1001,7 @@ class Zoo(Format, Probability, Cllr):
                             legendText[thisMetaValue].append(eerStr)
                         break
 
-        # Compute and show the Cllr value if so desired
+        # Compute and show the Cllr value if so desired.
         if self.config.getShowCllrValues():
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
@@ -941,7 +1017,7 @@ class Zoo(Format, Probability, Cllr):
                         legendText[metaValue].append(cllrStr)
                         break
 
-        # Compute and show the CllrMin value if so desired
+        # Compute and show the CllrMin value if so desired.
         if self.config.getShowMinCllrValues():
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
@@ -975,10 +1051,14 @@ class Zoo(Format, Probability, Cllr):
         xWidth = float((self.agm_maxAll - self.agm_minAll) / 20.0)
         yBase = self.aim_minAll
         xBase = self.agm_maxAll
-        # Find local minimum of agm_ma values and put legend next to it
+        # Find local minimum of agm_ma values and put legend next to it.
         for metaValue in sorted(colors.keys()):
             xBase = min(xBase, self.agm_ma[metaValue])
         xBase -= xWidth
+        # We do want to stay within the limits of the plot.
+        offset = factor * xWidth * ((pixelWidth * maxTextLength) / xWidthInPixels)
+        if xBase - offset < self.agm_minAll:
+            xBase = self.agm_minAll + offset
         for metaValue in sorted(colors.keys()):
             thisLegendText = ''
             # Compile legend text.
@@ -986,8 +1066,6 @@ class Zoo(Format, Probability, Cllr):
                 thisLegendText += el + ', '
             # Remove last comma and space.
             thisLegendText = thisLegendText[:-2]
-            offset = factor * xWidth * ((pixelWidth * maxTextLength) / xWidthInPixels)
-
             Color = colors[metaValue]
             points = [[xBase - offset, yBase + delta],
                       [xBase - offset, yBase + incr + delta],
@@ -1000,30 +1078,13 @@ class Zoo(Format, Probability, Cllr):
             delta += 1.5 * incr
             plt.gca().add_patch(rect)
 
-    def getRanges(self):
-        yRange = collections.defaultdict(list)
-        xRange = collections.defaultdict(list)
-        yRangeAll = 0.0
-        xRangeAll = 0.0
-
-        for metaValue in self.data.getMetaDataValues():
-            yRange[metaValue] = 1E-99
-            xRange[metaValue] = 1E-99
-
-        for metaValue in self.data.getMetaDataValues():
-            yRange[metaValue] = max(yRange[metaValue], abs(self.aim_ma[metaValue] - self.aim_mi[metaValue]))
-            xRange[metaValue] = max(xRange[metaValue], abs(self.agm_ma[metaValue] - self.agm_mi[metaValue]))
-            yRangeAll = max(yRangeAll, yRange[metaValue])
-            xRangeAll = max(xRangeAll, xRange[metaValue])
-        return xRange, yRange, xRangeAll, yRangeAll
-
     def _plotAxes(self, comment, yagerStyle, title, axes):
         '''
 
             Add axes to the plot and include boxes for the
-            quartile ranges in red for the _phantoms, in magenta for
-            the _doves, in green for the _worms and in blue for the
-            _chameleons.
+            quartile ranges in red for the phantoms, in magenta for
+            the doves, in green for the worms and in blue for the
+            chameleons.
 
         :param comment: string: text to be added as comment to the plot's title
         :param yagerStyle: boolean: when False will inverse y-axes of the plot
@@ -1031,19 +1092,17 @@ class Zoo(Format, Probability, Cllr):
         :return:
         '''
 
-        xRange, yRange, xRangeAll, yRangeAll = self.getRanges()
-
         if yagerStyle:
-            # Axes that shows low scores at the top of the plot, low scores at the bottom
-            axes.set_ylim(self.aim_maxAll + 0.105 * yRangeAll, self.aim_minAll - 0.1 * yRangeAll)
+            # Axes that shows low scores at the top of the plot, low scores at the bottom.
+            axes.set_ylim(self.aim_maxAll + 0.105 * self.yRangeAll, self.aim_minAll - 0.1 * self.yRangeAll)
         else:
             # Axes that shows low scores at the bottom of the plot, high scores at the top.
-            axes.set_ylim(self.aim_minAll - 0.1 * yRangeAll, self.aim_maxAll + 0.05 * yRangeAll)
+            axes.set_ylim(self.aim_minAll - 0.1 * self.yRangeAll, self.aim_maxAll + 0.05 * self.yRangeAll)
 
-        axes.set_xlim(self.agm_minAll - 0.1 * xRangeAll, self.agm_maxAll + 0.1 * xRangeAll)
+        axes.set_xlim(self.agm_minAll - 0.1 * self.xRangeAll, self.agm_maxAll + 0.1 * self.xRangeAll)
 
-        # Do not put title in title field as this will clash with the x-label of the histogram
-        # Put it in the zoo plot in a text field
+        # Do not put title in title field as this will clash with the x-label of the histogram.
+        # Put it in the zoo plot in a text field.
         if len(comment) > 0:
             title = "zoo plot for '%s %s'" % (title, comment)
 
@@ -1055,33 +1114,33 @@ class Zoo(Format, Probability, Cllr):
         else:
             alpha = 0.4
 
-        xPos = (self.agm_maxAll + self.agm_minAll) / 2 - 0.05 * xRangeAll
-        axes.text(xPos, self.aim_minAll - 0.05 * yRangeAll, title,
+        xPos = (self.agm_maxAll + self.agm_minAll) / 2 - 0.05 * self.xRangeAll
+        axes.text(xPos, self.aim_minAll - 0.05 * self.yRangeAll, title,
                   bbox={'facecolor': 'white', 'alpha': alpha, 'pad': 10})
 
-        axes.set_xlabel('Average Target Match Score')
-        axes.set_ylabel('Average Non Target Match Score')
+        axes.set_xlabel('Average Target (Genuine) Match Score')
+        axes.set_ylabel('Average Non Target (Imposter) Match Score')
 
         # Plot boxes for quartile ranges.
         for metaValue in self.data.getMetaDataValues():
             # Phantoms
-            self._plotBox(axes, self.agm_mi[metaValue] - 0.1 * xRange[metaValue],
-                          self.aim_mi[metaValue] - 0.1 * yRange[metaValue], self.agmsLow[metaValue],
+            self._plotBox(axes, self.agm_mi[metaValue] - 0.1 * self.xRange[metaValue],
+                          self.aim_mi[metaValue] - 0.1 * self.yRange[metaValue], self.agmsLow[metaValue],
                           self.aimsLow[metaValue], self.colors[metaValue])
-
-            self._plotBox(axes, self.agmsHigh[metaValue], self.aim_mi[metaValue] - 0.1 * yRange[metaValue],
-                          self.agm_ma[metaValue] + 0.1 * xRange[metaValue], self.aimsLow[metaValue],
+            # Doves
+            self._plotBox(axes, self.agmsHigh[metaValue], self.aim_mi[metaValue] - 0.1 * self.yRange[metaValue],
+                          self.agm_ma[metaValue] + 0.1 * self.xRange[metaValue], self.aimsLow[metaValue],
                           self.colors[metaValue])
 
             # Worms
-            self._plotBox(axes, self.agm_mi[metaValue] - 0.1 * xRange[metaValue], self.aimsHigh[metaValue],
-                          self.agmsLow[metaValue], self.aim_ma[metaValue] + 0.1 * yRange[metaValue],
+            self._plotBox(axes, self.agm_mi[metaValue] - 0.1 * self.xRange[metaValue], self.aimsHigh[metaValue],
+                          self.agmsLow[metaValue], self.aim_ma[metaValue] + 0.1 * self.yRange[metaValue],
                           self.colors[metaValue])
 
             # Chameleons
             self._plotBox(axes, self.agmsHigh[metaValue], self.aimsHigh[metaValue],
-                          self.agm_ma[metaValue] + 0.1 * xRange[metaValue],
-                          self.aim_ma[metaValue] + 0.1 * yRange[metaValue], self.colors[metaValue])
+                          self.agm_ma[metaValue] + 0.1 * self.xRange[metaValue],
+                          self.aim_ma[metaValue] + 0.1 * self.yRange[metaValue], self.colors[metaValue])
 
         # Plot labels in quartile areas: DOVES PHANTOMS WORMS CHAMELEONS
         animalColors = {}
@@ -1099,30 +1158,28 @@ class Zoo(Format, Probability, Cllr):
 
         # DOVES
         animals = 'DOVES'
-        axes.text(self.agm_maxAll, self.aim_minAll - 0.05 * yRangeAll, animals,
+        axes.text(self.agm_maxAll, self.aim_minAll - 0.05 * self.yRangeAll, animals,
                   bbox={'facecolor': animalColors[animals], 'alpha': alpha, 'pad': 10})
         # PHANTOMS
         animals = 'PHANTOMS'
-        axes.text(self.agm_minAll - 0.085 * xRangeAll, self.aim_minAll - 0.05 * yRangeAll, animals,
+        axes.text(self.agm_minAll - 0.085 * self.xRangeAll, self.aim_minAll - 0.05 * self.yRangeAll, animals,
                   bbox={'facecolor': animalColors[animals], 'alpha': alpha, 'pad': 10})
         # WORMS
         animals = 'WORMS'
         if yagerStyle:
-            axes.text(self.agm_minAll - 0.085 * xRangeAll, self.aim_maxAll + 0.085 * yRangeAll, animals,
+            axes.text(self.agm_minAll - 0.085 * self.xRangeAll, self.aim_maxAll + 0.085 * self.yRangeAll, animals,
                       bbox={'facecolor': animalColors[animals], 'alpha': alpha, 'pad': 10})
         else:
-            axes.text(self.agm_minAll - 0.085 * xRangeAll, self.aim_maxAll - 0.085 * yRangeAll, animals,
+            axes.text(self.agm_minAll - 0.085 * self.xRangeAll, self.aim_maxAll - 0.085 * self.yRangeAll, animals,
                       bbox={'facecolor': animalColors[animals], 'alpha': alpha, 'pad': 10})
         # CHAMELEONS
         animals = 'CHAMELEONS'
         if yagerStyle:
-            axes.text(self.agm_maxAll - 0.05 * xRangeAll, self.aim_maxAll + 0.085 * yRangeAll, animals,
+            axes.text(self.agm_maxAll - 0.05 * self.xRangeAll, self.aim_maxAll + 0.085 * self.yRangeAll, animals,
                       bbox={'facecolor': animalColors[animals], 'alpha': alpha, 'pad': 10})
         else:
-            axes.text(self.agm_maxAll - 0.05 * xRangeAll, self.aim_maxAll - 0.085 * yRangeAll, animals,
+            axes.text(self.agm_maxAll - 0.05 * self.xRangeAll, self.aim_maxAll - 0.085 * self.yRangeAll, animals,
                       bbox={'facecolor': animalColors[animals], 'alpha': alpha, 'pad': 10})
-
-
 
         # Last but not least, plot the graph.
         axes.grid()
@@ -1165,34 +1222,19 @@ class Zoo(Format, Probability, Cllr):
                 print metaValue, self.agmsLow[metaValue], self.agmsHigh[metaValue], \
                     self.aimsLow[metaValue], self.aimsHigh[metaValue]
 
-        xRange = collections.defaultdict(list)
-        yRange = collections.defaultdict(list)
-        xFactor = collections.defaultdict(list)
-        # xFactor? Yep, even zoo plots need to have a certain X-factor.
-        # McElderry for ever !
-        yFactor = collections.defaultdict(list)
-
         labelsDrawn = set()
-        scaleFactor = self.config.getScaleFactor()
-        for metaValue in self.data.getMetaDataValues():
-            xRange[metaValue] = abs(self.agm_ma[metaValue] - self.agm_mi[metaValue])
-            yRange[metaValue] = abs(self.aim_ma[metaValue] - self.aim_mi[metaValue])
-            xFactor[metaValue] = xRange[metaValue] / scaleFactor
-            yFactor[metaValue] = yRange[metaValue] / scaleFactor
-
         labelsToShow = self.data.getLabelsToShowAlways()
         for thisKey in self.subjects.keys():
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
             # Show subject label and the # of targets and non targets the ellipse was drawn for.
             thisLabel = subject.getLabel()
+            labelText = ("L: %s" % thisLabel)
             if self.config.getShowNrTargetsAndNonTargets():
-                labelText = ("L:%s " % thisLabel) + (" #T:%d" % subject.getNumberOfTargets()) + \
-                            (" #nT:%d" % subject.getNumberOfNonTargets())
-            else:
-                labelText = ("L:%s " % thisLabel)
+                labelText += ("\n#T: %d" % subject.getNumberOfTargets()) + \
+                            ("\n#nT: %d" % subject.getNumberOfNonTargets())
             if self.config.getShowAverageTargetAndNonTargetMatchScores():
-                labelText += (" aTms:%02.2f" % subject.getAgmsv()) + (" anTms:%02.2f" % subject.getAimsv())
+                labelText += ("\naTms: %02.2f" % subject.getAgmsv()) + ("\nanTms: %02.2f" % subject.getAimsv())
             agmStdDev = subject.getAgmStdDev()
             aimStdDev = subject.getAimStdDev()
             width = agmStdDev
@@ -1200,19 +1242,21 @@ class Zoo(Format, Probability, Cllr):
             if self.config.getAlexanderStyle():
                 # Only show stdev when ellipses are plotted.
                 if self.config.getShowStdev():
-                    labelText += (" aTmStDev:%02.2f" % agmStdDev) + (" anTStdDev:%02.2f" % aimStdDev)
+                    labelText += ("\naTmStDev: %02.2f" % agmStdDev) + ("\nanTStdDev: %02.2f" % aimStdDev)
 
             pattern = subject.getPattern()
-            xy = [self.agmsv[pattern], self.aimsv[pattern]]
-
-            xRange, yRange, xRangeAll, yRangeAll = self.getRanges()
+            x = subject.getAgmsv()
+            y = subject.getAimsv()
+            xy = (x, y)
+            stdDevOffset = self.config.getMaxStdDev()
             if self.config.getAlexanderStyle():
-                eWidth = subject.getAgmStdDev() * xFactor[metaValue]
-                eHeight =subject.getAimStdDev() * yFactor[metaValue]
+                eWidth = (stdDevOffset + subject.getAgmStdDev()) * self.xScaleFactorAll
+                eHeight = (stdDevOffset + subject.getAimStdDev()) * self.yScaleFactorAll
             else:
                 (hor, vert) = self.config.getScreenResolutionTuple()
-                eWidth = xRangeAll / (hor / 10.0)
-                eHeight = yRangeAll / (vert / 10.0)
+                # The width and hight should be chosen so that the data point is shown as a simple dot.
+                eWidth = self.xRangeAll / (hor / 10.0)
+                eHeight = self.yRangeAll / (vert / 10.0)
             e = Ellipse(xy, eWidth, eHeight, angle)
             e.set_facecolor(colors[metaValue])
             if self.config.getShowEdgeColor():
@@ -1236,7 +1280,8 @@ class Zoo(Format, Probability, Cllr):
                         # Then smaller data points (partly) lying on top of it will still be visible.
                         # We normalise the opacity using the surface area of the ellipse.
                         thisSurfaceArea = width * height
-                        alpha = 1.0 - (thisSurfaceArea - self.minSurfaceArea[metaValue]) / self.surfaceAreaRange[metaValue]
+                        alpha = 1.0 - (thisSurfaceArea - self.minSurfaceArea[metaValue]) / \
+                                      self.surfaceAreaRange[metaValue]
                     else:
                         alpha = self.config.getOpacity4Ellipses()
                 else:
@@ -1245,34 +1290,44 @@ class Zoo(Format, Probability, Cllr):
             if alpha < self.config.getMinimumOpacityValue():
                 alpha = self.config.getMinimumOpacityValue()
             e.set_alpha(alpha)
-            # Chameleon: BLUE
-            if (self.aimsv[pattern] > self.aimsHigh[metaValue]) and (self.agmsv[pattern] > self.agmsHigh[metaValue]):
-                if self.annotateEllipses:
-                    self._annotateEllipseInQuartile(xy, height, labelText, metaValue, 'rb', axesZoo)
+            # Chameleon: BLUE, right bottom quartile
+            hy = self.aim_maxAll - (self.aim_maxAll - self.aim_minAll) / 2.0
+            hx = self.agm_maxAll - (self.agm_maxAll - self.agm_minAll) / 2.0
+            if (y > self.aimsHigh[metaValue]) and (x > self.agmsHigh[metaValue]):
+                if self.annotateEllipsesInQuartiles:
+                    # Set text above data point to the left.
+                    annotation = self._annotateEllipse(xy, self.xRange[metaValue], hx, hy, labelText, axesZoo)
+                    annotation.set_visible(True)
                 if self.useColorsForQuartileRanges and (self.nrColors <= 1):
                     e.set_facecolor('blue')
                     if self.config.getShowEdgeColor():
                         e.set_edgecolor('blue')
-            # Phantom: RED
-            if (self.aimsv[pattern] < self.aimsLow[metaValue]) and (self.agmsv[pattern] < self.agmsLow[metaValue]):
-                if self.annotateEllipses:
-                    self._annotateEllipseInQuartile(xy, height, labelText, metaValue, 'lt', axesZoo)
+            # Phantom: RED, left top quartile.
+            if (y < self.aimsLow[metaValue]) and (x < self.agmsLow[metaValue]):
+                if self.annotateEllipsesInQuartiles:
+                    # Set text below data point to the right.
+                    annotation = self._annotateEllipse(xy, self.xRange[metaValue], hx, hy, labelText, axesZoo)
+                    annotation.set_visible(True)
                 if self.useColorsForQuartileRanges and (self.nrColors <= 1):
                     e.set_facecolor('orange')
                     if self.config.getShowEdgeColor():
                         e.set_edgecolor('orange')
-            # Worms: GREEN
-            if (self.aimsv[pattern] > self.aimsHigh[metaValue]) and (self.agmsv[pattern] < self.agmsLow[metaValue]):
-                if self.annotateEllipses:
-                    self._annotateEllipseInQuartile(xy, height, labelText, metaValue, 'lb', axesZoo)
+            # Worms: GREEN, left bottom
+            if (y > self.aimsHigh[metaValue]) and (x < self.agmsLow[metaValue]):
+                if self.annotateEllipsesInQuartiles:
+                    # Set text above data point to the right.
+                    annotation = self._annotateEllipse(xy, self.xRange[metaValue], hx, hy, labelText, axesZoo)
+                    annotation.set_visible(True)
                 if self.useColorsForQuartileRanges and (self.nrColors <= 1):
                     e.set_facecolor('green')
                     if self.config.getShowEdgeColor():
                         e.set_edgecolor('green')
-            # Doves: MAGENTA
-            if (self.aimsv[pattern] < self.aimsLow[metaValue]) and (self.agmsv[pattern] > self.agmsHigh[metaValue]):
-                if self.annotateEllipses:
-                    self._annotateEllipseInQuartile(xy, height, labelText, metaValue, 'rt', axesZoo)
+            # Doves: MAGENTA, right top
+            if (y < self.aimsLow[metaValue]) and (x > self.agmsHigh[metaValue]):
+                if self.annotateEllipsesInQuartiles:
+                    # Set text below data point to the left.
+                    annotation = self._annotateEllipse(xy, self.xRange[metaValue], hx, hy, labelText, axesZoo)
+                    annotation.set_visible(True)
                 if self.useColorsForQuartileRanges and (self.nrColors <= 1):
                     e.set_facecolor('magenta')
                     if self.config.getShowEdgeColor():
@@ -1281,29 +1336,33 @@ class Zoo(Format, Probability, Cllr):
             point = axesZoo.add_artist(e)
 
             # If there are several distinct meta data values, they are interconnected.
-            # In that case we do not need to annotate both ellipses.
+            # In that case we do not need to annotate both ellipses. One will do.
             if self.config.getInterconnectMetaValues():
                 if thisLabel in self.data.getLabelsToShowAlways() and thisLabel not in labelsDrawn:
                     labelsDrawn.add(thisLabel)
-                    annotation = self._annotateEllipse(xy, xRange[metaValue], yRange[metaValue], labelText, axesZoo)
+                    annotation = self._annotateEllipse(xy, self.xRange[metaValue], hx, hy, labelText, axesZoo)
                     self._pointsWithAnnotation.append([point, annotation, pattern, xy])
                     annotation.set_visible(True)
                 else:
-                    annotation = self._annotateEllipse(xy, xRange[metaValue], yRange[metaValue], labelText, axesZoo)
+                    annotation = self._annotateEllipse(xy, self.xRange[metaValue], hx, hy, labelText, axesZoo)
                     self._pointsWithAnnotation.append([point, annotation, pattern, xy])
                     annotation.set_visible(False)
             else:
-                annotation = self._annotateEllipse(xy, xRange[metaValue], yRange[metaValue], labelText, axesZoo)
+                annotation = self._annotateEllipse(xy, self.xRange[metaValue], hx, hy, labelText, axesZoo)
                 self._pointsWithAnnotation.append([point, annotation, pattern, xy])
                 if thisLabel in self.data.getLabelsToShowAlways():
                     annotation.set_visible(True)
             count += 1
 
-            # Plot some ellipses meant for reference but only
-            # if we do not show annotations at startup.
+        # Plot some ellipses meant for reference but only
+        # if we do not show annotations at startup.
         if self.config.getAlexanderStyle():
             if not self.config.getShowAnnotationsAtStartup():
-                self._plotReferenceEllipses(axesZoo, xRange[metaValue], yRange[metaValue])
+                self._plotReferenceEllipses(axesZoo)
+            if self.config.getShowUnitDataPoint():
+                self._plotUnitEllipses(axesZoo)
+            if self.config.getShowHelperCircles():
+                self._plotHelperCircles(axesZoo)
 
         if self.debug:
             print '_plotDistributions:count:', count
