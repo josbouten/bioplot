@@ -1,10 +1,13 @@
 TODO
 
-sorting of labels in animal text files.
-- labels are sorted as strings, this results in odd sequences if labels are numbers
+Change parameters named alphaXYZ in opacityXYZ
 
-To be implemented:
-We do not want a ticker on the radial axis.
+Sort labels in histogram alphabetically.
 
-Difference in length of labels in legend will influence the layout of the legend
-Compute max length first and adapt formatting.
+Add norm and raw stdDev to object labels in zoo plot.
+
+Add DCF and minDCF to EER-plot and zoo plot
+
+Leave choice to user to show median or mean as black ellipse in zoo plot.
+
+Describe how to install scikit-sklearn on OSX
