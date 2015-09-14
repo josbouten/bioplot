@@ -29,20 +29,16 @@ __author__ = 'drs. ing. Jos Bouten'
 
 # Author: drs. ing. J.S. Bouten
 # August, September 2013
-# email: josbouten@gmail.com
-
-_author_ = 'drs. ing. Jos Bouten'
 
 import sqlite3
 import sys
-
 from os import makedirs, path
 import collections
 
 from utils import sanitize, convert
 from format import Format
-
 from asyncwrite import AsyncWrite
+
 
 class Data(Format):
     '''
@@ -51,31 +47,35 @@ class Data(Format):
 
     def __init__(self, thisConfig, thisTitle, thisThreshold, thisDataType, thisDebug=True, thisSource='database'):
         Format.__init__(self, thisDebug)
-        self._title = thisTitle
         self.config = thisConfig
+        self._title = thisTitle
         self._defaultThreshold = thisThreshold
         self._dataType = thisDataType
-        self._plotType = None
-        self._format = Format(self.debug)
-
         # Annotate _doves, _phantoms, _worms and _chameleons
         self.debug = thisDebug
         self._source = thisSource
+        self._format = Format(self.debug)
 
-        # target scores per label and meta value pattern
+        self._plotType = None
+
+        # Target scores per label and meta value pattern.
         self._targetScores = collections.defaultdict(list)
-        # non target scores per label and meta value pattern
+        # Number of targets per label.
+        self._targetCnt = collections.Counter()
+        # Non target scores per label and meta value pattern.
         self._nonTargetScores = collections.defaultdict(list)
-        # target scores per label
+        # Number of non targets per label.
+        self._nonTargetCnt = collections.Counter()
+        # Target scores per label.
         self._targetScores4Label = collections.defaultdict(list)
         self._targetScores4MetaValue = collections.defaultdict(list)
-        # non target scores per label
+        # Non target scores per label.
         self._nonTargetScores4Label = collections.defaultdict(list)
         self._nonTargetScores4MetaValue = collections.defaultdict(list)
         self._results = collections.defaultdict(list)
-        self._resultsOrg = collections.defaultdict(list)
+        self._results4Subject = collections.defaultdict(list)
         self._nrDistinctMetaDataValues = 0
-        # contains: { speakerId: metaDataValue }
+        # Contains: { speakerId: metaDataValue }
         self._metaDataValues = collections.defaultdict(set)
         self._LabelsToShowAlways = []
         self._minimumScore = collections.defaultdict(dict)
@@ -94,6 +94,7 @@ class Data(Format):
         # If the user did not specify a filename, we assume a database as the source.
         if self._source == 'database':
             print "You need to add some code for this to work!"
+            # And remove the sys.exit(1) statement.
             sys.exit(1)
             res = self._readFromDatabase()
         else:
@@ -113,10 +114,10 @@ class Data(Format):
             sys.exit(1)
 
     def getMax(self):
-        return self._ma
+        return self._maAll
 
     def getMin(self):
-        return self._mi
+        return self._miAll
 
     def getMetaDataValues(self):
         return self._metaDataValues
@@ -127,20 +128,32 @@ class Data(Format):
     def getResults(self):
         return self._results
 
-    def getResultsOrg(self):
-        return self._resultsOrg
+    def getResults4Subject(self):
+        return self._results4Subject
 
     def getTargetScores(self):
         '''
-        :return: dict of target scores. Key = label
+        :return: dict of target scores. Key = label.
         '''
         return self._targetScores
+
+    def getTargetCnt(self):
+        '''
+        :return: return dict containing target counts. Use metaValue as key.
+        '''
+        return self._targetCnt;
 
     def getNonTargetScores(self):
         '''
         :return: return dict of non target scores. Key = label
         '''
         return self._nonTargetScores
+
+    def getNonTargetCnt(self):
+        '''
+        :return: return dict containing non target counts. Use metaValue as key.
+        '''
+        return self._nonTargetCnt;
 
     def getTargetScoreValues(self):
         thisList = self.getTargetScores()
@@ -228,7 +241,7 @@ class Data(Format):
 
     def compAverageScore(self, scores):
         '''
-        Compute average score from dict of scores
+        Compute average score from dict of scores.
         :param scores: dict containing list of scores for key = label
         :return: float: average score
         '''
@@ -242,7 +255,7 @@ class Data(Format):
 
     def minMax(self, score, mi, ma):
         '''
-        Compute minimum and maximum value from a list of scores.
+        Compute minimum and maximum value from a list of float scores.
 
         :param score: list of scores
         :return: minimum value and maximum value
@@ -253,7 +266,7 @@ class Data(Format):
 
     def minMax2(self, scoreDict, label, mi, ma):
         '''
-        Compute minimum and maximum value from a list of scores.
+        Compute minimum and maximum value from a list of scoreDicts.
 
         :param score: list of scores
         :return: minimum value and maximum value
@@ -265,6 +278,17 @@ class Data(Format):
         return mi, ma
 
     def _sanitize(self, l1, f1, l2, f2, score, truth, metaValue):
+        ''' Get rid of leading and trailing spaces.
+
+        :param l1: string label
+        :param f1: floating point number as a string
+        :param l2: string label
+        :param f2: floating point number as a string
+        :param score: string floating point number
+        :param truth: boolean as a string
+        :param metaValue: string
+        :return:
+        '''
         l1 = l1.strip()
         f1 = f1.strip()
         l2 = l2.strip()
@@ -278,10 +302,10 @@ class Data(Format):
         '''
         Decoder for cross identification type results file. Example of the format used:
 
-        80374 0000000017133729a 80359 0000000016842970b 2.1088616847991943 FALSE META_VAL1
+        80374  0000000017133729a 80359 0000000016842970b 2.1088616847991943  FALSE META_VAL1
         148407 0000260007968376b 89823 0000000008087650a 0.33669018745422363 FALSE META_VAL1
-        179408 03ea7cce-a192626a 80372 0000000016749939b 1.26323664188385 FALSE META_VAL2
-        80344 0000000016888750a 80344 0000000015560933b 4.423274517059326 TRUE META_VAL2
+        179408 03ea7cce-a192626a 80372 0000000016749939b 1.26323664188385    FALSE META_VAL2
+        80344  0000000016888750a 80344 0000000015560933b 4.423274517059326   TRUE  META_VAL2
         etc.
 
         :param res: list of strings (text lines) of raw data resulting from a series of trials.
@@ -301,20 +325,18 @@ class Data(Format):
         '''
 
         totCnt = 0
-        targetCnt = collections.Counter()
-        nonTargetCnt = collections.Counter()
         resCnt = 0
-        # For type 3 scores we assume that the scores are (Log) Likelyhood Ratios ranging between 0 and +infinity
+        # For type 3 scores we assume that the scores are (Log) Likelyhood Ratios ranging between 0 and +infinity.
         onlyOnce = set()
         revRepeatCnt = 0
         selfCnt = 0
         valuesCnt = collections.Counter()
-        # Set max and min function for this type
+        # Set max and min function for this type.
         self.getMaximum4ThisType = self.config.getMaximum4Type3
         self.getMinimum4ThisType = self.config.getMinimum4Type3
         # Scores are scalar float values.
-        self._mi = self.getMaximum4ThisType()
-        self._ma = self.getMinimum4ThisType()
+        self._miAll = self.getMaximum4ThisType()
+        self._maAll = self.getMinimum4ThisType()
         for line in res:
             if ',' in line:
                 splitChar = ','
@@ -325,15 +347,16 @@ class Data(Format):
                 if splitChar:
                     l1, f1, l2, f2, score, truth, metaValue = self._sanitize(l1, f1, l2, f2, score, truth, metaValue)
             except Exception, e:
-                print e, line
+                print 'Error in', line
+                print 'Use either comma or space as separator.'
+                print e
             else:
-                # We want to sort the data when choosing colors
+                # We want to sort the data when choosing colors.
                 # Therefore we convert to numbers if possible
                 # otherwise we assume string values.
-
                 metaValue = convert(metaValue)
 
-                # keep track of distinct meta data values
+                # Keep track of distinct meta data values.
                 valuesCnt[metaValue] += 1
 
                 if not metaValue in self._minimumScore:
@@ -341,68 +364,80 @@ class Data(Format):
                     self._maximumScore[metaValue] = self.getMinimum4ThisType()
                 l1_0 = l1 + '---' + f1
                 l2_0 = l2 + '---' + f2
-                score = float(score)
-                self._mi = min(self._mi, score)
-                self._ma = max(self._ma, score)
-                self._minimumScore[metaValue] = min(self._minimumScore[metaValue], score)
-                self._maximumScore[metaValue] = max(self._maximumScore[metaValue], score)
-
-                if l1_0 == l2_0:
-                    selfCnt += 1
-                    # Selfies are not interesting and therefore skipped
-                    # continue
-                if not (l1_0, l2_0) in onlyOnce:
-                    onlyOnce.add((l1_0, l2_0))
-                if not self._allowDups:
-                    # We do not want to include an experiment twice,
-                    # assuming that the scores are symmetric.
-                    # This may not be the case!
-                    if (l2_0, l1_0) in onlyOnce:
-                        revRepeatCnt += 1
-                        continue
-                resCnt += 1
-
-                # Keep track of labels associated with meta data values.
-                metaValue = str(metaValue)
-
-                pattern = l1 + self.LABEL_SEPARATOR + metaValue
-                # Keep track of results for ranking purposes.
-                # print 'adding element to results[', l1 + self.LABEL_SEPARATOR + metaValue, ']'
-                self._results[pattern].append((l2, score))
-                self._resultsOrg[l1].append((l2, score)) # code is just for debugging
-
-                self._metaDataValues[metaValue].add(l1)
-                self._metaDataValues[metaValue].add(l2)
-                totCnt += 1
-                if truth.lower() == 'true':
-                    self._targetScores[pattern].append(score)
-                    self._targetScores4Label[l1].append(score)
-                    self._targetScores4MetaValue[metaValue].append(score)
-                    targetCnt[metaValue] += 1
-                    self._targetLabels.add(l1)
+                # If the score is not numerical, then we skip everything.
+                try:
+                    score = float(score)
+                except Exception, e:
+                    print 'Error in', line
+                    print e
                 else:
-                    self._nonTargetScores[pattern].append(score)
-                    self._nonTargetScores4Label[l1].append(score)
-                    self._nonTargetScores4MetaValue[metaValue].append(score)
-                    nonTargetCnt[metaValue] += 1
-                    self._nonTargetLabels.add(l1)
+                    self._miAll = min(self._miAll, score)
+                    self._maAll = max(self._maAll, score)
+                    self._minimumScore[metaValue] = min(self._minimumScore[metaValue], score)
+                    self._maximumScore[metaValue] = max(self._maximumScore[metaValue], score)
+
+                    if l1_0 == l2_0:
+                        selfCnt += 1
+                        # Selfies are not interesting and therefore skipped
+                        # continue
+                    if not (l1_0, l2_0) in onlyOnce:
+                        onlyOnce.add((l1_0, l2_0))
+                    if not self._allowDups:
+                        # We do not want to include an experiment twice,
+                        # assuming that the scores are symmetric.
+                        # This may not be the case!
+                        if (l2_0, l1_0) in onlyOnce:
+                            revRepeatCnt += 1
+                            continue
+                    resCnt += 1
+
+                    # Keep track of labels associated with meta data values.
+                    metaValue = str(metaValue)
+
+                    pattern = l1 + self.LABEL_SEPARATOR + metaValue
+                    # Keep track of results for ranking purposes.
+                    # print 'adding element to results[', l1 + self.LABEL_SEPARATOR + metaValue, ']'
+                    self._results[pattern].append((l2, score))
+                    self._results4Subject[metaValue, l1].append((l2, score))  # code is just for debugging
+
+                    self._metaDataValues[metaValue].add(l1)
+                    self._metaDataValues[metaValue].add(l2)
+                    totCnt += 1
+                    if truth.lower() == 'true':
+                        self._targetScores[pattern].append(score)
+                        self._targetScores4Label[l1].append(score)
+                        self._targetScores4MetaValue[metaValue].append(score)
+                        self._targetCnt[metaValue] += 1
+                        self._targetLabels.add(l1)
+                    else:
+                        self._nonTargetScores[pattern].append(score)
+                        self._nonTargetScores4Label[l1].append(score)
+                        self._nonTargetScores4MetaValue[metaValue].append(score)
+                        self._nonTargetCnt[metaValue] += 1
+                        self._nonTargetLabels.add(l1)
         if self.debug:
-            print 'Number of results in res:', resCnt
-            print 'Number of subjects:', len(self._resultsOrg)
+            print 'Number of results in file:', resCnt
+            print 'Number of subjects:', len(self._results4Subject)
         print 'Number of scores:', totCnt
         if totCnt == 0:
-            print 'No scores were found. Maybe dataType is not set correctly.'
+            print 'No scores were found. Maybe the dataType is not set correctly.'
             print "DataType is '%s'" % self._dataType
             print 'Is this correct?'
             sys.exit(1)
-        print 'Number target scores:', self._compLen(self._targetScores)
-        print 'Number non target scores:', self._compLen(self._nonTargetScores)
-        print 'Number of repeats:', revRepeatCnt
-        print 'Number of selfies:', selfCnt
+        print "Number of target scores for: "
+        for metaValue in self._targetCnt:
+            print metaValue, self._targetCnt[metaValue],
+        print
+        print "Number of non target scores for: "
+        for metaValue in self._nonTargetCnt:
+            print metaValue, self._nonTargetCnt[metaValue],
+        print
+        print 'Total number of target scores:', self._compLen(self._targetScores)
+        print 'Total number of non target scores:', self._compLen(self._nonTargetScores)
+        print 'Number of repeats (multiple instances of same data in input):', revRepeatCnt
+        print 'Number of selfies (A vs A):', selfCnt
         self._nrDistinctMetaDataValues = len(self._metaDataValues)
         print 'Nr of distinct meta data values:', self._nrDistinctMetaDataValues
-        if self.debug:
-            print 'mi, ma:', self._mi, self._ma
 
     def _decodeType1Results(self, res):
         '''
@@ -476,7 +511,6 @@ class Data(Format):
             print e
             sys.exit(1)
 
-
     def writeScores2file(self, scoreDict, expName, extention):
         '''
         Write scores to a file
@@ -515,49 +549,4 @@ class Data(Format):
                     background.start()
                     background.join()
                 else:
-                    print "File %s already exists." % (filename)
-
-
-    def writeScores2fileOrg(self, scoreDict, expName, extention):
-        '''
-        Write scores to a file
-        :param scoreDict: dict of scores, key = label
-        :param expName: string used as part of the filename
-        :param extention: string used as file extention
-        :return: not a thing
-        :return: not a thing
-        '''
-        dataOutputPath = self.config.getOutputPath()
-        k = scoreDict.keys()
-        try:
-            if not path.exists(dataOutputPath):
-                makedirs(dataOutputPath)
-        except Exception, e:
-            print 'writeScores2file', e
-            sys.exit(1)
-
-        scoresPerMetaValue = collections.defaultdict(list)
-        for el in k:
-            scores = scoreDict[el]
-            metaValue = self._format.getMetaFromPattern(el)
-            scoresPerMetaValue[metaValue].append(scores)
-        for metaValue in scoresPerMetaValue:
-            scores = scoresPerMetaValue[metaValue]
-            filename = dataOutputPath + path.sep + expName + '_' + metaValue + extention
-            # We do not like spaces in file names.
-            # Sorry windows dudes and dudettes !
-            filename = sanitize(filename)
-            if not path.exists(filename):
-                if self.debug:
-                    print 'data.writeScores2file:writing to:', filename
-                try:
-                    f = open(filename, 'w')
-                    for score in scores:
-                        for el in score:
-                            f.write("%s\n" % str(el))
-                    f.close()
-                except IOError, e:
-                    print e
-                    sys.exit(1)
-            else:
-                print "File %s already exists." % (filename)
+                    print "File %s already exists." % filename
