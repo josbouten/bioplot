@@ -67,7 +67,7 @@ class AlexanderZoo(Zoo):
         plt.show()
 
 
-    def _plotZooAlexanderStyle(self, yagerStyle=False):
+    def _plotZooAlexanderStyle(self, yagerStyle=True):
         self.computeZooStatsAlexanderStyle()
         # plot a list of ellipses each visualising a score distribution for a target
         self.fig = plt.figure()
