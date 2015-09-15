@@ -1046,7 +1046,11 @@ class Zoo(Format, Probability, Cllr):
         else:
             factor = 20.0
 
-        xWidth = float((self.agm_maxAll - self.agm_minAll) / 20.0)
+        divFactor = 25.0
+        # Increase factor to move legend to the right.
+        # Decrease factor to move legend to the left.
+        xWidth = float((self.agm_maxAll - self.agm_minAll) / divFactor)
+
         yBase = self.aim_minAll
         xBase = self.agm_maxAll
         # Find local minimum of agm_ma values and put legend next to it.
@@ -1091,10 +1095,10 @@ class Zoo(Format, Probability, Cllr):
         '''
 
         if yagerStyle:
-            # Axes that shows low scores at the top of the plot, low scores at the bottom.
+            # Axes that shows low scores at the top of the plot, high scores at the bottom.
             axes.set_ylim(self.aim_maxAll + 0.105 * self.yRangeAll, self.aim_minAll - 0.1 * self.yRangeAll)
         else:
-            # Axes that shows low scores at the bottom of the plot, high scores at the top.
+            # Axes that shows high scores at the top of the plot, low scores at the bottom.
             axes.set_ylim(self.aim_minAll - 0.1 * self.yRangeAll, self.aim_maxAll + 0.05 * self.yRangeAll)
 
         axes.set_xlim(self.agm_minAll - 0.1 * self.xRangeAll, self.agm_maxAll + 0.1 * self.xRangeAll)
@@ -1231,7 +1235,7 @@ class Zoo(Format, Probability, Cllr):
             if self.config.getShowNrTargetsAndNonTargets():
                 labelText += ("\n#T: %d" % subject.getNumberOfTargets()) + \
                             ("\n#nT: %d" % subject.getNumberOfNonTargets())
-            if self.config.getShowAverageTargetAndNonTargetMatchScores():
+            if self.config.getShowAverageScores():
                 labelText += ("\naTms: %02.2f" % subject.getAgmsv()) + ("\nanTms: %02.2f" % subject.getAimsv())
             agmStdDev = subject.getAgmStdDev()
             aimStdDev = subject.getAimStdDev()
@@ -1240,7 +1244,7 @@ class Zoo(Format, Probability, Cllr):
             if self.config.getAlexanderStyle():
                 # Only show stdev when ellipses are plotted.
                 if self.config.getShowStdev():
-                    labelText += ("\naTmStDev: %02.2f" % agmStdDev) + ("\nanTStdDev: %02.2f" % aimStdDev)
+                    labelText += ("\naTmStDev: %02.2f" % agmStdDev) + ("\nanTmStdDev: %02.2f" % aimStdDev)
 
             pattern = subject.getPattern()
             x = subject.getAgmsv()
