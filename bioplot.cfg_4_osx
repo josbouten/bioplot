@@ -30,9 +30,7 @@ nrPoints = 100
 ; Always save the target and non target scores, even if the files already exist.
 alwaysSave = True
 
-; Choose a colormap for the ellipses: Spectral, gist_ncar, hsv, gist_rainbow or prism
-; For each meta value a color is selected from the color map.
-colorMap = hsv
+; colorMap is deprecated; have a look at [metacolors]
 
 ; set debug flag to True: will print a lot of info which might be of use
 ; when trying to debug the code.
@@ -142,15 +140,29 @@ showMatrixLabels = True
 labelAngle = 70
 
 [metacolors]
-; Colors used to combine multiple data sets in one plot.
+
+; Different colors make it possible to combine multiple data sets in one plot.
 ; Note: don't use white or some very light colour as the plot's
 ; canvas is white and you would not see much of a label then.
+; From a perceptual point you should avoide pure Blue
+; in combination with other colors as the human eye does not focus
+; blue light in the same way as the other colours because of chromatic aberation
+; when viewing multiple colours at the same time. Blue will be less visible because
+; it will not be in focus when other colours are near it.
 ; The meta data values are sorted alphabetically.
 ; The colors are used in the sequence they are listed here.
-; Note that the labels are of no consequence!
+; Note that the labels are of no consequence! They are there for your convenience.
 ; Values should be in R,G,B format specifying integer values
-; or hexadecimal values (6 digits).
+; or hexadecimal values (6 digits). Have a look at http://colorbrewer2.org. I'm certain
+; you will get inspired to use some nice colours in the plots.
+; Alternatively you can search for color values on the web using 'html colors' as the search string
+; and you will find various lists and examples.
 
+#first = edf8fb
+#second = b2e2e2
+#third = 66c2a4
+#fourth = 2ca25f
+#fifth = 006d2c
 IWouldCallThisBlueIsh = 3399FF
 Orangy = 255,125,10
 rustLike = 96,17,0
@@ -175,8 +187,8 @@ nrSamples4Probability = 500
 ; as published by Alexander et al. @ IAFPA conference Zurich, Switserland, 2014
 alexanderStyle = True
 
-; Transparency value for reference circles.
-alpha4ReferenceCircles = 0.3
+; Transparency value for inner most reference circle.
+alpha4ReferenceCircles = 1.0
 
 ; Transparency value for unit circles.
 alpha4UnitCircles = 0.5
@@ -209,10 +221,10 @@ labelColor = A0A0A0
 limitStdDevs = False
 
 ; Width of lines interconnecting ellipses in zoo plot
-lineWidth = 1
+lineWidth = 1.0
 
-; Maximum value of the stdev for an ellipse in the zoo plot.
-; Values any higher are limited to this number.
+; Maximum width/height in standard deviations allowed for an ellipse in the zoo plot.
+; Values any higher are limited to this number of standard deviations.
 maxStdDev = 6.0
 
 ; Opacity can be varied from small to large ellipses.
@@ -221,10 +233,13 @@ maxStdDev = 6.0
 ; Therefore it is limited to this value.
 minimumOpacityValue = 0.2
 
-; Minimum value of the stdev for an ellipse in the zoo plot
+; Minimum value of the stdev for an ellipse in the zoo plot.
+; Values any lower are limited to this number.
 minStdDev = 0.01
 
-; When True will prevent the use of x-axis labels in the histograms added to the zoo plot.
+; Histogram annotation on x-axis. When True will prevent the use of x-axis
+; labels in the histograms added to the zoo plot.
+; Tricky ... This parameter implies a double negative.
 noHistAnnot = False
 
 ; Opacity of ellipses if useOpacityForBigEllipses is set to False.
@@ -239,10 +254,10 @@ scaleFactor = 150
 showAnnotationsAtStartup = False
 
 ; Show average target match score and non match score in popup when data point is clicked.
-showAverageTargetAndNonTargetMatchScores = False
+showAverageScores = True
 
 ; Show histogram of shift of points depending on meta data values.
-showCircularHistogram = False
+showCircularHistogram = True
 
 ; Show Cllr values in relevant plots.
 showCllrValues = True
@@ -253,18 +268,23 @@ showEdgeColor = True
 ; Show EER values in relevant plots.
 showEerValues = True
 
+; Show circles around unit ellipse that can be used to resize the plot so that the unit circle
+; will be shown as a circle. This will make it easier to interpret the std values for average target vs
+; average non target data points.
+showHelperCircles = True
+
 ; Show minimum Cllr values in relevant plots.
 ; Stub, not yet implemented.
-showMinCllrValues = False
+showMinCllrValues = True
 
 ; Show nr of target and nr of non target scores for a data point.
-showNrTargetsAndNonTargets = False
+showNrTargetsAndNonTargets = True
 
 ; Show reference ellipses or not.
 showReference = True
 
 ; Show std dev values of data points when clicked
-showStdDev = False
+showStdDev = True
 
 ; Do not show text with reference ellipses
 showTextAtReferenceAtStartup = False
