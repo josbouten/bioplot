@@ -360,12 +360,11 @@ class Config():
         except Exception:
             self._showMatrixLabels = self._showMatrixLabelsDefault
 
-        self._showAverageTargetAndNonTargetMatchScoresDefault = True
+        self._showAverageScoresDefault = True
         try:
-            self._showAverageTargetAndNonTargetMatchScores = self.config.getboolean('zoo',
-                                                                                    'showAverageTargetAndNonTargetMatchScores')
+            self._showAverageScores = self.config.getboolean('zoo', 'showAverageScores')
         except Exception:
-            self._showAverageTargetAndNonTargetMatchScores = self._showAverageTargetAndNonTargetMatchScoresDefault
+            self._showAverageScores = self._showAverageScoresDefault
 
         self._showMetaInHistDefault = True
         try:
@@ -440,10 +439,10 @@ class Config():
         except Exception:
             self._xHeight = self._xHeightDefault
 
-        # Show vertical axis as in Yager et al.as
+        # Show vertical axis as in Yager et al. 2009 as
         self._yagerStyleDefault = True
         try:
-            self._yagerStyle = self.config.getboolean('zoo', 'yagerstyle')
+            self._yagerStyle = self.config.getboolean('zoo', 'yagerStyle')
         except Exception:
             self._yagerStyle = self._yagerStyleDefault
 
@@ -465,7 +464,7 @@ class Config():
         except Exception:
             self._zWidth = self._zWidthDefault
 
-        self._zBottomDefault = 0.05
+        self._zBottomDefault = 0.08
         try:
             self._zBottom = self.config.getfloat('layout', 'zbottom')
         except Exception:
@@ -677,8 +676,8 @@ class Config():
     def getShowAnnotationsAtStartup(self):
         return self._showAnnotationsAtStartup
 
-    def getShowAverageTargetAndNonTargetMatchScores(self):
-        return self._showAverageTargetAndNonTargetMatchScores
+    def getShowAverageScores(self):
+        return self._showAverageScores
 
     def getShowCircularHistogram(self):
         return self._showCircularHistogram
@@ -814,8 +813,7 @@ class Config():
         string += ", scaleFactor = " + str(self.getScaleFactor())
         string += ", screenResolution = " + str(self.getScreenResolutionString())
         string += ", showAnnotationsAtStartup = " + str(self.getShowAnnotationsAtStartup())
-        string += ", showAverageTargetAndNonTargetMatchScores = " + str(
-            self.getShowAverageTargetAndNonTargetMatchScores())
+        string += ", showMeanScores = " + str(self.getShowAverageScores())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())
         string += ", showCllrValues = " + str(self.getShowCllrValues())
         string += ", showConfigInfo = " + str(self.getShowConfigInfo())
