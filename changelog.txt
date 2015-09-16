@@ -1,4 +1,4 @@
-# v0.9.4 Sun September 13. 2015
+# v0.9.4 Tue September 15. 2015
 Improved positioning of labels in zoo plot, simplified code to do so quite a bit.
 Improved scaling of reference and unit ellipses in zoo plot.
 Added helper circles to zoo plot.
@@ -7,7 +7,8 @@ Added cllrMin to legend of Zoo plot for multi and single condition experiments.
 Added quite a bit of text to the rst-files.
 Improved position of legend in accuracy and ranking plot.
 Added some conversion scripts: bv2bioplot.py, sretools2bioplot.py and vocalize2bioplot.py
-Made label click more selective.
+Made label click more selective. Added label fields.
+Cleaned up settings files.
 
 # v0.9.3 August 2015
 Added EER and Cllr to legend of Zoo plot for multi and single condition experiments.
