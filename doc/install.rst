@@ -7,7 +7,7 @@ Follow the instructions found here: http://matplotlib.org/users/installing.html.
 I've tried anaconda 2.01 (32 bit version) on W7 32 bits, and I've heard that it works on XP and with the 64 bit
 version on W8 as well. Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
 So it seems you can choose whatever version of windows you like. Anaconda will install python 2.7.x and a load of
-python modules amongst which numpy, matplotlib, pyplot.
+python modules amongst which numpy, matplotlib, pyplot and scikit-learn.
 You will be able to run bioplot.py and do much more pythony things ;-)
 
 Download the zip file from the github page and unzip its contents to a local directory.
@@ -80,6 +80,10 @@ On OSX 10.9.5 run these commands: ::
 
     sudo git clone https://github.com/josbouten/bioplot.git
 
+From bioplot v0.9.4 on you'll need to install the python machine learning library scikit-learn: ::
+
+    sudo pip install scikit-learn
+
 Then change the owner of the bioplot directory to your user: ::
 
     sudo chown -R your-user-name:staff bioplot
@@ -107,7 +111,7 @@ in bioplot.cfg: ::
     [cfg] 
     runningOSX = True
 
-Set your screen's resolution in [cfg] using screenResolution (in this example it is set to 1600x1200). ::
+Set your screen's resolution in [cfg] using screenResolution: ::
 
     [cfg]
     screenResolution = 1600x1200
