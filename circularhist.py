@@ -43,7 +43,7 @@ class CircularHistPlot():
         theta = np.linspace(0.0, 2 * np.pi, N, endpoint=False)
         width = 2 * np.pi / N
         bars = self.axes.bar(theta, hist / maxHeight, width=width, bottom=self.bottom)
-        self.axes.set_xlabel("Distribution of slopes. $\\delta$ = %0.5f" % (self.score))
+        self.axes.set_xlabel("$\\delta$ = %0.5f" % (self.score))
 
         # To be implemented:
         # We do not want a ticker on the radial axis.
