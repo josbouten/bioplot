@@ -13,12 +13,7 @@ The software works well with matplotlib-1.3.1. Some matplotlib versions that are
 screen and then exit immediately. If you encounter this, let me know. This can be easily helped. Given that I encountered
 this only with older versions of matplotlib I have not implemented any measures for it in the current version of bioplot.
 
-The Labels by default show black text on a yellow background. The yellow background may be too large for the text on
-Ms Windows platforms when using matplotlib 1.4.3 however. If so, set cfg.runningWindows to True, this will change the
-yellow background into a grey one and make the background fit the text in size.
-
-Labels in zoo plots on OSX will appear in black on a grey background. Set runningOSX to True, this will change the
-yellow background into a grey one and make the background fit the text in size.
+There are some issues with labels in the zoo plots. See :ref:`rst_zooplot_labels`.
 
 Implementation notes
 --------------------
