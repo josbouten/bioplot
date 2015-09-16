@@ -3,7 +3,6 @@ Tools
 
 bv2bioplot.py
 -------------
-
 Convert a bv results data file to a data file for bioplot.
 Example of usage: ::
 
@@ -13,7 +12,7 @@ sretools2bioplot.py
 -------------------
 Convert a sretools type input data file to a data file for bioplot.
 
-Sre tools consist of utilities witten in R which accepts several columns of data.
+Sretools consist of utilities witten in R which accept several columns of data.
 This script is an example which you can use to use that same data as input for bioplot.
 
 Example of input: ::
@@ -30,7 +29,6 @@ Example of usage: ::
 
 vocalise2bioplot.py
 -------------------
-
 Convert a vocalise data file to a data file for bioplot.
 
 Example of usage: ::
