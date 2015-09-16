@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tools &mdash; bioplot 0.9.3 documentation</title>
+    <title>Tools &mdash; bioplot 0.9.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9.3 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="Settings" href="settings.html" />
     <link rel="prev" title="Zoo plot" href="zooplot.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="zooplot.html" title="Zoo plot"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,15 +51,37 @@
             
   <div class="section" id="tools">
 <h1>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="sretools2bioplot-py">
-<h2>sretools2bioplot.py<a class="headerlink" href="#sretools2bioplot-py" title="Permalink to this headline">¶</a></h2>
-<p>Convert sretools type data file to type3 data file for bioplot.</p>
-<p>To ouput the converted data to your screen use:</p>
-<div class="highlight-python"><div class="highlight"><pre>python sretools2bioplot.py input-filename
+<div class="section" id="bv2bioplot-py">
+<h2>bv2bioplot.py<a class="headerlink" href="#bv2bioplot-py" title="Permalink to this headline">¶</a></h2>
+<p>Convert a bv results data file to a data file for bioplot.
+Example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre>python bv2bioplot.py  -i inputfile -o outputfile
 </pre></div>
 </div>
-<p>To redirect the converted data to a file use:</p>
-<div class="highlight-python"><div class="highlight"><pre>python sretools2bioplot.py input-filename &gt;output-filename
+</div>
+<div class="section" id="sretools2bioplot-py">
+<h2>sretools2bioplot.py<a class="headerlink" href="#sretools2bioplot-py" title="Permalink to this headline">¶</a></h2>
+<p>Convert a sretools type input data file to a data file for bioplot.</p>
+<p>Sretools consist of utilities witten in R which accept several columns of data.
+This script is an example which you can use to use that same data as input for bioplot.</p>
+<p>Example of input:</p>
+<div class="highlight-python"><div class="highlight"><pre>Tspid,Tfrid,Mspid,Mfrid,score,target
+114849,0000000005712904a,114849,0000000005713112b,5.368496418,TRUE
+114849,0000000005712904a,114853,0000000005281055b,1.67685461,FALSE
+114849,0000000005712904a,114853,0000000005288357b,1.363172889,FALSE
+114849,0000000005712904a,114854,0000000005133202a,-0.024709666,FALSE
+</pre></div>
+</div>
+<p>Example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre>python sretools2bioplot.py -i inputfile -o outputfile
+</pre></div>
+</div>
+</div>
+<div class="section" id="vocalise2bioplot-py">
+<h2>vocalise2bioplot.py<a class="headerlink" href="#vocalise2bioplot-py" title="Permalink to this headline">¶</a></h2>
+<p>Convert a vocalise data file to a data file for bioplot.</p>
+<p>Example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre>python vocalise2bioplot.py -i inputfile -o outputfile
 </pre></div>
 </div>
 </div>
@@ -74,7 +96,9 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Tools</a><ul>
+<li><a class="reference internal" href="#bv2bioplot-py">bv2bioplot.py</a></li>
 <li><a class="reference internal" href="#sretools2bioplot-py">sretools2bioplot.py</a></li>
+<li><a class="reference internal" href="#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
 </ul>
 </li>
 </ul>
@@ -119,7 +143,7 @@
         <li class="right" >
           <a href="zooplot.html" title="Zoo plot"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

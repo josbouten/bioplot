@@ -19,13 +19,14 @@ When running OSX or Windows do not forget to set either runningOSX or runningWin
     runningOSX = True 
     runningWindows = False 
 
-Or use: ::
+Or in case of a compatible MS Windows OS use: ::
 
     [cfg] 
     runningOSX = False 
     runningWindows = True 
 
-Do not forget to set your screen's resolution in [cfg].screenResolution (in this example it is set to 1600x1200). ::
+Linux users set both to False.
+Do not forget to set your screen's resolution in [cfg] using screenResolution (in this example it is set to 1600x1200). ::
 
     [cfg] 
     screenResolution = 1600x1200

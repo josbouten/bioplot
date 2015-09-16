@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>INSTALL &mdash; bioplot 0.9.3 documentation</title>
+    <title>INSTALL &mdash; bioplot 0.9.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9.3 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="UPDATE" href="update.html" />
-    <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Introduction to Bioplot" href="bioplot.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,9 +38,9 @@
           <a href="update.html" title="UPDATE"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to bioplot’s documentation!"
+          <a href="bioplot.html" title="Introduction to Bioplot"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,7 +57,7 @@
 I&#8217;ve tried anaconda 2.01 (32 bit version) on W7 32 bits, and I&#8217;ve heard that it works on XP and with the 64 bit
 version on W8 as well. Moreover I&#8217;ve tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
 So it seems you can choose whatever version of windows you like. Anaconda will install python 2.7.x and a load of
-python modules amongst which numpy, matplotlib, pyplot.
+python modules amongst which numpy, matplotlib, pyplot and scikit-learn.
 You will be able to run bioplot.py and do much more pythony things ;-)</p>
 <p>Download the zip file from the github page and unzip its contents to a local directory.</p>
 <p>Copy bioplot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
@@ -75,6 +75,13 @@ Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them. Their values are shown on the
 command line whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg</p>
+<p>Set your screen&#8217;s resolution in [cfg] using screenResolution (in this example it is set to 1600x1200).</p>
+<div class="highlight-python"><div class="highlight"><pre>[cfg]
+screenResolution = 1600x1200
+</pre></div>
+</div>
+<p>Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
+send me an email if you want to be kept in the loop with changes or updates.</p>
 </div>
 <div class="section" id="linux">
 <h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
@@ -96,6 +103,13 @@ Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them.  Their values are shown on the
 commandline whenever you run the program, unless you choose not to via the appropriate
 option in bioplot.cfg</p>
+<p>Set your screen&#8217;s resolution in [cfg] using screenResolution (in this example it is set to 1600x1200).</p>
+<div class="highlight-python"><div class="highlight"><pre>[cfg]
+screenResolution = 1600x1200
+</pre></div>
+</div>
+<p>Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
+send me an email if you want to be kept in the loop with changes or updates.</p>
 </div>
 <div class="section" id="osx">
 <h2>OSX<a class="headerlink" href="#osx" title="Permalink to this headline">¶</a></h2>
@@ -107,6 +121,10 @@ python get-pip.py
 pip2 install matplotlib
 
 sudo git clone https://github.com/josbouten/bioplot.git
+</pre></div>
+</div>
+<p>From bioplot v0.9.4 on you&#8217;ll need to install the python machine learning library scikit-learn:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo pip install scikit-learn
 </pre></div>
 </div>
 <p>Then change the owner of the bioplot directory to your user:</p>
@@ -134,6 +152,13 @@ in bioplot.cfg:</p>
 <span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
+<p>Set your screen&#8217;s resolution in [cfg] using screenResolution:</p>
+<div class="highlight-python"><div class="highlight"><pre>[cfg]
+screenResolution = 1600x1200
+</pre></div>
+</div>
+<p>Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
+send me an email if you want to be kept in the loop with changes or updates.</p>
 </div>
 </div>
 
@@ -154,8 +179,8 @@ in bioplot.cfg:</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to bioplot&#8217;s documentation!</a></p>
+  <p class="topless"><a href="bioplot.html"
+                        title="previous chapter">Introduction to Bioplot</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="update.html"
                         title="next chapter">UPDATE</a></p>
@@ -191,9 +216,9 @@ in bioplot.cfg:</p>
           <a href="update.html" title="UPDATE"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to bioplot’s documentation!"
+          <a href="bioplot.html" title="Introduction to Bioplot"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Zoo plot &mdash; bioplot 0.9.3 documentation</title>
+    <title>Zoo plot &mdash; bioplot 0.9.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9.3 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="Tools" href="tools.html" />
     <link rel="prev" title="Tippett plot" href="tippettplot.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="tippettplot.html" title="Tippett plot"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,22 +51,34 @@
             
   <div class="section" id="zoo-plot">
 <span id="rst-zooplot"></span><h1>Zoo plot<a class="headerlink" href="#zoo-plot" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="traditional-plot">
+<h2>Traditional plot<a class="headerlink" href="#traditional-plot" title="Permalink to this headline">¶</a></h2>
 <p>A zoo plot shows a scatter type plot where on the vertical axis the mean of the non target
 scores and on the horizontal axis the mean target scores are drawn for each label. This leads to
 a plot of dots where each dot represents the scores for one subject. The plot below shows an example with one dataset.
 The zoo&#8217;s special animals are coloured differently to make them stand out more.</p>
 <p>Run this command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -f input/testdata_A.txt -Z
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -Z
 </pre></div>
 </div>
 <img alt="_images/condition_A_traditional_zoo_plot.png" src="_images/condition_A_traditional_zoo_plot.png" />
 <p>You can combine multiple data sets in one plot. The next plot below shows combined data of 3 experiments (A, B and C).
 The legend shows the eer and cllr values for the respective conditions.</p>
 <p>Run this command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A, B and C&quot; -f input/testdata_ABC.txt -Z
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A, B and C&quot; -i input/testdata_ABC.txt -Z
 </pre></div>
 </div>
 <img alt="_images/condition_ABC_traditional_zoo_plot.png" src="_images/condition_ABC_traditional_zoo_plot.png" />
+<p>You can choose which error measures to show in the plot by setting any of the options below to true:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<span class="n">showCllrValue</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showEERValue</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showMinCllrValues</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tall-thin-animals">
+<h2>Tall thin animals<a class="headerlink" href="#tall-thin-animals" title="Permalink to this headline">¶</a></h2>
 <p>An extention of the zoo plots was shown at the IAFPA 2014 conference in Zurich, Switserland
 by Anil Alexander et al. They proposed that adding a measure of the standard deviations of the
 scores used to make the plot will add details of the score distributions of the subjects
@@ -76,34 +88,66 @@ The width and height of the ellipses shown are essentially the standard deviatio
 target and average non target scores for a given label. Because these may be much bigger or much
 smaller than the horizontal and vertical scales of the traditional zoo plot, the mean standard
 deviations are scaled by subtracting the overall mean standard deviation and dividing by the
-standard deviation of all standard deviations. This is in essence a normalization procedure.
+standard deviation of all standard deviations. So they will be centered around zero.
+This is in essence a normalization procedure.
 The result will be ellipses with a unit width and height and ellipses smaller and bigger than that.
 To be able to actually plot the normalised ellipses, the width is multiplied by the range of
 scores on the horizontal axis and the height is multiplied by the range of the scores on the vertical axis.
 Finally to scale the ellipses their width and height is divided by a scale factor.
 This scale factor is related to the number of pixels in the display used to plot the zoo plot.
 A value of 150 works nicely for a 1600 ... 1280x1024 display.
-To get this type of plot set the following option in your settings file:</p>
+To get this type of plot set the following options in your settings file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">alexanderStyle</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">150</span>
+</pre></div>
+</div>
+<p>Set the screen resolution in layout:</p>
+<div class="highlight-python"><div class="highlight"><pre>[layout]
+screenResolution = 1600x1024
 </pre></div>
 </div>
 <img alt="_images/condition_ABC_alexander_zoo_plot.png" src="_images/condition_ABC_alexander_zoo_plot.png" />
-<p>If you don&#8217;t like the colors used, specify your own list in the section [metacolors] of the settings file.
-Different colors make it possible to combine multiple data sets in one plot.
+</div>
+<div class="section" id="yager-and-dunstone">
+<h2>Yager and Dunstone<a class="headerlink" href="#yager-and-dunstone" title="Permalink to this headline">¶</a></h2>
+<p>Yager and Dunstone show the worms and chameleons at the bottom of the plot and the phantoms and doves above them.
+This makes the vertical axis show lower scores at the top than at the bottom.
+If you do not like this layout set yagerstyle to False in the config file (the default is True) and the vertical
+axis will be reversed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<span class="n">yagerstyle</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="helper-circles">
+<h2>Helper circles<a class="headerlink" href="#helper-circles" title="Permalink to this headline">¶</a></h2>
+<p>Initially in a zoo plot helper ellipses are shown around the unit ellipse. If you resize the plot so that
+they become circles, it will be easier to interpret the plotted data points and the shapes of the data points
+will become independent of the screen dimensions. If you save a plot when resized in the way suggested you
+will be able to compare zoo plots made from different data sets more easily. The helper ellipses will disappear as soon
+as you click in the plot. Note, only if the std deviations of the average target scores are similar to standard
+deviations of the average non target scores this will help. If this is not the case, then the ranges of the vertical
+and horizontal axes differ too much to be able to resize the plot to a square.</p>
+<img alt="_images/experiment_x_small.png" src="_images/experiment_x_small.png" />
+</div>
+<div class="section" id="colours">
+<h2>Colours<a class="headerlink" href="#colours" title="Permalink to this headline">¶</a></h2>
+<p>If you don&#8217;t like the colours used, specify your own list in the section [metacolours] of the settings file.
+Different colours make it possible to combine multiple data sets in one plot.
 Note: don&#8217;t use white or some very light colour as the plot&#8217;s
 canvas is white and you would not see much of a label then.
 From a perceptual point you should avoide pure Blue
-in combination with other colors as the human eye does not focus
+in combination with other colours as the human eye does not focus
 blue light in the same way as the other colours because of chromatic aberation
 when viewing multiple colours at the same time.
 The meta data values are sorted alphabetically.
-The colors are used in the sequence they are listed here.
+The colours are used in the sequence they are listed here.
 Note that the labels are of no consequence! They are there for your convenience.
 Values should be in R,G,B format specifying integer values
-or hexadecimal values (6 digits). Search for color values on the web using &#8216;html colors&#8217; as the search string
+or hexadecimal values (6 digits). Search for colour values on the web using &#8216;html colours&#8217; as the search string
 and you will find various lists and examples.</p>
-<div class="highlight-python"><div class="highlight"><pre>[metacolors]
+<div class="highlight-python"><div class="highlight"><pre>[metacolours]
 IWouldCallThisBlueIsh = 3399FF
 Orangy = 255,125,10
 rustLike = 96,17,0
@@ -118,35 +162,56 @@ definatelyRed = 255,0,0
 horizontal axis. This means that comparing shapes between zoo plots with varying ranges of
 mean target and mean non target scores can be very tricky. The lines between the ellipses connect ellipses for the
 same label.</p>
+</div>
 <div class="section" id="unit-and-mean-reference">
 <h2>Unit and mean reference<a class="headerlink" href="#unit-and-mean-reference" title="Permalink to this headline">¶</a></h2>
 <p>The grey/black ellipse in the center of the quartiles denotes the mean of all ellipses. The 3 red ellipses on the
 lower left are meant as reference points. Their sizes measure (from smallest to largest ellipse): mean - 2
 standard deviations, mean, mean + 2 standard deviations.</p>
-<p>If you do not want these in your plot make the following setting.</p>
+<p>If you do not want these in your plot choose the following setting:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">showReference</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="n">showUnitDataPoint</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 </div>
+<div class="section" id="labels">
+<span id="rst-zooplot-labels"></span><h2>Labels<a class="headerlink" href="#labels" title="Permalink to this headline">¶</a></h2>
+<p>In some of the plots above you have seen examples of labels shown when you click on the plot. The information shown can
+be configured via the config file. You can choose among these:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<span class="n">showNrTargetsAndNonTargets</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showMeanScores</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showStdDev</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>From top to bottom they will show the number of target scores (#T) and number of non target (#nT) scores for the subject;
+the average target match score (aTms) and the average non target match score (anTms); and lastly the
+the average target match score standard deviation (aTmStDev) and the average non target match score standard deviation (anTmStDev).
+Note that the standard deviations are normalized.</p>
+<p>The Labels by default show black text on a yellow background. The yellow background may be too large for the text on
+Ms Windows platforms when using matplotlib 1.4.3 however. If so, set runningWindows to True in [cfg], this will
+change the yellow background into a grey one and make the background fit the text in size.</p>
+<p>Labels in zoo plots on OSX (Yosemite) will appear in yellow text on a yellow background due to a bug in matplotlib (or me using it wrong).
+Set runningOSX to True in [cfg], this will change the text into black and the background into grey.</p>
+<img alt="_images/condition_A_and_B_zoo_plot_label_extract.png" src="_images/condition_A_and_B_zoo_plot_label_extract.png" />
+</div>
 <div class="section" id="highlighting-labels">
 <h2>Highlighting labels<a class="headerlink" href="#highlighting-labels" title="Permalink to this headline">¶</a></h2>
 <p>If you click on a data point in the plot, a text label will be shown near the point. This makes
-it possible to find the name of a data point in e.g. the quartile ranges.</p>
-<p>If you are curious where the scores of a specific label are in the zoo plot, you need
-not click on all of them to find it. You can specify the labels on the command line.
-If they are in the plot, they will be highlighted. Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -f input/testdata_AB.txt -Z 1100 1109 1042
+it possible to find the name of a data point in e.g. the quartile ranges.
+If you are curious where a specific label is in the zoo plot, you need not click on a lot of them to find it.
+You can specify the labels on the command line. If they are in the plot, they will be highlighted. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -Z 1100 1109 1042
 </pre></div>
 </div>
 <p>This will highlight label 1100, 1109 and 1042 in the zoo plot compiled from
-the data in &#8216;testdata_AB.txt&#8217; and dim the colors of the other points in the plot
+the data in &#8216;testdata_AB.txt&#8217; and dim the colours of the other points in the plot
 making it easy to create a picture for a publication or report. Text labels
 will be displayed near the points selected.</p>
 <img alt="zoo plot for experiment with condition A and B" src="_images/condition_A_and_B_not_interconnected_zoo_plot.png" />
-<p>The lines between the ellipses connect labels which are equal. This makes
-it easy to see what the effect of the parameter change is.</p>
+<p>Lines can be drawn between the ellipses to connect labels which are equal. This makes
+it easy to see what the effect of the parameter change is. Choose this setting:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">interconnectMetaValues</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
@@ -155,12 +220,29 @@ it easy to see what the effect of the parameter change is.</p>
 </div>
 <div class="section" id="zooplots-combined-with-histograms">
 <h2>Zooplots combined with Histograms<a class="headerlink" href="#zooplots-combined-with-histograms" title="Permalink to this headline">¶</a></h2>
-<p>In the plot shown below the zoo plot is bordered by histograms showing the distributions of the target and non target scores. In this zoo plot 2 data sets are shown combined. The points corresponding with one label are interconneted. To get bioplot to show this, set the following option in bioplot.cfg:</p>
+<p>In the plot shown below the zoo plot is bordered by histograms showing the distributions of the target and non target
+scores. To get bioplot to show this, set the following option in bioplot.cfg:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">boutenStyle</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
+<p>Note that the minimum and maximum values in the histograms are based on raw scores and the axes of the zoo plot
+are based on mean scores. This causes the axes to differ and therefore the peak of the histogram is not alligned with the center
+of the zoo plot. In this example this is clearly visible for the non target scores. In this zoo plot 2 data sets
+are shown combined. Each data set has its own quartile ranges.</p>
 <img alt="_images/A_and_B_zoo_plot.png" src="_images/A_and_B_zoo_plot.png" />
+<p>To get a sort of quantification of the idea of change in position in the plot a circular histogram can be added in the top right corner.
+The black ellipses show the mean values of all target and non target mean scores. The circular histogram shows the distribution of angles
+of slopes the ellipses for a given subject moved on from one experiment&#8217;s results to the other. Bear in mind that due
+to the difference in the scale of the horizontal and vertical axes the angles can not be read from the zoo plot easily.
+A system&#8217;s discrimination appears to be proportional to the distance to the upper right corner of the plot
+(where the Doves are) and its calibration appears to be proportional to the distance of a data point to the imaginary
+diagonal one can draw from the lower left to the upper right of the plot.
+The delta value shown below the circular histogram tries to capture this by averaging all movements towards the upper right of the plot.
+The movement is measured by multiplying the absolute movement of an ellipses by the sine of the angle
+of movement to the horizontal axis. Note that this measure is computed between conditions sorted in alphabetical order.
+E.g. in the conditionA and conditionB data plot, the delta is computed for movement of ellipses from conditionA to conditionB.</p>
+<img alt="_images/condition_AB_bouten_zoo_plot.png" src="_images/condition_AB_bouten_zoo_plot.png" />
 <p>The interface used to display the plots allows the user to zoom in on any part of the plots shown.</p>
 <img alt="_images/condition_A_and_B_zoo_plot_zoom.png" src="_images/condition_A_and_B_zoo_plot_zoom.png" />
 </div>
@@ -175,7 +257,13 @@ it easy to see what the effect of the parameter change is.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Zoo plot</a><ul>
+<li><a class="reference internal" href="#traditional-plot">Traditional plot</a></li>
+<li><a class="reference internal" href="#tall-thin-animals">Tall thin animals</a></li>
+<li><a class="reference internal" href="#yager-and-dunstone">Yager and Dunstone</a></li>
+<li><a class="reference internal" href="#helper-circles">Helper circles</a></li>
+<li><a class="reference internal" href="#colours">Colours</a></li>
 <li><a class="reference internal" href="#unit-and-mean-reference">Unit and mean reference</a></li>
+<li><a class="reference internal" href="#labels">Labels</a></li>
 <li><a class="reference internal" href="#highlighting-labels">Highlighting labels</a></li>
 <li><a class="reference internal" href="#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
 </ul>
@@ -222,7 +310,7 @@ it easy to see what the effect of the parameter change is.</p>
         <li class="right" >
           <a href="tippettplot.html" title="Tippett plot"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

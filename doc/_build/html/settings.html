@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Settings &mdash; bioplot 0.9.3 documentation</title>
+    <title>Settings &mdash; bioplot 0.9.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9.3 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="Known Issues" href="issues.html" />
     <link rel="prev" title="Tools" href="tools.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="tools.html" title="Tools"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,7 +50,7 @@
           <div class="body">
             
   <div class="section" id="settings">
-<h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
+<span id="rst-settings"></span><h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="settings-file">
 <h2>settings file<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h2>
 <p>Bioplot will read settings from the file bioplot.cfg by default. To use a different settings file use the -c option.</p>
@@ -66,19 +66,22 @@ start bioplot like this:</p>
 </div>
 <p>It will then show a list of chosen settings like so:</p>
 <div class="highlight-python"><div class="highlight"><pre>Ignoring all command line parameters except -s
-Config info taken from default values:
-alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 0.3, alpha4UnitCircles = 0.5, animalColors = False,
-annotateEllipses = True, boutenStyle = True, colorMap = gist_rainbow, combineMatrices = True, debug = True, dimmingFactor = 0.7,
-interconnectMetaValues = True, labelAngle = 70, limitStdDevs = True, lineWidth = 0.8, matrixColorMap = Greys, maximum4Type1 = 1e+99,
-maximum4Type2 = 1e+99, maximum4Type3 = 1e+99, maxNrSteps = 100, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type2 = -1e+99,
-minimum4Type3 = -1e+99, minNrScores4MatrixPlot =3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = True,
-nrAccPoints = 100, nrBins = 75, nrRankingPoints = 100, nrSamples4Probability = 500, outputPath = output, runningWindows = False,
-runningOSX = False, saveScores = True, scaleFactor = 150, screenResolution = 1600x1024, showAnnotationsAtStartup = False,
-showAverageTargetAndNonTargetMatchScores = True, showCircularHistogram = True, showCllrValues = True, showConfigInfo = True,
-getShowEdgeColor = True, showEerValues = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True,
-showMinCllrValues = False, showNrTargetsAndNonTargets = True, showReference = True, showStdev = True, showTextAtReferenceAtStartup = False,
-showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = True, xHeight = 0.2,
-yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63, zLeft = 0.05, zWidth = 0.65
+Config info taken from &#39;default values&#39;:
+alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5,
+animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False,
+debug = False, dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor =
+(0.6274509803921569, 0.6274509803921569, 0.6274509803921569), limitStdDevs = True, lineWidth = 1.0,
+matrixColorMap = Greys, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99,
+minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False,
+normHist = False, nrAccPoints = 50, nrBins = 100, nrSamples4Probability = 200, opacity4Ellipses = 0.7,
+outputPath = output, runningWindows = False, runningOSX = False, saveScores = True, scaleFactor = 150,
+screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
+showCircularHistogram = False, showCllrValues = True, showConfigInfo = True, showEdgeColor = True,
+showEerValues = True, showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True,
+showMetaInHist = True, showMinCllrValues = False, showNrTargetsAndNonTargets = True, showReference = True,
+showStdev = False, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02,
+useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True,
+yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, zWidth = 0.65
 </pre></div>
 </div>
 <p>If you want to explicitly check them when read from a file without making any plot or reading any data,
@@ -87,7 +90,7 @@ start bioplot like this:</p>
 </pre></div>
 </div>
 <p>This will show the settings read from the file &#8216;some_other_settings_file&#8217;.</p>
-<div class="highlight-python"><div class="highlight"><pre>bioplot.py version 0.9.3, Copyright (C) 2014 Jos Bouten
+<div class="highlight-python"><div class="highlight"><pre>bioplot.py version 0.9.4, Copyright (C) 2014 Jos Bouten
 Ignoring all command line parameters except -s
 Config info as read from some_other_settings_file:
 alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
@@ -112,6 +115,7 @@ alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
 <div class="highlight-python"><div class="highlight"><pre><span class="n">alwaysSave</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
+<p>&#8216;colorMap&#8217; is deprecated; have a look at [metacolors].</p>
 <p>Set debug flag to True: will print a lot of info which might be of use when trying to debug the code.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">debug</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
@@ -161,14 +165,6 @@ Otherwise only the first encountered in the raw scores is used.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">maximum4Type3</span> <span class="o">=</span> <span class="mf">1.0E+99</span>
 </pre></div>
 </div>
-<p>Minimum value we expect for a score in type2 data.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">minimum4Type2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0E+99</span>
-</pre></div>
-</div>
-<p>Maximum value we expect for a score in type2 data.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">maximum4Type2</span> <span class="o">=</span> <span class="mf">1.0E+99</span>
-</pre></div>
-</div>
 <p>Minimum value we expect for a score in type1 data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">minimum4Type1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0E+99</span>
 </pre></div>
@@ -201,7 +197,15 @@ See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#
 </div>
 <div class="section" id="layout">
 <h2>[layout]<a class="headerlink" href="#layout" title="Permalink to this headline">¶</a></h2>
-<p>Left bottom x-position of zoo plot in boutenZoo.</p>
+<p>The layout is determined by these variables:</p>
+<div class="line-block">
+<div class="line">bottom_h = left_h = zleft + zwidth + spacing</div>
+<div class="line">The rectangle containing the zooplot: [zleft, zbottom, zwidth, zheight]</div>
+<div class="line">The rectangle containing the histogram of target scores: [zleft, bottom_h, zwidth, xheight]</div>
+<div class="line">The rectangle containing the histogram of non target scores: [left_h, zbottom, ywidth, zheight]</div>
+</div>
+<p>Do not change them unless you are certain what they are for.</p>
+<p>Left bottom x-position of zoo plot in boutenZoo style layout.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">zLeft</span> <span class="o">=</span> <span class="mf">0.05</span>
 </pre></div>
 </div>
@@ -209,23 +213,27 @@ See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#
 <div class="highlight-python"><div class="highlight"><pre><span class="n">zWidth</span> <span class="o">=</span> <span class="mf">0.65</span>
 </pre></div>
 </div>
-<p>Left bottom y-position of zoo plot in boutenZoo.</p>
+<p>Left bottom y-position of zoo plot in boutenZoo style layout.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">zBottom</span> <span class="o">=</span> <span class="mf">0.05</span>
 </pre></div>
 </div>
-<p>Height of zoo plot in boutenZoo.</p>
+<p>Height of zoo plot in boutenZoo style layout.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">zHeight</span> <span class="o">=</span> <span class="mf">0.63</span>
 </pre></div>
 </div>
-<p>Height of top histogram in boutenZoo.</p>
+<p>Height of top histogram in boutenZoo style layout.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">xHeight</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
-<p>Width of right hand side histogram in boutenZoo.</p>
+<p>Width of right hand side histogram in boutenZoo style layout.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">yWidth</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
-<p>Spacing between zoo plot and left side of histograms in boutenZoo.</p>
+<p>Resolution of screen used width x height, eg 1280x1024</p>
+<div class="highlight-python"><div class="highlight"><pre>screenResolution = 1600x1024
+</pre></div>
+</div>
+<p>Spacing between zoo plot and left side of histograms in boutenZoo style layout.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">spacing</span> <span class="o">=</span> <span class="mf">0.02</span>
 </pre></div>
 </div>
@@ -239,7 +247,7 @@ the label.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">minNrScores4MatrixPlot</span> <span class="o">=</span> <span class="mi">25</span>
 </pre></div>
 </div>
-<p>Color map of the plot.</p>
+<p>Color map of the plot. Choose a colormap: Greys, Spectral, gist_ncar, hsv, gist_rainbow or prism</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">matrixColorMap</span> <span class="o">=</span> <span class="n">Greys</span>
 </pre></div>
 </div>
@@ -266,12 +274,15 @@ canvas is white and you would not see much of a label then.
 From a perceptual point you should avoide pure Blue
 in combination with other colors as the human eye does not focus
 blue light in the same way as the other colours because of chromatic aberation
-when viewing multiple colours at the same time.
+when viewing multiple colours at the same time. Blue will be less visible because
+it will not be in focus when other colours are near it.
 The meta data values are sorted alphabetically.
 The colors are used in the sequence they are listed here.
 Note that the labels are of no consequence! They are there for your convenience.
 Values should be in R,G,B format specifying integer values
-or hexadecimal values (6 digits). Search for color values on the web using &#8216;html colors&#8217; as the search string
+or hexadecimal values (6 digits). Have a look at <a class="reference external" href="http://colorbrewer2.org">http://colorbrewer2.org</a>. I&#8217;m certain
+you will get inspired to use some nice colours in the plots.
+Alternatively you can search for color values on the web using &#8216;html colors&#8217; as the search string
 and you will find various lists and examples.</p>
 <div class="highlight-python"><div class="highlight"><pre>Orangy = 255,125,10
 someSortOfPink = 255,54,160
@@ -300,8 +311,8 @@ as published by Alexander et al. &#64; IAFPA conference Zurich, Switzerland, 201
 <div class="highlight-python"><div class="highlight"><pre><span class="n">alexanderStyle</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
-<p>Transparency value for reference circles.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">alpha4References</span> <span class="o">=</span> <span class="mf">0.3</span>
+<p>Transparency value for inner most reference circle.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">alpha4References</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
 <p>Transparency value for unit circles.</p>
@@ -313,8 +324,8 @@ When set to single, all will be grey.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">animalColors</span> <span class="o">=</span> <span class="n">multi</span>
 </pre></div>
 </div>
-<p>Show labels for data points. The old label &#8216;annotateEllipses&#8217; is depricated.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">annotateEllipses</span> <span class="o">=</span> <span class="bp">True</span>
+<p>Show labels for quartile data points at startup.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">annotateEllipsesInQuartiles</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Add target and non target score histogram to zoo plot.</p>
@@ -323,7 +334,7 @@ When set to single, all will be grey.</p>
 </div>
 <p>If we add labels to the command line, we dimm al the none matching points and
 ellipses by this factor thus making the given labels more prominent.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">dimmingFactor</span> <span class="o">=</span> <span class="mf">0.7</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dimmingFactor</span> <span class="o">=</span> <span class="mf">0.8</span>
 </pre></div>
 </div>
 <p>Draw lines between labels with opposing metadata values (only if alexanderStyle = True).</p>
@@ -343,12 +354,19 @@ or hexadecimal values (e.g. 0FA022).</p>
 </pre></div>
 </div>
 <p>Width of lines interconnecting ellipses in zoo plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">lineWidth</span> <span class="o">=</span> <span class="mf">1.2</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lineWidth</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
-<p>Maximum value of the stdev for an ellipse in the zoo plot.
-Values any higher are limited to this number.</p>
+<p>Maximum width/height in standard deviations allowed for an ellipse in the zoo plot.
+Values any higher are limited to this number of standard deviations.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">maxStdDev</span> <span class="o">=</span> <span class="mf">6.0</span>
+</pre></div>
+</div>
+<p>Opacity can be varied from small to large ellipses.
+The opacity values are normalised using the surface area of the ellipse.
+If it gets too small, the ellipses will not be visible anymore.
+Therefore it is limited to this value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">minimumOpacityValue</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
 <p>Minimum value of the stdev for an ellipse in the zoo plot.
@@ -359,13 +377,6 @@ Values any lower are limited to this number.</p>
 <p>Histogram annotation on x-axis. When True will prevent the use of x-axis labels in the histograms added to the zoo plot.
 Tricky ... This parameter implies a double negative.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">noHistAnnot</span> <span class="o">=</span> <span class="bp">False</span>
-</pre></div>
-</div>
-<p>Opacity can be varied from small to large ellipses.
-The opacity values are normalised using the surface area of the ellipse.
-If it gets too small, the ellipses will not be visible anymore.
-Therefore it is limited to this value.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">minimumOpacityValue</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
 <p>Opacity of ellipses if useOpacityForBigEllipses is set to False.</p>
@@ -383,7 +394,7 @@ Will only work if interconnectMetaValues is set to False.</p>
 </pre></div>
 </div>
 <p>Show average target match score and non match score in popup when data point is clicked.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showAverageTargetAndNonTargetMatchScores</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">showAverageScores</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show histogram of shift of points depending on meta data values.</p>
@@ -394,12 +405,20 @@ Will only work if interconnectMetaValues is set to False.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">showCllrValues</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
-<p>Show EER values in legend of relevant plots.</p>
+<p>Show edge of ellipse in same color as ellipse (otherwise black).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">showEdgeColor</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Show EER values in legend of relevant plots.
+Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
+The data points nearest to the crossing point are used and the crossing point is computed via interpolation.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">showEerValues</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
-<p>Show edge of ellipse in same color as ellipse (otherwise black).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showEdgeColor</span> <span class="o">=</span> <span class="bp">False</span>
+<p>Show circles around unit ellipse that can be used to resize the plot so that the unit circle
+will be shown as a circle. This will make it easier to interpret the std values for average target vs
+average non target data points.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">showHelperCircles</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show min Cllr values in legend of relevant plots.</p>
@@ -507,7 +526,7 @@ When set to False the y-axis will be inversed.</p>
         <li class="right" >
           <a href="tools.html" title="Tools"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

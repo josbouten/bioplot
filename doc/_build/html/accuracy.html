@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Accuracy plot &mdash; bioplot 0.9.3 documentation</title>
+    <title>Accuracy plot &mdash; bioplot 0.9.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9.3 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="EER plot" href="eerplot.html" />
     <link rel="prev" title="UPDATE" href="update.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="update.html" title="UPDATE"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,15 +50,18 @@
           <div class="body">
             
   <div class="section" id="accuracy-plot">
-<h1>Accuracy plot<a class="headerlink" href="#accuracy-plot" title="Permalink to this headline">¶</a></h1>
+<span id="rst-accuracy"></span><h1>Accuracy plot<a class="headerlink" href="#accuracy-plot" title="Permalink to this headline">¶</a></h1>
 <p>This plot shows 2 accuracy measures for a range of decision thresholds:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;accuracy plot&quot; -f testdata_A.txt -A
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;accuracy plot&quot; -i input/testdata_A.txt -A
 </pre></div>
 </div>
 <img alt="accuracy plot" class="align-left" src="_images/test_accuracy_plot.png" />
 <p>The plot shows the random and the balanced accuracy for a range of threshold values.
-In the plot the accuracy at the system&#8217;s decision threshold is indicated. H.L. the treshold was set to 0.70.
-This value obviously depends on the system under test. The number of target tests (#t) and the number of non target tests (#nt) is shown in the x-axis label.
+In the plot the accuracy at the system&#8217;s decision threshold is indicated. You can choose this via the command line option -d or - -threshold like so:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;accuracy plot&quot; -i input/testdata_A.txt -A --threshold 0.7
+</pre></div>
+</div>
+<p>This value obviously depends on the system under test. The number of target tests (#t) and the number of non target tests (#nt) is shown in the x-axis label.
 The threshold value can be set via the command line option &#8216;-d&#8217; or the &#8216;threshold&#8217; option.</p>
 <div class="highlight-python"><div class="highlight"><pre>                          number of true positives + number of true negatives
 random accuracy= -----------------------------------------------------------------------------
@@ -118,7 +121,7 @@ balanced accuracy = -------------------------- = -------------------------------
         <li class="right" >
           <a href="update.html" title="UPDATE"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

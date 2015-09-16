@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Histogram &mdash; bioplot 0.9.3 documentation</title>
+    <title>Histogram &mdash; bioplot 0.9.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="bioplot 0.9.3 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="Matrix plot" href="matrixplot.html" />
     <link rel="prev" title="EER plot" href="eerplot.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="eerplot.html" title="EER plot"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,21 +50,45 @@
           <div class="body">
             
   <div class="section" id="histogram">
-<h1>Histogram<a class="headerlink" href="#histogram" title="Permalink to this headline">¶</a></h1>
-<p>Nothing much to say about histograms. Here is an example:</p>
-<p>Run this command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -f input/testdata_A.txt -H
+<span id="rst-histogram"></span><h1>Histogram<a class="headerlink" href="#histogram" title="Permalink to this headline">¶</a></h1>
+<p>A histogram can be used to view the distribution of target and non target scores.</p>
+<p>Run this command to see an example:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -H
 </pre></div>
 </div>
 <img alt="_images/condition_A_histogram_plot.png" src="_images/condition_A_histogram_plot.png" />
-<p>You can set the  number of bins used in bioplot.cfg:</p>
+<p>The window showing the plot allows you to zoom in as shown in this example:</p>
+<img alt="_images/condition_A_histogram_plot_detail.png" src="_images/condition_A_histogram_plot_detail.png" />
+<div class="section" id="normalization">
+<h2>Normalization<a class="headerlink" href="#normalization" title="Permalink to this headline">¶</a></h2>
+<p>By default the bins of the datasets shown in the histogram are normalized. Especially with large differences in numbers
+this makes it possible to see the score ranges of the target and non target scores. Otherwise the target scores in particular
+might not be clearly visible. If you do not want this, set normHist to False:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">histogram</span><span class="p">]</span>
+<span class="n">normHist</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<img alt="_images/condition_A_histogram_not_normalized_plot.png" src="_images/condition_A_histogram_not_normalized_plot.png" />
+</div>
+<div class="section" id="number-of-bins">
+<h2>Number of bins<a class="headerlink" href="#number-of-bins" title="Permalink to this headline">¶</a></h2>
+<p>You can set the  number of bins. Either specify a number or rice, sqrt or sturges.
+See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width">https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width</a></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">histogram</span><span class="p">]</span>
 <span class="n">nrBins</span> <span class="o">=</span> <span class="mi">150</span>
 </pre></div>
 </div>
-<p>The window showing the plot allows one to zoom in as shown in this example:</p>
-<img alt="_images/condition_A_histogram_plot_detail.png" src="_images/condition_A_histogram_plot_detail.png" />
-<p>If you are interested in a cumulative plot, have a look at <a class="reference internal" href="eerplot.html#eerplot-label"><em>EER plot</em></a>.</p>
+</div>
+<div class="section" id="combined-experiments">
+<h2>Combined experiments<a class="headerlink" href="#combined-experiments" title="Permalink to this headline">¶</a></h2>
+<p>Obviously you can also visualize combined experiments. Here is an example of the command. The plot shows a region
+of the histogram after zooming in:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -H
+</pre></div>
+</div>
+<img alt="_images/condition_AB_histogram_plot_detail.png" src="_images/condition_AB_histogram_plot_detail.png" />
+<p>If you are interested in a cumulative plot, have a look at <a class="reference internal" href="eerplot.html#rst-eerplot"><em>EER plot</em></a>.</p>
+</div>
 </div>
 
 
@@ -73,6 +97,16 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Histogram</a><ul>
+<li><a class="reference internal" href="#normalization">Normalization</a></li>
+<li><a class="reference internal" href="#number-of-bins">Number of bins</a></li>
+<li><a class="reference internal" href="#combined-experiments">Combined experiments</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="eerplot.html"
                         title="previous chapter">EER plot</a></p>
@@ -113,7 +147,7 @@
         <li class="right" >
           <a href="eerplot.html" title="EER plot"
              >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

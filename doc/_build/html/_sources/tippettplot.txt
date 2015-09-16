@@ -1,3 +1,4 @@
+.. _rst_tippetplot:
 
 Tippett plot
 ============
@@ -9,6 +10,6 @@ nrSamples4Probability in bioplot.cgf in section [probability]. The default is 25
 
 Run this command: ::
 
-    python ./bioplot.py -e "condition A and B" -f input/testdata_AB.txt -T
+    python ./bioplot.py -e "condition A and B" -i input/testdata_AB.txt -T
 
 .. image:: images/condition_A_and_B_tippett_plot.png
