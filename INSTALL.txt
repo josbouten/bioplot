@@ -74,6 +74,10 @@ pip2 install matplotlib
 
 sudo git clone https://github.com/josbouten/bioplot.git
 
+From bioplot v0.9.4 on you'll need to install the python machine learning library scikit-learn:
+
+sudo pip install scikit-learn
+
 Then change the owner of the bioplot directory to your user:
 
 sudo chown -R your-user-name:staff bioplot
