@@ -68,8 +68,10 @@ Set the screen resolution in layout: ::
 
 Yager and Dunstone
 ------------------
-Yager and Dunstone show the worms and chameleons at the top of the plot and the phantoms and doves below them.
-If you prefer this layout set yagerstyle to True in the config file (the default is False). ::
+Yager and Dunstone show the worms and chameleons at the bottom of the plot and the phantoms and doves above them.
+This makes the vertical axis show lower scores at the top than at the bottom.
+If you do not like this layout set yagerstyle to False in the config file (the default is True) and the vertical
+axis will be reversed. ::
 
     [zoo]
     yagerstyle = True
@@ -124,21 +126,45 @@ The grey/black ellipse in the center of the quartiles denotes the mean of all el
 lower left are meant as reference points. Their sizes measure (from smallest to largest ellipse): mean - 2
 standard deviations, mean, mean + 2 standard deviations.
 
-If you do not want these in your plot make the following setting. ::
+If you do not want these in your plot choose the following setting: ::
 
     [zoo]
     showReference = False
     showUnitDataPoint = False
 
 
+.. _rst_zooplot_labels:
+
+Labels
+------
+In some of the plots above you have seen examples of labels shown when you click on the plot. The information shown can
+be configured via the config file. You can choose among these: ::
+
+    [zoo]
+    showNrTargetsAndNonTargets = True
+    showMeanScores = True
+    showStdDev = True
+
+From top to bottom they will show the number of target scores (#T) and number of non target (#nT) scores for the subject;
+the average target match score (aTms) and the average non target match score (anTms); and lastly the
+the average target match score standard deviation (aTmStDev) and the average non target match score standard deviation (anTmStDev).
+Note that the standard deviations are normalized.
+
+The Labels by default show black text on a yellow background. The yellow background may be too large for the text on
+Ms Windows platforms when using matplotlib 1.4.3 however. If so, set runningWindows to True in [cfg], this will
+change the yellow background into a grey one and make the background fit the text in size.
+
+Labels in zoo plots on OSX (Yosemite) will appear in yellow text on a yellow background due to a bug in matplotlib (or me using it wrong).
+Set runningOSX to True in [cfg], this will change the text into black and the background into grey.
+
+.. image:: images/condition_A_and_B_zoo_plot_label_extract.png
+
 Highlighting labels
 -------------------
 If you click on a data point in the plot, a text label will be shown near the point. This makes
 it possible to find the name of a data point in e.g. the quartile ranges.
-
-If you are curious where the scores of a specific label are in the zoo plot, you need
-not click on all of them to find it. You can specify the labels on the command line.
-If they are in the plot, they will be highlighted. Example: ::
+If you are curious where a specific label is in the zoo plot, you need not click on a lot of them to find it.
+You can specify the labels on the command line. If they are in the plot, they will be highlighted. Example: ::
 
     python ./bioplot.py -e "condition A and B" -i input/testdata_AB.txt -Z 1100 1109 1042
 
@@ -150,8 +176,8 @@ will be displayed near the points selected.
 .. image:: images/condition_A_and_B_not_interconnected_zoo_plot.png
    :alt: zoo plot for experiment with condition A and B
 
-The lines between the ellipses connect labels which are equal. This makes
-it easy to see what the effect of the parameter change is. ::
+Lines can be drawn between the ellipses to connect labels which are equal. This makes
+it easy to see what the effect of the parameter change is. Choose this setting: ::
 
     [zoo]
     interconnectMetaValues = True
@@ -162,30 +188,27 @@ it easy to see what the effect of the parameter change is. ::
 
 Zooplots combined with Histograms
 ---------------------------------
-
 In the plot shown below the zoo plot is bordered by histograms showing the distributions of the target and non target
-scores. Note that the minimum and maximum values in the histograms are based on raw scores and the axes of the zoo plot
-are based on mean scores. This causes the axes to differ and therefore the peak of the histogram is not alligned with the center
-of the zoo plot. In this example this is clearly visible for the non target scores. In this zoo plot 2 data sets
-are shown combined. The points corresponding with one label are interconneted. To get bioplot to show this, set the
-following option in bioplot.cfg: ::
+scores. To get bioplot to show this, set the following option in bioplot.cfg: ::
 
     [zoo]
     boutenStyle = True
-    interconnectMetaValues = True
+
+Note that the minimum and maximum values in the histograms are based on raw scores and the axes of the zoo plot
+are based on mean scores. This causes the axes to differ and therefore the peak of the histogram is not alligned with the center
+of the zoo plot. In this example this is clearly visible for the non target scores. In this zoo plot 2 data sets
+are shown combined. Each data set has its own quartile ranges.
 
 .. image:: images/A_and_B_zoo_plot.png
 
-To get a sort of quantification of the idea of change in position in the plot a histogram can be added.
-The black ellipses show the mean values of all target and non target mean scores. The histogram shows the distribution of angles
+To get a sort of quantification of the idea of change in position in the plot a circular histogram can be added in the top right corner.
+The black ellipses show the mean values of all target and non target mean scores. The circular histogram shows the distribution of angles
 of slopes the ellipses for a given subject moved on from one experiment's results to the other. Bear in mind that due
-to the difference in axes the angles can not be read from the zoo plot easily.
-Any movement to the upper right of the plot means increase in recognition. Any movement from the outskirts to the
-imaginary diagonal of the plot is an increase in calibration.
+to the difference in the scale of the horizontal and vertical axes the angles can not be read from the zoo plot easily.
 A system's discrimination appears to be proportional to the distance to the upper right corner of the plot
 (where the Doves are) and its calibration appears to be proportional to the distance of a data point to the imaginary
 diagonal one can draw from the lower left to the upper right of the plot.
-The delta value tries to capture this by averaging all movements towards the upper right of the plot.
+The delta value shown below the circular histogram tries to capture this by averaging all movements towards the upper right of the plot.
 The movement is measured by multiplying the absolute movement of an ellipses by the sine of the angle
 of movement to the horizontal axis. Note that this measure is computed between conditions sorted in alphabetical order.
 E.g. in the conditionA and conditionB data plot, the delta is computed for movement of ellipses from conditionA to conditionB.
@@ -195,13 +218,3 @@ E.g. in the conditionA and conditionB data plot, the delta is computed for movem
 The interface used to display the plots allows the user to zoom in on any part of the plots shown.
 
 .. image:: images/condition_A_and_B_zoo_plot_zoom.png
-
-Labels
-------
-In some of the plots above you have seen examples of labels shown when you click on the plot. The information shown can
-be configured via the config file. You can choose among these: ::
-
-    [zoo]
-    showStdDev = True
-    showNrTargetsAndNonTargets = True
-    showAverageTargetAndNonTargetMatchScores = True
