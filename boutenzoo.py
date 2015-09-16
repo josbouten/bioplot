@@ -76,7 +76,8 @@ class BoutenZoo(Zoo):
         axesHistx = self.fig.add_axes(rectHistx)
         axesHisty = self.fig.add_axes(rectHisty)
 
-        axesHistx.set_xlabel('Distribution of Target Scores')
+        #axesHistx.set_xlabel('Distribution of Target Scores')
+        axesHistx.set_title('Distribution of Target Scores')
         axesHisty.set_xlabel('Distribution of Non Target Scores')
 
         nullfmt = NullFormatter()
@@ -94,7 +95,8 @@ class BoutenZoo(Zoo):
             if self.config.getInterconnectMetaValues():
                 if self.config.getShowCircularHistogram():
                     axesHistc = self.fig.add_axes(rectHistc, polar=True)
-                    axesHistc.set_xlabel('Distribution of Slopes.')
+                    #axesHistc.set_xlabel('Distribution of Slopes.')
+                    axesHistc.set_title('Distribution of Slopes.')
                     axesHistc.yaxis.set_major_formatter(nullfmt)
                     axesHistc.xaxis.set_major_formatter(nullfmt)
         return self.fig, axesZoo, axesHistx, axesHisty, axesHistc
