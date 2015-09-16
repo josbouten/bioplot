@@ -1,6 +1,12 @@
 UPDATE
 ======
 
+OSX
+---
+From bioplot v0.9.4 on you?ll need to install the python machine learning library scikit-learn: ::
+
+    sudo pip install scikit-learn
+
 Any OS
 ------
 Keep a copy of bioplot.cfg with your latest settings before updating anything.
@@ -11,7 +17,7 @@ If you want to replace the bioplot version with a new one download the latest zi
 Merge your favourite settings in the saved version of bioplot.cfg with the new one.
 
 From here on, you're ready to go. 
-Look at the docs and bioplot.cfg to find out about new functions and settings.
+Look at the html docs and bioplot.cfg to find out about new functions and settings.
 
 When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg. So in case of OSX use: ::
 
