@@ -212,9 +212,12 @@ class Config():
         except Exception:
             self._minNrScores4MatrixPlot = self._minNrScores4MatrixPlotDefault
 
+        # minStDev may not exceed 1.0
         self._minStdDevDefault = 0.01
         try:
             self._minStdDev = self.config.getfloat('zoo', 'minStdDev')
+            if self._minStdDev > 1.0:
+                self._minStdDev = self._minStdDevDefault
         except Exception:
             self._minStdDev = self._minStdDevDefault
 
@@ -304,11 +307,17 @@ class Config():
         except Exception:
             self._showCircularHistogram = self._showCircularHistogramDefault
 
-        self._showCllrValuesDefault = True
+        self._showCllrValuesInEerDefault = True
         try:
-            self._showCllrValues = self.config.getboolean('zoo', 'showCllrValues')
+            self._showCllrValuesInEer = self.config.getboolean('eer', 'showCllrValues')
         except Exception:
-            self._showCllrValues = self._showCllrValuesDefault
+            self._showCllrValuesInEer = self._showCllrValuesInEerDefault
+
+        self._showCllrValuesInZooDefault = True
+        try:
+            self._showCllrValuesInZoo = self.config.getboolean('zoo', 'showCllrValues')
+        except Exception:
+            self._showCllrValuesInZoo = self._showCllrValuesInZooDefault
 
         self._showEdgeColorDefault = True
         try:
@@ -329,11 +338,17 @@ class Config():
         except Exception:
             self._showHelperCircles = self._showHelperCirclesDefault
 
-        self._showMinCllrValuesDefault = False
+        self._showMinCllrValuesInEerDefault = True
         try:
-            self._showMinCllrValues = self.config.getboolean('zoo', 'showMinCllrValues')
+            self._showMinCllrValuesInEer = self.config.getboolean('eer', 'showMinCllrValues')
         except Exception:
-            self._showMinCllrValues = self._showMinCllrValuesDefault
+            self._showMinCllrValuesInEer = self._showMinCllrValuesInEerDefault
+
+        self._showMinCllrValuesInZooDefault = True
+        try:
+            self._showMinCllrValuesInZoo = self.config.getboolean('zoo', 'showMinCllrValues')
+        except Exception:
+            self._showMinCllrValuesInZoo = self._showMinCllrValuesInZooDefault
 
         # Show config info at startup of program ( actually when instantiating the config object )
         self._showConfigInfoDefault = True
@@ -377,6 +392,12 @@ class Config():
             self._showNrTargetsAndNonTargets = self.config.getboolean('zoo', 'showNrTargetsAndNonTargets')
         except Exception:
             self._showNrTargetsAndNonTargets = self._showNrTargetsAndNonTargetsDefault
+
+        self._showSingleValueAsUnitValueDefault = False
+        try:
+            self._showSingleValueAsUnitValue = self.config.getboolean('zoo', 'showSingleValueAsUnitValue')
+        except Exception:
+            self._showSingleValueAsUnitValue = self._showSingleValueAsUnitValueDefault
 
         self._showUnitDataPointDefault = True
         try:
@@ -682,8 +703,11 @@ class Config():
     def getShowCircularHistogram(self):
         return self._showCircularHistogram
 
-    def getShowCllrValues(self):
-        return self._showCllrValues
+    def getShowCllrValuesInEer(self):
+        return self._showCllrValuesInEer
+
+    def getShowCllrValuesInZoo(self):
+        return self._showCllrValuesInZoo
 
     def getShowConfigInfo(self):
         return self._showConfigInfo
@@ -706,8 +730,11 @@ class Config():
     def getShowMetaInHist(self):
         return self._showMetaInHist
 
-    def getShowMinCllrValues(self):
-        return self._showMinCllrValues
+    def getShowMinCllrValuesInEer(self):
+        return self._showMinCllrValuesInEer
+
+    def getShowMinCllrValuesInZoo(self):
+        return self._showMinCllrValuesInZoo
 
     def getShowNrTargetsAndNonTargets(self):
         return self._showNrTargetsAndNonTargets
@@ -717,6 +744,9 @@ class Config():
 
     def getShowReference(self):
         return self._showReference
+
+    def getShowSingleValueAsUnitValue(self):
+        return self._showSingleValueAsUnitValue
 
     def getShowStdev(self):
         return self._showStdDev
@@ -815,7 +845,8 @@ class Config():
         string += ", showAnnotationsAtStartup = " + str(self.getShowAnnotationsAtStartup())
         string += ", showMeanScores = " + str(self.getShowAverageScores())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())
-        string += ", showCllrValues = " + str(self.getShowCllrValues())
+        string += ", showCllrValuesInEer = " + str(self.getShowCllrValuesInEer())
+        string += ", showCllrValuesInZoo = " + str(self.getShowCllrValuesInZoo())
         string += ", showConfigInfo = " + str(self.getShowConfigInfo())
         string += ", showEdgeColor = " + str(self.getShowEdgeColor())
         string += ", showEerValues = " + str(self.getShowEerValues())
@@ -825,9 +856,11 @@ class Config():
         string += ", showKernelInHist = " + str(self.getShowKernelInHist())
         string += ", showMatrixLabels = " + str(self.getShowMatrixLabels())
         string += ", showMetaInHist = " + str(self.getShowMetaInHist())
-        string += ", showMinCllrValues = " + str(self.getShowMinCllrValues())
+        string += ", showMinCllrValuesInEer = " + str(self.getShowMinCllrValuesInEer())
+        string += ", showMinCllrValuesInZoo = " + str(self.getShowMinCllrValuesInZoo())
         string += ", showNrTargetsAndNonTargets = " + str(self.getShowNrTargetsAndNonTargets())
         string += ", showReference = " + str(self.getShowReference())
+        string += ", showSingleValueAsUnitValue = " + str(self.getShowSingleValueAsUnitValue())
         string += ", showStdev = " + str(self.getShowStdev())
         string += ", showTextAtReferenceAtStartup = " + str(self.getShowTextAtReferenceAtStartup())
         string += ", showUnitDataPoint = " + str(self.getShowUnitDataPoint())
@@ -856,5 +889,5 @@ class Config():
 
 
 if __name__ == '__main__':
-    config = Config()
+    config = Config('nonexisting_file')
     print 'main:', config.toString()
