@@ -107,3 +107,10 @@ class Subject(Format):
     def setWasLimited(self, value):
         self._wasLimited = value
 
+
+    def isLoner(self):
+        if self.getSingleTargetScore() or self.getSingleNonTargetScore():
+            return True
+        else:
+            return False
+
