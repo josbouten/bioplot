@@ -66,13 +66,9 @@ class Zoo(Format, Probability, Cllr):
         self.annotateEllipsesInQuartiles = self.config.getAnnotateEllipsesInQuartiles()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
         self.subjects = {}
-        self.aimsv = {}
-        self.agmsv = {}
         # Keep track of the subject labels.
         self.labels = set()
         # Keep track of the number of scores per label
-        self.lenAgmsv = {}
-        self.lenAimsv = {}
 
         self.agmStdDevStdDev = collections.defaultdict(list)
         self.aimStdDevStdDev = collections.defaultdict(list)
@@ -97,6 +93,8 @@ class Zoo(Format, Probability, Cllr):
         self.meanAgms = collections.defaultdict(list)
         self.meanAims = collections.defaultdict(list)
 
+        self.aimsv = {}
+        self.agmsv = {}
         self.aimsLow = collections.defaultdict(list)
         self.aimsHigh = collections.defaultdict(list)
         self.agmsLow = collections.defaultdict(list)
@@ -267,29 +265,32 @@ class Zoo(Format, Probability, Cllr):
     def computeZooStats(self):
         '''
 
-        Compute mean target scores and mean non target scores to be used in zoo plot (Yagert et al.).
+        Compute mean target scores and mean non target scores to be used in zoo plot.
 
         '''
+
+        lenAgmsv = {}
+        lenAimsv = {}
 
         for metaValue in self.data.getMetaDataValues():
             for subjectLabelPlusMetaValue in self.data.getTargetScores().keys():
                 if metaValue in subjectLabelPlusMetaValue:
                     elements = self.data.getTargetScores()[subjectLabelPlusMetaValue]
                     self.agmsv[subjectLabelPlusMetaValue] = self.data.compAverageScore(elements)
-                    self.lenAgmsv[subjectLabelPlusMetaValue] = len(elements)
-                    #     print "Only 1 target value for %s" % subjectLabelPlusMetaValue
+                    lenAgmsv[subjectLabelPlusMetaValue] = len(self.data.getTargetScores()[subjectLabelPlusMetaValue])
             for subjectLabelPlusMetaValue in self.data.getNonTargetScores().keys():
                 if metaValue in subjectLabelPlusMetaValue:
                     elements = self.data.getNonTargetScores()[subjectLabelPlusMetaValue]
                     self.aimsv[subjectLabelPlusMetaValue] = self.data.compAverageScore(elements)
-                    self.lenAimsv[subjectLabelPlusMetaValue] = len(elements)
-                    #     print "Only 1 non target value for %s" % subjectLabelPlusMetaValue
+                    lenAimsv[subjectLabelPlusMetaValue] = len(self.data.getNonTargetScores()[subjectLabelPlusMetaValue])
         for subjectLabelPlusMetaValue in self.agmsv:
             if subjectLabelPlusMetaValue in self.aimsv:
-                # There must be at least one agms and aims value for the data to be used in the zoo plot.
-                subject = Subject(subjectLabelPlusMetaValue, self.agmsv[subjectLabelPlusMetaValue],
-                                  self.aimsv[subjectLabelPlusMetaValue], self.lenAgmsv[subjectLabelPlusMetaValue],
-                                  self.lenAimsv[subjectLabelPlusMetaValue], self.debug)
+                # There must be at least one agms and aims value for the data to be used in the zoo plot,
+                # otherwise reject the label.
+                # Bundle all data for this label for this meta value.
+                subject = Subject(subjectLabelPlusMetaValue,
+                                  self.agmsv[subjectLabelPlusMetaValue], self.aimsv[subjectLabelPlusMetaValue],
+                                  lenAgmsv[subjectLabelPlusMetaValue], lenAimsv[subjectLabelPlusMetaValue], self.debug)
                 self.subjects[subjectLabelPlusMetaValue] = subject
 
         if len(self.subjects) == 0:
@@ -330,7 +331,7 @@ class Zoo(Format, Probability, Cllr):
                                      self.aim_ma[metaValue])
 
             if self.config.getShowEqualAxes():
-                # Force all plot so be square
+                # Force all plot so be square.
                 mi = min(self.aim_mi[metaValue], self.agm_mi[metaValue])
                 self.aim_mi[metaValue] = self.agm_mi[metaValue] = mi
                 ma = max(self.aim_ma[metaValue], self.agm_ma[metaValue])
@@ -358,6 +359,7 @@ class Zoo(Format, Probability, Cllr):
             Compute statistics to plot ellipses in zoo plot as published by Alexander et al. IAFPA Zurich, 2014
         '''
         self.computeZooStats()
+
         # Now we need the std for width and height
         # of the ellipses we want to draw in the plot.
 
@@ -365,7 +367,7 @@ class Zoo(Format, Probability, Cllr):
         allTargetStdDevs = collections.defaultdict(list)
         allNonTargetStdDevs = collections.defaultdict(list)
 
-        # labels: p1000, p1001, p1002 etc.
+        # Get all labels.
         self.labels = self.data.getTargetLabels()
 
         for metaValue in self.data.getMetaDataValues():
@@ -377,7 +379,7 @@ class Zoo(Format, Probability, Cllr):
         for thisKey in self.subjects.keys():
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
-            # target for each meta value
+            # Target std dev for this subject.
             targetScores4ThisSubject = self.data.getTargetScores()[thisKey]
             if len(targetScores4ThisSubject) > 1:
                 stdDev = numpy.std(targetScores4ThisSubject)
@@ -386,10 +388,13 @@ class Zoo(Format, Probability, Cllr):
                 subject.setAgmStdDev(stdDev)
             else:
                 subject.setSingleTargetScore(True)
-                # value for stdDev will be set to unit value later.
+                # Value for stdDev will be set later.
+                if self.debug:
+                    print subject.getPattern(), ': singleTargetScore'
 
-            # Non target std for each meta value
+            # Non target std dev for this subject.
             nonTargetScores4ThisSubject = self.data.getNonTargetScores()[thisKey]
+
             if len(nonTargetScores4ThisSubject) > 1:
                 stdDev = numpy.std(nonTargetScores4ThisSubject)
                 self.aimStdDevMin[metaValue] = min(self.aimStdDevMin[metaValue], stdDev)
@@ -397,36 +402,39 @@ class Zoo(Format, Probability, Cllr):
                 subject.setAimStdDev(stdDev)
             else:
                 subject.setSingleNonTargetScore(True)
-                # value for stdDev will be set to unit value later.
+                if self.debug:
+                    print subject.getPattern(), ': singleNonTargetScore'
+                # value for stdDev will be set later.
+
+        # Select subjects that we could calculate a std dev for, so that we can normalise
+        # these. The remaining subjects will be dealt with later.
 
         for thisKey in self.subjects.keys():
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
             if not subject.getSingleTargetScore():
-                # Only use data for subjects with more than one target score.
+                # Only gather data for subjects with more than one target score.
                 allTargetStdDevs[metaValue].append(subject.getAgmStdDev())
             if not subject.getSingleNonTargetScore():
-                # Only use data for subjects with more than one non target score.
+                # Only gather data for subjects with more than one non target score.
                 allNonTargetStdDevs[metaValue].append(subject.getAimStdDev())
 
         for metaValue in self.data.getMetaDataValues():
-            # If there are subjects with only one target or non target score, we
-            # can not compute the StdDev of the StdDev
             if len(allTargetStdDevs[metaValue]) > 0:
                 self.agmStdDevStdDev[metaValue] = numpy.std(allTargetStdDevs[metaValue])
                 self.agmMeanStdDev[metaValue] = numpy.average(allTargetStdDevs[metaValue])
             else:
-                # We assume the std of all stds to be 1 = unity if we have only one score.
-                self.agmStdDevStdDev[metaValue] = 1.0
-                self.agmMeanStdDev[metaValue] = 0.0
+                print "Not enough target scores to normalize std devs for metavalue %s!" % metaValue
+                # Implementation note: we could continue here after removing the metaValue from self.data._metaDataValues
+                sys.exit(1)
 
             if len(allNonTargetStdDevs[metaValue]) > 0:
                 self.aimStdDevStdDev[metaValue] = numpy.std(allNonTargetStdDevs[metaValue])
                 self.aimMeanStdDev[metaValue] = numpy.average(allNonTargetStdDevs[metaValue])
             else:
-                # We assume the std of all stds to be 1 = unity if we have only one score.
-                self.aimStdDevStdDev[metaValue] = 1.0
-                self.aimMeanStdDev[metaValue] = 0.0
+                print "Not enough non target scores to normalize std devs for metavalue %s!" % metaValue
+                # Implementation note: we could continue here after removing the metaValue from self.data._metaDataValues
+                sys.exit(1)
 
             # Central point of the plot is determined by the mean of agms and aims per meta data value.
             # This point is plotted as a black dot and is meant as a reference.
@@ -440,32 +448,43 @@ class Zoo(Format, Probability, Cllr):
 
         maxStdDev = self.config.getMaxStdDev()
         # Normalize stdev of all subjects.
-        # Note, stdev values will be centered around zero after normalization.
+        # Note this makes stdev values to be centered around zero.
+
         for thisKey in self.subjects.keys():
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
 
-            if not subject.getSingleTargetScore():
+            if subject.getSingleTargetScore():
+                # If there are subjects with only one target or non target score, we
+                # can not compute the StdDev of the StdDev
+                # We can assume the subject to be similar to other subjects and assume the unit value
+                # or we go for the non info option and set the std dev to the minimum accepted.
+                if self.config.getShowSingleValueAsUnitValue():
+                    agmStdDev = self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[metaValue]
+                else:
+                    agmStdDev = self.config.getMinStdDev()
+            else:
                 # Normalize std dev.: (x - mu) / std
                 agmStdDev = (subject.getAgmStdDev() - self.agmMeanStdDev[metaValue]) / self.agmStdDevStdDev[metaValue]
-            else:
-                # Set value for stdDev to unit value.
-                agmStdDev = self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[metaValue]
             subject.setAgmStdDev(agmStdDev)
 
-            if not subject.getSingleNonTargetScore():
+            if subject.getSingleNonTargetScore():
+                # We can assume the subject to be similar to other subjects and assume the unit value
+                # or we go for the non info option and set the std dev to the minimum accepted.
+                if self.config.getShowSingleValueAsUnitValue():
+                    aimStdDev = self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[metaValue]
+                else:
+                    aimStdDev = self.config.getMinStdDev()
+            else:
                 # Normalize std dev.: (x - mu) / std
                 aimStdDev = (subject.getAimStdDev() - self.aimMeanStdDev[metaValue]) / self.aimStdDevStdDev[metaValue]
-            else:
-                # Set value for stdDev to unit value.
-                aimStdDev = self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[metaValue]
             subject.setAimStdDev(aimStdDev)
 
         # If the user wants to, the stdev values can be limited to a certain maximum value.
         if self.config.getLimitStdDevs():
             for thisKey in self.subjects.keys():
-                if not subject.getSingleTargetScore() and not subject.getSingleNonTargetScore():
-                    subject = self.subjects[thisKey]
+                subject = self.subjects[thisKey]
+                if not subject.getSingleTargetScore():
                     agmStdDev = subject.getAgmStdDev()
                     if abs(agmStdDev) > maxStdDev:
                         agmStdDev = self._sign(agmStdDev) * maxStdDev
@@ -473,6 +492,7 @@ class Zoo(Format, Probability, Cllr):
                         subject.setWasLimited(True)
                         # Add subject to exclusive set.
                         self._addLimited(subject)
+                if not subject.getSingleNonTargetScore():
                     aimStdDev = subject.getAimStdDev()
                     if abs(aimStdDev) > maxStdDev:
                         aimStdDev = self._sign(aimStdDev) * maxStdDev
@@ -481,6 +501,7 @@ class Zoo(Format, Probability, Cllr):
                         # Add subject to exclusive set.
                         self._addLimited(subject)
 
+        # After normalisation we need to recompute aim_mi and aim_ma + agm_mi and agm_ma.
         for metaValue in self.data.getMetaDataValues():
             self.minSurfaceArea[metaValue] = 1.0E99
             self.maxSurfaceArea[metaValue] = 0.0
@@ -489,13 +510,14 @@ class Zoo(Format, Probability, Cllr):
 
         for thisKey in self.subjects.keys():
             subject = self.subjects[thisKey]
+
             metaValue = subject.getMetaValue()
             self.minSurfaceArea[metaValue] = min(self.minSurfaceArea[metaValue],
                                                  subject.getAgmStdDev() * subject.getAimStdDev())
             self.maxSurfaceArea[metaValue] = max(self.maxSurfaceArea[metaValue],
                                                  subject.getAgmStdDev() * subject.getAimStdDev())
 
-        # Surface area of ellipses is used to normalise opacity against size in order to
+        # Surface area of ellipse is used to normalise opacity against size in order to
         # make small ellipses visible even if they are overlapped by larger ones.
         for metaValue in self.data.getMetaDataValues():
             self.surfaceAreaRange[metaValue] = (self.maxSurfaceArea[metaValue] - self.minSurfaceArea[metaValue])
@@ -516,7 +538,7 @@ class Zoo(Format, Probability, Cllr):
             self.yRangeAll = max(self.yRangeAll, self.yRange[metaValue])
 
         for metaValue in self.data.getMetaDataValues():
-            # JSB: je zou hiermee willen kunnen schalen zodat b.v. 100 ellipsen naast elkaar passen.
+            # Implementation note: We would like maybe 100 ellipses to fit next to each other?
             self.xScaleFactor[metaValue] = self.xRange[metaValue] / self.config.getScaleFactor()
             self.yScaleFactor[metaValue] = self.yRange[metaValue] / self.config.getScaleFactor()
         self.xScaleFactorAll = self.xRangeAll / self.config.getScaleFactor()
@@ -832,8 +854,8 @@ class Zoo(Format, Probability, Cllr):
             radius = max(thisWidth, thisHeight)
             i = 1
             while x + i * radius < self.agm_maxAll:
-                if self.debug:
-                    print "_plotHelperCircles", x + i * radius, self.agm_maxAll
+                # if self.debug:
+                #     print "_plotHelperCircles", x + i * radius, self.agm_maxAll
                 # for i in [4, 8, 12, 16, 20]:
                 e = Ellipse((x, y), i * radius, i * radius, angle)
                 # No need to fill the ellipse.
@@ -1000,7 +1022,7 @@ class Zoo(Format, Probability, Cllr):
                         break
 
         # Compute and show the Cllr value if so desired.
-        if self.config.getShowCllrValues():
+        if self.config.getShowCllrValuesInZoo():
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
@@ -1016,7 +1038,7 @@ class Zoo(Format, Probability, Cllr):
                         break
 
         # Compute and show the CllrMin value if so desired.
-        if self.config.getShowMinCllrValues():
+        if self.config.getShowMinCllrValuesInZoo():
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:
@@ -1211,8 +1233,10 @@ class Zoo(Format, Probability, Cllr):
     def _plotDistributions(self, colors, axesZoo):
         '''
         Plot the average target scores against the average non target
-        scores using ellipses to show a measure of each label's distribution.
+        scores using ellipses to show a measure of each subject's
+        target and non target score distribution.
 
+        :param colors: dictionary with tuple with rgb values for each metavalue.
         :param axes: axes object to plot data on
         :return:
         '''
