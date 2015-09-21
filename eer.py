@@ -30,6 +30,8 @@ from probability import Probability
 import numpy as np
 import listutils as lu
 from utils import assignColors2MetaDataValue
+from cllr import Cllr
+from collections import defaultdict
 
 class Eer(Probability):
     def __init__(self, thisData, thisConfig, thisDebug=True):
@@ -98,17 +100,18 @@ class Eer(Probability):
         try:
             index2score, eer = self._intersectionPoint(PD, PP)
         except Exception, e:
-            print 'probability.py: Exception in computeEer:', e
-            print 'probability.py: You may have too few data points to compute an eer value.'
+            print 'Exception in computeEer:', e
+            print 'You may have too few data points to compute an eer value.'
             # Rethrow the exception
             raise
         else:
             if self.debug:
-                print 'compProbs:index2score:', index2score
-                print 'compProbs:eer:', eer
+                print 'computeEer:index2score:', index2score
+                print 'computeEer:eer:', eer
             score = X[index2score]
             return eer, score
         return 1.0, 0.0
+
 
     def plot(self):
         self.fig = plt.figure()
@@ -120,16 +123,60 @@ class Eer(Probability):
         metaDataValues = self.data.getMetaDataValues()
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
+
+        legendText = defaultdict(list)
+        # Compute and show the Cllr value if so desired.
+        if self.config.getShowCllrValuesInEer():
+            cllrObject = Cllr(self.data, self.config, self.debug)
+            cllrData = cllrObject.getCllr()
+            if self.debug:
+                print cllrData
+            for thisMetaValue in sorted(colors.keys()):
+                for metaValue, cllrValue in cllrData:
+                    if thisMetaValue == metaValue:
+                        if type(cllrValue) is float:
+                            cllrStr = "Cllr: %.3f" % cllrValue
+                        else:
+                            cllrStr = "Cllr: %s" % cllrValue
+                        legendText[metaValue].append(cllrStr)
+                        break
+
+        # Compute and show the CllrMin value if so desired.
+        if self.config.getShowMinCllrValuesInEer():
+            cllrObject = Cllr(self.data, self.config, self.debug)
+            minCllrData = cllrObject.getMinCllr()
+            if self.debug:
+                print "minCllrData:", minCllrData
+            for thisMetaValue in sorted(colors.keys()):
+                for metaValue, minCllrValue in minCllrData:
+                    if thisMetaValue == metaValue:
+                        if type(minCllrValue) is float:
+                            minCllrStr = "minCllr: %.3f" % minCllrValue
+                        else:
+                            minCllrStr = "minCllr: %s" % minCllrValue
+                        legendText[metaValue].append(minCllrStr)
+                        break
+
         for (metaValue, PD, PP, X) in eerData:
+            thisLegendText = ''
+            # Compile legend text.
+            for el in legendText[metaValue]:
+                thisLegendText += el + ', '
+                # Remove last comma and space.
+            thisLegendText = thisLegendText[:-2]
             try:
                 eer, score = self.computeEer(PD, PP, X)
             except Exception:
                 print "Eer: problem computing EER for %s" % metaValue
-                pFr, = axes.plot(X, PP, 's-', label="P(pros), %s Eer: undefined" % (metaValue), color=colors[metaValue])
-                pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue, color=colors[metaValue])
+                labelText = "P(pros), %s Eer: undefined" % (metaValue)
+                pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
+                labelText = "P(def), %s %s" % (metaValue, thisLegendText)
+                pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
             else:
-                pFr, = axes.plot(X, PP, 's-', label="P(pros), %s Eer: %0.2f%s at %0.2f" % (metaValue, eer * 100, '%', score), color=colors[metaValue])
-                pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue, color=colors[metaValue])
+                labelText = "P(pros), %s Eer: %0.2f%s at %0.2f" % (metaValue, eer * 100, '%', score)
+                pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
+                labelText = "P(def), %s %s" % (metaValue, thisLegendText)
+                pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
         plt.legend(loc=5) # position logend at center right
         axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
         plt.xlabel('Threshold (raw score)')
