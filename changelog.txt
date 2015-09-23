@@ -11,7 +11,6 @@ Added some conversion scripts: bv2bioplot.py, sretools2bioplot.py and vocalize2b
 Updated anonymize.py to use the sha256 function.
 Made label click more selective. Added label fields.
 Cleaned up settings files.
-Switched to 'alabaster' from 'classic' as the html theme for the doc generated using sphinx.
 On OSX install of scikit-learn is required.
 Changed html_theme to 'bootstrap' for sphinx html doc (see https://github.com/ryan-roemer/sphinx-bootstrap-theme).
 Generated man pages for OSX and linux in bioplot/doc/_build/man/bioplot.1
