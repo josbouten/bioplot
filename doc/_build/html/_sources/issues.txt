@@ -14,16 +14,3 @@ screen and then exit immediately. If you encounter this, let me know. This can b
 this only with older versions of matplotlib I have not implemented any measures for it in the current version of bioplot.
 
 There are some issues with labels in the zoo plots. See :ref:`rst_zooplot_labels`.
-
-Implementation notes
---------------------
-When drawing a histogram lots of warnings like this one may be seen on the screen: ::
-
-    /usr/lib/pymodules/python2.7/matplotlib/cbook.py:1711: DeprecationWarning: using a non-integer number instead of an
-    integer will result in an error in the future
-    result = np.zeros(new_shape, a.dtype)
-
-To suppress warnings like this a filter was added in histogram.py to filter out this specific warning using: ::
-
-    import warnings
-    warnings.filterwarnings("ignore", category=DeprecationWarning)

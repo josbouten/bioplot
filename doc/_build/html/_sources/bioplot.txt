@@ -20,15 +20,15 @@ bioplot.py. You'll learn more of the program's potential than from its command l
 
 @Windows dudes and dudettes: I'm afraid you have to run the program by hand from a command line or build shortcuts
 which not only start the program but also provide the command line options and parameters needed. You're on your
-own here. I'm a command line junky anyway so I did not spend any time building a gui. But don't fret. All plots
-ares shown in an interactive window, you can click on that as much as you like. The interface allows you to zoom in,
+own here. I'm a linux/OSX command line junky anyway so I did not spend any time building a (windows) gui. But don't fret. All plots
+are shown in an interactive window, you can click on that as much as you like. The interface allows you to zoom in,
 click on a point to see the associated label, save the plot in a file etc. etc.
 
 Usage
 -----
 
 What bioplot.py basically does is: read a data file and plot one or more interactive graphs.
-You can run bioplot.py from the command line. The follow command will shows help info for bioplot:
+You can run bioplot.py from the command line. The follow command will show help info for bioplot:
 On OSX and linux run: ::
 
     python bioplot.py -h
@@ -39,9 +39,9 @@ On Ms Windows run: ::
 
 This wil output the following information: ::
 
-    Usage: ./bioplot.py [options] [option <arg1>] [<label1> <label2> <label3> ...]
+    Usage: bioplot.py [options] [option <arg1>] [<label1> <label2> <label3> ...]
     bioplot.py version 0.9.4, Copyright (C) 2014, 2015 Jos Bouten
-    bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l'.
+    This program comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `bioplot.py -l' for details.
     This program was written by Jos Bouten.
@@ -76,23 +76,29 @@ This wil output the following information: ::
       -V                    show version info
 
 
-Note: that you can use several options at the same time. The sequence is of no importance.
+Note:
+ - that you can use several options at the same time. The sequence is of no importance.
+ - each time in this documentation you read 'python' as part of a command then on a windows platform use 'python.exe' (without the quotes).
+ - On OSX and linux you need not specify the python interpreter at all. bioplot.py can be run using: ./bioplot.py
 
-As you can see you need to choose what type of graph you want.
-
+As you can tell from the list of options you need to choose what type of graph you want.
 Bioplot can produce several plots in a row with just one invocation of the program. E.g. if you run: ::
 
-    bioplot -Z -A -E -i some_input_data_file.txt
+    python bioplot.py -Z -A -E -i some_input_data_file.txt
 
 the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.
 
-The input data has to be in a specific format. Actually there are 2 types of format allowed. See 'Data Files' below.
-All plots can be saved. This happens automagically as well, but you get more useful results if this happens under
+The input data has to be in a specific format. Actually there are 2 types of format allowed. See :ref:`rst_data_files` below.
+All plots can be saved. This happens automagically as well, as soon as you click on a plot and press a key, but you get more useful results if this happens under
 your control.
 
 If you do not provide an input file, the program uses input/testdata_A.txt.
-By providing this default data file it is easy to test whether the program is installed correctly. You can try
-the multi experiment capabilities of the program by choosing input/testdata_AB.txt or input/testdata_ABC.txt.
+This makes it is easy to try the program. You can try the multi experiment capabilities
+of the program by choosing input/testdata_AB.txt or input/testdata_ABC.txt.
+
+Bioplot when run reads its config file (by default called 'bioplot.cfg') and uses the settings it finds in there.
+If no config file exists it uses a set of default values. Have a look at the config file. The program has quite a lot
+of settings you may want set to your own liking.
 
 Auto store
 ----------
@@ -100,79 +106,119 @@ The program does a bit more than its command line arguments suggest.
 You will notice this when you run it. It will for instance store all the
 target and non target scores it distills from the data file you pass
 to it and write them in text files (unless you set saveScores to False in bioplot.cfg).
-For this to be usefull always add a name for the experiment you were running to the command line.
-This name is used in the filenames bioplot produces. ::
+For this to be usefull always add a name for the experiment you were running to the command line,
+otherwise the prefix 'test' is used.
+
+The experiment name is used in the titles of the plots and in the filenames bioplot produces. ::
 
     python bioplot.py -Z -e myFirstExperiment
 
 You can use these file for further processing. The experiment name you specify is used as part
 of the filename: <exp_name>_<meta_value>_non_target.txt, <exp_name>_<meta_value>_target.txt.
-The <meta_value> is taken from the last column of data in the data files.
+The <meta_value> is taken from the last column of data in the data files: ::
+
+    myFirstExperiment_conditionA_target.txt
+    myFirstExperiment_conditionA_non_target.txt
 
 The files are stored in the directory specified by 'outputPath' in
-bioplot.cfg in it's [cfg] section. The default will be 'output' in
+bioplot.cfg in it's [cfg] section. The default path will be 'output' in
 the current directory. You can change this behaviour in bioplot.cfg via the following settings: ::
 
    [cfg]
-   outputPath = my_own_data_dir/bioplot/output
+   outputPath = output
    saveScores = True
    alwasySave = False
 
-If you run the program again using the same experiment
-name, the scores are not saved again, saving some processing time, unless you add the following setting to the config file: ::
+If the output path does not exist, bioplot will try to create it. Note: this may require privileges to be set propperly.
+If you run the program repeatedly using the same experiment name, the scores are not saved again, saving some processing
+time, unless you add the following setting to the config file: ::
 
     [cfg]
     alwaysSave = True
 
 The default value is False as it is expected that you will run bioplot several times with the same data (hoping this
-will speed things up a bit). Note, that if you do not change the experiment name but do change the data, if alwasySave = False,
-the data extracts will not reflect the analysis of the (new) data file used. If you want to have new versions of these files,
-you need to delete them before running bioplot.py again.
+will speed things up a bit). Note, that if you do not change the experiment name but do change the data, if alwaysSave = False,
+the data extracted will not reflect the analysis of the (new) data file used. If you want to have new versions of these files,
+you need to delete them before running bioplot.py again (or set alwaysSave to True).
 
-Next, if you choose to plot a zoo plot, the labels which fall within the doves, chameleons, worms and phantom quartiles
+If you choose to plot a zoo plot, the labels which fall within the doves, chameleons, worms and phantom quartiles
 are saved in individual text files: <exp_name>_chameleons.txt, <exp_name>_doves.txt, <exp_name>_phantoms.txt and
-<exp_name>_worms.txt. This automatically documents all outliers.
+<exp_name>_worms.txt. This automatically documents all outliers. ::
 
-The labels with a standard deviation for their target scores or their non target scores bigger than the unit standard
-deviation are stored in a file <exp name>_limited.txt together with the violating score (have a look at the
-:ref:`rst_zooplot` page for a general understanding of how the plot is made). The files will show the label name
-followed by target/non target designation followed by the std dev for that label.
+    myFirstExperiment_chameleons.txt
+    myFirstExperiment_doves.txt
+    myFirstExperiment_phantoms.txt
+    myFirstExperiment_worms.txt
 
-This example shows the chameleons found for the experiment 'testdata_A' in the file output/testdata_A_chameleons.txt: ::
+The content of output/myFirstExperiment_chameleons.txt looks like this: ::
 
     # label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
+    116 conditionB -0.563504928571 -1.07438894059 14 202 -0.502857 1.25531696972
+    1118 conditionA -0.264748666667 -1.07494067871 30 249 2.000000 -0.733892414191
+    226 conditionB -0.555475 -1.06827121759 1 216 0.010000 -0.717001903115
     1066 conditionA -0.399073347826 -1.06514522689 23 238 1.985593 0.181852885922
-    1096 conditionA -0.3189693125 -1.06838052917 32 240 2.930263 -0.825256532013
-    1118 conditionA -0.264748666667 -1.07494067871 30 249 2.395363 -0.733892414191
+    1066 conditionB -0.205634 -1.07308166403 12 253 2.000000 0.234369371589
+    3146 conditionB -0.542155 -1.07573414493 2 207 -0.588718 -0.808330988919
+    1096 conditionB -0.47514326087 -1.06535841905 23 210 2.000000 -0.964818041437
+    1096 conditionA -0.3189693125 -1.06838052917 32 240 2.000000 -0.825256532013
 
-This example show the standard deviations that were limited to a maximum value of 6 * unit std dev for another experiment: ::
+The labels with a normalized standard deviation for their target scores or their non target scores bigger than a maximum standard
+deviation are stored in a file <exp name>_limited.txt together with the violating score (have a look at the
+:ref:`rst_zooplot` page for a general understanding of how the plot is made).
 
-  cat output/condition_A_limited.txt
+Assuming these settings: ::
 
-  1096 target std dev: 6.01978718893
-  335 non target std dev: 6.71906032808
+    [zoo]
+    limitStdDevs = True
+    maxStdDev = 2.0
+    minStdDev = 0.01
 
-Note that you can switch limiting on or off via setting limitStdDevs = False in bioplot.cfg section [zoo].
+the following command will produce the file 'myFirstExperiment_limited.txt' where the standard deviations are limited to a maximum value of 2 * unit std dev: ::
+
+    python bioplot.py -Z -i input/testdata_AB.txt -e myFirstExperiment
+
+
+This will result into the following content in output/myFirstExperiment_limited.txt (shown partially): ::
+
+    # label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
+    223 conditionA -0.6239485 -1.0987091784 2 213 -0.294772 2.0
+    1129 conditionB -0.481959666667 -1.09234021145 12 227 2.000000 -0.487198065101
+    57 conditionB -1.08974608333 -1.07881886634 12 202 -0.719556 -2.0
+    609 conditionB -0.614352277778 -1.07410090099 18 202 -0.482100 2.0
+    1130 conditionB -0.0728461428571 -1.11323731633 21 196 2.000000 0.0208211034315
+    223 conditionB -0.59144 -1.14699159184 1 196 0.010000 2.0
+    1112 conditionA -0.416871 -1.103248548 34 250 2.000000 1.17620375038
+    1116 conditionA -0.4189825625 -1.1624667598 32 204 1.920131 2.0
+    335 conditionA -0.3849315 -1.15242778855 2 227 -0.545516 2.0
+    1123 conditionB -0.323721045455 -1.07929185124 22 242 2.000000 -0.212778963187
+    1115 conditionA -0.491315227273 -1.14706272124 22 226 2.000000 1.42789578734
+    1131 conditionA -0.3203315 -1.09662913636 34 220 2.000000 0.0194105127029
+
+Note that the default setting for maxStdDev = 6.0 * unit std dev.
 
 Save plots
 ----------
-Any plot you produce will be saved to disk as a png-file soon as you click on the plot (to het the window focus) and press a key.
-Again the experiment name is used as part of the plot name. Note, it is important to maximise the plot's window to
-get a proper layout of all elements in the plot! If you maximise the plot and press 's', you will be presented with a menu which
+Any plot you produce will be saved to disk as a png-file in the output directory as soon as you click on the plot
+(to get the window focus) and press a key. The experiment name is used as part of the plot name. Note, it is important to maximise the plot's window to
+get a proper layout of all elements in the plot! If you press 's', you will be presented with a menu which
 will allow you to save the plot anywhere you choose to. If you press a different key, the plot will be saved locally in
-the directory specified by outputPath. This happens any time you press a key except l, k, g, s, f:
+the directory specified by outputPath. This happens any time you press a key!
 
-Note: l, k, g, s and f are predefined keys of the gui.
+Note: the keys l, k, g, s and f are predefined keys of the gui. They provide additional functions.
 With them you can: ::
 
   g: toggle grid on / off
-  k: toggle between lin horizontal scale and log horizontal scale
-  l: toggle between lin vertical scale and log vertical scale
+  k: toggle between linear horizontal scale and logaritmic horizontal scale
+  l: toggle between linear vertical scale and logaritmic vertical scale
   s: open save menu
   f: toggle between standard size and full screen
 
-Any other key will make that the file is saved in its current dimensions.
-To get a nice plot it is wise to maximise and then press any key. Then close the window.
+Any key will make that the file is saved in its window's dimensions.
+To get a nice plot it is wise to maximise the window and then press a key. Then close the window.
+
+Note that using l and k may lead to warnings if e.g. the scores contain negative values (the log is only defined for numbers >= 0).
+
+.. _rst_data_files:
 
 Data files
 ----------
@@ -234,7 +280,7 @@ database of scores. Specify 'database' as filename on the command line.
 
 Example: ::
 
-  python ./bioplot.py -i database -t type1 -e 'data taken from db' -Z
+  python bioplot.py -i database -t type1 -e 'data taken from db' -Z
 
 You will have to adapt the query in the function _readFromDatabase and the function
 _decodeType1Results in data.py to your own needs.
@@ -244,13 +290,22 @@ with: input/testdata_A.txt, input/testdata_B.txt, input/testdata_C.txt and input
 
 Example: ::
 
-  python ./bioplot.py -e "condition A" -i testdata_A.txt -Z
+  python bioplot.py -e "condition A" -i testdata_A.txt -Z
+
 
 If you experience any difficulties reading your data file, we can either discuss this
-via email or you can send it to me ( josbouten at gmail dot com ) so that I can have a look at it.
-Please consider anonimizing the data before you send it to me by mail! Have a look at
-anonimize.py and adapt it to your needs.
+via email or you can send the data it to me ( josbouten at gmail dot com ) so that I can have a look at it.
+Please consider anonymizing the data before you send it to me by mail! Have a look at
+:ref:`rst_anonymize`.
 
+
+Data exchange
+-------------
+bioplot formatted text files from linux, OSX and MS Windows platforms should be interchangeable without problems.
+
+Data anonymity
+--------------
+If you want to anonymize your data e.g. in case you want to exchange data file with somebody, have a look at :ref:`rst_anonymize`.
 
 Bugs and feature requests
 -------------------------

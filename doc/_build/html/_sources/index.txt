@@ -9,7 +9,7 @@ Welcome to bioplot's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    bioplot
    install
@@ -24,6 +24,7 @@ Contents:
    tools
    settings
    issues
+   implementation_notes
    license
 * :ref:`search`
 

@@ -8,7 +8,8 @@ Traditional plot
 A zoo plot shows a scatter type plot where on the vertical axis the mean of the non target
 scores and on the horizontal axis the mean target scores are drawn for each label. This leads to
 a plot of dots where each dot represents the scores for one subject. The plot below shows an example with one dataset.
-The zoo's special animals are coloured differently to make them stand out more.
+The zoo's special animals (points within quartile ranges) are coloured differently to make them stand out more.
+Note: there must be at least one target and one non target score to be able to include a subject's data in the zoo plot.
 
 Run this command: ::
 
@@ -17,7 +18,7 @@ Run this command: ::
 .. image:: images/condition_A_traditional_zoo_plot.png
 
 You can combine multiple data sets in one plot. The next plot below shows combined data of 3 experiments (A, B and C).
-The legend shows the eer and cllr values for the respective conditions.
+The legend shows the eer and cllr values for the respective conditions. Note that each data set has its own quartile ranges.
 
 Run this command: ::
 
@@ -65,6 +66,17 @@ Set the screen resolution in layout: ::
 
 
 .. image:: images/condition_ABC_alexander_zoo_plot.png
+
+Note that in the data set there may be subjects with limited scores available. In case there is only one target score,
+(or one non target score) one can not plot an ellipse for the corresponding axis.
+In this case bioplot provides the option to either set the normalized std dev for this subject to the
+minimum value which will result in a flat line for that dimension of the ellipse
+or assume this subject is similar to other subjects and set the normalized std dev for this subject to the
+unit value derived from the other subject target and non target scores. The default is to use the minimum value allowed. ::
+
+    showSingleValueAsUnitValue = False
+
+See also minStdDev in section [zoo] in bioplot.cfg.
 
 Yager and Dunstone
 ------------------
@@ -120,19 +132,6 @@ horizontal axis. This means that comparing shapes between zoo plots with varying
 mean target and mean non target scores can be very tricky. The lines between the ellipses connect ellipses for the
 same label.
 
-Unit and mean reference
------------------------
-The grey/black ellipse in the center of the quartiles denotes the mean of all ellipses. The 3 red ellipses on the
-lower left are meant as reference points. Their sizes measure (from smallest to largest ellipse): mean - 2
-standard deviations, mean, mean + 2 standard deviations.
-
-If you do not want these in your plot choose the following setting: ::
-
-    [zoo]
-    showReference = False
-    showUnitDataPoint = False
-
-
 .. _rst_zooplot_labels:
 
 Labels
@@ -146,9 +145,8 @@ be configured via the config file. You can choose among these: ::
     showStdDev = True
 
 From top to bottom they will show the number of target scores (#T) and number of non target (#nT) scores for the subject;
-the average target match score (aTms) and the average non target match score (anTms); and lastly the
-the average target match score standard deviation (aTmStDev) and the average non target match score standard deviation (anTmStDev).
-Note that the standard deviations are normalized.
+the average target match score (aTms) and the average non target match score (anTms); and lastly
+the average target match score normalized standard deviation (aTmNormStDev) and the average non target match score normalized standard deviation (anTmNormStDev).
 
 The Labels by default show black text on a yellow background. The yellow background may be too large for the text on
 Ms Windows platforms when using matplotlib 1.4.3 however. If so, set runningWindows to True in [cfg], this will

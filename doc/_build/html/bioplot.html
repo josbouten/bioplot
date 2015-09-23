@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>Introduction to Bioplot &mdash; bioplot 0.9.4 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,56 +24,242 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="INSTALL" href="install.html" />
-    <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" /> 
-  </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="install.html" title="INSTALL"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to bioplot’s documentation!"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          bioplot</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.4</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Chapter <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Introduction to Bioplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#auto-store">Auto store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#save-plots">Save plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-files">Data files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-exchange">Data exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-anonymity">Data anonymity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bugs-and-feature-requests">Bugs and feature requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">INSTALL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ms-windows">Ms Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#update-notifications">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#linux">Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#man-pages">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id1">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#number-of-bins">Number of bins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#combined-experiments">Combined experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrix plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#traditional-plot">Traditional plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#tall-thin-animals">Tall thin animals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#yager-and-dunstone">Yager and Dunstone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#helper-circles">Helper circles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#colours">Colours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#labels">Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#highlighting-labels">Highlighting labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#settings-file">settings file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#accuracy">[accuracy]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#cfg">[cfg]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#data">[data]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#eer">[eer]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#histogram">[histogram]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#layout">[layout]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#matrix">[matrix]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#metacolors">[metacolors]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#probability">[probability]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#zoo">[zoo]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">Data separation character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib-on-osx-and-ms-windows">Matplotlib on OSX and Ms Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implementation_notes.html">Implementation notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#histogram-py">histogram.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#cllr-py">cllr.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#documentation">documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#preamble">Preamble</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#gnu-general-public-license">GNU GENERAL PUBLIC LICENSE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#no-warranty">NO WARRANTY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#how-to-apply-these-terms-to-your-new-programs">How to Apply These Terms to Your New Programs</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Paragraph <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Introduction to Bioplot</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#auto-store">Auto store</a></li>
+<li><a class="reference internal" href="#save-plots">Save plots</a></li>
+<li><a class="reference internal" href="#data-files">Data files</a></li>
+<li><a class="reference internal" href="#data-exchange">Data exchange</a></li>
+<li><a class="reference internal" href="#data-anonymity">Data anonymity</a></li>
+<li><a class="reference internal" href="#bugs-and-feature-requests">Bugs and feature requests</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: Welcome to bioplot’s documentation!"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Welcome to biopl...</span>
+    </a>
+  </li>
+  <li>
+    <a href="install.html" title="Next Chapter: INSTALL"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">INSTALL &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/bioplot.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <div class="section" id="introduction-to-bioplot">
 <h1>Introduction to Bioplot<a class="headerlink" href="#introduction-to-bioplot" title="Permalink to this headline">¶</a></h1>
 <p>You will not be able to use this program or any of its parts to slay a dragon, that I&#8217;m sure of, and I do not guarantee
 that it is fit for any other purpose at all, but I would appreciate if you would include a reference to this code and my name
 in any publications you may write using its features or add a source reference to your code if you include some part(s)
-of this code in yours. Especially if you plan to use part of the code please respect the <a class="reference internal" href="license.html#rst-license"><em>License</em></a>.</p>
+of this code in yours. Especially if you plan to use part of the code please respect the <a class="reference internal" href="license.html#rst-license"><span>License</span></a>.</p>
 <p>bioplot.py is a program which can draw several plots that can be used
 when evaluating the performance of a biometric system. It reads settings from the file &#8216;bioplot.cfg&#8217;.
-But using the -c option you can specify your own settings file (see <a class="reference internal" href="settings.html#rst-settings"><em>Settings</em></a>).
+But using the -c option you can specify your own settings file (see <a class="reference internal" href="settings.html#rst-settings"><span>Settings</span></a>).
 These settings may be used to determine the way information is shown in a plot, what directory plot files
 are written to etc.</p>
-<p>The plot types currently supported are: <a class="reference internal" href="accuracy.html#rst-accuracy"><em>Accuracy plot</em></a>, <a class="reference internal" href="eerplot.html#rst-eerplot"><em>EER plot</em></a>, <a class="reference internal" href="histogram.html#rst-histogram"><em>Histogram</em></a>,
-<a class="reference internal" href="matrixplot.html#rst-matrixplot"><em>Matrix plot</em></a>, <a class="reference internal" href="rankingplot.html#rst-rankingplot"><em>Ranking plot</em></a>, <a class="reference internal" href="tippettplot.html#rst-tippetplot"><em>Tippett plot</em></a> and <a class="reference internal" href="zooplot.html#rst-zooplot"><em>Zoo plot</em></a>.</p>
+<p>The plot types currently supported are: <a class="reference internal" href="accuracy.html#rst-accuracy"><span>Accuracy plot</span></a>, <a class="reference internal" href="eerplot.html#rst-eerplot"><span>EER plot</span></a>, <a class="reference internal" href="histogram.html#rst-histogram"><span>Histogram</span></a>,
+<a class="reference internal" href="matrixplot.html#rst-matrixplot"><span>Matrix plot</span></a>, <a class="reference internal" href="rankingplot.html#rst-rankingplot"><span>Ranking plot</span></a>, <a class="reference internal" href="tippettplot.html#rst-tippetplot"><span>Tippett plot</span></a> and <a class="reference internal" href="zooplot.html#rst-zooplot"><span>Zoo plot</span></a>.</p>
 <p>Please read INSTALL.txt, this html documentation (note that the file &#8216;manual.txt&#8217; is obsolete) and bioplot.cfg before you try to use
 bioplot.py. You&#8217;ll learn more of the program&#8217;s potential than from its command line help message.</p>
 <p>&#64;Windows dudes and dudettes: I&#8217;m afraid you have to run the program by hand from a command line or build shortcuts
 which not only start the program but also provide the command line options and parameters needed. You&#8217;re on your
-own here. I&#8217;m a command line junky anyway so I did not spend any time building a gui. But don&#8217;t fret. All plots
-ares shown in an interactive window, you can click on that as much as you like. The interface allows you to zoom in,
+own here. I&#8217;m a linux/OSX command line junky anyway so I did not spend any time building a (windows) gui. But don&#8217;t fret. All plots
+are shown in an interactive window, you can click on that as much as you like. The interface allows you to zoom in,
 click on a point to see the associated label, save the plot in a file etc. etc.</p>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>What bioplot.py basically does is: read a data file and plot one or more interactive graphs.
-You can run bioplot.py from the command line. The follow command will shows help info for bioplot:
+You can run bioplot.py from the command line. The follow command will show help info for bioplot:
 On OSX and linux run:</p>
 <div class="highlight-python"><div class="highlight"><pre>python bioplot.py -h
 </pre></div>
@@ -82,9 +269,9 @@ On OSX and linux run:</p>
 </pre></div>
 </div>
 <p>This wil output the following information:</p>
-<div class="highlight-python"><div class="highlight"><pre>Usage: ./bioplot.py [options] [option &lt;arg1&gt;] [&lt;label1&gt; &lt;label2&gt; &lt;label3&gt; ...]
+<div class="highlight-python"><div class="highlight"><pre>Usage: bioplot.py [options] [option &lt;arg1&gt;] [&lt;label1&gt; &lt;label2&gt; &lt;label3&gt; ...]
 bioplot.py version 0.9.4, Copyright (C) 2014, 2015 Jos Bouten
-bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l&#39;.
+This program comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l&#39;.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type `bioplot.py -l&#39; for details.
 This program was written by Jos Bouten.
@@ -119,19 +306,30 @@ Options:
   -V                    show version info
 </pre></div>
 </div>
-<p>Note: that you can use several options at the same time. The sequence is of no importance.</p>
-<p>As you can see you need to choose what type of graph you want.</p>
-<p>Bioplot can produce several plots in a row with just one invocation of the program. E.g. if you run:</p>
-<div class="highlight-python"><div class="highlight"><pre>bioplot -Z -A -E -i some_input_data_file.txt
+<dl class="docutils">
+<dt>Note:</dt>
+<dd><ul class="first last simple">
+<li>that you can use several options at the same time. The sequence is of no importance.</li>
+<li>each time in this documentation you read &#8216;python&#8217; as part of a command then on a windows platform use &#8216;python.exe&#8217; (without the quotes).</li>
+<li>On OSX and linux you need not specify the python interpreter at all. bioplot.py can be run using: ./bioplot.py</li>
+</ul>
+</dd>
+</dl>
+<p>As you can tell from the list of options you need to choose what type of graph you want.
+Bioplot can produce several plots in a row with just one invocation of the program. E.g. if you run:</p>
+<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -A -E -i some_input_data_file.txt
 </pre></div>
 </div>
 <p>the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.</p>
-<p>The input data has to be in a specific format. Actually there are 2 types of format allowed. See &#8216;Data Files&#8217; below.
-All plots can be saved. This happens automagically as well, but you get more useful results if this happens under
+<p>The input data has to be in a specific format. Actually there are 2 types of format allowed. See <a class="reference internal" href="#rst-data-files"><span>Data files</span></a> below.
+All plots can be saved. This happens automagically as well, as soon as you click on a plot and press a key, but you get more useful results if this happens under
 your control.</p>
 <p>If you do not provide an input file, the program uses input/testdata_A.txt.
-By providing this default data file it is easy to test whether the program is installed correctly. You can try
-the multi experiment capabilities of the program by choosing input/testdata_AB.txt or input/testdata_ABC.txt.</p>
+This makes it is easy to try the program. You can try the multi experiment capabilities
+of the program by choosing input/testdata_AB.txt or input/testdata_ABC.txt.</p>
+<p>Bioplot when run reads its config file (by default called &#8216;bioplot.cfg&#8217;) and uses the settings it finds in there.
+If no config file exists it uses a set of default values. Have a look at the config file. The program has quite a lot
+of settings you may want set to your own liking.</p>
 </div>
 <div class="section" id="auto-store">
 <h2>Auto store<a class="headerlink" href="#auto-store" title="Permalink to this headline">¶</a></h2>
@@ -139,77 +337,114 @@ the multi experiment capabilities of the program by choosing input/testdata_AB.t
 You will notice this when you run it. It will for instance store all the
 target and non target scores it distills from the data file you pass
 to it and write them in text files (unless you set saveScores to False in bioplot.cfg).
-For this to be usefull always add a name for the experiment you were running to the command line.
-This name is used in the filenames bioplot produces.</p>
+For this to be usefull always add a name for the experiment you were running to the command line,
+otherwise the prefix &#8216;test&#8217; is used.</p>
+<p>The experiment name is used in the titles of the plots and in the filenames bioplot produces.</p>
 <div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -e myFirstExperiment
 </pre></div>
 </div>
 <p>You can use these file for further processing. The experiment name you specify is used as part
 of the filename: &lt;exp_name&gt;_&lt;meta_value&gt;_non_target.txt, &lt;exp_name&gt;_&lt;meta_value&gt;_target.txt.
-The &lt;meta_value&gt; is taken from the last column of data in the data files.</p>
+The &lt;meta_value&gt; is taken from the last column of data in the data files:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">myFirstExperiment_conditionA_target</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">myFirstExperiment_conditionA_non_target</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
 <p>The files are stored in the directory specified by &#8216;outputPath&#8217; in
-bioplot.cfg in it&#8217;s [cfg] section. The default will be &#8216;output&#8217; in
+bioplot.cfg in it&#8217;s [cfg] section. The default path will be &#8216;output&#8217; in
 the current directory. You can change this behaviour in bioplot.cfg via the following settings:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
-<span class="n">outputPath</span> <span class="o">=</span> <span class="n">my_own_data_dir</span><span class="o">/</span><span class="n">bioplot</span><span class="o">/</span><span class="n">output</span>
+<span class="n">outputPath</span> <span class="o">=</span> <span class="n">output</span>
 <span class="n">saveScores</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">alwasySave</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
-<p>If you run the program again using the same experiment
-name, the scores are not saved again, saving some processing time, unless you add the following setting to the config file:</p>
+<p>If the output path does not exist, bioplot will try to create it. Note: this may require privileges to be set propperly.
+If you run the program repeatedly using the same experiment name, the scores are not saved again, saving some processing
+time, unless you add the following setting to the config file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">alwaysSave</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>The default value is False as it is expected that you will run bioplot several times with the same data (hoping this
-will speed things up a bit). Note, that if you do not change the experiment name but do change the data, if alwasySave = False,
-the data extracts will not reflect the analysis of the (new) data file used. If you want to have new versions of these files,
-you need to delete them before running bioplot.py again.</p>
-<p>Next, if you choose to plot a zoo plot, the labels which fall within the doves, chameleons, worms and phantom quartiles
+will speed things up a bit). Note, that if you do not change the experiment name but do change the data, if alwaysSave = False,
+the data extracted will not reflect the analysis of the (new) data file used. If you want to have new versions of these files,
+you need to delete them before running bioplot.py again (or set alwaysSave to True).</p>
+<p>If you choose to plot a zoo plot, the labels which fall within the doves, chameleons, worms and phantom quartiles
 are saved in individual text files: &lt;exp_name&gt;_chameleons.txt, &lt;exp_name&gt;_doves.txt, &lt;exp_name&gt;_phantoms.txt and
 &lt;exp_name&gt;_worms.txt. This automatically documents all outliers.</p>
-<p>The labels with a standard deviation for their target scores or their non target scores bigger than the unit standard
-deviation are stored in a file &lt;exp name&gt;_limited.txt together with the violating score (have a look at the
-<a class="reference internal" href="zooplot.html#rst-zooplot"><em>Zoo plot</em></a> page for a general understanding of how the plot is made). The files will show the label name
-followed by target/non target designation followed by the std dev for that label.</p>
-<p>This example shows the chameleons found for the experiment &#8216;testdata_A&#8217; in the file output/testdata_A_chameleons.txt:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">myFirstExperiment_chameleons</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">myFirstExperiment_doves</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">myFirstExperiment_phantoms</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">myFirstExperiment_worms</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>The content of output/myFirstExperiment_chameleons.txt looks like this:</p>
 <div class="highlight-python"><div class="highlight"><pre># label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
+116 conditionB -0.563504928571 -1.07438894059 14 202 -0.502857 1.25531696972
+1118 conditionA -0.264748666667 -1.07494067871 30 249 2.000000 -0.733892414191
+226 conditionB -0.555475 -1.06827121759 1 216 0.010000 -0.717001903115
 1066 conditionA -0.399073347826 -1.06514522689 23 238 1.985593 0.181852885922
-1096 conditionA -0.3189693125 -1.06838052917 32 240 2.930263 -0.825256532013
-1118 conditionA -0.264748666667 -1.07494067871 30 249 2.395363 -0.733892414191
+1066 conditionB -0.205634 -1.07308166403 12 253 2.000000 0.234369371589
+3146 conditionB -0.542155 -1.07573414493 2 207 -0.588718 -0.808330988919
+1096 conditionB -0.47514326087 -1.06535841905 23 210 2.000000 -0.964818041437
+1096 conditionA -0.3189693125 -1.06838052917 32 240 2.000000 -0.825256532013
 </pre></div>
 </div>
-<p>This example show the standard deviations that were limited to a maximum value of 6 * unit std dev for another experiment:</p>
-<div class="highlight-python"><div class="highlight"><pre>cat output/condition_A_limited.txt
-
-1096 target std dev: 6.01978718893
-335 non target std dev: 6.71906032808
+<p>The labels with a normalized standard deviation for their target scores or their non target scores bigger than a maximum standard
+deviation are stored in a file &lt;exp name&gt;_limited.txt together with the violating score (have a look at the
+<a class="reference internal" href="zooplot.html#rst-zooplot"><span>Zoo plot</span></a> page for a general understanding of how the plot is made).</p>
+<p>Assuming these settings:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<span class="n">limitStdDevs</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">maxStdDev</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">minStdDev</span> <span class="o">=</span> <span class="mf">0.01</span>
 </pre></div>
 </div>
-<p>Note that you can switch limiting on or off via setting limitStdDevs = False in bioplot.cfg section [zoo].</p>
+<p>the following command will produce the file &#8216;myFirstExperiment_limited.txt&#8217; where the standard deviations are limited to a maximum value of 2 * unit std dev:</p>
+<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -i input/testdata_AB.txt -e myFirstExperiment
+</pre></div>
+</div>
+<p>This will result into the following content in output/myFirstExperiment_limited.txt (shown partially):</p>
+<div class="highlight-python"><div class="highlight"><pre># label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
+223 conditionA -0.6239485 -1.0987091784 2 213 -0.294772 2.0
+1129 conditionB -0.481959666667 -1.09234021145 12 227 2.000000 -0.487198065101
+57 conditionB -1.08974608333 -1.07881886634 12 202 -0.719556 -2.0
+609 conditionB -0.614352277778 -1.07410090099 18 202 -0.482100 2.0
+1130 conditionB -0.0728461428571 -1.11323731633 21 196 2.000000 0.0208211034315
+223 conditionB -0.59144 -1.14699159184 1 196 0.010000 2.0
+1112 conditionA -0.416871 -1.103248548 34 250 2.000000 1.17620375038
+1116 conditionA -0.4189825625 -1.1624667598 32 204 1.920131 2.0
+335 conditionA -0.3849315 -1.15242778855 2 227 -0.545516 2.0
+1123 conditionB -0.323721045455 -1.07929185124 22 242 2.000000 -0.212778963187
+1115 conditionA -0.491315227273 -1.14706272124 22 226 2.000000 1.42789578734
+1131 conditionA -0.3203315 -1.09662913636 34 220 2.000000 0.0194105127029
+</pre></div>
+</div>
+<p>Note that the default setting for maxStdDev = 6.0 * unit std dev.</p>
 </div>
 <div class="section" id="save-plots">
 <h2>Save plots<a class="headerlink" href="#save-plots" title="Permalink to this headline">¶</a></h2>
-<p>Any plot you produce will be saved to disk as a png-file soon as you click on the plot (to het the window focus) and press a key.
-Again the experiment name is used as part of the plot name. Note, it is important to maximise the plot&#8217;s window to
-get a proper layout of all elements in the plot! If you maximise the plot and press &#8216;s&#8217;, you will be presented with a menu which
+<p>Any plot you produce will be saved to disk as a png-file in the output directory as soon as you click on the plot
+(to get the window focus) and press a key. The experiment name is used as part of the plot name. Note, it is important to maximise the plot&#8217;s window to
+get a proper layout of all elements in the plot! If you press &#8216;s&#8217;, you will be presented with a menu which
 will allow you to save the plot anywhere you choose to. If you press a different key, the plot will be saved locally in
-the directory specified by outputPath. This happens any time you press a key except l, k, g, s, f:</p>
-<p>Note: l, k, g, s and f are predefined keys of the gui.
+the directory specified by outputPath. This happens any time you press a key!</p>
+<p>Note: the keys l, k, g, s and f are predefined keys of the gui. They provide additional functions.
 With them you can:</p>
 <div class="highlight-python"><div class="highlight"><pre>g: toggle grid on / off
-k: toggle between lin horizontal scale and log horizontal scale
-l: toggle between lin vertical scale and log vertical scale
+k: toggle between linear horizontal scale and logaritmic horizontal scale
+l: toggle between linear vertical scale and logaritmic vertical scale
 s: open save menu
 f: toggle between standard size and full screen
 </pre></div>
 </div>
-<p>Any other key will make that the file is saved in its current dimensions.
-To get a nice plot it is wise to maximise and then press any key. Then close the window.</p>
+<p>Any key will make that the file is saved in its window&#8217;s dimensions.
+To get a nice plot it is wise to maximise the window and then press a key. Then close the window.</p>
+<p>Note that using l and k may lead to warnings if e.g. the scores contain negative values (the log is only defined for numbers &gt;= 0).</p>
 </div>
 <div class="section" id="data-files">
-<h2>Data files<a class="headerlink" href="#data-files" title="Permalink to this headline">¶</a></h2>
+<span id="rst-data-files"></span><h2>Data files<a class="headerlink" href="#data-files" title="Permalink to this headline">¶</a></h2>
 <p>The command line allows to specify a filename and a type. The default type is &#8216;type3&#8217; which corresponds to a text file
 with 7 fields. You need not specify type3 as it is a default. This data type allows you to specify scores of
 experiments where multiple files are used to make a model whether this is a training model or a test model.
@@ -254,7 +489,7 @@ the special characters mentioned below under &#8216;Known Issues&#8217;.</p>
 <p>File &#8216;type1&#8217; is a database based data format and meant as an example on how to use bioplot in combination with a
 database of scores. Specify &#8216;database&#8217; as filename on the command line.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -i database -t type1 -e &#39;data taken from db&#39; -Z
+<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -i database -t type1 -e &#39;data taken from db&#39; -Z
 </pre></div>
 </div>
 <p>You will have to adapt the query in the function _readFromDatabase and the function
@@ -262,13 +497,21 @@ _decodeType1Results in data.py to your own needs.</p>
 <p>There are several data files (of type3) which are meant as examples to play around
 with: input/testdata_A.txt, input/testdata_B.txt, input/testdata_C.txt and input/testdata_ABC.txt</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -i testdata_A.txt -Z
+<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -e &quot;condition A&quot; -i testdata_A.txt -Z
 </pre></div>
 </div>
 <p>If you experience any difficulties reading your data file, we can either discuss this
-via email or you can send it to me ( josbouten at gmail dot com ) so that I can have a look at it.
-Please consider anonimizing the data before you send it to me by mail! Have a look at
-anonimize.py and adapt it to your needs.</p>
+via email or you can send the data it to me ( josbouten at gmail dot com ) so that I can have a look at it.
+Please consider anonymizing the data before you send it to me by mail! Have a look at
+<a class="reference internal" href="tools.html#rst-anonymize"><span>anonymize.py</span></a>.</p>
+</div>
+<div class="section" id="data-exchange">
+<h2>Data exchange<a class="headerlink" href="#data-exchange" title="Permalink to this headline">¶</a></h2>
+<p>bioplot formatted text files from linux, OSX and MS Windows platforms should be interchangeable without problems.</p>
+</div>
+<div class="section" id="data-anonymity">
+<h2>Data anonymity<a class="headerlink" href="#data-anonymity" title="Permalink to this headline">¶</a></h2>
+<p>If you want to anonymize your data e.g. in case you want to exchange data file with somebody, have a look at <a class="reference internal" href="tools.html#rst-anonymize"><span>anonymize.py</span></a>.</p>
 </div>
 <div class="section" id="bugs-and-feature-requests">
 <h2>Bugs and feature requests<a class="headerlink" href="#bugs-and-feature-requests" title="Permalink to this headline">¶</a></h2>
@@ -278,69 +521,21 @@ you can contact me at josbouten at gmail dot com.</p>
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Introduction to Bioplot</a><ul>
-<li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#auto-store">Auto store</a></li>
-<li><a class="reference internal" href="#save-plots">Save plots</a></li>
-<li><a class="reference internal" href="#data-files">Data files</a></li>
-<li><a class="reference internal" href="#bugs-and-feature-requests">Bugs and feature requests</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to bioplot&#8217;s documentation!</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="install.html"
-                        title="next chapter">INSTALL</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/bioplot.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="install.html" title="INSTALL"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to bioplot’s documentation!"
-             >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
-    <div class="footer">
-        &copy; Copyright 2015, Jos S. Bouten.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
-    </div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Jos S. Bouten.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

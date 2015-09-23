@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>Settings &mdash; bioplot 0.9.4 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,38 +24,228 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="bioplot 0.9.4 documentation" href="index.html" />
     <link rel="next" title="Known Issues" href="issues.html" />
-    <link rel="prev" title="Tools" href="tools.html" /> 
-  </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="issues.html" title="Known Issues"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="tools.html" title="Tools"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <link rel="prev" title="Tools" href="tools.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          bioplot</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.4</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Chapter <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bioplot.html">Introduction to Bioplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#auto-store">Auto store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#save-plots">Save plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-files">Data files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-exchange">Data exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-anonymity">Data anonymity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#bugs-and-feature-requests">Bugs and feature requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">INSTALL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ms-windows">Ms Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#update-notifications">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#linux">Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#man-pages">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id1">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#number-of-bins">Number of bins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#combined-experiments">Combined experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrix plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#traditional-plot">Traditional plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#tall-thin-animals">Tall thin animals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#yager-and-dunstone">Yager and Dunstone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#helper-circles">Helper circles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#colours">Colours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#labels">Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#highlighting-labels">Highlighting labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#settings-file">settings file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accuracy">[accuracy]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cfg">[cfg]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data">[data]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eer">[eer]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#histogram">[histogram]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#layout">[layout]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matrix">[matrix]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metacolors">[metacolors]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#probability">[probability]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#zoo">[zoo]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">Data separation character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib-on-osx-and-ms-windows">Matplotlib on OSX and Ms Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implementation_notes.html">Implementation notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#histogram-py">histogram.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#cllr-py">cllr.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#documentation">documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#preamble">Preamble</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#gnu-general-public-license">GNU GENERAL PUBLIC LICENSE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#no-warranty">NO WARRANTY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#how-to-apply-these-terms-to-your-new-programs">How to Apply These Terms to Your New Programs</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Paragraph <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Settings</a><ul>
+<li><a class="reference internal" href="#settings-file">settings file</a></li>
+<li><a class="reference internal" href="#accuracy">[accuracy]</a></li>
+<li><a class="reference internal" href="#cfg">[cfg]</a></li>
+<li><a class="reference internal" href="#data">[data]</a></li>
+<li><a class="reference internal" href="#eer">[eer]</a></li>
+<li><a class="reference internal" href="#histogram">[histogram]</a></li>
+<li><a class="reference internal" href="#layout">[layout]</a></li>
+<li><a class="reference internal" href="#matrix">[matrix]</a></li>
+<li><a class="reference internal" href="#metacolors">[metacolors]</a></li>
+<li><a class="reference internal" href="#probability">[probability]</a></li>
+<li><a class="reference internal" href="#zoo">[zoo]</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="tools.html" title="Previous Chapter: Tools"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Tools</span>
+    </a>
+  </li>
+  <li>
+    <a href="issues.html" title="Next Chapter: Known Issues"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Known Issues &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/settings.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <div class="section" id="settings">
 <span id="rst-settings"></span><h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="settings-file">
 <h2>settings file<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h2>
 <p>Bioplot will read settings from the file bioplot.cfg by default. To use a different settings file use the -c option.</p>
-<div class="highlight-python"><div class="highlight"><pre>bioplot.py -c some_other_settings_file
+<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -c some_other_settings_file
 </pre></div>
 </div>
 <p>The file bioplot.cfg contains many sections. Below for each section the variables are explained and for each the default value is shown.
@@ -174,6 +365,17 @@ Otherwise only the first encountered in the raw scores is used.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="eer">
+<h2>[eer]<a class="headerlink" href="#eer" title="Permalink to this headline">¶</a></h2>
+<p>Show Cllr values in the plot.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>Show minimum Cllr values in the plot.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="histogram">
 <h2>[histogram]<a class="headerlink" href="#histogram" title="Permalink to this headline">¶</a></h2>
 <p>Number of bins in the histogram.
@@ -235,6 +437,10 @@ See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#
 </div>
 <p>Spacing between zoo plot and left side of histograms in boutenZoo style layout.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">spacing</span> <span class="o">=</span> <span class="mf">0.02</span>
+</pre></div>
+</div>
+<p>Use same scale for vertical axis as for horizontal axis.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">showEqualAxes</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 </div>
@@ -357,8 +563,8 @@ or hexadecimal values (e.g. 0FA022).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">lineWidth</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
-<p>Maximum width/height in standard deviations allowed for an ellipse in the zoo plot.
-Values any higher are limited to this number of standard deviations.</p>
+<p>Maximum normalized standard deviation allowed for an ellipse in the zoo plot.
+Values any higher are limited to this number of normalized standard deviations.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">maxStdDev</span> <span class="o">=</span> <span class="mf">6.0</span>
 </pre></div>
 </div>
@@ -369,8 +575,9 @@ Therefore it is limited to this value.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">minimumOpacityValue</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
-<p>Minimum value of the stdev for an ellipse in the zoo plot.
-Values any lower are limited to this number.</p>
+<p>Minimum normalized standard deviation allowed for an ellipse in the zoo plot.
+Values any lower are limited to this number of normalized standard deviations.
+minStDev may not exceed 1.0.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">minStdDev</span> <span class="o">=</span> <span class="mf">0.01</span>
 </pre></div>
 </div>
@@ -383,9 +590,9 @@ Tricky ... This parameter implies a double negative.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">opacity4Ellipses</span> <span class="o">=</span> <span class="mf">0.7</span>
 </pre></div>
 </div>
-<p>Scale ellipses to screen resolution. 150 should be good for 1600x1024 until 1280x1024.
+<p>Scale ellipses to screen resolution. 100 should be good for 1600x1024 until 1280x1024.
 Make it smaller if you want bigger ellipses.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">150</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">100</span>
 </pre></div>
 </div>
 <p>Show all annotations when starting program; one click on the figure will make them disappear.
@@ -433,6 +640,15 @@ average non target data points.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">showReference</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
+<p>In the data set there may be subjects with limited scores available. In case there is only one target score,
+(or one non target score) one can not plot an ellipse for the corresponding axis.
+In this case bioplot provides the option to either set the normalized std dev for this subject to the
+minimum value which will result in a flat line for that dimension of the ellipse
+or assume this subject is similar to other subjects and set the normalized std dev for this subject to the
+unit value derived from the other subject target and non target scores. The default is to use the minimum value allowed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">showSingleValueAsUnitValue</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
 <p>Show std dev values of data points when clicked.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">showStdDev</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
@@ -464,74 +680,21 @@ When set to False the y-axis will be inversed.</p>
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Settings</a><ul>
-<li><a class="reference internal" href="#settings-file">settings file</a></li>
-<li><a class="reference internal" href="#accuracy">[accuracy]</a></li>
-<li><a class="reference internal" href="#cfg">[cfg]</a></li>
-<li><a class="reference internal" href="#data">[data]</a></li>
-<li><a class="reference internal" href="#histogram">[histogram]</a></li>
-<li><a class="reference internal" href="#layout">[layout]</a></li>
-<li><a class="reference internal" href="#matrix">[matrix]</a></li>
-<li><a class="reference internal" href="#metacolors">[metacolors]</a></li>
-<li><a class="reference internal" href="#probability">[probability]</a></li>
-<li><a class="reference internal" href="#zoo">[zoo]</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="tools.html"
-                        title="previous chapter">Tools</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="issues.html"
-                        title="next chapter">Known Issues</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/settings.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="issues.html" title="Known Issues"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="tools.html" title="Tools"
-             >previous</a> |</li>
-        <li><a href="index.html">bioplot 0.9.4 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
-    <div class="footer">
-        &copy; Copyright 2015, Jos S. Bouten.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
-    </div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Jos S. Bouten.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>
