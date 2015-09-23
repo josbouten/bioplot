@@ -81,6 +81,8 @@ On OSX 10.9.5 run these commands:
 
 <code>$ sudo pip2 install matplotlib</code>
 
+<code> $ sudo pip install scikit-learn </code>
+
 <code>$ git clone https://github.com/josbouten/bioplot.git</code>
 
 Then change the owner of the bioplot directory to your user:

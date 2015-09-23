@@ -887,7 +887,7 @@ class Zoo(Format, Probability, Cllr):
         xText = x + xOffset
         yText = y + yOffset
 
-        if self.config.getRunningOSX() or self.config.getRunningWindows():
+        if self.config.getRunningOSX():
             axes.annotate("%s" % (text),
                           xy,
                           bbox=dict(boxstyle="square", fc="0.8"),
@@ -908,7 +908,7 @@ class Zoo(Format, Probability, Cllr):
     def _annotateEllipse4References(self, axesZoo, xy, xText, yText, text):
         ha = 'left'
         va = 'bottom'
-        if self.config.getRunningOSX() or self.config.getRunningWindows():
+        if self.config.getRunningOSX():
             annotation = axesZoo.annotate("%s" % (text),
                                           xy,
                                           bbox=dict(boxstyle="square", fc="0.8"),
@@ -949,7 +949,7 @@ class Zoo(Format, Probability, Cllr):
         yText = y + yOffset
         angle = 0
         # angle = 45.0 / xRange * (x - xRange) + 45.0
-        if self.config.getRunningOSX() or self.config.getRunningWindows():
+        if self.config.getRunningOSX():
             annotation = axes.annotate("%s" % (text),
                                        xy,
                                        bbox=dict(boxstyle="square", fc="0.8"),

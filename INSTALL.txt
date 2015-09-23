@@ -72,6 +72,8 @@ python get-pip.py
 
 pip2 install matplotlib
 
+sudo pip install scikit-learn
+
 sudo git clone https://github.com/josbouten/bioplot.git
 
 From bioplot v0.9.4 on you'll need to install the python machine learning library scikit-learn:
