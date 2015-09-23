@@ -75,6 +75,9 @@ class Zoo(Format, Probability, Cllr):
         self.agmMeanStdDev = collections.defaultdict(list)
         self.aimMeanStdDev = collections.defaultdict(list)
 
+        self.agmMeanNormStdDev = collections.defaultdict(list)
+        self.aimMeanNormStdDev = collections.defaultdict(list)
+
         self.agmStdDevMin = collections.defaultdict(list)
         self.agmStdDevMax = collections.defaultdict(list)
         self.aimStdDevMin = collections.defaultdict(list)
@@ -446,7 +449,6 @@ class Zoo(Format, Probability, Cllr):
                 print "central point for %s will be at: %f %f" % (
                     metaValue, self.meanAgms[metaValue], self.meanAims[metaValue])
 
-        maxStdDev = self.config.getMaxStdDev()
         # Normalize stdev of all subjects.
         # Note this makes stdev values to be centered around zero.
 
@@ -460,43 +462,44 @@ class Zoo(Format, Probability, Cllr):
                 # We can assume the subject to be similar to other subjects and assume the unit value
                 # or we go for the non info option and set the std dev to the minimum accepted.
                 if self.config.getShowSingleValueAsUnitValue():
-                    agmStdDev = self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[metaValue]
+                    agmNormStdDev = self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[metaValue]
                 else:
-                    agmStdDev = self.config.getMinStdDev()
+                    agmNormStdDev = self.config.getMinStdDev()
             else:
                 # Normalize std dev.: (x - mu) / std
-                agmStdDev = (subject.getAgmStdDev() - self.agmMeanStdDev[metaValue]) / self.agmStdDevStdDev[metaValue]
-            subject.setAgmStdDev(agmStdDev)
+                agmNormStdDev = (subject.getAgmStdDev() - self.agmMeanStdDev[metaValue]) / self.agmStdDevStdDev[metaValue]
+            subject.setAgmNormStdDev(agmNormStdDev)
 
             if subject.getSingleNonTargetScore():
                 # We can assume the subject to be similar to other subjects and assume the unit value
                 # or we go for the non info option and set the std dev to the minimum accepted.
                 if self.config.getShowSingleValueAsUnitValue():
-                    aimStdDev = self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[metaValue]
+                    aimNormStdDev = self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[metaValue]
                 else:
-                    aimStdDev = self.config.getMinStdDev()
+                    aimNormStdDev = self.config.getMinStdDev()
             else:
                 # Normalize std dev.: (x - mu) / std
-                aimStdDev = (subject.getAimStdDev() - self.aimMeanStdDev[metaValue]) / self.aimStdDevStdDev[metaValue]
-            subject.setAimStdDev(aimStdDev)
+                aimNormStdDev = (subject.getAimStdDev() - self.aimMeanStdDev[metaValue]) / self.aimStdDevStdDev[metaValue]
+            subject.setAimNormStdDev(aimNormStdDev)
 
+        maxStdDev = self.config.getMaxStdDev()
         # If the user wants to, the stdev values can be limited to a certain maximum value.
         if self.config.getLimitStdDevs():
             for thisKey in self.subjects.keys():
                 subject = self.subjects[thisKey]
                 if not subject.getSingleTargetScore():
-                    agmStdDev = subject.getAgmStdDev()
-                    if abs(agmStdDev) > maxStdDev:
-                        agmStdDev = self._sign(agmStdDev) * maxStdDev
-                        subject.setAgmStdDev(agmStdDev)
+                    agmNormStdDev = subject.getAgmNormStdDev()
+                    if abs(agmNormStdDev) > maxStdDev:
+                        agmNormStdDev = self._sign(agmNormStdDev) * maxStdDev
+                        subject.setAgmNormStdDev(agmNormStdDev)
                         subject.setWasLimited(True)
                         # Add subject to exclusive set.
                         self._addLimited(subject)
                 if not subject.getSingleNonTargetScore():
-                    aimStdDev = subject.getAimStdDev()
-                    if abs(aimStdDev) > maxStdDev:
-                        aimStdDev = self._sign(aimStdDev) * maxStdDev
-                        subject.setAimStdDev(aimStdDev)
+                    aimNormStdDev = subject.getAimNormStdDev()
+                    if abs(aimNormStdDev) > maxStdDev:
+                        aimNormStdDev = self._sign(aimNormStdDev) * maxStdDev
+                        subject.setAimNormStdDev(aimNormStdDev)
                         subject.setWasLimited(True)
                         # Add subject to exclusive set.
                         self._addLimited(subject)
@@ -516,6 +519,19 @@ class Zoo(Format, Probability, Cllr):
                                                  subject.getAgmStdDev() * subject.getAimStdDev())
             self.maxSurfaceArea[metaValue] = max(self.maxSurfaceArea[metaValue],
                                                  subject.getAgmStdDev() * subject.getAimStdDev())
+
+        # Compute mean of normalized std devs.
+        for metaValue in self.data.getMetaDataValues():
+            self.agmMeanNormStdDev[metaValue] = 0.0
+            self.aimMeanNormStdDev[metaValue] = 0.0
+        for thisKey in self.subjects.keys():
+            subject = self.subjects[thisKey]
+            metaValue = subject.getMetaValue()
+            self.agmMeanNormStdDev[metaValue] += subject.getAgmNormStdDev()
+            self.aimMeanNormStdDev[metaValue] += subject.getAimNormStdDev()
+        for metaValue in self.data.getMetaDataValues():
+            self.agmMeanNormStdDev[metaValue] /= len(self.subjects)
+            self.aimMeanNormStdDev[metaValue] /= len(self.subjects)
 
         # Surface area of ellipse is used to normalise opacity against size in order to
         # make small ellipses visible even if they are overlapped by larger ones.
@@ -738,7 +754,7 @@ class Zoo(Format, Probability, Cllr):
         alphaDecrement = (alpha - 0.1) / 3.0
         # It should be possible to show 20 meta value reference ellipses next to eachother.
         offset = baseOffset = self.xRangeAll / 20.0
-        stdDevOffset = 0.5 * self.config.getMaxStdDev()
+        stdDevOffset = self.config.getMaxStdDev() * 0.5
         if self.config.getShowReference():
             for metaValue in self.data.getMetaDataValues():
                 onlyOnce = True
@@ -748,19 +764,11 @@ class Zoo(Format, Probability, Cllr):
                 # thinner/taller than mu or mu + 2 stdev ellipses.
                 x = self.agm_minAll + offset
                 y = self.aim_maxAll
-                for refEllipseStdDev in [-2, 0, 2]:
-                    # thisWidth = (self.agmMeanStdDev[metaValue] + factor * self.agmStdDevStdDev[metaValue]) * self.xScaleFactorAll
-                    # thisHeight = (self.aimMeanStdDev[metaValue] + factor * self.aimStdDevStdDev[metaValue]) * self.yScaleFactorAll
-                    thisWidth = (stdDevOffset + refEllipseStdDev * self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[
-                        metaValue]) * self.xScaleFactorAll
-                    thisHeight = (
-                                     stdDevOffset + refEllipseStdDev * self.aimMeanStdDev[metaValue] /
-                                     self.aimStdDevStdDev[
-                                         metaValue]) * self.yScaleFactorAll
-                    #thisWidth = (stdDevOffset + refEllipseStdDev) / self.agmStdDevStdDev[metaValue] * self.xScaleFactorAll
-                    #thisHeight = (stdDevOffset + refEllipseStdDev) / self.aimStdDevStdDev[metaValue] * self.yScaleFactorAll
-                    thisWidth = (stdDevOffset + refEllipseStdDev * self.agmStdDevStdDev[metaValue]) * self.xScaleFactorAll
-                    thisHeight = (stdDevOffset + refEllipseStdDev * self.aimStdDevStdDev[metaValue]) * self.yScaleFactorAll
+                for factor in [-2, 0, 2]:
+                    #thisWidth = (stdDevOffset + refEllipseStdDev * self.agmStdDevStdDev[metaValue]) * self.xScaleFactorAll
+                    #thisHeight = (stdDevOffset + refEllipseStdDev * self.aimStdDevStdDev[metaValue]) * self.yScaleFactorAll
+                    thisWidth = (stdDevOffset + factor * self.agmMeanNormStdDev[metaValue]) * self.xScaleFactorAll
+                    thisHeight = (stdDevOffset + factor * self.aimMeanNormStdDev[metaValue]) * self.yScaleFactorAll
                     e = Ellipse((x, y), thisWidth, thisHeight, angle)
                     e.set_facecolor(self.colors[metaValue])
                     e.set_alpha(alpha)
@@ -800,18 +808,13 @@ class Zoo(Format, Probability, Cllr):
         alpha = self.config.getAlpha4UnitCircles()
         angle = 0.0
         # The width/height where the normalized data is 0 standard deviations lies at w = maxStdDev
-        stdDevOffset = 0.5 * self.config.getMaxStdDev()
+        stdDevOffset = self.config.getMaxStdDev() * 0.5
         for metaValue in self.data.getMetaDataValues():
             xOffset = abs(self.agm_ma[metaValue] - self.agm_mi[metaValue]) / 15.0
             yOffset = abs(self.aim_ma[metaValue] - self.aim_mi[metaValue]) / 7.0
 
-            # Plot a black dot at the mean value spot of the plot.
-            # thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[
-            #     metaValue]) * self.xScaleFactorAll
-            # thisHeight = (stdDevOffset + self.aimMeanStdDev[metaValue] / self.aimStdDevStdDev[
-            #     metaValue]) * self.yScaleFactorAll
-            thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue]) * self.xScaleFactorAll
-            thisHeight = (stdDevOffset + self.aimMeanStdDev[metaValue]) * self.yScaleFactorAll
+            thisWidth = (stdDevOffset + self.agmMeanNormStdDev[metaValue]) * self.xScaleFactorAll
+            thisHeight = (stdDevOffset + self.aimMeanNormStdDev[metaValue]) * self.yScaleFactorAll
             (x, y) = (self.meanAgms[metaValue], self.meanAims[metaValue])
             e = Ellipse((x, y), thisWidth, thisHeight, angle)
             e.set_facecolor('black')
@@ -841,8 +844,8 @@ class Zoo(Format, Probability, Cllr):
 
     def _plotHelperCircles(self, axes):
         angle = 0.0
-        # The width/height where the normalized data is 0 standard deviations lies at w = maxStdDev
-        stdDevOffset = 0.5 * self.config.getMaxStdDev()
+        # The width/height where the normalized data is 0 standard deviations lies at w = maxStdDev / 2
+        stdDevOffset = self.config.getMaxStdDev() * 0.5
         for metaValue in self.data.getMetaDataValues():
             # thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue] / self.agmStdDevStdDev[
             #     metaValue]) * self.xScaleFactorAll
@@ -851,9 +854,9 @@ class Zoo(Format, Probability, Cllr):
             thisWidth = (stdDevOffset + self.agmMeanStdDev[metaValue]) * self.xScaleFactorAll
             thisHeight = (stdDevOffset + self.aimMeanStdDev[metaValue]) * self.yScaleFactorAll
             (x, y) = (self.meanAgms[metaValue], self.meanAims[metaValue])
-            radius = max(thisWidth, thisHeight)
+            radius = max(thisWidth, thisHeight) * 2.0
             i = 1
-            while x + i * radius < self.agm_maxAll:
+            while x + i * radius < self.agm_maxAll * 2.0:
                 # if self.debug:
                 #     print "_plotHelperCircles", x + i * radius, self.agm_maxAll
                 # for i in [4, 8, 12, 16, 20]:
@@ -1261,23 +1264,23 @@ class Zoo(Format, Probability, Cllr):
                             ("\n#nT: %d" % subject.getNumberOfNonTargets())
             if self.config.getShowAverageScores():
                 labelText += ("\naTms: %02.2f" % subject.getAgmsv()) + ("\nanTms: %02.2f" % subject.getAimsv())
-            agmStdDev = subject.getAgmStdDev()
-            aimStdDev = subject.getAimStdDev()
-            width = agmStdDev
-            height = aimStdDev
+            agmNormStdDev = subject.getAgmNormStdDev()
+            aimNormStdDev = subject.getAimNormStdDev()
+            # width = agmNormStdDev
+            # height = aimNormStdDev
             if self.config.getAlexanderStyle():
-                # Only show stdev when ellipses are plotted.
+                # Only show norm stdev when ellipses are plotted.
                 if self.config.getShowStdev():
-                    labelText += ("\naTmStDev: %02.2f" % agmStdDev) + ("\nanTmStdDev: %02.2f" % aimStdDev)
+                    labelText += ("\naTmNormStDev: %02.2f" % agmNormStdDev) + ("\nanTmNormStdDev: %02.2f" % aimNormStdDev)
 
             pattern = subject.getPattern()
             x = subject.getAgmsv()
             y = subject.getAimsv()
             xy = (x, y)
-            stdDevOffset = self.config.getMaxStdDev()
+            stdDevOffset = self.config.getMaxStdDev() * 0.5
             if self.config.getAlexanderStyle():
-                eWidth = (stdDevOffset + subject.getAgmStdDev()) * self.xScaleFactorAll
-                eHeight = (stdDevOffset + subject.getAimStdDev()) * self.yScaleFactorAll
+                eWidth = (stdDevOffset + subject.getAgmNormStdDev()) * self.xScaleFactorAll
+                eHeight = (stdDevOffset + subject.getAimNormStdDev()) * self.yScaleFactorAll
             else:
                 (hor, vert) = self.config.getScreenResolutionTuple()
                 # The width and hight should be chosen so that the data point is shown as a simple dot.
@@ -1383,10 +1386,10 @@ class Zoo(Format, Probability, Cllr):
         # Plot some ellipses meant for reference but only
         # if we do not show annotations at startup.
         if self.config.getAlexanderStyle():
-            if not self.config.getShowAnnotationsAtStartup():
-                self._plotReferenceEllipses(axesZoo)
             if self.config.getShowUnitDataPoint():
                 self._plotUnitEllipses(axesZoo)
+            # if not self.config.getShowAnnotationsAtStartup():
+            #     self._plotReferenceEllipses(axesZoo)
             if self.config.getShowHelperCircles():
                 self._plotHelperCircles(axesZoo)
 
