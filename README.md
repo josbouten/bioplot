@@ -170,23 +170,17 @@ find out about new functions and settings and read the update section for possib
 When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in
 bioplot.cfg. So in case of OSX use:
 
-<code>
-[cfg]
-runningOSX = True
-runningWindows = False
-</code>
+<code>[cfg]</code>
+<code>runningOSX = True</code>
+<code>runningWindows = False</code>
 
 Or in case of a compatible MS Windows OS use:
 
-<code>
-[cfg]
-runningOSX = False
-runningWindows = True
-</code>
+<code>[cfg]</code>
+<code>runningOSX = False</code>
+<code>runningWindows = True</code>
 
 Linux users set both to False. Do not forget to set your screen’s resolution in [cfg] using screenResolution (in this example it is set to 1600x1200).
 
-<code>
-[cfg]
-screenResolution = 1600x1200
-</code>
+<code>[cfg]</code>
+<code>screenResolution = 1600x1200</code>
