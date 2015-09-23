@@ -172,9 +172,7 @@ bioplot.cfg. So in case of OSX use:
 
 <code>
 [cfg]
-
 runningOSX = True
-
 runningWindows = False
 </code>
 
@@ -182,9 +180,7 @@ Or in case of a compatible MS Windows OS use:
 
 <code>
 [cfg]
-
 runningOSX = False
-
 runningWindows = True
 </code>
 
