@@ -73,6 +73,13 @@ minimum4Type1 = -1.0E+99
 ; maximum value we expect for a score in type1 data.
 maximum4Type1 = 1.0E+99
 
+[eer]
+; Show Cllr values
+showCllr = True
+
+; Show minimum Cllr values.
+showMinCllr = True
+
 [histogram]
 # Either specify a number or rice, sqrt or sturges.
 # See https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width
@@ -113,6 +120,9 @@ yWidth = 0.2
 
 ; Resolution of screen used width x height, eg 1280x1024
 screenResolution = 1600x1024
+
+; Use same scale for vertical axis as for horizontal axis.
+showEqualAxes = False
 
 ; Spacing between zoo plot and left side of histograms in boutenZoo
 spacing = 0.02
@@ -223,8 +233,8 @@ limitStdDevs = False
 ; Width of lines interconnecting ellipses in zoo plot
 lineWidth = 1.0
 
-; Maximum width/height in standard deviations allowed for an ellipse in the zoo plot.
-; Values any higher are limited to this number of standard deviations.
+; Maximum normalized standard deviation allowed for an ellipse in the zoo plot.
+; Values any higher are limited to this number of normalized standard deviations.
 maxStdDev = 6.0
 
 ; Opacity can be varied from small to large ellipses.
@@ -233,8 +243,9 @@ maxStdDev = 6.0
 ; Therefore it is limited to this value.
 minimumOpacityValue = 0.2
 
-; Minimum value of the stdev for an ellipse in the zoo plot.
-; Values any lower are limited to this number.
+; Minimum normalized standard deviation allowed for an ellipse in the zoo plot.
+; Values any lower are limited to this number of normalized standard deviations.
+; minStDev may not exceed 1.0.
 minStdDev = 0.01
 
 ; Histogram annotation on x-axis. When True will prevent the use of x-axis
@@ -245,9 +256,9 @@ noHistAnnot = False
 ; Opacity of ellipses if useOpacityForBigEllipses is set to False.
 opacity4Ellipses = 0.7
 
-; Scale data to screen resolution. 150 should be good for 1600x1024 ... 1280x1024
+; Scale data to screen resolution. 100 should be good for 1600x1024 ... 1280x1024
 ; Make smaller if you want bigger ellipses.
-scaleFactor = 150
+scaleFactor = 100
 
 ; Show all annotations when starting program; one click on the figure will make them disappear.
 ; Will only work if interconnectMetaValues is set to False.
@@ -259,7 +270,7 @@ showAverageScores = True
 ; Show histogram of shift of points depending on meta data values.
 showCircularHistogram = True
 
-; Show Cllr values in relevant plots.
+; Show Cllr values
 showCllrValues = True
 
 ; Show edge of ellipse in same color as ellipse (otherwise black)
@@ -273,8 +284,7 @@ showEerValues = True
 ; average non target data points.
 showHelperCircles = True
 
-; Show minimum Cllr values in relevant plots.
-; Stub, not yet implemented.
+; Show minimum Cllr values.
 showMinCllrValues = True
 
 ; Show nr of target and nr of non target scores for a data point.
@@ -282,6 +292,12 @@ showNrTargetsAndNonTargets = True
 
 ; Show reference ellipses or not.
 showReference = True
+
+; Set the normalized std dev for single score subjects to the
+; minimum value which will result in a flat line for that dimension of the ellipse
+; or assume this subject is similar to other subjects and set the normalized std dev for this subject to the
+; unit value derives from the other subject target and non target scores.
+showSingleValueAsUnitValue = False
 
 ; Show std dev values of data points when clicked
 showStdDev = True
