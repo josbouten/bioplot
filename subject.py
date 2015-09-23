@@ -35,6 +35,8 @@ class Subject(Format):
 
         self._agmStdDev = 0.0
         self._aimStdDev = 0.0
+        self._agmNormStdDev = 0.0
+        self._aimNormStdDev = 0.0
         self._singleTargetScore = False
         self._singleNonTargetScore = False
         # wasLimited can be used to display points that were limited in stdev in a
@@ -48,11 +50,17 @@ class Subject(Format):
     def getAgmStdDev(self):
         return self._agmStdDev
 
+    def getAgmNormStdDev(self):
+        return self._agmNormStdDev
+
     def getAimsv(self):
         return self._aimsv
 
     def getAimStdDev(self):
         return self._aimStdDev
+
+    def getAimNormStdDev(self):
+        return self._aimNormStdDev
 
     def getLabel(self):
         return self.getLabelFromPattern(self.getPattern())
@@ -86,11 +94,17 @@ class Subject(Format):
     def setAgmStdDev(self, value):
         self._agmStdDev = value
 
+    def setAgmNormStdDev(self, value):
+        self._agmNormStdDev = value
+
     def setAimsv(self, thisAimsv):
         self._aimsv = thisAimsv
 
     def setAimStdDev(self, value):
         self._aimStdDev = value
+
+    def setAimNormStdDev(self, value):
+        self._aimNormStdDev = value
 
     def setSingleTargetScore(self, boolean):
         self._singleTargetScore = boolean
