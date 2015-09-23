@@ -375,11 +375,9 @@ be configured via the config file. You can choose among these:</p>
 <p>From top to bottom they will show the number of target scores (#T) and number of non target (#nT) scores for the subject;
 the average target match score (aTms) and the average non target match score (anTms); and lastly
 the average target match score normalized standard deviation (aTmNormStDev) and the average non target match score normalized standard deviation (anTmNormStDev).</p>
-<p>The Labels by default show black text on a yellow background. The yellow background may be too large for the text on
-Ms Windows platforms when using matplotlib 1.4.3 however. If so, set runningWindows to True in [cfg], this will
-change the yellow background into a grey one and make the background fit the text in size.</p>
-<p>Labels in zoo plots on OSX (Yosemite) will appear in yellow text on a yellow background due to a bug in matplotlib (or me using it wrong).
-Set runningOSX to True in [cfg], this will change the text into black and the background into grey.</p>
+<p>The Labels by default show black text on a yellow background. On OSX (Yosemite) the labels get really big and the text gets the
+same colour as the background. Therefore, set runningOSX to True in [cfg], this will
+change the yellow background into a grey one.</p>
 <img alt="_images/condition_A_and_B_zoo_plot_label_extract.png" src="_images/condition_A_and_B_zoo_plot_label_extract.png" />
 </div>
 <div class="section" id="highlighting-labels">
