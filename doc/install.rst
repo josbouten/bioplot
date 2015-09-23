@@ -5,8 +5,8 @@ Ms Windows
 ----------
 Follow the instructions found here: http://matplotlib.org/users/installing.html.
 I've tried anaconda 2.01 (32 bit version) on W7 32 bits, and I've heard that it works on XP and with the 64 bit
-version on W8 as well. Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
-So it seems you can choose whatever version of windows you like. Anaconda will install python 2.7.x and a load of
+version on W8. Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
+So it seems you can choose whatever version of Ms Windows you like. Anaconda will install python 2.7.x and a load of
 python modules amongst which numpy, matplotlib, pyplot and scikit-learn.
 You will be able to run bioplot.py and do much more pythony things ;-)
 
@@ -33,11 +33,16 @@ Set your screen's resolution in [cfg] using screenResolution (in this example it
     [cfg]
     screenResolution = 1600x1200
 
-Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
-send me an email if you want to be kept in the loop with changes or updates.
+Update notifications
+~~~~~~~~~~~~~~~~~~~~
+Since there is no way for me to know who downloaded bioplot, other than the downloader telling me,
+send me an email if you want to be notified of changes.
 
 Linux
 -----
+
+Requirements
+~~~~~~~~~~~~
 You need to have python2.7.x installed. On most linux systems this is the case.
 Then install matplotlib (e.g. version 1.3.1 or higher) and some other modules using:
 
@@ -52,7 +57,7 @@ And change any settings in it relevant to your use case.
 
 Then run the main program: ::
 
-    ./bioplot.py -h 
+    python bioplot.py -h
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -65,11 +70,20 @@ Set your screen's resolution in [cfg] using screenResolution (in this example it
     [cfg]
     screenResolution = 1600x1200
 
-Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
-send me an email if you want to be kept in the loop with changes or updates.
+Man pages
+~~~~~~~~~
+If you want to include the bioplot doc as part of the  linux manual system, include  bioplot/doc/_build/man/bioplot.1 in your manpath.
+
+Update notifications
+~~~~~~~~~~~~~~~~~~~~
+Since there is no way for me to know who downloaded bioplot, other than the downloader telling me,
+send me an email if you want to be notified of changes.
 
 OSX
 ---
+
+Requirements
+~~~~~~~~~~~~
 On OSX 10.9.5 run these commands: ::
 
     curl -O https://bootstrap.pypa.io/get-pip.py
@@ -96,7 +110,7 @@ And change any settings in it relevant to your use case.
 
 From here on, you're ready to go. Run the main program from a terminal: ::
 
-    ./bioplot.py -h 
+    python bioplot.py -h
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -116,5 +130,11 @@ Set your screen's resolution in [cfg] using screenResolution: ::
     [cfg]
     screenResolution = 1600x1200
 
-Since there is no way for me to know who downloaded bioplot, other than the downloader telling me herself,
-send me an email if you want to be kept in the loop with changes or updates.
+Man pages
+~~~~~~~~~
+If you want to include the bioplot doc as part of the OSX manual system, include  bioplot/doc/_build/man/bioplot.1 in your manpath.
+
+Update notifications
+~~~~~~~~~~~~~~~~~~~~
+Since there is no way for me to know who downloaded bioplot, other than the downloader telling me,
+send me an email if you want to be notified of changes.

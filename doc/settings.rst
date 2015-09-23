@@ -7,7 +7,7 @@ settings file
 -------------
 Bioplot will read settings from the file bioplot.cfg by default. To use a different settings file use the -c option. ::
 
-    bioplot.py -c some_other_settings_file
+    python bioplot.py -c some_other_settings_file
 
 The file bioplot.cfg contains many sections. Below for each section the variables are explained and for each the default value is shown.
 To change the behaviour of bioplot, change the setting in the settings file. Misspelled options are ignored. By default bioplot will print
@@ -123,6 +123,17 @@ Maximum value we expect for a score in type1 data. ::
 
     maximum4Type1 = 1.0E+99
 
+
+[eer]
+-----
+Show Cllr values in the plot.::
+
+    showCllr = True
+
+Show minimum Cllr values in the plot. ::
+
+    showMinCllr = True
+
 [histogram]
 -----------
 Number of bins in the histogram.
@@ -185,6 +196,10 @@ Resolution of screen used width x height, eg 1280x1024 ::
 Spacing between zoo plot and left side of histograms in boutenZoo style layout. ::
 
   spacing = 0.02
+
+Use same scale for vertical axis as for horizontal axis. ::
+
+  showEqualAxes = False
 
 [matrix]
 --------
@@ -303,8 +318,8 @@ Width of lines interconnecting ellipses in zoo plot. ::
 
   lineWidth = 1.0
 
-Maximum width/height in standard deviations allowed for an ellipse in the zoo plot.
-Values any higher are limited to this number of standard deviations. ::
+Maximum normalized standard deviation allowed for an ellipse in the zoo plot.
+Values any higher are limited to this number of normalized standard deviations. ::
 
   maxStdDev = 6.0
 
@@ -315,8 +330,9 @@ Therefore it is limited to this value. ::
 
   minimumOpacityValue = 0.2
 
-Minimum value of the stdev for an ellipse in the zoo plot.
-Values any lower are limited to this number. ::
+Minimum normalized standard deviation allowed for an ellipse in the zoo plot.
+Values any lower are limited to this number of normalized standard deviations.
+minStDev may not exceed 1.0. ::
 
   minStdDev = 0.01
 
@@ -329,10 +345,10 @@ Opacity of ellipses if useOpacityForBigEllipses is set to False. ::
 
   opacity4Ellipses = 0.7
 
-Scale ellipses to screen resolution. 150 should be good for 1600x1024 until 1280x1024.
+Scale ellipses to screen resolution. 100 should be good for 1600x1024 until 1280x1024.
 Make it smaller if you want bigger ellipses. ::
 
-    scaleFactor = 150
+    scaleFactor = 100
 
 Show all annotations when starting program; one click on the figure will make them disappear.
 Will only work if interconnectMetaValues is set to False. ::
@@ -378,6 +394,15 @@ Show nr of target and nr of non target scores for a data point in zoo plot. ::
 Show reference ellipses or not. ::
 
   showReference = True
+
+In the data set there may be subjects with limited scores available. In case there is only one target score,
+(or one non target score) one can not plot an ellipse for the corresponding axis.
+In this case bioplot provides the option to either set the normalized std dev for this subject to the
+minimum value which will result in a flat line for that dimension of the ellipse
+or assume this subject is similar to other subjects and set the normalized std dev for this subject to the
+unit value derived from the other subject target and non target scores. The default is to use the minimum value allowed. ::
+
+    showSingleValueAsUnitValue = False
 
 Show std dev values of data points when clicked. ::
 

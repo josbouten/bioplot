@@ -19,3 +19,12 @@ Example command: ::
 All plots are shown in a window that allows you to zoom in on events. Here the plot is zoomed in around the intersection points of the graphs.
 
 .. image:: images/condition_A_and_B_eer_plot_zoom.png
+
+If you want to see cllr and cllrMin values in the plot's legend, set: ::
+
+    [eer]
+    showCllrValues = True
+    showCllrMinValues = True
+
+.. image:: images/condition_A_and_B_eer_plot_cllr.png
+
