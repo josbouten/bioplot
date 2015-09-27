@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
 
-'''
+"""
     Tool to convert the output of Vocalise (Oxford Wave Research) to bioplot data format.
 
     Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
@@ -18,7 +18,7 @@
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-'''
+"""
 
 import sys
 import csv
@@ -39,11 +39,10 @@ class VocaliseData:
         self.readFromFile()
 
     def readFromFile(self):
-        '''
+        """
         Read raw lines of text from a csv file.
-        :param filename: string: name of file containing text
         :return list of strings
-        '''
+        """
         onlyOnce = True
         delimiter = ','
         with open(self.inputFilename, 'rb') as csvfile:
@@ -84,10 +83,10 @@ class VocaliseData:
         return maxLength
 
     def _lenghtOfLongestCommonString(self, s1, s2):
-        ''' Find longest correspondence between 2 strings from the beginning of the strings.
+        """ Find longest correspondence between 2 strings from the beginning of the strings.
             :param s1, s2 strings
             :return int length
-        '''
+        """
         m = len(s1)
         length = 0
         for i in range(m):
@@ -122,7 +121,7 @@ class VocaliseData:
                         print shortModelName, modelName, shortTestName, testName, self.scores[testName][m], \
                             truthValue, self.metaValue
                     else:
-                        f.write("%s %s %s %s %s %s %s\n" % (shortModelName, modelName, shortTestName, testName, \
+                        f.write("%s %s %s %s %s %s %s\n" % (shortModelName, modelName, shortTestName, testName,
                             str(self.scores[testName][m]), truthValue, self.metaValue))
                 except Exception, e:
                     print e

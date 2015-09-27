@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-'''
+"""
     license.py, class to read and show the license.
 
     Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
@@ -19,7 +19,7 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-'''
+"""
 
 import sys
 

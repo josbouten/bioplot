@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
 
-'''
+"""
     zoo.py
 
     Basic object which is super to the boutenzoo and alexanderzoo objects
@@ -20,7 +20,7 @@
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-'''
+"""
 
 import sys
 import os.path
@@ -47,13 +47,12 @@ from subject import Subject
 from utils import assignColors2MetaDataValue
 
 
-class Zoo(Format, Probability, Cllr):
+class Zoo(Format, Probability):
     def __init__(self, thisData, thisConfig, thisDebug):
         self.data = thisData
         self.config = thisConfig
         self.debug = thisDebug
         Format.__init__(self, self.debug)
-        Cllr.__init__(self, self.data, self.config, self.debug)
         self._worms = []
         self._chameleons = []
         self._phantoms = []
@@ -266,11 +265,11 @@ class Zoo(Format, Probability, Cllr):
         return ret
 
     def computeZooStats(self):
-        '''
+        """
 
         Compute mean target scores and mean non target scores to be used in zoo plot.
 
-        '''
+        """
 
         lenAgmsv = {}
         lenAimsv = {}
@@ -358,9 +357,9 @@ class Zoo(Format, Probability, Cllr):
         return cmp(value, 0)
 
     def computeZooStatsAlexanderStyle(self):
-        '''
+        """
             Compute statistics to plot ellipses in zoo plot as published by Alexander et al. IAFPA Zurich, 2014
-        '''
+        """
         self.computeZooStats()
 
         # Now we need the std for width and height
@@ -583,13 +582,13 @@ class Zoo(Format, Probability, Cllr):
             return False
 
     def findDataPointsNear(self, x1, y1):
-        '''
+        """
         Find data point(s) close to the position of the mouse click.
 
         :param x1: float: mouse x data position
         :param y1: float: mouse y data position
         :return: list: list of labels within 0.1 unit std of position clicked.
-        '''
+        """
         if self.debug:
             print "aimStdDevStdDev:", self.aimStdDevStdDev
             print "agmStdDevStdDev:", self.agmStdDevStdDev
@@ -744,11 +743,11 @@ class Zoo(Format, Probability, Cllr):
         return allAngles, allDistances
 
     def _plotReferenceEllipses(self, axes):
-        '''
+        """
         Plot reference ellipse with size corresponding to -2, 0 and 2 x std (i.e. mean).
         :param axes: axes object of the plot
         :return: Not a thing
-        '''
+        """
         angle = 0.0
         alpha = self.config.getAlpha4ReferenceCircles()
         alphaDecrement = (alpha - 0.1) / 3.0
@@ -888,7 +887,7 @@ class Zoo(Format, Probability, Cllr):
         yText = y + yOffset
 
         if self.config.getRunningOSX():
-            axes.annotate("%s" % (text),
+            axes.annotate("%s" % text,
                           xy,
                           bbox=dict(boxstyle="square", fc="0.8"),
                           xytext=(xText, yText),
@@ -896,7 +895,7 @@ class Zoo(Format, Probability, Cllr):
                           textcoords='data',
                           arrowprops=dict(arrowstyle='->'))
         else:
-            axes.annotate("%s" % (text),
+            axes.annotate("%s" % text,
                           xy,
                           bbox=dict(boxstyle="square", fc="0.8"),
                           backgroundcolor='yellow',
@@ -909,7 +908,7 @@ class Zoo(Format, Probability, Cllr):
         ha = 'left'
         va = 'bottom'
         if self.config.getRunningOSX():
-            annotation = axesZoo.annotate("%s" % (text),
+            annotation = axesZoo.annotate("%s" % text,
                                           xy,
                                           bbox=dict(boxstyle="square", fc="0.8"),
                                           xytext=(xText, yText),
@@ -919,7 +918,7 @@ class Zoo(Format, Probability, Cllr):
                                           horizontalalignment=ha,
                                           verticalalignment=va, )
         else:
-            annotation = axesZoo.annotate("%s" % (text),
+            annotation = axesZoo.annotate("%s" % text,
                                           xy,
                                           bbox=dict(boxstyle="square", fc="0.8"),
                                           backgroundcolor='yellow',
@@ -950,7 +949,7 @@ class Zoo(Format, Probability, Cllr):
         angle = 0
         # angle = 45.0 / xRange * (x - xRange) + 45.0
         if self.config.getRunningOSX():
-            annotation = axes.annotate("%s" % (text),
+            annotation = axes.annotate("%s" % text,
                                        xy,
                                        bbox=dict(boxstyle="square", fc="0.8"),
                                        xytext=(xText, yText),
@@ -959,7 +958,7 @@ class Zoo(Format, Probability, Cllr):
                                        rotation=angle,
                                        arrowprops=dict(arrowstyle='->'))
         else:
-            annotation = axes.annotate("%s" % (text),
+            annotation = axes.annotate("%s" % text,
                                        xy,
                                        bbox=dict(boxstyle="square", fc="0.8"),
                                        backgroundcolor='yellow',
@@ -977,11 +976,11 @@ class Zoo(Format, Probability, Cllr):
         return annotation
 
     def drawLegend(self, colors):
-        '''
+        """
         Draw a color legend for the metadata on the upper right
         side of the plot, if the metadata can be grouped in more
         than one group. Only show the meta value if there are more than one.
-        '''
+        """
 
         nrColors = len(colors)
         delta = 0.01
@@ -1014,7 +1013,7 @@ class Zoo(Format, Probability, Cllr):
                         try:
                             eerValue, score = eerObject.computeEer(PD, PP, X)
                         except Exception, e:
-                            print "DrawLegend: problem computing EER for %s" % thisMetaValue
+                            print "DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e)
                         else:
                             eerValue *= 100
                             if eerValue < 10.0:
@@ -1106,7 +1105,7 @@ class Zoo(Format, Probability, Cllr):
             plt.gca().add_patch(rect)
 
     def _plotAxes(self, comment, yagerStyle, title, axes):
-        '''
+        """
 
             Add axes to the plot and include boxes for the
             quartile ranges in red for the phantoms, in magenta for
@@ -1117,7 +1116,7 @@ class Zoo(Format, Probability, Cllr):
         :param yagerStyle: boolean: when False will inverse y-axes of the plot
         :param axes: axes object
         :return:
-        '''
+        """
 
         if yagerStyle:
             # Axes that shows low scores at the top of the plot, high scores at the bottom.
@@ -1134,7 +1133,7 @@ class Zoo(Format, Probability, Cllr):
             title = "zoo plot for '%s %s'" % (title, comment)
 
         else:
-            title = "zoo plot for '%s'" % (title)
+            title = "zoo plot for '%s'" % title
 
         if self.config.getRunningOSX() or self.config.getRunningWindows():
             alpha = 0.7
@@ -1211,11 +1210,11 @@ class Zoo(Format, Probability, Cllr):
         # Last but not least, plot the graph.
         axes.grid()
 
-    def _plotBox(self, plt, x1, y1, x2, y2, col):
-        '''
+    def _plotBox(self, thisPlt, x1, y1, x2, y2, col):
+        """
         plot a box with a colored border (e.g. used to delimit quartile ranges in zoo plot)
 
-        :param plt: plot object
+        :param thisPlt: plot object
         :param x1: int: x-coordinate of lower left corner of box
         :param y1: int: y-coordinate of lower left corner of box
         :param x2: int: x-coordinate of upper right corner of box
@@ -1223,26 +1222,26 @@ class Zoo(Format, Probability, Cllr):
         :param col: string: color of box border
         :return: Not a thing
 
-        '''
+        """
         # draw line from left top to right top
-        plt.plot([x1, x2], [y1, y1], color=col, lw=2)
+        thisPlt.plot([x1, x2], [y1, y1], color=col, lw=2)
         # draw line from right top to right bottom
-        plt.plot([x2, x2], [y1, y2], color=col, lw=2)
+        thisPlt.plot([x2, x2], [y1, y2], color=col, lw=2)
         # draw line from right bottom to left bottom
-        plt.plot([x2, x1], [y2, y2], color=col, lw=2)
+        thisPlt.plot([x2, x1], [y2, y2], color=col, lw=2)
         # draw line from left bottom to left top
-        plt.plot([x1, x1], [y2, y1], color=col, lw=2)
+        thisPlt.plot([x1, x1], [y2, y1], color=col, lw=2)
 
     def _plotDistributions(self, colors, axesZoo):
-        '''
+        """
         Plot the average target scores against the average non target
         scores using ellipses to show a measure of each subject's
         target and non target score distribution.
 
         :param colors: dictionary with tuple with rgb values for each metavalue.
-        :param axes: axes object to plot data on
+        :param axesZoo: axes object to plot data on
         :return:
-        '''
+        """
         angle = 0.0
         count = 0
         if self.debug:
@@ -1308,7 +1307,7 @@ class Zoo(Format, Probability, Cllr):
                         # Make the data point less visible if it is bigger.
                         # Then smaller data points (partly) lying on top of it will still be visible.
                         # We normalise the opacity using the surface area of the ellipse.
-                        thisSurfaceArea = width * height
+                        thisSurfaceArea = eWidth * eHeight
                         alpha = 1.0 - (thisSurfaceArea - self.minSurfaceArea[metaValue]) / \
                                       self.surfaceAreaRange[metaValue]
                     else:

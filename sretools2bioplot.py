@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
 
-'''
+"""
     Tool to convert the input data for sretools (D. van Leeuwen) to bioplot data format.
 
     Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
@@ -18,7 +18,7 @@
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-'''
+"""
 
 import sys
 import csv
@@ -32,7 +32,7 @@ class SreData:
         self.debug = thisDebug
 
     def convert2bioplot(self, thisFilename='stdout'):
-        '''
+        """
         Tspid,Tfrid,Mspid,Mfrid,score,target
         114849,0000000005712904a,114849,0000000005713112b,5.368496418,TRUE
         114849,0000000005712904a,114853,0000000005281055b,1.67685461,FALSE
@@ -48,7 +48,7 @@ class SreData:
 
         :param thisFilename:
         :return:
-        '''
+        """
         '''
         :param thisFilename:
         :return:

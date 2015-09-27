@@ -41,11 +41,11 @@ def sanitize(filename):
 
 
 def convert(value):
-    '''
+    """
     Convert a string to a float, or int or leave it as it was.
     :param value: a string
     :return: float, integer or string copy of the input param
-    '''
+    """
 
     # It could be a float.
     try:
@@ -73,7 +73,6 @@ def convert(value):
 def assignColors2MetaDataValue(setOfMetaDataValues, listOfColorTuples):
     cols = {}
     listOfMetaDataValues = list(setOfMetaDataValues)
-    num = len(listOfMetaDataValues) + 1
     # Sort the labels
     listOfMetaDataValues.sort()
     cnt = 0
@@ -89,9 +88,9 @@ def assignColors2MetaDataValue(setOfMetaDataValues, listOfColorTuples):
 
 
 def plotIt(y, title=None):
-    '''
+    """
     plot a signal
-    '''
+    """
     fig = plt.figure()
     axes = fig.add_subplot(111)
     color = 'r+-'
@@ -103,9 +102,9 @@ def plotIt(y, title=None):
 
 
 def plotIt2(y1, y2, label1, label2):
-    '''
+    """
     plot 2 signals
-    '''
+    """
     if len(y1) < len(y2):
         x = arange(len(y1))
     else:

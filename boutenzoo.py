@@ -56,6 +56,7 @@ class BoutenZoo(Zoo):
         self._outputPath = self.config.getOutputPath()
         self.aimsStdDev = []
         self.agmsStdDev = []
+        self.fig = None
 
     def _prepareFigs(self):
         zleft = self.config.getZleft()
@@ -121,7 +122,7 @@ class BoutenZoo(Zoo):
             n, bins, patches = axes.hist(allData, bins=nrBins, normed=self.config.getNormHist(), color=allColors,
                                          alpha=alpha, orientation=orientation, label=allLabels)
         except Exception:
-            print "Error: could not plot histogram for %s values." % (extraLabel)
+            print "Error: could not plot histogram for %s values." % extraLabel
             pass
         axes.legend()
         axes.grid(True)

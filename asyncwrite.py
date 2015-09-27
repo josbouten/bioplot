@@ -25,7 +25,6 @@ __author__ = 'jos'
 '''
 
 import threading
-from os import path
 import sys
 
 class AsyncWrite(threading.Thread):

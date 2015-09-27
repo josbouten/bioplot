@@ -61,7 +61,7 @@ class MatrixData(Format):
 
 
     def makeRandomMatrix(self, rand=True):
-        '''
+        """
         Make a matrix containing scores for test purposes.
         Choose a different range of scores per metaValue by incrementing
         scores for successive meta values with 1.0
@@ -86,7 +86,7 @@ class MatrixData(Format):
             {'labelN_#_conditionB' [('p', 0.1), ('p', -2.3), ('p', 1.4), ... 20 values, ('q', 1.2), ('q', 0.1) ... 20 values, ('r', 1.1) ... 20 values, etc]}
         ]
 
-        '''
+        """
         baseScore = 1.0
         metaValueScoreOffset = 0.0
         for metaValue in self._metaValues:
@@ -108,12 +108,12 @@ class MatrixData(Format):
         pass
 
     def dumpMatrix(self, matrix, metaValue):
-        '''
+        """
         # Save matrix in a text file ( for debug purposes ).
         :param matrix: matrix of labels and label, scores tuples.
         :param metaValue: value used to distinguish between experimental conditions
         :return:
-        '''
+        """
         try:
             f = open("matrix_%s.txt" % metaValue, 'wt')
         except Exception, e:
@@ -127,7 +127,7 @@ class MatrixData(Format):
             f.close()
 
     def getLabelsAndScoresForMetaValue(self, data, metaValue):
-        '''
+        """
         :param data:    [{'a_#_conditionA': [('p', 2.3), ('p', -3.0), ('p', 1), ('q', 2.0), ('q', 0.1)]},
                          {'b_#_conditionA': [('p', 6.0), ('p', 1.0), ('q', 3.0)]}]
                          {'a_#_conditionB': [('p', 1.0), ('p', 2.0), ('q', 1.0), ('q', -1.2)]}]
@@ -136,7 +136,7 @@ class MatrixData(Format):
                          'b': [('p', 6.0), ('p', 1.0), ('q', 3.0)] }
                   ...
                   Data is sorted, i.e. keys and values are sorted.
-        '''
+        """
         row = collections.OrderedDict()
         odata = collections.OrderedDict(sorted(data.items(), key=lambda x: x[0], reverse=True))
         for pattern in odata.keys():
@@ -166,8 +166,8 @@ class MatrixData(Format):
 if __name__ == '__main__':
     from config import Config
     debug = True
-    config = Config()
-    d = MatrixData(config, debug=True)
+    config = Config('bioplot.cfg')
+    d = MatrixData(config, debug)
 
     d.makeRandomMatrix(False)
     print d.getMinimum(), d.getMaximum()

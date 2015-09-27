@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
 
-'''
+"""
     Tool to convert the output of BV result text files to bioplot data format.
 
     Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
@@ -18,7 +18,7 @@
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-'''
+"""
 
 import sys
 import csv
@@ -53,9 +53,9 @@ class BVData:
         '''
 
     def convert2bioplot(self, thisFilename='stdout'):
-        '''
+        """
         Read raw lines of text from a BV csv file and print them in bioplot sequence.
-        '''
+        """
         if thisFilename != 'stdout':
             try:
                 f = open(thisFilename, 'wt')
@@ -88,7 +88,7 @@ class BVData:
                 else:
                     truth = "FALSE"
                 if thisFilename != 'stdout':
-                    f.write("%s %s %s %s %s %s %s\n" % (speaker, testModel, speaker4Model[testModel],\
+                    f.write("%s %s %s %s %s %s %s\n" % (speaker, testModel, speaker4Model[testModel],
                                 speaker4Model[testModel] + '_' + testModel, str(score), truth, self.metaValue))
                 else:
                     print speaker, testModel, speaker4Model[testModel], testModel, score, truth, self.metaValue

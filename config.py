@@ -32,7 +32,7 @@ import numpy as np
 import os.path
 
 
-class Config():
+class Config:
     def __init__(self, thisConfigFilename):
         self.configFilename = thisConfigFilename
         self.config = ConfigParser.RawConfigParser()
@@ -616,9 +616,9 @@ class Config():
         return self._normHist
 
     def _getNrBins(self):
-        '''
+        """
         :return: String: either a string or a number (as a string)
-        '''
+        """
         return str(self._nrBins)
 
     def getNrBins(self, nrDataElements):
@@ -659,10 +659,10 @@ class Config():
         return self._opacity4Ellipses
 
     def getOutputPath(self):
-        '''
+        """
         Get path to data directory
         :return: string: path to data directory
-        '''
+        """
         return self._outputPath
 
     def getRunningWindows(self):
@@ -675,10 +675,10 @@ class Config():
         return self._saveScores
 
     def getScaleFactor(self):
-        '''
+        """
         Get scale factor to give the width and heights of ellipses.
         :return: int: scale factor
-        '''
+        """
         if self._scaleFactor < 0.0:
             self._scaleFactor = self._scaleFactorDefault
         return self._scaleFactor
@@ -692,7 +692,7 @@ class Config():
         tmp = self._screenResolution.split('x')
         width = int(tmp[0])
         height = int(tmp[1])
-        return (width, height)
+        return width, height
 
     def getShowAnnotationsAtStartup(self):
         return self._showAnnotationsAtStartup
@@ -875,18 +875,6 @@ class Config():
         string += ", zLeft = " + str(self.getZleft())
         string += ", zWidth = " + str(self.getZwidth())
         return string
-
-    def openCfg(self):
-        try:
-            f = open('cfg.txt', 'w')
-        except Exception, e:
-            print e
-            sys.exit(1)
-
-    def writeLine(self, f, lines):
-        for line in lines:
-            f.write(line + "\n")
-
 
 if __name__ == '__main__':
     config = Config('nonexisting_file')

@@ -48,18 +48,19 @@ class MatrixPlot(Format):
         self.SPECIAL_SCORE = 12345
         self.plotType = 'matrix_plot'
         self.title = self.data.getTitle()
+        self.event = None
 
-    def _checkCheckerPlot(self, nr):
+    def _checkCheckerPlot(self, thisNr):
         # if the number has an integer square OR if it is devidable by 2
         # then return true, else false
-        if nr < 4:
+        if thisNr < 4:
             return False, 0, 0
-        nr *= 1.0
-        x = sqrt(nr)
+        thisNr *= 1.0
+        x = sqrt(thisNr)
         if int(x) == x:
             return True, int(x), int(x)
-        if (nr / 2.0) - int(nr / 2) == 0:
-            return True, 2, int(nr / 2)
+        if (thisNr / 2.0) - int(thisNr / 2) == 0:
+            return True, 2, int(thisNr / 2)
         return False, 0, 0
 
     def plot(self):
@@ -234,7 +235,7 @@ class MatrixPlot(Format):
         return len(labelCounter.items())
 
     def mkMatrix(self, labelsAndScores):
-        '''
+        """
 
         :param labelsAndScores for a given meta value:
             labelsAndScore:
@@ -244,7 +245,7 @@ class MatrixPlot(Format):
 
         :return: matrix of label1 vs mean scores per label2 value
 
-        '''
+        """
         # Some labels may have more scores than others because for some labels possibly
         # no models exist, or because the recognizer could not handle the data.
 
@@ -298,7 +299,7 @@ if __name__ == '__main__':
 
     from matrixdata import MatrixData
 
-    config = Config()
+    config = Config('bioplot.cfg')
     config.setMinNrScores4MatrixPlot(3)
     data = MatrixData(config)
     debug = True

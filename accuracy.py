@@ -29,16 +29,19 @@ __author__ = 'drs. ing. Jos Bouten'
 import matplotlib.pyplot as plt
 from event import Event
 
-class Accuracy():
+class Accuracy:
     def __init__(self, thisData, thisConfig, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
         self.debug = thisDebug
         self.targetScores = self.data.getTargetScores()
         self.nonTargetScores = self.data.getNonTargetScores()
+        self.fig = None
+        self.event = None
+        self.plotType = None
 
     def compAcc(self, threshold):
-        '''
+        """
         Compute the accuracy measures using:
 
 
@@ -59,14 +62,13 @@ class Accuracy():
 
         :param threshold:
         :return: float: accuracy in %
-        '''
-        acc = None
+        """
         nrTruePositives = 0
         nrFalseNegatives = 0
         nrFalsePositives = 0
         nrTrueNegatives = 0
 
-        lt = self.data._compLen(self.targetScores)
+        lt = self.data.compLen(self.targetScores)
         if lt > 0:
             for k in self.targetScores.keys():
                 for s in self.targetScores[k]:
@@ -74,7 +76,7 @@ class Accuracy():
                         nrTruePositives += 1
                     else:
                         nrFalseNegatives +=1
-        ln = self.data._compLen(self.nonTargetScores)
+        ln = self.data.compLen(self.nonTargetScores)
         if ln > 0:
             for k in self.nonTargetScores.keys():
                 for s in self.nonTargetScores[k]:
@@ -91,11 +93,11 @@ class Accuracy():
 
 
     def plot(self):
-        '''
+        """
         Compute statistics to plot the random accuracy versus the score threshold.
 
         :return:
-        '''
+        """
         print 'Computing Accuracy, this may take a moment (or two)...'
         self.plotType = "accuracy_plot"
         x = []
@@ -122,8 +124,8 @@ class Accuracy():
         axes.set_xlim(0, self.data.getMax())
         axes.set_ylim(0, 100)
         axes.set_title("Accuracy vs Threshold for '%s'" % self.data.getTitle())
-        lt = self.data._compLen(self.targetScores)
-        ln = self.data._compLen(self.nonTargetScores)
+        lt = self.data.compLen(self.targetScores)
+        ln = self.data.compLen(self.nonTargetScores)
         plt.xlabel("Threshold (#t: %d, #nt: %d)" % (lt, ln))
         plt.ylabel('Accuracy')
         accuracyAtDefault, balancedAccuracyAtDefault = self.compAcc(self.data.getDefaultThreshold())

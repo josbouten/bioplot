@@ -28,21 +28,27 @@ import matplotlib.pyplot as plt
 from event import Event
 from utils import assignColors2MetaDataValue
 
-class Ranking():
+class Ranking:
     def __init__(self, thisData, thisConfig, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
         self.debug = thisDebug
         self.title = self.data.getTitle()
+        self.labels = None
+        self.fig = None
+        self.event = None
+        self.colors = None
+        self.nrColors = None
+        self.plotType = None
 
     def _findType(self, data, seek):
-        '''
+        """
         Find the first occurrence of 'seek' in the ordered list of keys in dict 'data'.
         A partial occurrence of seek is accepted.
         :param data: list of dicts.
         :param seek: text string.
         :return: int: index to position in ordered version of dict 'data'.
-        '''
+        """
         odata = OrderedDict(sorted(data.items(), key=lambda x: x[1], reverse=True))
         index = 1
         for el in odata:
@@ -54,11 +60,11 @@ class Ranking():
         return index
 
     def computeRanking(self, metaValue):
-        '''
+        """
         Compute the ranking position for all labels available in self.labels from their scores.
 
         :return: dict of ranking positions for key = label.
-        '''
+        """
         if self.debug:
             print 'Computing ranking'
 
@@ -81,12 +87,12 @@ class Ranking():
         return ranking, maxRank
 
     def getNrLabels(self, ranking, thisRank):
-        '''
+        """
         Count the number of labels at or below this rank.
 
         :param  ranking: list of ranking positions
         :param  thisRank: integer: rank value used as threshold
-        '''
+        """
         cnt = 0
         for r in ranking.values():
             if r <= thisRank:
@@ -98,13 +104,13 @@ class Ranking():
         s = ""
         for p in points:
             if p < len(y):
-                s = s + "P(r<=%d)=%d%s " % (p, y[p], "%")
+                s += "P(r<=%d)=%d%s " % (p, y[p], "%")
         return s
 
     def plot(self):
-        '''
+        """
         Cumulative Ranking Plot
-        '''
+        """
         self.fig = plt.figure()
         self.plotType = "ranking_plot"
         self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)

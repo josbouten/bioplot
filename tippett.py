@@ -36,6 +36,8 @@ class Tippett(Probability):
         self.debug = thisDebug
         self.plotType = 'tippett_plot'
         Probability.__init__(self, self.data, self.config, self.debug)
+        self.fig = None
+        self.event = None
 
 
     def plot(self):
@@ -49,7 +51,7 @@ class Tippett(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
         for (metaValue, PD, PP, X) in eerData:
-            pFr, = axes.plot(X, PP, 's-', label="P(pros), %s" % (metaValue), color=colors[metaValue])
+            pFr, = axes.plot(X, PP, 's-', label="P(pros), %s" % metaValue, color=colors[metaValue])
             pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue, color=colors[metaValue])
         plt.legend()
         axes.set_title("Tippett Plot: P(defense) and P(prosecution) for '%s'" % self.data.getTitle())

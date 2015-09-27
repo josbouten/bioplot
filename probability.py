@@ -27,7 +27,7 @@ import numpy as np
 
 import listutils as lu
 
-class Probability():
+class Probability:
     def __init__(self, thisData, thisConfig, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
@@ -41,7 +41,7 @@ class Probability():
 
     def compProbs(self, targetScores, nonTargetScores, func):
 
-        '''
+        """
             Compute P(prosecution) and P(defense) from target and non target scores.
             In case of EER compute eer value and score at which eer point lies
             for j = 1 : length(Xx)
@@ -49,18 +49,18 @@ class Probability():
               PD(j) = length(find(non_target_scores >= Xx(j))) / length(non_target_scores)
             end
 
-        '''
+        """
 
         mi = self.data.getMin()
         ma = self.data.getMax()
-        range = abs(ma - mi)
+        thisRange = abs(ma - mi)
 
         # We want N steps on the score (horizontal) axis.
         N = self.config.getNrSamples4Probability()
 
         lt = len(targetScores) * 1.0
         lnt = len(nonTargetScores) * 1.0
-        X = np.arange(mi, ma, range / N)
+        X = np.arange(mi, ma, thisRange / N)
         lx = len(X)
         PD = np.zeros(lx)
         PP = np.zeros(lx)
@@ -71,17 +71,17 @@ class Probability():
             PD[j] = nts / lnt
         return PD, PP, X
 
-    def getScores(self, dict):
+    def getScores(self, thisDict):
         ret = []
-        for el in dict:
-            ret = ret + dict[el]
+        for el in thisDict:
+            ret = ret + thisDict[el]
         return ret
 
-    def _extractValues(self, dict, metaValue):
+    def _extractValues(self, thisDict, metaValue):
         ret = []
-        for el in dict:
+        for el in thisDict:
             if metaValue in el:
-                ret += dict[el]
+                ret += thisDict[el]
         return ret
 
     def computeProbabilities(self, func):

@@ -28,7 +28,7 @@ import os.path
 from os import makedirs
 from utils import sanitize
 
-class Event():
+class Event:
     def __init__(self, thisConfig, thisFig, thisTitle, thisPlotType, thisDebug):
         self.config = thisConfig
         self.fig = thisFig
@@ -37,13 +37,13 @@ class Event():
         self.debug = thisDebug
 
     def onEvent(self, event):
-        '''
+        """
         Callback function handling button presses
         will write figure to disk.
 
         :param event: button code
         :return: nothing
-        '''
+        """
         if self.debug:
             print("You pressed key {:s}".format(event.key))
         filename = self.title + "_" + self.plotType + '.png'

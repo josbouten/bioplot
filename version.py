@@ -25,15 +25,16 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-class Version():
+class Version:
     def __init__(self, thisDebug=False):
         self.debug = thisDebug
 
     def getVersion(self):
-        '''
+        """
         Return the version number of the first version
         description in the changelog.txt file encountered.
-        '''
+        :rtype : None
+        """
         version = '?'
         try:
             f = open('changelog.txt', 'rt')

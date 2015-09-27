@@ -33,6 +33,7 @@ from event import Event
 from zoo import Zoo
 import collections
 
+
 class AlexanderZoo(Zoo):
     def __init__(self, thisData, thisConfig, thisDebug):
         Zoo.__init__(self, thisData, thisConfig, thisDebug)
@@ -50,7 +51,7 @@ class AlexanderZoo(Zoo):
 
         self.aimsStdDev = collections.defaultdict(float)
         self.agmsStdDev = collections.defaultdict(float)
-
+        self.annotateEllipses = None
 
     def plot(self):
         yagerStyle = self.config.getYagerStyle()
@@ -65,7 +66,6 @@ class AlexanderZoo(Zoo):
         # Gather some stats
         self.saveExceptionalAnimals()
         plt.show()
-
 
     def _plotZooAlexanderStyle(self, yagerStyle=True):
         self.computeZooStatsAlexanderStyle()

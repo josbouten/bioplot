@@ -27,7 +27,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-class Format():
+class Format:
     def __init__(self, thisDebug=True):
         self.debug = thisDebug
         # The separators should be characters that will
@@ -45,22 +45,22 @@ class Format():
         '''
 
     def getLabelFromPattern(self, pattern):
-        '''
+        """
         Return label part of a pattern.
 
         :param pattern: '1025_#_24_1_21'
         :return: '1025'
-        '''
+        """
         tmp = pattern.split(self.LABEL_SEPARATOR)
         return tmp[0]
 
     def getMetaFromPattern(self, template):
-        '''
+        """
         Return meta data value part of a pattern.
 
-        :param pattern: '1025_#_24_1_21'
+        :param template: '1025_#_24_1_21'
         :return: '24_1_21'
-        '''
+        """
         tmp = template.split(self.LABEL_SEPARATOR)
         return tmp[1]
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-'''
+"""
     eer.py
 
     Object used to extract compute EER and plot EER in score plot.
@@ -21,9 +21,8 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-'''
-import warnings
-#warnings.filterwarnings("ignore", category=DeprecationWarning)
+"""
+
 import matplotlib.pyplot as plt
 from event import Event
 from probability import Probability
@@ -32,6 +31,7 @@ import listutils as lu
 from utils import assignColors2MetaDataValue
 from cllr import Cllr
 from collections import defaultdict
+import sys
 
 class Eer(Probability):
     def __init__(self, thisData, thisConfig, thisDebug=True):
@@ -40,6 +40,8 @@ class Eer(Probability):
         self.debug = thisDebug
         self.plotType = 'eer_plot'
         Probability.__init__(self, self.data, self.config, self.debug)
+        self.fig = None
+        self.event = None
 
     def _intersectionPoint(self, PD, PP):
         indices = lu.findEqual(PD, PP)
@@ -62,25 +64,25 @@ class Eer(Probability):
 
     def eerResample_org(self, targetScores, nonTargetScores):
 
-        '''
+        """
             Compute eer and score at which eer point lies from target and non target scores.
             for j = 1 : length(Xx)
               PP(j) = 1 - (length(find(target_scores >= Xx(j))) / length(target_scores))
               PD(j) = length(find(non_target_scores >= Xx(j))) / length(non_target_scores)
             end
 
-        '''
+        """
 
         mi = self.data.getMin()
         ma = self.data.getMax()
-        range = abs(ma - mi)
+        thisRange = abs(ma - mi)
 
         # We want N steps on the score (horizontal) axis.
         N = self.config.getNrSamples4Probability()
 
         lt = len(targetScores) * 1.0
         lnt = len(nonTargetScores) * 1.0
-        X = np.arange(mi, ma, range / N)
+        X = np.arange(mi, ma, thisRange / N)
         lx = len(X)
         PD = np.zeros(lx)
         PP = np.zeros(lx)
@@ -102,16 +104,13 @@ class Eer(Probability):
         except Exception, e:
             print 'Exception in computeEer:', e
             print 'You may have too few data points to compute an eer value.'
-            # Rethrow the exception
-            raise
+            sys.exit(1)
         else:
             if self.debug:
                 print 'computeEer:index2score:', index2score
                 print 'computeEer:eer:', eer
             score = X[index2score]
             return eer, score
-        return 1.0, 0.0
-
 
     def plot(self):
         self.fig = plt.figure()
@@ -168,7 +167,7 @@ class Eer(Probability):
                 eer, score = self.computeEer(PD, PP, X)
             except Exception:
                 print "Eer: problem computing EER for %s" % metaValue
-                labelText = "P(pros), %s Eer: undefined" % (metaValue)
+                labelText = "P(pros), %s Eer: undefined" % metaValue
                 pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
                 labelText = "P(def), %s %s" % (metaValue, thisLegendText)
                 pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])

@@ -41,9 +41,9 @@ from asyncwrite import AsyncWrite
 
 
 class Data(Format):
-    '''
+    """
         Data object containing target and non target scores per test picture.
-    '''
+    """
 
     def __init__(self, thisConfig, thisTitle, thisThreshold, thisDataType, thisDebug=True, thisSource='database'):
         Format.__init__(self, thisDebug)
@@ -132,28 +132,28 @@ class Data(Format):
         return self._results4Subject
 
     def getTargetScores(self):
-        '''
+        """
         :return: dict of target scores. Key = label.
-        '''
+        """
         return self._targetScores
 
     def getTargetCnt(self):
-        '''
+        """
         :return: return dict containing target counts. Use metaValue as key.
-        '''
-        return self._targetCnt;
+        """
+        return self._targetCnt
 
     def getNonTargetScores(self):
-        '''
+        """
         :return: return dict of non target scores. Key = label
-        '''
+        """
         return self._nonTargetScores
 
     def getNonTargetCnt(self):
-        '''
+        """
         :return: return dict containing non target counts. Use metaValue as key.
-        '''
-        return self._nonTargetCnt;
+        """
+        return self._nonTargetCnt
 
     def getTargetScoreValues(self):
         thisList = self.getTargetScores()
@@ -182,7 +182,7 @@ class Data(Format):
         return self._nonTargetScores4Label
 
     def getLabelsAndScoresForMetaValue(self, data, metaValue):
-        '''
+        """
         :param data:    [{'a_#_conditionA': [('p', 2.3), ('p', -3.0), ('p', 1), ('q', 2.0), ('q', 0.1)]},
                          {'b_#_conditionA': [('p', 6.0), ('p', 1.0), ('q', 3.0)]}]
                          {'a_#_conditionB': [('p', 1.0), ('p', 2.0), ('q', 1.0), ('q', -1.2)]}]
@@ -190,7 +190,7 @@ class Data(Format):
         :return:  row = {'a': [('p', 2.3), ('p', -3.0), ('p', 1), ('q', 2.0), ('q', 0.1)]
                          'b': [('p', 6.0), ('p', 1.0), ('q', 3.0)] }
                   ...
-        '''
+        """
         row = collections.defaultdict(list)
         odata = collections.OrderedDict(sorted(data.items(), key=lambda x: x[0], reverse=True))
         for pattern in odata.keys():
@@ -210,7 +210,7 @@ class Data(Format):
         return list(self._targetLabels)
 
     def getNonTargetLabels(self):
-        '''
+        """
         Get non target labels from raw data input.
         Split target label field using the --- separator.
         The first part is the label, the second the name of the
@@ -218,7 +218,7 @@ class Data(Format):
 
         :return: set of labels. Each label is of type str.
 
-        '''
+        """
         return list(self._nonTargetLabels)
 
     def getNrDistinctMetaDataValues(self):
@@ -240,11 +240,11 @@ class Data(Format):
         return self._minimumScore[meta]
 
     def compAverageScore(self, scores):
-        '''
+        """
         Compute average score from dict of scores.
         :param scores: dict containing list of scores for key = label
         :return: float: average score
-        '''
+        """
         tot = sum(scores)
         cnt = len(scores)
         avg = float(tot) / float(cnt)
@@ -254,23 +254,26 @@ class Data(Format):
         return self._title
 
     def minMax(self, score, mi, ma):
-        '''
+        """
         Compute minimum and maximum value from a list of float scores.
 
         :param score: list of scores
         :return: minimum value and maximum value
-        '''
+        """
         mi = min(score, mi)
         ma = max(score, ma)
         return mi, ma
 
     def minMax2(self, scoreDict, label, mi, ma):
-        '''
+        """
         Compute minimum and maximum value from a list of scoreDicts.
 
-        :param score: list of scores
+        :param scoreDict: list of scores
+        :param label: string
+        :param mi: float: minimum input value
+        :param ma: float: maximum input value
         :return: minimum value and maximum value
-        '''
+        """
         for key in scoreDict.keys():
             if label in key:
                 mi = min(scoreDict[key], mi)
@@ -278,7 +281,7 @@ class Data(Format):
         return mi, ma
 
     def _sanitize(self, l1, f1, l2, f2, score, truth, metaValue):
-        ''' Get rid of leading and trailing spaces.
+        """ Get rid of leading and trailing spaces.
 
         :param l1: string label
         :param f1: floating point number as a string
@@ -288,7 +291,7 @@ class Data(Format):
         :param truth: boolean as a string
         :param metaValue: string
         :return:
-        '''
+        """
         l1 = l1.strip()
         f1 = f1.strip()
         l2 = l2.strip()
@@ -299,7 +302,7 @@ class Data(Format):
         return l1, f1, l2, f2, score, truth, metaValue
 
     def _decodeType3Results(self, res):
-        '''
+        """
         Decoder for cross identification type results file. Example of the format used:
 
         80374  0000000017133729a 80359 0000000016842970b 2.1088616847991943  FALSE META_VAL1
@@ -322,7 +325,7 @@ class Data(Format):
         Field 7 can be used to contrast experiments in the zoo plot.
         So if you have 2 experiments where you change one variable, when doing a cross
         identification test, the meta value can be used to group the experiment's scores.
-        '''
+        """
 
         totCnt = 0
         resCnt = 0
@@ -432,15 +435,15 @@ class Data(Format):
         for metaValue in self._nonTargetCnt:
             print metaValue, self._nonTargetCnt[metaValue],
         print
-        print 'Total number of target scores:', self._compLen(self._targetScores)
-        print 'Total number of non target scores:', self._compLen(self._nonTargetScores)
+        print 'Total number of target scores:', self.compLen(self._targetScores)
+        print 'Total number of non target scores:', self.compLen(self._nonTargetScores)
         print 'Number of repeats (multiple instances of same data in input):', revRepeatCnt
         print 'Number of selfies (A vs A):', selfCnt
         self._nrDistinctMetaDataValues = len(self._metaDataValues)
         print 'Nr of distinct meta data values:', self._nrDistinctMetaDataValues
 
     def _decodeType1Results(self, res):
-        '''
+        """
         This function is a stub.
         You need to convert the type1 data read from the database
         here and convert it to the type3 format.
@@ -448,7 +451,7 @@ class Data(Format):
 
         :param res:
         :return:
-        '''
+        """
         ret = []
         for line in res:
             # Do your type1 to type3 conversion here
@@ -457,8 +460,8 @@ class Data(Format):
         self._decodeType3Results(ret)
         return ret
 
-    def _compLen(self, scoreDict):
-        '''
+    def compLen(self, scoreDict):
+        """
 
         Compute the total length of the  values
         stored in scoreDict
@@ -466,14 +469,14 @@ class Data(Format):
         :param scoreDict: key = string: label, value = float: score
         :return: int: total length
 
-        '''
+        """
         tot = 0
         for k in scoreDict.keys():
             tot += len(scoreDict[k])
         return tot
 
     def _readFromDatabase(self):
-        '''
+        """
         This function contains some (incomplete) example code in case you want to read
         data from a database. It is suggested to add some code here which does the following:
         1: connect to the database
@@ -483,7 +486,7 @@ class Data(Format):
         4: In _decodeType1Results transform the lines to the Type3 format and call _decodeType3Results there.
 
         :return: list of lines containing data elements separated by spaces
-        '''
+        """
         conn = sqlite3.connect('database.sqlite')
         c = conn.cursor()
         res = c.execute("SELECT ProbeId, GalleryId, Score FROM crossidentificationresults")
@@ -493,12 +496,12 @@ class Data(Format):
         return res
 
     def _readFromFile(self, filename):
-        '''
+        """
         Read raw lines of text from a text file.
         Strip lines of CR/LF
         :param filename: string: name of file containing text
         :return: list of strings
-        '''
+        """
         try:
             f = open(filename, 'r')
             lines = f.readlines()
@@ -512,13 +515,13 @@ class Data(Format):
             sys.exit(1)
 
     def writeScores2file(self, scoreDict, expName, extention):
-        '''
+        """
         Write scores to a file
         :param scoreDict: dict of scores, key = label
         :param expName: string used as part of the file name
         :param extention: string used as file extention
         :return: not a thing
-        '''
+        """
         dataOutputPath = self.config.getOutputPath()
         k = scoreDict.keys()
         try:

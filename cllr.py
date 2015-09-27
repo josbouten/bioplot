@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-'''
+"""
     Object used to compute Cllr and minCllr.
 
     This code is based on IDIAP's calibration.py which can be found via http://idiap.github.io/bob
@@ -37,7 +37,7 @@
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-'''
+"""
 
 import math
 import numpy as np
@@ -51,12 +51,12 @@ class Cllr:
         self.debug = thisDebug
 
     def _cllr(self, targetScoreValues, nonTargetScoreValues):
-        '''
+        """
         Computes the 'cost of log likelihood ratio' measure as given in the bosaris toolkit
         :param targetScoreValues:
         :param nonTargetScoreValues:
         :return:
-        '''
+        """
         sum_pos, sum_neg = 0., 0.
         for pos in targetScoreValues:
             sum_pos += math.log(1. + math.exp(-pos), 2.)
@@ -65,17 +65,17 @@ class Cllr:
         cllr = (sum_pos / float(len(targetScoreValues)) + sum_neg / float(len(nonTargetScoreValues))) / 2.
         return cllr
 
-    def _extractValues(self, dict, metaValue):
-        '''
+    def _extractValues(self, myDict, metaValue):
+        """
 
-        :param dict:
+        :param myDict:
         :param metaValue:
         :return:
-        '''
+        """
         ret = []
-        for el in dict:
+        for el in myDict:
             if metaValue in el:
-                ret += dict[el]
+                ret += myDict[el]
         return ret
 
     def _minCllr(self, targetScoreValues, nonTargetScoreValues, ):
@@ -105,8 +105,6 @@ class Cllr:
                 n += 1
 
         # Run the pool adjacent violaters method on the ideal LLR scores.
-        popt = np.ndarray(idealSequence.shape, dtype=np.float)
-
         # pavx implements isotonic regression. Python's sklearn contains code to do just that.
         ir = IsotonicRegression()
         # Calculate the isotonic regression.
@@ -140,13 +138,13 @@ class Cllr:
 
     def getCllr(self):
         ret = []
-        targetScores = self.data.getTargetScores()
-        nonTargetScores = self.data.getNonTargetScores()
+        theseTargetScores = self.data.getTargetScores()
+        theseNonTargetScores = self.data.getNonTargetScores()
         metaValues = self.data.getMetaDataValues()
         for metaValue in metaValues:
-            targetScoreValues = self._extractValues(targetScores, metaValue)
+            targetScoreValues = self._extractValues(theseTargetScores, metaValue)
             if len(targetScoreValues) > 0:
-                nonTargetScoreValues = self._extractValues(nonTargetScores, metaValue)
+                nonTargetScoreValues = self._extractValues(theseNonTargetScores, metaValue)
                 cllr = self._cllr(targetScoreValues, nonTargetScoreValues)
                 ret.append((metaValue, cllr))
             else:
@@ -154,9 +152,9 @@ class Cllr:
         return ret
 
     def getMinCllr(self):
-        '''
+        """
             Computes the 'minimum cost of log likelihood ratio measure.
-        '''
+        """
         ret = []
         # metaValues = self.data.getMetaDataValues()
         # for metaValue in metaValues:

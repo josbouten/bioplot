@@ -64,13 +64,17 @@ class Histogram(Format):
         self.title = self.data.getTitle()
         self.useMeta = thisUseMeta
         self.plotType = "histogram_plot"
+        self.fig = None
+        self.event = None
+        self.colors = None
+        self.nrColors = None
 
     def _to_percent(self, y, position):
         # Ignore the passed in position. This has the effect of scaling the default tick locations.
         s = str(100 * y)
 
         # The percent symbol needs escaping in latex.
-        if matplotlib.rcParams['text.usetex'] == True:
+        if matplotlib.rcParams['text.usetex']:
             return s + r'$\%$'
         else:
             return s + '%'
@@ -94,7 +98,7 @@ class Histogram(Format):
                          histtype='step', cumulative=-1)
                 plt.hist(targetScores, bins=nrBins, normed=self.config.getNormHist(), color='green', alpha=0.7,
                          histtype='step', cumulative=True)
-                plt.title(r"Cumulative histogram for '%s'" % (self.title))
+                plt.title(r"Cumulative histogram for '%s'" % self.title)
             else:
                 n, bins2, patches = plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), color='red',
                                              alpha=1.0)
@@ -110,10 +114,10 @@ class Histogram(Format):
                     sigma2 = numpy.std(nonTargetScores)
                     y2 = mlab.normpdf(bins2, mu2, sigma2)
                     plt.plot(bins2, y2, 'b--')
-                    plt.title(r"Histogram for '%s': mu, sigma = (%0.2f, %0.2f) (%0.2f, %0.2f)" % (
-                    self.title, mu1, sigma1, mu2, sigma2))
+                    plt.title(r"Histogram for '{0:s}': mu, sigma = ({1:0.2f}, {2:0.2f}) ({3:0.2f}, {4:0.2f})".format(
+                        self.title, mu1, sigma1, mu2, sigma2))
                 else:
-                    plt.title(r"Histogram for '%s" % (self.title))
+                    plt.title(r"Histogram for '%s" % self.title)
             plt.grid(True)
             plt.legend()
             plt.xlabel('red: non target scores, green: target scores')
@@ -140,7 +144,7 @@ class Histogram(Format):
                      histtype='step', cumulative=-1)
             plt.hist(targetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='green', alpha=0.7,
                      histtype='step', cumulative=True)
-            plt.title(r"Cumulative histogram for '%s'" % (self.title))
+            plt.title(r"Cumulative histogram for '%s'" % self.title)
         else:
             if self.config.getShowMetaInHist():
                 # Split target and non target scores per meta data value
@@ -196,15 +200,15 @@ class Histogram(Format):
                 except Exception:
                     print "Error: could not plot histogram!"
                     print "len(allData): %d\nnrBins: %d" % (len(allData), self.config.getNrBins())
-                    print "allLabels: %s" % (allLabels)
+                    print "allLabels: %s" % allLabels
                     pass
                 else:
-                    plt.title(r"Histogram for '%s'" % (self.title))
+                    plt.title(r"Histogram for '%s'" % self.title)
                     plt.legend()
             else:
                 plt.hist(nonTargetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='red', alpha=1.0)
                 plt.hist(targetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='green', alpha=0.7)
-                plt.title(r"Histogram for '%s'" % (self.title))
+                plt.title(r"Histogram for '%s'" % self.title)
         plt.grid(True)
         plt.xlabel('Target and Non Target Scores')
         plt.show()
