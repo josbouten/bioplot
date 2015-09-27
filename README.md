@@ -141,8 +141,8 @@ into whatever browser you use.
 
 Make sure you change \<user name\> into the appropriate name.
 
-UPDATE
-======
+How to Update
+=============
 
 v0.9.4
 ------
