@@ -144,8 +144,6 @@ Make sure you change \<user name\> into the appropriate name.
 How to Update
 =============
 
-v0.9.4
-------
 OSX
 ---
 From bioplot v0.9.4 on you’ll need to install the python machine learning library scikit-learn:
