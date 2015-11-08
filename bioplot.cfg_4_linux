@@ -192,6 +192,13 @@ definatelyRed = 255,0,0
 ; per meta value.
 nrSamples4Probability = 500
 
+[roc]
+; Show Cllr values
+showCllr = True
+
+; Show minimum Cllr values.
+showMinCllr = True
+
 [zoo]
 ; Show ellipses at position of data points representing standard deviation of target and non target scores
 ; as published by Alexander et al. @ IAFPA conference Zurich, Switserland, 2014
