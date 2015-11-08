@@ -315,7 +315,7 @@ class Config:
 
         self._showCllrValuesInRocDefault = True
         try:
-            self._showCllrValuesInRoc = self.config.getboolean('Roc', 'showCllrValues')
+            self._showCllrValuesInRoc = self.config.getboolean('roc', 'showCllrValues')
         except Exception:
             self._showCllrValuesInRoc = self._showCllrValuesInRocDefault
 
@@ -352,7 +352,7 @@ class Config:
 
         self._showMinCllrValuesInRocDefault = True
         try:
-            self._showMinCllrValuesInRoc = self.config.getboolean('Roc', 'showMinCllrValues')
+            self._showMinCllrValuesInRoc = self.config.getboolean('roc', 'showMinCllrValues')
         except Exception:
             self._showMinCllrValuesInRoc = self._showMinCllrValuesInRocDefault
 
@@ -371,13 +371,13 @@ class Config:
 
         self._showEerValuesInRocDefault = True
         try:
-            self._showEerValuesInRoc = self.config.getboolean('roc', 'showEerValuesInRoc')
+            self._showEerValuesInRoc = self.config.getboolean('roc', 'showEer')
         except Exception:
             self._showEerValuesInRoc = self._showEerValuesInRocDefault
 
         self._showEerValuesInZooDefault = True
         try:
-            self._showEerValuesInZoo = self.config.getboolean('zoo', 'showEerValuesInZoo')
+            self._showEerValuesInZoo = self.config.getboolean('zoo', 'showEer')
         except Exception:
             self._showEerValuesInZoo = self._showEerValuesInZooDefault
 
