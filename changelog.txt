@@ -1,3 +1,6 @@
+# v0.9.6 8 November 2015
+Added roc plot
+
 # v0.9.5 27 September 2015
 Zoo object does not inherit cllr object anymore (there was no need to do so anyway).
 Cleaned up code thus adhering to python coding standards a bit more.
