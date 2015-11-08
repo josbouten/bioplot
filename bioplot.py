@@ -39,6 +39,7 @@ from tippett import Tippett
 from histogram import Histogram
 from accuracy import Accuracy
 from ranking import Ranking
+from roc import Roc
 from matrix import MatrixPlot
 from version import Version
 from utils import sanitize
@@ -75,6 +76,7 @@ parser.add_option('-A', '--accuracy', action="store_true", dest="plotAccuracy", 
 parser.add_option('-E', '--eer', action="store_true", dest="plotEer", help="show EER plot")
 parser.add_option('-T', '--tippet', action="store_true", dest="plotTippet", help="show Tippett plot")
 parser.add_option('-M', '--matrix', action="store_true", dest="plotMatrix", help="show matrix plot")
+parser.add_option('-O', '--roc', action="store_true", dest="plotRoc", help="show roc plot")
 parser.add_option('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")
 parser.add_option('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
 parser.add_option('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
@@ -92,7 +94,6 @@ parser.add_option('-c', '--config', action="store", dest="configFilename", defau
 parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
 parser.add_option('-s', '--settings', action="store_true", dest="showOptions", help="show settings only")
 parser.add_option('-q', '--quiet', action="store_true", dest="quiet", help="do not show settings")
-parser.add_option('-V', action="store_false", dest="showVersion", help="show version info")
 options, remainder = parser.parse_args()
 
 # Let's handle any request for the license first.
@@ -102,9 +103,9 @@ if options.showLicense:
     l.showLicense()
     exit(0)
 
-if options.showVersion:
-    print "This is bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
-    exit(0)
+# if options.showVersion:
+#    print "This is bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
+#    exit(0)
 
 print "bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
 
@@ -113,7 +114,7 @@ expName = options.expName
 
 # We do not like spaces!
 filename = sanitize(options.filename)
-#filename = options.filename
+# filename = options.filename
 dataType = options.dataType
 
 # Threshold used by biometric system to make a decision
@@ -159,13 +160,17 @@ if options.plotAccuracy:
     accuracy = Accuracy(data, config, debug)
     accuracy.plot()
 
+if options.plotEer:
+    eer = Eer(data, config, debug)
+    eer.plot()
+
 if options.plotRanking:
     ranking = Ranking(data, config, debug)
     ranking.plot()
 
-if options.plotEer:
-    eer = Eer(data, config, debug)
-    eer.plot()
+if options.plotRoc:
+    roc = Roc(data, config, debug)
+    roc.plot()
 
 if options.plotTippet:
     tippet = Tippett(data, config, debug)

@@ -313,6 +313,12 @@ class Config:
         except Exception:
             self._showCllrValuesInEer = self._showCllrValuesInEerDefault
 
+        self._showCllrValuesInRocDefault = True
+        try:
+            self._showCllrValuesInRoc = self.config.getboolean('Roc', 'showCllrValues')
+        except Exception:
+            self._showCllrValuesInRoc = self._showCllrValuesInRocDefault
+
         self._showCllrValuesInZooDefault = True
         try:
             self._showCllrValuesInZoo = self.config.getboolean('zoo', 'showCllrValues')
@@ -344,6 +350,12 @@ class Config:
         except Exception:
             self._showMinCllrValuesInEer = self._showMinCllrValuesInEerDefault
 
+        self._showMinCllrValuesInRocDefault = True
+        try:
+            self._showMinCllrValuesInRoc = self.config.getboolean('Roc', 'showMinCllrValues')
+        except Exception:
+            self._showMinCllrValuesInRoc = self._showMinCllrValuesInRocDefault
+
         self._showMinCllrValuesInZooDefault = True
         try:
             self._showMinCllrValuesInZoo = self.config.getboolean('zoo', 'showMinCllrValues')
@@ -357,11 +369,17 @@ class Config:
         except Exception:
             self._showConfigInfo = self._showConfigInfoDefault
 
-        self._showEerValuesDefault = True
+        self._showEerValuesInRocDefault = True
         try:
-            self._showEerValues = self.config.getboolean('zoo', 'showEerValues')
+            self._showEerValuesInRoc = self.config.getboolean('roc', 'showEerValuesInRoc')
         except Exception:
-            self._showEerValues = self._showEerValuesDefault
+            self._showEerValuesInRoc = self._showEerValuesInRocDefault
+
+        self._showEerValuesInZooDefault = True
+        try:
+            self._showEerValuesInZoo = self.config.getboolean('zoo', 'showEerValuesInZoo')
+        except Exception:
+            self._showEerValuesInZoo = self._showEerValuesInZooDefault
 
         self._showKernelInHistDefault = True
         try:
@@ -706,14 +724,20 @@ class Config:
     def getShowCllrValuesInEer(self):
         return self._showCllrValuesInEer
 
+    def getShowCllrValuesInRoc(self):
+        return self._showCllrValuesInRoc
+    
     def getShowCllrValuesInZoo(self):
         return self._showCllrValuesInZoo
 
     def getShowConfigInfo(self):
         return self._showConfigInfo
 
-    def getShowEerValues(self):
-        return self._showEerValues
+    def getShowEerValuesInRoc(self):
+        return self._showEerValuesInRoc
+
+    def getShowEerValuesInZoo(self):
+        return self._showEerValuesInZoo
 
     def getShowEdgeColor(self):
         return self._showEdgeColor
@@ -732,6 +756,9 @@ class Config:
 
     def getShowMinCllrValuesInEer(self):
         return self._showMinCllrValuesInEer
+
+    def getShowMinCllrValuesInRoc(self):
+        return self._showMinCllrValuesInRoc
 
     def getShowMinCllrValuesInZoo(self):
         return self._showMinCllrValuesInZoo
@@ -802,6 +829,7 @@ class Config:
             self._showAnnotationsAtStartup = value
 
     # Print all settings.
+
     def toString(self):
         string = "alexanderStyle = " + str(self.getAlexanderStyle())
         string += ", alwaysSave = " + str(self.getAllwaysSave())
@@ -846,10 +874,12 @@ class Config:
         string += ", showMeanScores = " + str(self.getShowAverageScores())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())
         string += ", showCllrValuesInEer = " + str(self.getShowCllrValuesInEer())
+        string += ", showCllrValuesInRoc = " + str(self.getShowCllrValuesInRoc())
         string += ", showCllrValuesInZoo = " + str(self.getShowCllrValuesInZoo())
         string += ", showConfigInfo = " + str(self.getShowConfigInfo())
         string += ", showEdgeColor = " + str(self.getShowEdgeColor())
-        string += ", showEerValues = " + str(self.getShowEerValues())
+        string += ", showEerValuesInRoc = " + str(self.getShowEerValuesInRoc())
+        string += ", showEerValuesInZoo = " + str(self.getShowEerValuesInZoo())
         if self.getDebug():
             string += ", showEqualAxes = " + str(self.getShowEqualAxes())  # debug only function
         string += ", showHelperCircles = " + str(self.getShowHelperCircles())
@@ -857,6 +887,7 @@ class Config:
         string += ", showMatrixLabels = " + str(self.getShowMatrixLabels())
         string += ", showMetaInHist = " + str(self.getShowMetaInHist())
         string += ", showMinCllrValuesInEer = " + str(self.getShowMinCllrValuesInEer())
+        string += ", showMinCllrValuesInRoc = " + str(self.getShowMinCllrValuesInRoc())
         string += ", showMinCllrValuesInZoo = " + str(self.getShowMinCllrValuesInZoo())
         string += ", showNrTargetsAndNonTargets = " + str(self.getShowNrTargetsAndNonTargets())
         string += ", showReference = " + str(self.getShowReference())

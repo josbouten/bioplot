@@ -53,6 +53,7 @@ class Zoo(Format, Probability):
         self.config = thisConfig
         self.debug = thisDebug
         Format.__init__(self, self.debug)
+        Probability.__init__(self, self.data, self.config, self.debug)
         self._worms = []
         self._chameleons = []
         self._phantoms = []
@@ -1004,7 +1005,7 @@ class Zoo(Format, Probability):
                 legendText[thisMetaValue].append(thisMetaValue)
 
         # Compute and show the EER value if so desired.
-        if self.config.getShowEerValues():
+        if self.config.getShowEerValuesInZoo():
             eerObject = Eer(self.data, self.config, self.debug)
             eerData = eerObject.computeProbabilities(self.eerFunc)
             for thisMetaValue in sorted(colors.keys()):

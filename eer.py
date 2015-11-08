@@ -168,17 +168,12 @@ class Eer(Probability):
             except Exception:
                 print "Eer: problem computing EER for %s" % metaValue
                 labelText = "P(pros), %s Eer: undefined" % metaValue
-                pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
-                labelText = "P(def), %s %s" % (metaValue, thisLegendText)
-                pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
             else:
                 labelText = "P(pros), %s Eer: %0.2f%s at %0.2f" % (metaValue, eer * 100, '%', score)
-                pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
-                labelText = "P(def), %s %s" % (metaValue, thisLegendText)
-                pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
-        plt.legend(loc=5) # position logend at center right
-        axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
-        plt.xlabel('Threshold (raw score)')
-        plt.ylabel('Probability (cumulative distribution function)')
-        plt.grid()
-        plt.show()
+            pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
+            labelText = "P(def), %s %s" % (metaValue, thisLegendText)
+            pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
+            plt.grid()
+            axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
+            plt.xlabel('raw score')
+            plt.ylabel('Probability')
