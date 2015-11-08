@@ -19,6 +19,7 @@ Contents:
    histogram
    matrixplot
    rankingplot
+   rocplot
    tippettplot
    zooplot
    tools
