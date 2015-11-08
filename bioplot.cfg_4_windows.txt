@@ -193,11 +193,14 @@ definatelyRed = 255,0,0
 nrSamples4Probability = 500
 
 [roc]
-; Show Cllr values
+; Show Cllr values in the roc plot.
 showCllr = True
 
-; Show minimum Cllr values.
+; Show minimum Cllr values in the roc plot.
 showMinCllr = True
+
+; Show EER values in the roc plot.
+showEer = True
 
 [zoo]
 ; Show ellipses at position of data points representing standard deviation of target and non target scores
@@ -284,7 +287,7 @@ showCllrValues = True
 showEdgeColor = True
 
 ; Show EER values in relevant plots.
-showEerValues = True
+showEer = True
 
 ; Show circles around unit ellipse that can be used to resize the plot so that the unit circle
 ; will be shown as a circle. This will make it easier to interpret the std values for average target vs
