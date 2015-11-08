@@ -173,7 +173,9 @@ class Eer(Probability):
             pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
             labelText = "P(def), %s %s" % (metaValue, thisLegendText)
             pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
-            plt.grid()
             axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
             plt.xlabel('raw score')
             plt.ylabel('Probability')
+        plt.grid()
+        plt.legend(loc=5)  # position logend at center right
+        plt.show()
