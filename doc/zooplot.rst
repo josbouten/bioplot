@@ -30,9 +30,9 @@ Run this command: ::
 You can choose which error measures to show in the plot by setting any of the options below to true: ::
 
     [zoo]
-    showCllrValue = True
-    showEERValue = True
-    showMinCllrValues = True
+    showCllr = True
+    showEER = True
+    showMinCllr = True
 
 Tall thin animals
 -----------------

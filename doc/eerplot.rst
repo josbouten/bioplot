@@ -23,8 +23,8 @@ All plots are shown in a window that allows you to zoom in on events. Here the p
 If you want to see cllr and cllrMin values in the plot's legend, set: ::
 
     [eer]
-    showCllrValues = True
-    showCllrMinValues = True
+    showCllr = True
+    showCllrMin = True
 
 .. image:: images/condition_A_and_B_eer_plot_cllr.png
 

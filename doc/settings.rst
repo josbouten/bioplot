@@ -20,26 +20,21 @@ It will then show a list of chosen settings like so: ::
 
     Ignoring all command line parameters except -s
     Config info taken from 'default values':
-    alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5,
-    animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False,
-    debug = False, dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor =
-    (0.6274509803921569, 0.6274509803921569, 0.6274509803921569), limitStdDevs = True, lineWidth = 1.0,
-    matrixColorMap = Greys, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99,
-    minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False,
-    normHist = False, nrAccPoints = 50, nrBins = 100, nrSamples4Probability = 200, opacity4Ellipses = 0.7,
-    outputPath = output, runningWindows = False, runningOSX = False, saveScores = True, scaleFactor = 150,
-    screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
-    showCircularHistogram = False, showCllrValues = True, showConfigInfo = True, showEdgeColor = True,
-    showEerValues = True, showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True,
-    showMetaInHist = True, showMinCllrValues = False, showNrTargetsAndNonTargets = True, showReference = True,
-    showStdev = False, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02,
-    useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True,
-    yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, zWidth = 0.65
-
-If you want to explicitly check them when read from a file without making any plot or reading any data,
-start bioplot like this: ::
-
-    python bioplot.py -s -c some_other_settings_file
+    alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, 
+    animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False, 
+    dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 
+    0.6274509803921569, 0.6274509803921569), limitStdDevs = False, lineWidth = 1.0, matrixColorMap = Greys, 
+    maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, 
+    minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2, minStdDev = 0.01, noHistAnnot = False, normHist = True, 
+    nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500, opacity4Ellipses = 0.7, outputPath = output, 
+    runningWindows = False, runningOSX = False, saveScores = True, scaleFactor = 100, screenResolution = 1600x1024, 
+    showAnnotationsAtStartup = False, showMeanScores = True, showCircularHistogram = True, eer.showCllr = True, 
+    roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True, showEdgeColor = True, roc.showEer = True, 
+    zoo.showEer = True, showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, 
+    eer.showMinCllr = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, 
+    showReference = True, showSingleValueAsUnitValue = False, showStdev = True, showTextAtReferenceAtStartup = False, 
+    showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, 
+    xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63, zLeft = 0.05, zWidth = 0.65
 
 This will show the settings read from the file 'some_other_settings_file'. ::
 
@@ -264,6 +259,20 @@ per meta value. ::
 
     nrSamples4Probability = 500
 
+[roc]
+-----
+Show Cllr values in the roc plot.::
+
+    showCllr = True
+
+Show minimum Cllr values in the roc plot. ::
+
+    showMinCllr = True
+
+Show EER values in the roc plot.::
+
+    showEer = True
+
 [zoo]
 -----
 Show ellipses at position of data points representing standard deviation of target and non target scores
@@ -375,7 +384,7 @@ Show EER values in legend of relevant plots.
 Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
 The data points nearest to the crossing point are used and the crossing point is computed via interpolation. ::
 
-  showEerValues = True
+  showEer = True
 
 Show circles around unit ellipse that can be used to resize the plot so that the unit circle
 will be shown as a circle. This will make it easier to interpret the std values for average target vs
