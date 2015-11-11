@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Search &mdash; bioplot 0.9.6 documentation</title>
+    <title>ROC plot &mdash; bioplot 0.9.6 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,23 +24,17 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/searchtools.js"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="bioplot 0.9.6 documentation" href="index.html" />
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
-  
+    <link rel="next" title="Tippett plot" href="tippettplot.html" />
+    <link rel="prev" title="Ranking plot" href="rankingplot.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-
 
   </head>
   <body>
@@ -71,7 +65,7 @@
      href="index.html">Chapter <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="bioplot.html">Introduction to Bioplot</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="bioplot.html#usage">Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="bioplot.html#auto-store">Auto store</a></li>
@@ -119,7 +113,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrix plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rocplot.html">ROC plot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">ROC plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zooplot.html#traditional-plot">Traditional plot</a></li>
@@ -186,24 +180,46 @@
      href="#">Paragraph <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"
       role="menu"
-      aria-labelledby="dLabelLocalToc"></ul>
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">ROC plot</a></li>
+</ul>
+</ul>
 </li>
               
             
             
               
                 
+  <li>
+    <a href="rankingplot.html" title="Previous Chapter: Ranking plot"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Ranking plot</span>
+    </a>
+  </li>
+  <li>
+    <a href="tippettplot.html" title="Next Chapter: Tippett plot"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Tippett plot &raquo;</span>
+    </a>
+  </li>
               
             
             
             
             
-              <li class="hidden-sm"></li>
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/rocplot.txt"
+     rel="nofollow">Source</a>
+</div></li>
             
           </ul>
 
           
             
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
           
         </div>
     </div>
@@ -213,35 +229,24 @@
   <div class="row">
     <div class="col-md-12">
       
-  <h1 id="search-documentation">Search</h1>
-  <div id="fallback" class="admonition warning">
-  <script type="text/javascript">$('#fallback').hide();</script>
-  <p>
-    Please activate JavaScript to enable the search
-    functionality.
-  </p>
-  </div>
-  <p>
-    From here you can search these documents. Enter your search
-    words into the box below and click "search". Note that the search
-    function will automatically search for all of the words. Pages
-    containing fewer words won't appear in the result list.
-  </p>
+  <div class="section" id="roc-plot">
+<span id="rst-rocplot"></span><h1>ROC plot<a class="headerlink" href="#roc-plot" title="Permalink to this headline">¶</a></h1>
+<p>Will plot a so called Receiver Operating Characteristic also known as ROC plot.
+This plot shows the true positive rate versus the false positive rate.</p>
+<p>Example command:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A, B and C&quot; -i input/testdata_ABC.txt -O
+</pre></div>
+</div>
+<img alt="_images/condition_ABC_roc.png" src="_images/condition_ABC_roc.png" />
+<p>If you want to see EER, Cllr and/or CllrMin values in the plot&#8217;s legend, set:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">roc</span><span class="p">]</span>
+<span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showCllrMin</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
 
-  
-  <form class="form-inline" action="" method="get">
-    <div class="form-group">
-      <input type="text" class="form-control" name="q" value="" />
-    </div>
-    <input type="submit" class="btn btn-default" value="search" />
-    <span id="search-progress" style="padding-left: 10px"></span>
-  </form>  
-  
-  
-  
-  <div id="search-results">
-  
-  </div>
 
     </div>
       
