@@ -17,6 +17,8 @@ validation of multi-file score matching.
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+from utils import assignColors2MetaDataValue
+
 
 class Det:
     def __init__(self, thisData, thisConfig, thisDebug):
@@ -153,23 +155,41 @@ class Det:
             retval = np.zeros(arr.shape, dtype='float64')
             for i, p in enumerate(arr): retval[i] = self.__ppndf__(p)
             return retval
-        far, frr = self._evalROC(negatives, positives, points)
 
+        far, frr = self._evalROC(negatives, positives, points)
         return (__ppndf_array__(far), __ppndf_array__(frr))
 
-    # def plot(self, negatives, positives, points=100, limits=None, title='DET Curve', labels=None, colour=False):
-
     def plot(self):
-        negatives = np.array([k for k in self.data.getNonTargetScoreValues()], dtype='float64')
-        positives = np.array([k for k in self.data.getTargetScoreValues()], dtype='float64')
+        metaDataValues = self.data.getMetaDataValues()
+        metaColors = self.config.getMetaColors()
+        colors = assignColors2MetaDataValue(metaDataValues, metaColors)
         points = 100
         limits = None
         title = 'DET plot'
         labels = None
         colour = False
-        self.plotDet(negatives, positives, points, limits, title, labels, colour)
 
-    def plotDet(self, negatives, positives, points, limits, title, labels, colour):
+        for metaValue in metaDataValues:
+            negatives = [np.array([k for k in self.data.getTargetScores4MetaValue(metaValue)], dtype='float64')]
+            positives = [np.array([k for k in self.data.getNonTargetScores4MetaValue(metaValue)], dtype='float64')]
+            # negatives = np.array(self.data.getNonTargetScoreValues(), dtype='float64')
+            # positives = np.array(self.data.getTargetScoreValues(), dtype='float64')
+            self._plotDet(negatives, positives, points, limits, labels, colour)
+            
+        if title:
+            plt.title(title)
+            plt.grid(True)
+            plt.xlabel('False Rejection Rate [in %]')
+            plt.ylabel('False Acceptance Rate [in %]')
+        if labels: plt.legend()
+        plt.show()
+
+    def plotDet(self, negatives, positives, points, limits, labels, colour):
+        self._plotDet(self, negatives, positives, points, limits, labels, colour)
+        plt.show()
+
+
+    def _plotDet(self, negatives, positives, points, limits, labels, colour):
 
         """
         Plots Detection Error Trade-off (DET) curve
@@ -189,11 +209,7 @@ class Det:
             an (optional) tuple containing 4 elements that determine the maximum and
             minimum values to plot. Values have to exist in the internal
             desiredLabels variable.
-    
-          title
-            an (optional) string containg a title to be inprinted on the top of the
-            plot
-    
+
           labels
             an (optional) list of labels for a legend. If None or empty, the legend
             is suppressed
@@ -286,22 +302,16 @@ class Det:
         ax = plt.gca()
 
         plt.axis([pticks[fr_minIndex], pticks[fr_maxIndex],
-                 pticks[fa_minIndex], pticks[fa_maxIndex]])
+                  pticks[fa_minIndex], pticks[fa_maxIndex]])
 
         ax.set_xticks(pticks[fr_minIndex:fr_maxIndex])
         ax.set_xticklabels(desiredLabels[fr_minIndex:fr_maxIndex], size='x-small', rotation='vertical')
         ax.set_yticks(pticks[fa_minIndex:fa_maxIndex])
         ax.set_yticklabels(desiredLabels[fa_minIndex:fa_maxIndex], size='x-small')
 
-        if title: plt.title(title)
-        plt.grid(True)
-        plt.xlabel('False Rejection Rate [in %]')
-        plt.ylabel('False Acceptance Rate [in %]')
-
-        if labels: plt.legend()
 
         plt.plot()
-        plt.show()
+
 
 def split_it(data):
     """
@@ -313,13 +323,14 @@ def split_it(data):
     return (np.array([k[4] for k in data if k[0] != k[2]], dtype='float64'),
             np.array([k[4] for k in data if k[0] == k[2]], dtype='float64'))
 
+
 if __name__ == '__main__':
     # get negatives and positive scores
     negatives = []
     positives = []
     debug = True
     det = Det(None, None, debug)
-    filename = 'input/det_testdata_A.txt'
+    filename = 'input/det_testdata_ABC.txt'
     print("Loading score file %s..." % filename)
     neg, pos = split_it(det.load_file(filename, no_labels=True))
     negatives.append(neg)
