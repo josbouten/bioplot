@@ -280,13 +280,13 @@ showAverageScores = True
 ; Show histogram of shift of points depending on meta data values.
 showCircularHistogram = True
 
-; Show Cllr values
-showCllrValues = True
+; Show Cllr value(s).
+showCllr = True
 
 ; Show edge of ellipse in same color as ellipse (otherwise black)
 showEdgeColor = True
 
-; Show EER values in relevant plots.
+; Show EER value(s).
 showEer = True
 
 ; Show circles around unit ellipse that can be used to resize the plot so that the unit circle
@@ -294,8 +294,8 @@ showEer = True
 ; average non target data points.
 showHelperCircles = True
 
-; Show minimum Cllr values.
-showMinCllrValues = True
+; Show minimum Cllr value(s).
+showMinCllr = True
 
 ; Show nr of target and nr of non target scores for a data point.
 showNrTargetsAndNonTargets = True

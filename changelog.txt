@@ -1,5 +1,7 @@
 # v0.9.6 8 November 2015
-Added roc plot
+Added roc plot and det plot.
+Changed config parameter names showMinCllrValues into showMinCllr
+Changed config parameter names showCllrValues into showCllr
 
 # v0.9.5 27 September 2015
 Zoo object does not inherit cllr object anymore (there was no need to do so anyway).

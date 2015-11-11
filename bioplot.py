@@ -34,6 +34,7 @@ from config import Config
 from data import Data
 from alexanderzoo import AlexanderZoo
 from boutenzoo import BoutenZoo
+from det import Det
 from eer import Eer
 from tippett import Tippett
 from histogram import Histogram
@@ -73,6 +74,7 @@ You can contact me via josbouten at gmail dot com." % (argv[0], version),
                                version="This is bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version, )
 parser.add_option('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
 parser.add_option('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
+parser.add_option('-D', '--det', action="store_true", dest="plotDet", help="show Det plot")
 parser.add_option('-E', '--eer', action="store_true", dest="plotEer", help="show EER plot")
 parser.add_option('-T', '--tippet', action="store_true", dest="plotTippet", help="show Tippett plot")
 parser.add_option('-M', '--matrix', action="store_true", dest="plotMatrix", help="show matrix plot")
@@ -148,33 +150,18 @@ if config.getSaveScores():
 if len(remainder) > 0:
     data.setLabelsToShowAlways(remainder)
 
-if options.plotZoo:
-    if config.getBoutenStyle() is True:
-        zoo = BoutenZoo(data, config, debug)
-        zoo.plot()
-    else:
-        zoo = AlexanderZoo(data, config, debug)
-        zoo.plot()
 
 if options.plotAccuracy:
     accuracy = Accuracy(data, config, debug)
     accuracy.plot()
 
+if options.plotDet:
+    det = Det(data, config, debug)
+    det.plot()
+
 if options.plotEer:
     eer = Eer(data, config, debug)
     eer.plot()
-
-if options.plotRanking:
-    ranking = Ranking(data, config, debug)
-    ranking.plot()
-
-if options.plotRoc:
-    roc = Roc(data, config, debug)
-    roc.plot()
-
-if options.plotTippet:
-    tippet = Tippett(data, config, debug)
-    tippet.plot()
 
 if options.plotHistCum:
     # Interested in EER plot? Then plot a cumulative histogram of the scores.
@@ -191,6 +178,27 @@ if options.plotHist:
     histogram = Histogram(data, config, 'normal', debug, useMeta)
     histogram.plot()
 
+
 if options.plotMatrix:
     matrix = MatrixPlot(data, config, debug)
     matrix.plot()
+
+if options.plotRanking:
+    ranking = Ranking(data, config, debug)
+    ranking.plot()
+
+if options.plotRoc:
+    roc = Roc(data, config, debug)
+    roc.plot()
+
+if options.plotTippet:
+    tippet = Tippett(data, config, debug)
+    tippet.plot()
+
+if options.plotZoo:
+    if config.getBoutenStyle() is True:
+        zoo = BoutenZoo(data, config, debug)
+        zoo.plot()
+    else:
+        zoo = AlexanderZoo(data, config, debug)
+        zoo.plot()

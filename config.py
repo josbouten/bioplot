@@ -307,23 +307,23 @@ class Config:
         except Exception:
             self._showCircularHistogram = self._showCircularHistogramDefault
 
-        self._showCllrValuesInEerDefault = True
+        self._showCllrEerDefault = True
         try:
-            self._showCllrValuesInEer = self.config.getboolean('eer', 'showCllrValues')
+            self._showCllrInEer = self.config.getboolean('eer', 'showCllr')
         except Exception:
-            self._showCllrValuesInEer = self._showCllrValuesInEerDefault
+            self._showCllrInEer = self._showCllrEerDefault
 
-        self._showCllrValuesInRocDefault = True
+        self._showCllrInRocDefault = True
         try:
-            self._showCllrValuesInRoc = self.config.getboolean('roc', 'showCllrValues')
+            self._showCllrInRoc = self.config.getboolean('roc', 'showCllr')
         except Exception:
-            self._showCllrValuesInRoc = self._showCllrValuesInRocDefault
+            self._showCllrInRoc = self._showCllrInRocDefault
 
-        self._showCllrValuesInZooDefault = True
+        self._showCllrInZooDefault = True
         try:
-            self._showCllrValuesInZoo = self.config.getboolean('zoo', 'showCllrValues')
+            self._showCllrInZoo = self.config.getboolean('zoo', 'showCllr')
         except Exception:
-            self._showCllrValuesInZoo = self._showCllrValuesInZooDefault
+            self._showCllrInZoo = self._showCllrInZooDefault
 
         self._showEdgeColorDefault = True
         try:
@@ -344,23 +344,23 @@ class Config:
         except Exception:
             self._showHelperCircles = self._showHelperCirclesDefault
 
-        self._showMinCllrValuesInEerDefault = True
+        self._showMinCllrInEerDefault = True
         try:
-            self._showMinCllrValuesInEer = self.config.getboolean('eer', 'showMinCllrValues')
+            self._showMinCllrInEer = self.config.getboolean('eer', 'showMinCllr')
         except Exception:
-            self._showMinCllrValuesInEer = self._showMinCllrValuesInEerDefault
+            self._showMinCllrInEer = self._showMinCllrInEerDefault
 
-        self._showMinCllrValuesInRocDefault = True
+        self._showMinCllrInRocDefault = True
         try:
-            self._showMinCllrValuesInRoc = self.config.getboolean('roc', 'showMinCllrValues')
+            self._showMinCllrInRoc = self.config.getboolean('roc', 'showMinCllr')
         except Exception:
-            self._showMinCllrValuesInRoc = self._showMinCllrValuesInRocDefault
+            self._showMinCllrInRoc = self._showMinCllrInRocDefault
 
-        self._showMinCllrValuesInZooDefault = True
+        self._showMinCllrInZooDefault = True
         try:
-            self._showMinCllrValuesInZoo = self.config.getboolean('zoo', 'showMinCllrValues')
+            self._showMinCllrInZoo = self.config.getboolean('zoo', 'showMinCllr')
         except Exception:
-            self._showMinCllrValuesInZoo = self._showMinCllrValuesInZooDefault
+            self._showMinCllrInZoo = self._showMinCllrInZooDefault
 
         # Show config info at startup of program ( actually when instantiating the config object )
         self._showConfigInfoDefault = True
@@ -369,17 +369,17 @@ class Config:
         except Exception:
             self._showConfigInfo = self._showConfigInfoDefault
 
-        self._showEerValuesInRocDefault = True
+        self._showEerInRocDefault = True
         try:
-            self._showEerValuesInRoc = self.config.getboolean('roc', 'showEer')
+            self._showEerInRoc = self.config.getboolean('roc', 'showEer')
         except Exception:
-            self._showEerValuesInRoc = self._showEerValuesInRocDefault
+            self._showEerInRoc = self._showEerInRocDefault
 
-        self._showEerValuesInZooDefault = True
+        self._showEerInZooDefault = True
         try:
-            self._showEerValuesInZoo = self.config.getboolean('zoo', 'showEer')
+            self._showEerInZoo = self.config.getboolean('zoo', 'showEer')
         except Exception:
-            self._showEerValuesInZoo = self._showEerValuesInZooDefault
+            self._showEerInZoo = self._showEerInZooDefault
 
         self._showKernelInHistDefault = True
         try:
@@ -721,23 +721,23 @@ class Config:
     def getShowCircularHistogram(self):
         return self._showCircularHistogram
 
-    def getShowCllrValuesInEer(self):
-        return self._showCllrValuesInEer
+    def getShowCllrInEer(self):
+        return self._showCllrInEer
 
-    def getShowCllrValuesInRoc(self):
-        return self._showCllrValuesInRoc
+    def getShowCllrInRoc(self):
+        return self._showCllrInRoc
     
-    def getShowCllrValuesInZoo(self):
-        return self._showCllrValuesInZoo
+    def getShowCllrInZoo(self):
+        return self._showCllrInZoo
 
     def getShowConfigInfo(self):
         return self._showConfigInfo
 
-    def getShowEerValuesInRoc(self):
-        return self._showEerValuesInRoc
+    def getShowEerInRoc(self):
+        return self._showEerInRoc
 
-    def getShowEerValuesInZoo(self):
-        return self._showEerValuesInZoo
+    def getShowEerInZoo(self):
+        return self._showEerInZoo
 
     def getShowEdgeColor(self):
         return self._showEdgeColor
@@ -754,14 +754,14 @@ class Config:
     def getShowMetaInHist(self):
         return self._showMetaInHist
 
-    def getShowMinCllrValuesInEer(self):
-        return self._showMinCllrValuesInEer
+    def getShowMinCllrInEer(self):
+        return self._showMinCllrInEer
 
-    def getShowMinCllrValuesInRoc(self):
-        return self._showMinCllrValuesInRoc
+    def getShowMinCllrInRoc(self):
+        return self._showMinCllrInRoc
 
-    def getShowMinCllrValuesInZoo(self):
-        return self._showMinCllrValuesInZoo
+    def getShowMinCllrInZoo(self):
+        return self._showMinCllrInZoo
 
     def getShowNrTargetsAndNonTargets(self):
         return self._showNrTargetsAndNonTargets
@@ -873,22 +873,22 @@ class Config:
         string += ", showAnnotationsAtStartup = " + str(self.getShowAnnotationsAtStartup())
         string += ", showMeanScores = " + str(self.getShowAverageScores())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())
-        string += ", showCllrValuesInEer = " + str(self.getShowCllrValuesInEer())
-        string += ", showCllrValuesInRoc = " + str(self.getShowCllrValuesInRoc())
-        string += ", showCllrValuesInZoo = " + str(self.getShowCllrValuesInZoo())
+        string += ", eer.showCllr = " + str(self.getShowCllrInEer())
+        string += ", roc.showCllr = " + str(self.getShowCllrInRoc())
+        string += ", zoo.showCllr = " + str(self.getShowCllrInZoo())
         string += ", showConfigInfo = " + str(self.getShowConfigInfo())
         string += ", showEdgeColor = " + str(self.getShowEdgeColor())
-        string += ", showEerValuesInRoc = " + str(self.getShowEerValuesInRoc())
-        string += ", showEerValuesInZoo = " + str(self.getShowEerValuesInZoo())
+        string += ", roc.showEer = " + str(self.getShowEerInRoc())
+        string += ", zoo.showEer = " + str(self.getShowEerInZoo())
         if self.getDebug():
             string += ", showEqualAxes = " + str(self.getShowEqualAxes())  # debug only function
         string += ", showHelperCircles = " + str(self.getShowHelperCircles())
         string += ", showKernelInHist = " + str(self.getShowKernelInHist())
         string += ", showMatrixLabels = " + str(self.getShowMatrixLabels())
         string += ", showMetaInHist = " + str(self.getShowMetaInHist())
-        string += ", showMinCllrValuesInEer = " + str(self.getShowMinCllrValuesInEer())
-        string += ", showMinCllrValuesInRoc = " + str(self.getShowMinCllrValuesInRoc())
-        string += ", showMinCllrValuesInZoo = " + str(self.getShowMinCllrValuesInZoo())
+        string += ", eer.showMinCllr = " + str(self.getShowMinCllrInEer())
+        string += ", roc.showMinCllr = " + str(self.getShowMinCllrInRoc())
+        string += ", zoo.showMinCllr = " + str(self.getShowMinCllrInZoo())
         string += ", showNrTargetsAndNonTargets = " + str(self.getShowNrTargetsAndNonTargets())
         string += ", showReference = " + str(self.getShowReference())
         string += ", showSingleValueAsUnitValue = " + str(self.getShowSingleValueAsUnitValue())
