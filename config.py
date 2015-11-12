@@ -37,6 +37,10 @@ class Config:
         self.configFilename = thisConfigFilename
         self.config = ConfigParser.RawConfigParser()
         self._fileNotFound = False
+        # Rates for accept and rejection rates in Det-plot.
+        self._allowedRates = ["0.001", "0.002", "0.005", "0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1", "2", "5", "10",
+                             "20", "40", "60", "80", "90", "95", "98", "99", "99.5", "99.8", "99.9", "99.95", "99.98",
+                             "99.99", "99.995", "99.998", "99.999"]
 
         if os.path.exists(self.configFilename):
             try:
@@ -277,6 +281,26 @@ class Config:
         # and multiply by a scaleFactor to make them visible as not too small and
         # not too bit
 
+        self._maxFalseAcceptRateDefault = 60
+        try:
+            self._maxFalseAcceptRate = self.config.getfloat('det', 'maxFalseAcceptRate')
+        except Exception:
+            self._maxFalseAcceptRate = self._maxFalseAcceptRateDefault
+            
+        self._maxFalseRejectionRateDefault = 60
+        try:
+            self._maxFalseRejectionRate = self.config.getfloat('det', 'maxFalseRejectionRate')
+        except Exception:
+            self._maxFalseRejectionRate = self._maxFalseRejectionRateDefault
+
+        if str(self._maxFalseAcceptRate) not in self._allowedRates:
+            print "Warning: value for maxFalseAcceptRate not allowed, using default value: %s" % self._maxFalseAcceptRateDefault
+            self._maxFalseAcceptRate = self._maxFalseAcceptRateDefault
+
+        if str(self._maxFalseRejectionRate) not in self._allowedRates:
+            print "Warning: value for maxFalseRejectionRate not allowed, using default value: %s" % self._maxFalseRejectionRateDefault
+            self._maxFalseRejectionRate = self._maxFalseRejectionRateDefault
+
         self._saveScoresDefault = True
         try:
             self._saveScores = self.config.getboolean('cfg', 'saveScores')
@@ -306,6 +330,12 @@ class Config:
             self._showCircularHistogram = self.config.getboolean('zoo', 'showCircularHistogram')
         except Exception:
             self._showCircularHistogram = self._showCircularHistogramDefault
+
+        self._showCllrDetDefault = True
+        try:
+            self._showCllrInDet = self.config.getboolean('det', 'showCllr')
+        except Exception:
+            self._showCllrInDet = self._showCllrDetDefault
 
         self._showCllrEerDefault = True
         try:
@@ -344,6 +374,12 @@ class Config:
         except Exception:
             self._showHelperCircles = self._showHelperCirclesDefault
 
+        self._showMinCllrInDetDefault = True
+        try:
+            self._showMinCllrInDet = self.config.getboolean('det', 'showMinCllr')
+        except Exception:
+            self._showMinCllrInDet = self._showMinCllrInDetDefault
+            
         self._showMinCllrInEerDefault = True
         try:
             self._showMinCllrInEer = self.config.getboolean('eer', 'showMinCllr')
@@ -368,6 +404,12 @@ class Config:
             self._showConfigInfo = self.config.getboolean('cfg', 'showConfigInfo')
         except Exception:
             self._showConfigInfo = self._showConfigInfoDefault
+
+        self._showEerInDetDefault = True
+        try:
+            self._showEerInDet = self.config.getboolean('det', 'showEer')
+        except Exception:
+            self._showEerInDet = self._showEerInDetDefault
 
         self._showEerInRocDefault = True
         try:
@@ -520,6 +562,9 @@ class Config:
     def getAlexanderStyle(self):
         return self._alexanderStyle
 
+    def getAllowedRates(self):
+        return self._allowedRates
+
     def getAlpha4ReferenceCircles(self):
         return self._alpha4ReferenceCircles
 
@@ -596,11 +641,17 @@ class Config:
     def getMatrixColorMap(self):
         return self._matrixColorMap
 
+    def getMaxFalseAcceptRate(self):
+        return self._maxFalseAcceptRate
+
     def getMaximum4Type1(self):
         return self._maximum4Type1
 
     def getMaximum4Type3(self):
         return self._maximum4Type3
+
+    def getMaxFalseRejectionRate(self):
+        return self._maxFalseRejectionRate
 
     def getMaxStdDev(self):
         return self._maxStdDev
@@ -721,6 +772,9 @@ class Config:
     def getShowCircularHistogram(self):
         return self._showCircularHistogram
 
+    def getShowCllrInDet(self):
+        return self._showCllrInDet
+    
     def getShowCllrInEer(self):
         return self._showCllrInEer
 
@@ -732,6 +786,9 @@ class Config:
 
     def getShowConfigInfo(self):
         return self._showConfigInfo
+
+    def getShowEerInDet(self):
+        return self._showEerInDet
 
     def getShowEerInRoc(self):
         return self._showEerInRoc
@@ -753,6 +810,9 @@ class Config:
 
     def getShowMetaInHist(self):
         return self._showMetaInHist
+
+    def getShowMinCllrInDet(self):
+        return self._showMinCllrInDet
 
     def getShowMinCllrInEer(self):
         return self._showMinCllrInEer
@@ -848,6 +908,8 @@ class Config:
         string += ", limitStdDevs = " + str(self.getLimitStdDevs())
         string += ", lineWidth = " + str(self.getLineWidth())
         string += ", matrixColorMap = " + str(self.getMatrixColorMap())
+        string += ", maxFalseAcceptRate = " + str(self.getMaxFalseAcceptRate())
+        string += ", maxFalseRejectionRate = " + str(self.getMaxFalseRejectionRate())
         string += ", maximum4Type1 = " + str(self.getMaximum4Type1())
         string += ", maximum4Type3 = " + str(self.getMaximum4Type3())
         string += ", maxStdDev = " + str(self.getMaxStdDev())
@@ -873,6 +935,7 @@ class Config:
         string += ", showAnnotationsAtStartup = " + str(self.getShowAnnotationsAtStartup())
         string += ", showMeanScores = " + str(self.getShowAverageScores())
         string += ", showCircularHistogram = " + str(self.getShowCircularHistogram())
+        string += ", det.showCllr = " + str(self.getShowCllrInDet())
         string += ", eer.showCllr = " + str(self.getShowCllrInEer())
         string += ", roc.showCllr = " + str(self.getShowCllrInRoc())
         string += ", zoo.showCllr = " + str(self.getShowCllrInZoo())

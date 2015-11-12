@@ -52,9 +52,11 @@ This wil output the following information: ::
       -h, --help            show this help message and exit
       -Z, --zoo             show zoo plot
       -A, --accuracy        show accuracy plot
+      -D, --det             show Det plot
       -E, --eer             show EER plot
       -T, --tippet          show Tippett plot
       -M, --matrix          show matrix plot
+      -O, --roc             show roc plot
       -R, --ranking         show ranking plot
       -C, --histogramc      show cumulative histogram
       -H, --histogram       show histogram
@@ -73,7 +75,7 @@ This wil output the following information: ::
       -l, --license         show license
       -s, --settings        show settings only
       -q, --quiet           do not show settings
-      -V                    show version info
+
 
 
 Note:
@@ -89,8 +91,8 @@ Bioplot can produce several plots in a row with just one invocation of the progr
 the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.
 
 The input data has to be in a specific format. Actually there are 2 types of format allowed. See :ref:`rst_data_files` below.
-All plots can be saved. This happens automagically as well, as soon as you click on a plot and press a key, but you get more useful results if this happens under
-your control.
+All plots can be saved. This happens automagically as well, as soon as you click on a plot and press a key, but depending
+on the screen size you get more useful results if this happens under your control.
 
 If you do not provide an input file, the program uses input/testdata_A.txt.
 This makes it is easy to try the program. You can try the multi experiment capabilities

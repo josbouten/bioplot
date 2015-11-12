@@ -18,14 +18,19 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from utils import assignColors2MetaDataValue
+from collections import defaultdict
+from cllr import Cllr
+from eer import Eer
+from probability import Probability
+from event import Event
 
-
-class Det:
+class Det(Probability):
     def __init__(self, thisData, thisConfig, thisDebug):
         self._debug = thisDebug
         self.data = thisData
         self.config = thisConfig
         self.debug = thisDebug
+        Probability.__init__(self, self.data, self.config, self.debug)
         self.plotType = 'det_plot'
         self.fig = None
         self.event = None
@@ -48,48 +53,10 @@ class Det:
         self.__D2__ = 1.6370678189
         self.__EPS__ = 2.2204e-16
 
-    def load_file(self, filename, no_labels=False):
-        """Loads a score set from a single file to memory.
-    
-        Verifies that all fields are correctly placed and contain valid fields.
-    
-        Returns a python list of tuples containg the following fields:
-    
-          [0]
-            claimed identity (string)
-          [1]
-            model label (string)
-          [2]
-            real identity (string)
-          [3]
-            test label (string)
-          [4]
-            score (float)
-        """
-        retval = []
-        for i, l in enumerate(open(filename, 'rt')):
-            s = l.strip()
-            if len(s) == 0 or s[0] == '#': continue  # empty or comment
-            field = [k.strip() for k in s.split()]
-            if len(field) != 5:
-                raise SyntaxError, 'Line %d of file "%s" is invalid: %s' % \
-                                   (i, filename, l)
-            try:
-                score = float(field[4])
-                if no_labels:  # only useful for plotting
-                    t = (field[0], None, field[2], None, score)
-                else:
-                    t = (field[0], field[1], field[2], field[3], score)
-                retval.append(t)
-            except:
-                raise SyntaxError, 'Cannot convert score to float at line %d of file "%s": %s' % (i, filename, l)
-
-        return retval
-
     def _farfrr(self, negatives, positives, threshold):
         """
         Calculates the FAR and FRR for a given set of positives and negatives and
-        a threshold
+        a threshold.
         """
         far = len(negatives[negatives >= threshold]) / float(len(negatives))
         frr = len(positives[positives < threshold]) / float(len(positives))
@@ -160,136 +127,110 @@ class Det:
         return (__ppndf_array__(far), __ppndf_array__(frr))
 
     def plot(self):
+        self.fig = plt.figure()
+        self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
+        # For saving the pic we use a generic event object
+        self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
+        axes = self.fig.add_subplot(111)
+
         metaDataValues = self.data.getMetaDataValues()
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
+
+        legendText = defaultdict(list)
+
+        # Compute and show the EER value if so desired.
+        if self.config.getShowEerInDet():
+            eerObject = Eer(self.data, self.config, self.debug)
+            eerData = eerObject.computeProbabilities(self.eerFunc)
+            for thisMetaValue in sorted(colors.keys()):
+                for metaValue, PD, PP, X in eerData:
+                    if thisMetaValue == metaValue:
+                        try:
+                            eerValue, score = eerObject.computeEer(PD, PP, X)
+                        except Exception, e:
+                            print "DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e)
+                        else:
+                            eerValue *= 100
+                            if eerValue < 10.0:
+                                eerStr = "Eer:  %.2f%s" % (eerValue, '%')
+                            else:
+                                eerStr = "Eer: %2.2f%s" % (eerValue, '%')
+                            legendText[thisMetaValue].append(eerStr)
+                        break
+
+        # Compute and show the Cllr value if so desired.
+        if self.config.getShowCllrInDet():
+            cllrObject = Cllr(self.data, self.config, self.debug)
+            cllrData = cllrObject.getCllr()
+            if self.debug:
+                print cllrData
+            for thisMetaValue in sorted(colors.keys()):
+                for metaValue, cllrValue in cllrData:
+                    if thisMetaValue == metaValue:
+                        if type(cllrValue) is float:
+                            cllrStr = "Cllr: %.3f" % cllrValue
+                        else:
+                            cllrStr = "Cllr: %s" % cllrValue
+                        legendText[metaValue].append(cllrStr)
+                        break
+
+        # Compute and show the CllrMin value if so desired.
+        if self.config.getShowMinCllrInDet():
+            cllrObject = Cllr(self.data, self.config, self.debug)
+            minCllrData = cllrObject.getMinCllr()
+            if self.debug:
+                print "minCllrData:", minCllrData
+            for thisMetaValue in sorted(colors.keys()):
+                for metaValue, minCllrValue in minCllrData:
+                    if thisMetaValue == metaValue:
+                        if type(minCllrValue) is float:
+                            minCllrStr = "minCllr: %.3f" % minCllrValue
+                        else:
+                            minCllrStr = "minCllr: %s" % minCllrValue
+                        legendText[metaValue].append(minCllrStr)
+                        break
         points = 100
         limits = None
         title = 'DET plot'
         labels = None
-        colour = False
-
-        for metaValue in metaDataValues:
-            negatives = [np.array([k for k in self.data.getTargetScores4MetaValue(metaValue)], dtype='float64')]
-            positives = [np.array([k for k in self.data.getNonTargetScores4MetaValue(metaValue)], dtype='float64')]
-            # negatives = np.array(self.data.getNonTargetScoreValues(), dtype='float64')
-            # positives = np.array(self.data.getTargetScoreValues(), dtype='float64')
-            self._plotDet(negatives, positives, points, limits, labels, colour)
-            
-        if title:
-            plt.title(title)
-            plt.grid(True)
-            plt.xlabel('False Rejection Rate [in %]')
-            plt.ylabel('False Acceptance Rate [in %]')
-        if labels: plt.legend()
-        plt.show()
-
-    def plotDet(self, negatives, positives, points, limits, labels, colour):
-        self._plotDet(self, negatives, positives, points, limits, labels, colour)
-        plt.show()
-
-
-    def _plotDet(self, negatives, positives, points, limits, labels, colour):
-
-        """
-        Plots Detection Error Trade-off (DET) curve
-    
-        Keyword parameters:
-    
-          positives
-            np.array of positive class scores in float64 format
-    
-          negatives
-            np.array of negative class scores in float64 format
-    
-          points
-            an (optional) number of points to use for the plot. Defaults to 100.
-    
-          limits
-            an (optional) tuple containing 4 elements that determine the maximum and
-            minimum values to plot. Values have to exist in the internal
-            desiredLabels variable.
-
-          labels
-            an (optional) list of labels for a legend. If None or empty, the legend
-            is suppressed
-    
-          colour
-            flag determining if the plot is coloured or monochrome. By default we
-            plot in monochrome scale.
-        """
 
         figure = plt.gcf()
         figure.set_figheight(figure.get_figheight() * 1.3)
 
         desiredTicks = ["0.00001", "0.00002", "0.00005", "0.0001", "0.0002", "0.0005", "0.001", "0.002", "0.005",
-                        "0.01",
-                        "0.02", "0.05", "0.1", "0.2", "0.4", "0.6", "0.8", "0.9", "0.95", "0.98", "0.99", "0.995",
-                        "0.998",
-                        "0.999", "0.9995", "0.9998", "0.9999", "0.99995", "0.99998", "0.99999"]
+                        "0.01", "0.02", "0.05", "0.1", "0.2", "0.4", "0.6", "0.8", "0.9", "0.95", "0.98", "0.99", "0.995",
+                        "0.998", "0.999", "0.9995", "0.9998", "0.9999", "0.99995", "0.99998", "0.99999"]
 
-        desiredLabels = ["0.001", "0.002", "0.005", "0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1", "2", "5", "10",
-                         "20", "40", "60", "80", "90", "95", "98", "99", "99.5", "99.8", "99.9", "99.95", "99.98",
-                         "99.99", "99.995", "99.998", "99.999"]
+        desiredLabels = self.config.getAllowedRates()
 
         # Available styles: please note that we plot up to the number of styles
         # available. So, for coloured plots, we can go up to 6 lines in a single
         # plot. For grayscaled ones, up to 12. If you need more plots just extend the
         # list bellow.
 
-        colourStyle = [
-            ((0, 0, 0), '-', 1),  # black
-            ((0, 0, 1.0), '--', 1),  # blue
-            ((0.8, 0.0, 0.0), '-.', 1),  # red
-            ((0, 0.6, 0.0), ':', 1),  # green
-            ((0.5, 0.0, 0.5), '-', 1),  # magenta
-            ((0.3, 0.3, 0.0), '--', 1),  # orange
-        ]
+        limits = ('0.1', str(self.config.getMaxFalseRejectionRate()), '0.1', str(self.config.getMaxFalseAcceptRate()))
 
-        grayStyle = [
-            ((0, 0, 0), '-', 1),  # black
-            ((0, 0, 0), '--', 1),  # black
-            ((0, 0, 0), '-.', 1),  # black
-            ((0, 0, 0), ':', 1),  # black
-            ((0.3, 0.3, 0.3), '-', 1),  # gray
-            ((0.3, 0.3, 0.3), '--', 1),  # gray
-            ((0.3, 0.3, 0.3), '-.', 1),  # gray
-            ((0.3, 0.3, 0.3), ':', 1),  # gray
-            ((0.6, 0.6, 0.6), '-', 2),  # lighter gray
-            ((0.6, 0.6, 0.6), '--', 2),  # lighter gray
-            ((0.6, 0.6, 0.6), '-.', 2),  # lighter gray
-            ((0.6, 0.6, 0.6), ':', 2),  # lighter gray
-        ]
-
-        if not limits: limits = ('0.001', '99.999', '0.001', '99.999')
-
-        # check limits
+        # Check limits.
         for k in limits:
             if k not in desiredLabels:
-                raise SyntaxError, \
-                    'Unsupported limit %s. Please use one of %s' % (k, desiredLabels)
+                raise SyntaxError, 'Unsupported limit %s. Please use one of %s' % (k, desiredLabels)
 
-        if colour:
-            style = colourStyle
-        else:
-            style = grayStyle
+        negatives = None
+        positives = None
+        for metaValue in metaDataValues:
+            negatives = [np.array([k for k in self.data.getNonTargetScores4MetaValue(metaValue)], dtype='float64')]
+            positives = [np.array([k for k in self.data.getTargetScores4MetaValue(metaValue)], dtype='float64')]
+            thisLegendText = '%s, ' % metaValue
+            # Compile legend text.
+            for el in legendText[metaValue]:
+                thisLegendText += el + ', '
+                # Remove last comma and space.
+            thisLegendText = thisLegendText[:-2]
 
-        if labels:
-            for neg, pos, lab, sty in zip(negatives, positives, labels, style):
+            for neg, pos in zip(negatives, positives):
                 ppfar, ppfrr = self._evalDET(neg, pos, points)
-                plt.plot(ppfrr, ppfar, label=lab, color=sty[0], linestyle=sty[1], linewidth=sty[2])
-
-        else:
-            for neg, pos, sty in zip(negatives, positives, style):
-                ppfar, ppfrr = self._evalDET(neg, pos, points)
-                plt.plot(ppfrr, ppfar, color=sty[0], linestyle=sty[1], linewidth=sty[2])
-
-        # if labels:
-        #     ppfar, ppfrr = self._evalDET(negatives, positives, points)
-        #     plt.plot(ppfrr, ppfar, label=labels, color=style[0], linestyle=style[1], linewidth=style[2])
-        # else:
-        #     ppfar, ppfrr = self._evalDET(negatives, positives, points)
-        #     plt.plot(ppfrr, ppfar, color=style[0], linestyle=style[1], linewidth=style[2])
+                plt.plot(ppfrr, ppfar, label=thisLegendText, color=colors[metaValue])
 
         fr_minIndex = desiredLabels.index(limits[0])
         fr_maxIndex = desiredLabels.index(limits[1])
@@ -308,36 +249,11 @@ class Det:
         ax.set_xticklabels(desiredLabels[fr_minIndex:fr_maxIndex], size='x-small', rotation='vertical')
         ax.set_yticks(pticks[fa_minIndex:fa_maxIndex])
         ax.set_yticklabels(desiredLabels[fa_minIndex:fa_maxIndex], size='x-small')
-
-
-        plt.plot()
-
-
-def split_it(data):
-    """
-    Splits the input tuple list (as returned by load_file()) into positives
-    and negative scores.
-
-    Returns 2 np arrays as a tuple with (negatives, positives)
-    """
-    return (np.array([k[4] for k in data if k[0] != k[2]], dtype='float64'),
-            np.array([k[4] for k in data if k[0] == k[2]], dtype='float64'))
-
-
-if __name__ == '__main__':
-    # get negatives and positive scores
-    negatives = []
-    positives = []
-    debug = True
-    det = Det(None, None, debug)
-    filename = 'input/det_testdata_ABC.txt'
-    print("Loading score file %s..." % filename)
-    neg, pos = split_it(det.load_file(filename, no_labels=True))
-    negatives.append(neg)
-    positives.append(pos)
-    points = 100
-    limits = None
-    labels = 'condition A'
-    colour = False
-    title = 'condition A'
-    det.plotDet(negatives, positives, points, limits, title, labels, colour)
+        if title:
+            plt.title("DET plot for " + self.data.getTitle())
+            plt.grid(True)
+            plt.xlabel('False Rejection Rate [in %]')
+            plt.ylabel('False Acceptance Rate [in %]')
+        plt.legend(loc=1)
+        #plt.legend()
+        plt.show()

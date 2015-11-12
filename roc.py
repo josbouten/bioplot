@@ -63,7 +63,7 @@ class Roc(Probability):
                 legendText[thisMetaValue].append(thisMetaValue)
 
         # Compute and show the EER value if so desired.
-        if self.config.getShowEerValuesInRoc():
+        if self.config.getShowEerInRoc():
             eerObject = Eer(self.data, self.config, self.debug)
             eerData = eerObject.computeProbabilities(self.eerFunc)
             for thisMetaValue in sorted(colors.keys()):
@@ -83,7 +83,7 @@ class Roc(Probability):
                         break
 
         # Compute and show the Cllr value if so desired.
-        if self.config.getShowCllrValuesInRoc():
+        if self.config.getShowCllrInRoc():
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
@@ -99,7 +99,7 @@ class Roc(Probability):
                         break
 
         # Compute and show the CllrMin value if so desired.
-        if self.config.getShowMinCllrValuesInRoc():
+        if self.config.getShowMinCllrInRoc():
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:
@@ -129,7 +129,8 @@ class Roc(Probability):
             truthValues[len(targetScores):] = 0
             fpr, tpr, thresholds = metrics.roc_curve(truthValues, allScores, pos_label=1)
             bla, = axes.plot(fpr, tpr, 'x-', label=thisLegendText, color=colors[metaValue])
-            axes.set_title("Receiver Operating Characteristic for '%s'" % self.data.getTitle())
+            #axes.set_title("Receiver Operating Characteristic for '%s'" % self.data.getTitle())
+            axes.set_title("ROC plot for '%s'" % self.data.getTitle())
         plt.xlabel('P(false positive)')
         plt.ylabel('P(true positive)')
         plt.grid()

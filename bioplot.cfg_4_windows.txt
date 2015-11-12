@@ -50,7 +50,7 @@ runningOSX = False
 ; The yellow background may be too large for the text.
 ; If so, set runningWindows to True, this will change the yellow
 ; background into a grey one and make the background fit the text in size.
-runningWindows = True
+runningWindows = False
 
 ; Save all scores to text file separated in target and non target scores per meta value.
 saveScores = True
@@ -72,6 +72,16 @@ minimum4Type1 = -1.0E+99
 
 ; maximum value we expect for a score in type1 data.
 maximum4Type1 = 1.0E+99
+
+[det]
+; Show Cllr values in the det plot.
+showCllr = True
+
+; Show minimum Cllr values in the det plot.
+showMinCllr = True
+
+; Show EER values in the det plot.
+showEer = True
 
 [eer]
 ; Show Cllr values
@@ -329,4 +339,3 @@ useOpacityForBigEllipses = False
 ; Use vertical axis as proposed by Yager et al.
 ; When set to False the y-axis will be inversed.
 yagerStyle = True
-

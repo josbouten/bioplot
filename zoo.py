@@ -1005,7 +1005,7 @@ class Zoo(Format, Probability):
                 legendText[thisMetaValue].append(thisMetaValue)
 
         # Compute and show the EER value if so desired.
-        if self.config.getShowEerValuesInZoo():
+        if self.config.getShowEerZoo():
             eerObject = Eer(self.data, self.config, self.debug)
             eerData = eerObject.computeProbabilities(self.eerFunc)
             for thisMetaValue in sorted(colors.keys()):
@@ -1025,7 +1025,7 @@ class Zoo(Format, Probability):
                         break
 
         # Compute and show the Cllr value if so desired.
-        if self.config.getShowCllrValuesInZoo():
+        if self.config.getShowCllrZoo():
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
@@ -1041,7 +1041,7 @@ class Zoo(Format, Probability):
                         break
 
         # Compute and show the CllrMin value if so desired.
-        if self.config.getShowMinCllrValuesInZoo():
+        if self.config.getShowMinCllrZoo():
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:

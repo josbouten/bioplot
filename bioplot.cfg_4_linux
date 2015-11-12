@@ -73,6 +73,16 @@ minimum4Type1 = -1.0E+99
 ; maximum value we expect for a score in type1 data.
 maximum4Type1 = 1.0E+99
 
+[det]
+; Show Cllr values in the det plot.
+showCllr = True
+
+; Show minimum Cllr values in the det plot.
+showMinCllr = True
+
+; Show EER values in the det plot.
+showEer = True
+
 [eer]
 ; Show Cllr values
 showCllr = True

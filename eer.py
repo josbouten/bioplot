@@ -38,8 +38,8 @@ class Eer(Probability):
         self.data = thisData
         self.config = thisConfig
         self.debug = thisDebug
-        self.plotType = 'eer_plot'
         Probability.__init__(self, self.data, self.config, self.debug)
+        self.plotType = 'eer_plot'
         self.fig = None
         self.event = None
 
@@ -118,6 +118,7 @@ class Eer(Probability):
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
+
         eerData = self.computeProbabilities(self.eerFunc)
         metaDataValues = self.data.getMetaDataValues()
         metaColors = self.config.getMetaColors()
@@ -125,7 +126,7 @@ class Eer(Probability):
 
         legendText = defaultdict(list)
         # Compute and show the Cllr value if so desired.
-        if self.config.getShowCllrValuesInEer():
+        if self.config.getShowCllrInEer():
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
@@ -141,7 +142,7 @@ class Eer(Probability):
                         break
 
         # Compute and show the CllrMin value if so desired.
-        if self.config.getShowMinCllrValuesInEer():
+        if self.config.getShowMinCllrInEer():
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:

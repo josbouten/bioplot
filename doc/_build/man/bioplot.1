@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "BIOPLOT" "1" "November 09, 2015" "0.9.6" "bioplot"
+.TH "BIOPLOT" "1" "November 11, 2015" "0.9.6" "bioplot"
 .SH NAME
 bioplot \- bioplot Documentation
 .
@@ -835,6 +835,67 @@ balanced accuracy = \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- = \-\-\
 .fi
 .UNINDENT
 .UNINDENT
+.SH DET PLOT
+.sp
+Will plot a detection error trade off plot or DET plot.
+.sp
+Example command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+python ./bioplot.py \-e "condition A, B and C" \-i input/testdata_ABC.txt \-D
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+[image]
+.sp
+If you want to see cllr and cllrMin values in the plot\(aqs legend, set:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[det]
+showEer = True
+showCllr = True
+showCllrMin = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+You can set the upper limits for the False Accept rate and False Rejection Rate in the config file:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[det]
+maxFalseAcceptRate = 60
+maxFalseRejectionRate = 60
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Choose the limits from:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5,
+ 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+In the plot below they are set to 60%
+[image]
 .SH EER PLOT
 .sp
 Will plot a cumulative score plot showing the odds of a false positive and false negative

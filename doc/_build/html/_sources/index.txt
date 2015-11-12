@@ -15,6 +15,7 @@ Contents:
    install
    update
    accuracy
+   detplot
    eerplot
    histogram
    matrixplot
