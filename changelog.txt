@@ -1,4 +1,4 @@
-# v0.9.6 8 November 2015
+# v0.9.6 12 November 2015
 Added roc plot and det plot.
 Changed config parameter names showMinCllrValues into showMinCllr
 Changed config parameter names showCllrValues into showCllr
