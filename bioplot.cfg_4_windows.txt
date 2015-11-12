@@ -50,7 +50,7 @@ runningOSX = False
 ; The yellow background may be too large for the text.
 ; If so, set runningWindows to True, this will change the yellow
 ; background into a grey one and make the background fit the text in size.
-runningWindows = False
+runningWindows = True
 
 ; Save all scores to text file separated in target and non target scores per meta value.
 saveScores = True
