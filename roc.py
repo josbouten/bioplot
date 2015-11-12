@@ -44,6 +44,15 @@ class Roc(Probability):
         self.event = None
         Probability.__init__(self, self.data, self.config, self.debug)
 
+    def _makeLegendText(self, legendText, metaValue):
+        thisLegendText = '%s, ' % metaValue
+        # Compile legend text.
+        for el in legendText[metaValue]:
+            thisLegendText += el + ', '
+            # Remove last comma and space.
+        thisLegendText = thisLegendText[:-2]
+        return thisLegendText
+
     def plot(self):
         self.fig = plt.figure()
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
@@ -115,12 +124,8 @@ class Roc(Probability):
                         break
 
         for metaValue in metaDataValues:
-            thisLegendText = ''
-            # Compile legend text.
-            for el in legendText[metaValue]:
-                thisLegendText += el + ', '
-                # Remove last comma and space.
-            thisLegendText = thisLegendText[:-2]
+            thisLegendText = self._makeLegendText(legendText, metaValue)
+
             targetScores = self.data.getTargetScores4MetaValue(metaValue)
             nonTargetScores = self.data.getNonTargetScores4MetaValue(metaValue)
             allScores = targetScores + nonTargetScores

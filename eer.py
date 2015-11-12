@@ -112,6 +112,15 @@ class Eer(Probability):
             score = X[index2score]
             return eer, score
 
+    def _makeLegendText(self, legendText, metaValue):
+        thisLegendText = '%s, ' % metaValue
+        # Compile legend text.
+        for el in legendText[metaValue]:
+            thisLegendText += el + ', '
+            # Remove last comma and space.
+        thisLegendText = thisLegendText[:-2]
+        return thisLegendText
+
     def plot(self):
         self.fig = plt.figure()
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
@@ -158,12 +167,7 @@ class Eer(Probability):
                         break
 
         for (metaValue, PD, PP, X) in eerData:
-            thisLegendText = ''
-            # Compile legend text.
-            for el in legendText[metaValue]:
-                thisLegendText += el + ', '
-                # Remove last comma and space.
-            thisLegendText = thisLegendText[:-2]
+            thisLegendText = self._makeLegendText(legendText, metaValue)
             try:
                 eer, score = self.computeEer(PD, PP, X)
             except Exception:

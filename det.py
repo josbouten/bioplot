@@ -1,18 +1,15 @@
+# !/usr/bin/env python
+
 # This code was taken from http://www.tabularasa-euproject.org/
 # It is published under the GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
-# The code was integrated in bioplot by Objectifying the code.
-#  
+# The code was integrated in bioplot by creating a Det object and
+# refactoring the code to convert it into fitting methods.
 
 
-# !/usr/bin/env python
+
 # Andre Anjos <andre.anjos@idiap.ch>
 # Wed 11 May 2011 09:16:39 CEST 
-
-"""The ScoreToolKit (or simpy "stk") provides functionality to load TABULA
-RASA conformant score files, for either plotting DET curves or for the
-validation of multi-file score matching.
-"""
 
 import math
 import numpy as np
@@ -64,7 +61,8 @@ class Det(Probability):
         return (far, frr)
 
     def _evalROC(self, negatives, positives, points):
-        """Evaluates the ROC curve.
+        """
+        Evaluates the ROC curve.
     
         This method evaluates the ROC curve given a set of positives and negatives,
         returning two np arrays containing the FARs and the FRRs.
@@ -125,6 +123,15 @@ class Det(Probability):
 
         far, frr = self._evalROC(negatives, positives, points)
         return (__ppndf_array__(far), __ppndf_array__(frr))
+
+    def _makeLegendText(self, legendText, metaValue):
+        thisLegendText = '%s, ' % metaValue
+        # Compile legend text.
+        for el in legendText[metaValue]:
+            thisLegendText += el + ', '
+            # Remove last comma and space.
+        thisLegendText = thisLegendText[:-2]
+        return thisLegendText
 
     def plot(self):
         self.fig = plt.figure()
@@ -191,10 +198,7 @@ class Det(Probability):
                         legendText[metaValue].append(minCllrStr)
                         break
         points = 100
-        limits = None
         title = 'DET plot'
-        labels = None
-
         figure = plt.gcf()
         figure.set_figheight(figure.get_figheight() * 1.3)
 
@@ -216,18 +220,10 @@ class Det(Probability):
             if k not in desiredLabels:
                 raise SyntaxError, 'Unsupported limit %s. Please use one of %s' % (k, desiredLabels)
 
-        negatives = None
-        positives = None
         for metaValue in metaDataValues:
             negatives = [np.array([k for k in self.data.getNonTargetScores4MetaValue(metaValue)], dtype='float64')]
             positives = [np.array([k for k in self.data.getTargetScores4MetaValue(metaValue)], dtype='float64')]
-            thisLegendText = '%s, ' % metaValue
-            # Compile legend text.
-            for el in legendText[metaValue]:
-                thisLegendText += el + ', '
-                # Remove last comma and space.
-            thisLegendText = thisLegendText[:-2]
-
+            thisLegendText = self._makeLegendText(legendText, metaValue)
             for neg, pos in zip(negatives, positives):
                 ppfar, ppfrr = self._evalDET(neg, pos, points)
                 plt.plot(ppfrr, ppfar, label=thisLegendText, color=colors[metaValue])
