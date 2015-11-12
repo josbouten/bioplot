@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "BIOPLOT" "1" "November 11, 2015" "0.9.6" "bioplot"
+.TH "BIOPLOT" "1" "November 12, 2015" "0.9.6" "bioplot"
 .SH NAME
 bioplot \- bioplot Documentation
 .
@@ -103,9 +103,11 @@ Options:
   \-h, \-\-help            show this help message and exit
   \-Z, \-\-zoo             show zoo plot
   \-A, \-\-accuracy        show accuracy plot
+  \-D, \-\-det             show Det plot
   \-E, \-\-eer             show EER plot
   \-T, \-\-tippet          show Tippett plot
   \-M, \-\-matrix          show matrix plot
+  \-O, \-\-roc             show roc plot
   \-R, \-\-ranking         show ranking plot
   \-C, \-\-histogramc      show cumulative histogram
   \-H, \-\-histogram       show histogram
@@ -124,7 +126,6 @@ Options:
   \-l, \-\-license         show license
   \-s, \-\-settings        show settings only
   \-q, \-\-quiet           do not show settings
-  \-V                    show version info
 .ft P
 .fi
 .UNINDENT
@@ -158,8 +159,8 @@ python bioplot.py \-Z \-A \-E \-i some_input_data_file.txt
 the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.
 .sp
 The input data has to be in a specific format. Actually there are 2 types of format allowed. See \fIrst_data_files\fP below.
-All plots can be saved. This happens automagically as well, as soon as you click on a plot and press a key, but you get more useful results if this happens under
-your control.
+All plots can be saved. This happens automagically as well, as soon as you click on a plot and press a key, but depending
+on the screen size you get more useful results if this happens under your control.
 .sp
 If you do not provide an input file, the program uses input/testdata_A.txt.
 This makes it is easy to try the program. You can try the multi experiment capabilities
@@ -887,8 +888,8 @@ Choose the limits from:
 .sp
 .nf
 .ft C
-0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5,
- 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999
+0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99, 99.5,
+99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999
 .ft P
 .fi
 .UNINDENT
@@ -1558,17 +1559,18 @@ alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 
 animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False,
 dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569,
 0.6274509803921569, 0.6274509803921569), limitStdDevs = False, lineWidth = 1.0, matrixColorMap = Greys,
-maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99,
-minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2, minStdDev = 0.01, noHistAnnot = False, normHist = True,
-nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500, opacity4Ellipses = 0.7, outputPath = output,
-runningWindows = False, runningOSX = False, saveScores = True, scaleFactor = 100, screenResolution = 1600x1024,
-showAnnotationsAtStartup = False, showMeanScores = True, showCircularHistogram = True, eer.showCllr = True,
-roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True, showEdgeColor = True, roc.showEer = True,
-zoo.showEer = True, showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True,
-eer.showMinCllr = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True,
-showReference = True, showSingleValueAsUnitValue = False, showStdev = True, showTextAtReferenceAtStartup = False,
-showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False,
-xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63, zLeft = 0.05, zWidth = 0.65
+maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0,
+minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2,
+minStdDev = 0.01, noHistAnnot = False, normHist = True, nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500,
+opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False, saveScores = True,
+scaleFactor = 100, screenResolution = 1600x1024, showAnnotationsAtStartup = False, showMeanScores = True,
+showCircularHistogram = True, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True,
+showConfigInfo = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True,
+showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, eer.showMinCllr = True, roc.showMinCllr = True,
+zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False,
+showStdev = True, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True,
+useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63,
+zLeft = 0.05, zWidth = 0.65
 .ft P
 .fi
 .UNINDENT
@@ -1772,9 +1774,9 @@ maximum4Type1 = 1.0E+99
 .fi
 .UNINDENT
 .UNINDENT
-.SS [eer]
+.SS [det]
 .sp
-Show Cllr values in the plot.:
+Show Cllr value(s).
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -1786,7 +1788,74 @@ showCllr = True
 .UNINDENT
 .UNINDENT
 .sp
-Show minimum Cllr values in the plot.
+Show minimum Cllr value(s).
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+showMinCllr = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Show Eer value(s).
+Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
+The data points nearest to the crossing point are used and the crossing point is computed via interpolation.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+showEer = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Maximum value of False Accept Rate in %.
+Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
+99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+maxFalseAcceptRate = 60
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Maximum value of False Rejection Rate in %.
+Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
+99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+maxFalseRejectionRate = 60
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS [eer]
+.sp
+Show Cllr value(s) in the plot.:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+showCllr = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Show minimum Cllr value(s) in the plot.
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -2086,7 +2155,7 @@ nrSamples4Probability = 500
 .UNINDENT
 .SS [roc]
 .sp
-Show Cllr values in the roc plot.:
+Show Cllr value(s) in the roc plot.
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -2098,7 +2167,7 @@ showCllr = True
 .UNINDENT
 .UNINDENT
 .sp
-Show minimum Cllr values in the roc plot.
+Show minimum Cllr value(s) in the roc plot.
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -2110,7 +2179,7 @@ showMinCllr = True
 .UNINDENT
 .UNINDENT
 .sp
-Show EER values in the roc plot.:
+Show EER value(s) in the roc plot.
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -2385,7 +2454,7 @@ Show Cllr values in legend of relevant plots.
 .sp
 .nf
 .ft C
-showCllrValues = True
+showCllr = True
 .ft P
 .fi
 .UNINDENT
@@ -2398,20 +2467,6 @@ Show edge of ellipse in same color as ellipse (otherwise black).
 .nf
 .ft C
 showEdgeColor = False
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.sp
-Show EER values in legend of relevant plots.
-Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
-The data points nearest to the crossing point are used and the crossing point is computed via interpolation.
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-showEer = True
 .ft P
 .fi
 .UNINDENT
@@ -2437,7 +2492,7 @@ Show min Cllr values in legend of relevant plots.
 .sp
 .nf
 .ft C
-showMinCllrValues = True
+showMinCllr = True
 .ft P
 .fi
 .UNINDENT

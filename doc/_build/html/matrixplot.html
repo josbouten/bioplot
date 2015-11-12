@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Matrix plot &mdash; bioplot 0.9.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="bioplot 0.9.6 documentation" href="index.html" />
+    <link rel="next" title="Ranking plot" href="rankingplot.html" />
+    <link rel="prev" title="Histogram" href="histogram.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          bioplot</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.6</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Chapter <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bioplot.html">Introduction to Bioplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#auto-store">Auto store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#save-plots">Save plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-files">Data files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-exchange">Data exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-anonymity">Data anonymity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#bugs-and-feature-requests">Bugs and feature requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">INSTALL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ms-windows">Ms Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#update-notifications">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#linux">Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#man-pages">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id1">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detplot.html">DET plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#number-of-bins">Number of bins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#combined-experiments">Combined experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Matrix plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocplot.html">ROC plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#traditional-plot">Traditional plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#tall-thin-animals">Tall thin animals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#yager-and-dunstone">Yager and Dunstone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#helper-circles">Helper circles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#colours">Colours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#labels">Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#highlighting-labels">Highlighting labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#settings-file">settings file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#accuracy">[accuracy]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#cfg">[cfg]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#data">[data]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#det">[det]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#eer">[eer]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#histogram">[histogram]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#layout">[layout]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#matrix">[matrix]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#metacolors">[metacolors]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#probability">[probability]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#roc">[roc]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#zoo">[zoo]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">Data separation character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib-on-osx-and-ms-windows">Matplotlib on OSX and Ms Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implementation_notes.html">Implementation notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#histogram-py">histogram.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#cllr-py">cllr.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#documentation">documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#preamble">Preamble</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#gnu-general-public-license">GNU GENERAL PUBLIC LICENSE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#no-warranty">NO WARRANTY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#how-to-apply-these-terms-to-your-new-programs">How to Apply These Terms to Your New Programs</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Paragraph <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Matrix plot</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="histogram.html" title="Previous Chapter: Histogram"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Histogram</span>
+    </a>
+  </li>
+  <li>
+    <a href="rankingplot.html" title="Next Chapter: Ranking plot"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Ranking plot &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/matrixplot.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="matrix-plot">
+<span id="rst-matrixplot"></span><h1>Matrix plot<a class="headerlink" href="#matrix-plot" title="Permalink to this headline">¶</a></h1>
+<p>A matrix plot can be used to compare scores of different experiments with eachother. It is also usefull to display correlations. If the scores contain labels compared to other labels each comparison resulting in one score, then the plot will show a correlation plot. If labels are compared to multiple instances of other labels, each resulting in groups of scores, then these groups are averages.
+To differentiate between experiments the meta value field of the data file is used.</p>
+<p>Matrices can be combined in one plot. Example:</p>
+<img alt="_images/matrix_data_6conditions.png" src="_images/matrix_data_6conditions.png" />
+<p>This plot shows 6 conditions where the overall score changes from condition to condition. The first 3 labels
+correspond to the top row of matrices (from left to right), the next 3 with the bottom row.
+If the number of conditions allows it, the plots can be combined into one plot as in the example above.
+But it is possible to plot them all next to eachother or above oneanother. If the vertical dimension of each matrix exceeds the horizontal dimension they will be drawn next to each other, otherwise they will be drawn in a vertical bar. To achieve this, set combineMatrices to False in bioplot.cfg:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">matrix</span><span class="p">]</span>
+<span class="n">combineMatrices</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<img alt="_images/matrix_data_horizontal_6conditions.png" src="_images/matrix_data_horizontal_6conditions.png" />
+<p>If you want to see some labels in the plot, add the following to bioplot.cfg:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">matrix</span><span class="p">]</span>
+<span class="n">showLabels</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">labelAngle</span> <span class="o">=</span> <span class="mi">70</span>
+</pre></div>
+</div>
+<img alt="_images/matrix_data_6conditions_with_labels.png" src="_images/matrix_data_6conditions_with_labels.png" />
+<p>The matrices above contain artifical data. In real experiments not all labels may have the same number of scores. This may be due to data shortage, a model not being computed etc. In that case bioplot will accept the scores that exist and plot as many as possible. This is visible in the matrices below. On the right hand side data that is missing is replaced by some average value. The scaling of the grey values is not influenced by these values.</p>
+<img alt="_images/real_data_matrix_plot.png" src="_images/real_data_matrix_plot.png" />
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Jos S. Bouten.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

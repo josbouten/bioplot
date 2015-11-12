@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tools &mdash; bioplot 0.9.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="bioplot 0.9.6 documentation" href="index.html" />
+    <link rel="next" title="Settings" href="settings.html" />
+    <link rel="prev" title="Zoo plot" href="zooplot.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          bioplot</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.6</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Chapter <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bioplot.html">Introduction to Bioplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#auto-store">Auto store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#save-plots">Save plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-files">Data files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-exchange">Data exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-anonymity">Data anonymity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#bugs-and-feature-requests">Bugs and feature requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">INSTALL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ms-windows">Ms Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#update-notifications">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#linux">Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#man-pages">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id1">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detplot.html">DET plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#number-of-bins">Number of bins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#combined-experiments">Combined experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrix plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocplot.html">ROC plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#traditional-plot">Traditional plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#tall-thin-animals">Tall thin animals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#yager-and-dunstone">Yager and Dunstone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#helper-circles">Helper circles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#colours">Colours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#labels">Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#highlighting-labels">Highlighting labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bv2bioplot-py">bv2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sretools2bioplot-py">sretools2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#settings-file">settings file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#accuracy">[accuracy]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#cfg">[cfg]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#data">[data]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#det">[det]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#eer">[eer]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#histogram">[histogram]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#layout">[layout]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#matrix">[matrix]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#metacolors">[metacolors]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#probability">[probability]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#roc">[roc]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#zoo">[zoo]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">Data separation character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib-on-osx-and-ms-windows">Matplotlib on OSX and Ms Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implementation_notes.html">Implementation notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#histogram-py">histogram.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#cllr-py">cllr.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation_notes.html#documentation">documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#preamble">Preamble</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#gnu-general-public-license">GNU GENERAL PUBLIC LICENSE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#no-warranty">NO WARRANTY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#how-to-apply-these-terms-to-your-new-programs">How to Apply These Terms to Your New Programs</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Paragraph <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Tools</a><ul>
+<li><a class="reference internal" href="#anonymize-py">anonymize.py</a></li>
+<li><a class="reference internal" href="#bv2bioplot-py">bv2bioplot.py</a></li>
+<li><a class="reference internal" href="#sretools2bioplot-py">sretools2bioplot.py</a></li>
+<li><a class="reference internal" href="#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="zooplot.html" title="Previous Chapter: Zoo plot"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Zoo plot</span>
+    </a>
+  </li>
+  <li>
+    <a href="settings.html" title="Next Chapter: Settings"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Settings &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/tools.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="tools">
+<h1>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="anonymize-py">
+<span id="rst-anonymize"></span><h2>anonymize.py<a class="headerlink" href="#anonymize-py" title="Permalink to this headline">¶</a></h2>
+<p>This script will convert a bioplot data file into an anonymized data file by replacing all relevant elements by a hash value.
+That should make it hard for anyone to decode it. In case you want to exchange data with anyone, you can thus
+preserve the anonymity of the subjects. You can e.g. use this script if you want to send me a data set in case you have
+problems processing it. Use it like so:</p>
+<div class="highlight-python"><div class="highlight"><pre>python anonymize.py input_file output_file
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>python anonymize.py example_data.txt example_data_anonymized.txt
+</pre></div>
+</div>
+<p>If you now look at the contents of the files (only the first few lines are shown), you will see that all elements except
+the score, truth value and meta data label have been replaced by hash values:</p>
+<div class="highlight-python"><div class="highlight"><pre>==&gt; input/example_data.txt &lt;==
+114846 0000000005146119b 114854 bla -1.3412277399322274 FALSE 60s_2x30s
+114847 0000000005146119b 114854 bla -2.2384162803080474 FALSE 60s_2x30s
+114848 0000000005146119b 114854 bla -0.22776277505632123 FALSE 60s_2x30s
+114849 0000000005146119b 114854 bla -0.42766955655065264 FALSE 60s_2x30s
+114850 0000000005146119b 114854 bla -2.838987423178022 FALSE 60s_2x30s
+
+==&gt; input/example_data_anonymized.txt &lt;==
+d068898f905ec982135fadb46e1fe2db5c4e227b4b2deb97ad3b1064b92b7c04 a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -1.3412277399322274 FALSE 60s_2x30s
+3b6ca0f6c6d06ea87807b87a6fba612206381c0d96a844f988fc71d1d6e8528c a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -2.2384162803080474 FALSE 60s_2x30s
+bb663b5dedca2fac332f3c7aa53155f3e7e038fe02faefbb85d8315616f603cd a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -0.22776277505632123 FALSE 60s_2x30s
+8ef620b7e211385969b72d04b9ad7d760cf0f7e5f4b19ad32b85dd046c110f70 a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -0.42766955655065264 FALSE 60s_2x30s
+4bb2c3af939742181003c57fc21c06fe2236c06d365963b2c7ceacc3df3e6e0c a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -2.838987423178022 FALSE 60s_2x30s
+</pre></div>
+</div>
+<p>For anonymization the sha256 hash function is used. For most purposes this should be adequaat.</p>
+</div>
+<div class="section" id="bv2bioplot-py">
+<h2>bv2bioplot.py<a class="headerlink" href="#bv2bioplot-py" title="Permalink to this headline">¶</a></h2>
+<p>Convert a bv results data file to a data file for bioplot.
+Example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre>python bv2bioplot.py  -i inputfile -o outputfile
+</pre></div>
+</div>
+</div>
+<div class="section" id="sretools2bioplot-py">
+<h2>sretools2bioplot.py<a class="headerlink" href="#sretools2bioplot-py" title="Permalink to this headline">¶</a></h2>
+<p>Convert a sretools type input data file to a data file for bioplot.</p>
+<p>Sretools consist of utilities witten in R which accept several columns of data.
+This script is an example which you can use to use that same data as input for bioplot.</p>
+<p>Example of input:</p>
+<div class="highlight-python"><div class="highlight"><pre>Tspid,Tfrid,Mspid,Mfrid,score,target
+114849,0000000005712904a,114849,0000000005713112b,5.368496418,TRUE
+114849,0000000005712904a,114853,0000000005281055b,1.67685461,FALSE
+114849,0000000005712904a,114853,0000000005288357b,1.363172889,FALSE
+114849,0000000005712904a,114854,0000000005133202a,-0.024709666,FALSE
+</pre></div>
+</div>
+<p>Example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre>python sretools2bioplot.py -i inputfile -o outputfile
+</pre></div>
+</div>
+</div>
+<div class="section" id="vocalise2bioplot-py">
+<h2>vocalise2bioplot.py<a class="headerlink" href="#vocalise2bioplot-py" title="Permalink to this headline">¶</a></h2>
+<p>Convert a vocalise data file to a data file for bioplot.</p>
+<p>Example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre>python vocalise2bioplot.py -i inputfile -o outputfile
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Jos S. Bouten.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

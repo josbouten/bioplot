@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Implementation notes &mdash; bioplot 0.9.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="bioplot 0.9.6 documentation" href="index.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="Known Issues" href="issues.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          bioplot</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.6</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Chapter <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bioplot.html">Introduction to Bioplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#auto-store">Auto store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#save-plots">Save plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-files">Data files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-exchange">Data exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#data-anonymity">Data anonymity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bioplot.html#bugs-and-feature-requests">Bugs and feature requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">INSTALL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ms-windows">Ms Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#update-notifications">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#linux">Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#man-pages">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id1">Update notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detplot.html">DET plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eerplot.html">EER plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="histogram.html">Histogram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#number-of-bins">Number of bins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html#combined-experiments">Combined experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrixplot.html">Matrix plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankingplot.html">Ranking plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocplot.html">ROC plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tippettplot.html">Tippett plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zooplot.html">Zoo plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#traditional-plot">Traditional plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#tall-thin-animals">Tall thin animals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#yager-and-dunstone">Yager and Dunstone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#helper-circles">Helper circles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#colours">Colours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#labels">Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#highlighting-labels">Highlighting labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zooplot.html#zooplots-combined-with-histograms">Zooplots combined with Histograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#settings-file">settings file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#accuracy">[accuracy]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#cfg">[cfg]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#data">[data]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#det">[det]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#eer">[eer]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#histogram">[histogram]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#layout">[layout]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#matrix">[matrix]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#metacolors">[metacolors]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#probability">[probability]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#roc">[roc]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#zoo">[zoo]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#data-separation-character">Data separation character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html#matplotlib-on-osx-and-ms-windows">Matplotlib on OSX and Ms Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Implementation notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#histogram-py">histogram.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cllr-py">cllr.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#preamble">Preamble</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#gnu-general-public-license">GNU GENERAL PUBLIC LICENSE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#no-warranty">NO WARRANTY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#how-to-apply-these-terms-to-your-new-programs">How to Apply These Terms to Your New Programs</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Paragraph <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Implementation notes</a><ul>
+<li><a class="reference internal" href="#histogram-py">histogram.py</a></li>
+<li><a class="reference internal" href="#cllr-py">cllr.py</a></li>
+<li><a class="reference internal" href="#documentation">documentation</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="issues.html" title="Previous Chapter: Known Issues"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Known Issues</span>
+    </a>
+  </li>
+  <li>
+    <a href="license.html" title="Next Chapter: License"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">License &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/implementation_notes.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="implementation-notes">
+<h1>Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="histogram-py">
+<h2>histogram.py<a class="headerlink" href="#histogram-py" title="Permalink to this headline">¶</a></h2>
+<p>When drawing a histogram lots of warnings like this one may be seen on the screen:</p>
+<div class="highlight-python"><div class="highlight"><pre>/usr/lib/pymodules/python2.7/matplotlib/cbook.py:1711: DeprecationWarning: using a non-integer number instead of an
+integer will result in an error in the future
+result = np.zeros(new_shape, a.dtype)
+</pre></div>
+</div>
+<p>To suppress warnings like this a filter was added in histogram.py to filter out this specific warning using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cllr-py">
+<h2>cllr.py<a class="headerlink" href="#cllr-py" title="Permalink to this headline">¶</a></h2>
+<p>When computing minimum Cllr values warnings are suppressed when computing log values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># disable runtime warnings for a short time since log(0) will raise a warning.</span>
+<span class="n">old_warn_setup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The minCllr function computes the &#8216;minimum cost of log likelihood ratio&#8217; measure as given in IDIAP&#8217;s BOB code &#8220;measure/calibration.py&#8221;.
+Have a look here <a class="reference external" href="http://idiap.github.io/bob/">http://idiap.github.io/bob/</a> and at this:</p>
+<div class="highlight-python"><div class="highlight"><pre>@inproceedings{bob2012, author = {A. Anjos AND L. El Shafey AND R. Wallace AND M. G\\&quot;unther AND C. McCool AND S. Marcel}, title = {Bob: a free signal processing and machine learning toolbox for researchers}, year = {2012}, month = oct, booktitle = {20th ACM Conference on Multimedia Systems (ACMMM), Nara, Japan}, publisher = {ACM Press}, url = {http://publications.idiap.ch/downloads/papers/2012/Anjos_Bob_ACMMM12.pdf},}
+</pre></div>
+</div>
+<p>However no use is made of BOB&#8217;s pavx function as it would require linking c++ code. Instead sklearn&#8217;s isotonic
+regression function is used which is equivalent.</p>
+</div>
+<div class="section" id="documentation">
+<h2>documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>The man pages and html documentation was made using sphinx v1.3.1 combined with the bootstrap theme,
+see <a class="reference external" href="https://github.com/ryan-roemer/sphinx-bootstrap-theme">https://github.com/ryan-roemer/sphinx-bootstrap-theme</a>. You can find them in the bioplot directory under
+doc/_build/man/bioplot.1 and doc/_build/html/index.html.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Jos S. Bouten.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
