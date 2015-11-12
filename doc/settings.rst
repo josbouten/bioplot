@@ -65,15 +65,15 @@ Always save the target and non target scores, even if the files already exist. :
 
 Set debug flag to True: will print a lot of info which might be of use when trying to debug the code. ::
 
-    debug = False
+ debug = False
 
 Show config info at start of program on command line. ::
 
-    showConfigInfo = True
+ showConfigInfo = True
 
 Path to dir where results and plots are stored. ::
 
-    outputPath = output
+ outputPath = output
 
 Are we running on OSX or not?
 The Labels by default show black text on a yellow background.
@@ -81,7 +81,7 @@ The yellow background may be too large for the text.
 If so, set runningOSX to True, this will change the yellow
 background into a grey one and make the background fit the text in size. ::
 
-    runningOSX = False
+ runningOSX = False
 
 Are we running on Microsoft Windows or not?
 The Labels by default show black text on a yellow background.
@@ -89,11 +89,11 @@ The yellow background may be too large for the text.
 If so, set runningWindows to True, this will change the yellow
 background into a grey one and make the background fit the text in size. ::
 
-    runningWindows = False
+ runningWindows = False
 
 Save all scores to text file separated in target and non target scores per meta value. ::
 
-    saveScores = True
+ saveScores = True
 
 [data]
 ------
@@ -119,16 +119,43 @@ Maximum value we expect for a score in type1 data. ::
 
     maximum4Type1 = 1.0E+99
 
+[det]
+-----
+Show Cllr value(s). ::
+
+ showCllr = True
+
+Show minimum Cllr value(s). ::
+
+ showMinCllr = True
+
+Show Eer value(s).
+Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
+The data points nearest to the crossing point are used and the crossing point is computed via interpolation. ::
+
+ showEer = True
+
+Maximum value of False Accept Rate in %.
+Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
+99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999 ::
+
+ maxFalseAcceptRate = 60
+
+Maximum value of False Rejection Rate in %.
+Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
+99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999 ::
+
+ maxFalseRejectionRate = 60
 
 [eer]
 -----
-Show Cllr values in the plot.::
+Show Cllr value(s) in the plot.::
 
-    showCllr = True
+ showCllr = True
 
-Show minimum Cllr values in the plot. ::
+Show minimum Cllr value(s) in the plot. ::
 
-    showMinCllr = True
+ showMinCllr = True
 
 [histogram]
 -----------
@@ -136,19 +163,19 @@ Number of bins in the histogram.
 Either specify a number or rice, sqrt or sturges.
 See https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width ::
 
-    nrBins = 75
+ nrBins = 75
 
 Normalize histogram. ::
 
-  normHist = True
+ normHist = True
 
 Show meta data values in histogram. ::
 
-  showMetaInHist = True
+ showMetaInHist = True
 
 Show kernel in histogram (if true, meta data values are disregarded). ::
 
-    showKernelInHist = True
+ showKernelInHist = True
 
 [layout]
 --------
@@ -262,15 +289,15 @@ per meta value. ::
 
 [roc]
 -----
-Show Cllr values in the roc plot.::
+Show Cllr value(s) in the roc plot. ::
 
     showCllr = True
 
-Show minimum Cllr values in the roc plot. ::
+Show minimum Cllr value(s) in the roc plot. ::
 
     showMinCllr = True
 
-Show EER values in the roc plot.::
+Show EER value(s) in the roc plot. ::
 
     showEer = True
 
@@ -375,17 +402,11 @@ Show histogram of shift of points depending on meta data values. ::
 
 Show Cllr values in legend of relevant plots. ::
 
-  showCllrValues = True
+  showCllr = True
 
 Show edge of ellipse in same color as ellipse (otherwise black). ::
 
   showEdgeColor = False
-
-Show EER values in legend of relevant plots.
-Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
-The data points nearest to the crossing point are used and the crossing point is computed via interpolation. ::
-
-  showEer = True
 
 Show circles around unit ellipse that can be used to resize the plot so that the unit circle
 will be shown as a circle. This will make it easier to interpret the std values for average target vs
@@ -395,7 +416,7 @@ average non target data points. ::
 
 Show min Cllr values in legend of relevant plots. ::
 
-  showMinCllrValues = True
+  showMinCllr = True
 
 Show nr of target and nr of non target scores for a data point in zoo plot. ::
 
@@ -412,7 +433,7 @@ minimum value which will result in a flat line for that dimension of the ellipse
 or assume this subject is similar to other subjects and set the normalized std dev for this subject to the
 unit value derived from the other subject target and non target scores. The default is to use the minimum value allowed. ::
 
-    showSingleValueAsUnitValue = False
+  showSingleValueAsUnitValue = False
 
 Show std dev values of data points when clicked. ::
 
@@ -440,4 +461,4 @@ Use vertical axis as proposed by Yager et al.
 When set to False the y-axis will be inversed. ::
 
   yagerStyle = True
-  
+
