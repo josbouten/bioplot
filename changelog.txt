@@ -1,3 +1,7 @@
+# v0.9.6.3 22 November 2015
+Added diagonal line to DET-plot, updates images in doc.
+Method name bug in zoo.py
+
 # v0.9.6.2 22 November 2015
 Added some more small things to the doc.
 
