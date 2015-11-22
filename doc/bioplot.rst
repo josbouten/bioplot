@@ -40,7 +40,7 @@ On Ms Windows run: ::
 This wil output the following information: ::
 
 	Usage: ./bioplot.py [options] [option <arg1>] [<label1> <label2> <label3> ...]
-	bioplot.py version 0.9.6.3, Copyright (C) 2014, 2015 Jos Bouten
+	bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
 	This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l'.
 	This is free software, and you are welcome to redistribute it
 	under certain conditions; type `bioplot.py -l' for details.
