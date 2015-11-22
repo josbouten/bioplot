@@ -1,3 +1,6 @@
+# v0.9.6.4 22 November 2015
+bug: double labels in legend of some plots
+
 # v0.9.6.3 22 November 2015
 Added diagonal line to DET-plot, updates images in doc.
 Method name bug in zoo.py
