@@ -262,28 +262,26 @@ start bioplot like this:</p>
 </pre></div>
 </div>
 <p>It will then show a list of chosen settings like so:</p>
-<div class="highlight-python"><div class="highlight"><pre>Ignoring all command line parameters except -s
-Config info taken from &#39;default values&#39;:
-alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5,
-animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False,
-dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569,
-0.6274509803921569, 0.6274509803921569), limitStdDevs = False, lineWidth = 1.0, matrixColorMap = Greys,
-maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0,
-minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2,
-minStdDev = 0.01, noHistAnnot = False, normHist = True, nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500,
-opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False, saveScores = True,
-scaleFactor = 100, screenResolution = 1600x1024, showAnnotationsAtStartup = False, showMeanScores = True,
-showCircularHistogram = True, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True,
-showConfigInfo = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True,
-showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, eer.showMinCllr = True, roc.showMinCllr = True,
-zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False,
-showStdev = True, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True,
-useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63,
-zLeft = 0.05, zWidth = 0.65
+<div class="highlight-python"><div class="highlight"><pre>Config info taken from &#39;default values&#39;:
+alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
+annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8,
+interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569),
+limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60,
+maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99,
+minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50,
+nrBins = 100, nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False,
+saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
+showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True,
+showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True,
+showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True,
+eer.showMinCllr = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True,
+showSingleValueAsUnitValue = False, showStdev = False, showTextAtReferenceAtStartup = False, showUnitDataPoint = True,
+spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True,
+yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, zWidth = 0.65
 </pre></div>
 </div>
 <p>This will show the settings read from the file &#8216;some_other_settings_file&#8217;.</p>
-<div class="highlight-python"><div class="highlight"><pre>bioplot.py version 0.9.4, Copyright (C) 2014 Jos Bouten
+<div class="highlight-python"><div class="highlight"><pre>bioplot.py version 0.9.6.3, Copyright (C) 2014, 2015 Jos Bouten
 Ignoring all command line parameters except -s
 Config info as read from some_other_settings_file:
 alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.

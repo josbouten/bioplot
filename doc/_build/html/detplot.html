@@ -238,12 +238,12 @@
 <div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A, B and C&quot; -i input/testdata_ABC.txt -D
 </pre></div>
 </div>
-<img alt="_images/det_condition_ABC.png" src="_images/det_condition_ABC.png" />
-<p>If you want to see cllr and cllrMin values in the plot&#8217;s legend, set:</p>
+<img alt="_images/det_plot_ohne_etwas.png" src="_images/det_plot_ohne_etwas.png" />
+<p>If you want to see Cllr and minCllr values in the plot&#8217;s legend, set:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">det</span><span class="p">]</span>
 <span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">showCllrMin</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>You can set the upper limits for the False Accept rate and False Rejection Rate in the config file:</p>
@@ -258,6 +258,12 @@
 </pre></div>
 </div>
 <p>In the plot below they are set to 60%</p>
+<img alt="_images/detplot_with_diagonal.png" src="_images/detplot_with_diagonal.png" />
+<p>If you do not like to see a line on the diagonal of the plot by default, then choose this setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">det</span><span class="p">]</span>
+<span class="n">showDiagonal</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
 <img alt="_images/det2_condition_ABC.png" src="_images/det2_condition_ABC.png" />
 </div>
 

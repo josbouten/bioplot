@@ -9,14 +9,14 @@ Example command: ::
 
     python ./bioplot.py -e "condition A, B and C" -i input/testdata_ABC.txt -D
 
-.. image:: images/det_condition_ABC.png
+.. image:: images/det_plot_ohne_etwas.png
 
-If you want to see cllr and cllrMin values in the plot's legend, set: ::
+If you want to see Cllr and minCllr values in the plot's legend, set: ::
 
     [det]
     showEer = True
     showCllr = True
-    showCllrMin = True
+    showMinCllr = True
 
 You can set the upper limits for the False Accept rate and False Rejection Rate in the config file: ::
 
@@ -30,5 +30,12 @@ Choose the limits from: ::
     99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999
 
 In the plot below they are set to 60%
+
+.. image:: images/detplot_with_diagonal.png
+
+If you do not like to see a line on the diagonal of the plot by default, then choose this setting: ::
+
+   [det]
+   showDiagonal = False
 
 .. image:: images/det2_condition_ABC.png

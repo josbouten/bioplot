@@ -12,9 +12,9 @@ Example command: ::
 
 .. image:: images/condition_ABC_roc.png
 
-If you want to see EER, Cllr and/or CllrMin values in the plot's legend, set: ::
+If you want to see EER, Cllr and/or MinCllr values in the plot's legend, set: ::
 
     [roc]
     showEer = True
     showCllr = True
-    showCllrMin = True
+    showMinCllr = True

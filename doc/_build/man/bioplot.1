@@ -91,7 +91,7 @@ This wil output the following information:
 .nf
 .ft C
 Usage: ./bioplot.py [options] [option <arg1>] [<label1> <label2> <label3> ...]
-bioplot.py version 0.9.6.2, Copyright (C) 2014, 2015 Jos Bouten
+bioplot.py version 0.9.6.3, Copyright (C) 2014, 2015 Jos Bouten
 This program comes with ABSOLUTELY NO WARRANTY; for details run \(gabioplot.py \-l\(aq.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type \(gabioplot.py \-l\(aq for details.
@@ -853,7 +853,7 @@ python ./bioplot.py \-e "condition A, B and C" \-i input/testdata_ABC.txt \-D
 .UNINDENT
 [image]
 .sp
-If you want to see cllr and cllrMin values in the plot\(aqs legend, set:
+If you want to see Cllr and minCllr values in the plot\(aqs legend, set:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -862,7 +862,7 @@ If you want to see cllr and cllrMin values in the plot\(aqs legend, set:
 [det]
 showEer = True
 showCllr = True
-showCllrMin = True
+showMinCllr = True
 .ft P
 .fi
 .UNINDENT
@@ -897,6 +897,20 @@ Choose the limits from:
 .sp
 In the plot below they are set to 60%
 [image]
+.sp
+If you do not like to see a line on the diagonal of the plot by default, then choose this setting:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[det]
+showDiagonal = False
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+[image]
 .SH EER PLOT
 .sp
 Will plot a cumulative score plot showing the odds of a false positive and false negative
@@ -930,7 +944,7 @@ If you want to see cllr and cllrMin values in the plot\(aqs legend, set:
 .ft C
 [eer]
 showCllr = True
-showCllrMin = True
+showMinCllr = True
 .ft P
 .fi
 .UNINDENT
@@ -1080,7 +1094,7 @@ python ./bioplot.py \-e "condition A, B and C" \-i input/testdata_ABC.txt \-O
 .UNINDENT
 [image]
 .sp
-If you want to see EER, Cllr and/or CllrMin values in the plot\(aqs legend, set:
+If you want to see EER, Cllr and/or MinCllr values in the plot\(aqs legend, set:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -1089,7 +1103,7 @@ If you want to see EER, Cllr and/or CllrMin values in the plot\(aqs legend, set:
 [roc]
 showEer = True
 showCllr = True
-showCllrMin = True
+showMinCllr = True
 .ft P
 .fi
 .UNINDENT
@@ -1553,24 +1567,22 @@ It will then show a list of chosen settings like so:
 .sp
 .nf
 .ft C
-Ignoring all command line parameters except \-s
 Config info taken from \(aqdefault values\(aq:
-alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5,
-animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False,
-dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569,
-0.6274509803921569, 0.6274509803921569), limitStdDevs = False, lineWidth = 1.0, matrixColorMap = Greys,
-maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0,
-minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2,
-minStdDev = 0.01, noHistAnnot = False, normHist = True, nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500,
-opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False, saveScores = True,
-scaleFactor = 100, screenResolution = 1600x1024, showAnnotationsAtStartup = False, showMeanScores = True,
-showCircularHistogram = True, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True,
-showConfigInfo = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True,
-showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, eer.showMinCllr = True, roc.showMinCllr = True,
-zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False,
-showStdev = True, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True,
-useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63,
-zLeft = 0.05, zWidth = 0.65
+alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
+annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8,
+interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569),
+limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60,
+maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99,
+minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50,
+nrBins = 100, nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False,
+saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
+showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True,
+showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True,
+showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True,
+eer.showMinCllr = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True,
+showSingleValueAsUnitValue = False, showStdev = False, showTextAtReferenceAtStartup = False, showUnitDataPoint = True,
+spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True,
+yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, zWidth = 0.65
 .ft P
 .fi
 .UNINDENT
@@ -1582,7 +1594,7 @@ This will show the settings read from the file \(aqsome_other_settings_file\(aq.
 .sp
 .nf
 .ft C
-bioplot.py version 0.9.4, Copyright (C) 2014 Jos Bouten
+bioplot.py version 0.9.6.3, Copyright (C) 2014, 2015 Jos Bouten
 Ignoring all command line parameters except \-s
 Config info as read from some_other_settings_file:
 alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
