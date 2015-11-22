@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction to Bioplot &mdash; bioplot 0.9.6.3 documentation</title>
+    <title>Introduction to Bioplot &mdash; bioplot 0.9.6.4 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.6.3',
+        VERSION:     '0.9.6.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.6.3 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.6.4 documentation" href="index.html" />
     <link rel="next" title="INSTALL" href="install.html" />
     <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" />
 <meta charset='utf-8'>
@@ -37,7 +37,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body role="document">
+  <body>
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.6.3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.6.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -245,14 +245,14 @@
 <p>You will not be able to use this program or any of its parts to slay a dragon, that I&#8217;m sure of, and I do not guarantee
 that it is fit for any other purpose at all, but I would appreciate if you would include a reference to this code and my name
 in any publications you may write using its features or add a source reference to your code if you include some part(s)
-of this code in yours. Especially if you plan to use part of the code please respect the <a class="reference internal" href="license.html#rst-license"><span>License</span></a>.</p>
+of this code in yours. Especially if you plan to use part of the code please respect the <a class="reference internal" href="license.html#rst-license"><em>License</em></a>.</p>
 <p>bioplot.py is a program which can draw several plots that can be used
 when evaluating the performance of a biometric system. It reads settings from the file &#8216;bioplot.cfg&#8217;.
-But using the -c option you can specify your own settings file (see <a class="reference internal" href="settings.html#rst-settings"><span>Settings</span></a>).
+But using the -c option you can specify your own settings file (see <a class="reference internal" href="settings.html#rst-settings"><em>Settings</em></a>).
 These settings may be used to determine the way information is shown in a plot, what directory plot files
 are written to etc.</p>
-<p>The plot types currently supported are: <a class="reference internal" href="accuracy.html#rst-accuracy"><span>Accuracy plot</span></a>, <a class="reference internal" href="detplot.html#rst-detplot"><span>DET plot</span></a>, <a class="reference internal" href="eerplot.html#rst-eerplot"><span>EER plot</span></a>, <a class="reference internal" href="histogram.html#rst-histogram"><span>Histogram</span></a>,
-<a class="reference internal" href="matrixplot.html#rst-matrixplot"><span>Matrix plot</span></a>, <a class="reference internal" href="rankingplot.html#rst-rankingplot"><span>Ranking plot</span></a>, <a class="reference internal" href="rocplot.html#rst-rocplot"><span>ROC plot</span></a>, <a class="reference internal" href="tippettplot.html#rst-tippetplot"><span>Tippett plot</span></a> and <a class="reference internal" href="zooplot.html#rst-zooplot"><span>Zoo plot</span></a>.</p>
+<p>The plot types currently supported are: <a class="reference internal" href="accuracy.html#rst-accuracy"><em>Accuracy plot</em></a>, <a class="reference internal" href="detplot.html#rst-detplot"><em>DET plot</em></a>, <a class="reference internal" href="eerplot.html#rst-eerplot"><em>EER plot</em></a>, <a class="reference internal" href="histogram.html#rst-histogram"><em>Histogram</em></a>,
+<a class="reference internal" href="matrixplot.html#rst-matrixplot"><em>Matrix plot</em></a>, <a class="reference internal" href="rankingplot.html#rst-rankingplot"><em>Ranking plot</em></a>, <a class="reference internal" href="rocplot.html#rst-rocplot"><em>ROC plot</em></a>, <a class="reference internal" href="tippettplot.html#rst-tippetplot"><em>Tippett plot</em></a> and <a class="reference internal" href="zooplot.html#rst-zooplot"><em>Zoo plot</em></a>.</p>
 <p>Please read INSTALL.txt, this html documentation (note that the file &#8216;manual.txt&#8217; is obsolete) and bioplot.cfg before you try to use
 bioplot.py. You&#8217;ll learn more of the program&#8217;s potential than from its command line help message.</p>
 <p>&#64;Windows dudes and dudettes: I&#8217;m afraid you have to run the program by hand from a command line or build shortcuts
@@ -274,7 +274,7 @@ On OSX and linux run:</p>
 </div>
 <p>This wil output the following information:</p>
 <div class="highlight-python"><div class="highlight"><pre>Usage: ./bioplot.py [options] [option &lt;arg1&gt;] [&lt;label1&gt; &lt;label2&gt; &lt;label3&gt; ...]
-bioplot.py version 0.9.6.3, Copyright (C) 2014, 2015 Jos Bouten
+bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
 This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l&#39;.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type `bioplot.py -l&#39; for details.
@@ -326,7 +326,7 @@ Bioplot can produce several plots in a row with just one invocation of the progr
 </pre></div>
 </div>
 <p>the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.</p>
-<p>The input data has to be in a specific format. Actually there are 2 types of format allowed. See <a class="reference internal" href="#rst-data-files"><span>Data files</span></a> below.
+<p>The input data has to be in a specific format. Actually there are 2 types of format allowed. See <a class="reference internal" href="#rst-data-files"><em>Data files</em></a> below.
 All plots can be saved. This happens automagically as well, as soon as you click on a plot and press a key, but depending
 on the screen size you get more useful results if this happens under your control.</p>
 <p>If you do not provide an input file, the program uses input/testdata_A.txt.
@@ -398,7 +398,7 @@ are saved in individual text files: &lt;exp_name&gt;_chameleons.txt, &lt;exp_nam
 </div>
 <p>The labels with a normalized standard deviation for their target scores or their non target scores bigger than a maximum standard
 deviation are stored in a file &lt;exp name&gt;_limited.txt together with the violating score (have a look at the
-<a class="reference internal" href="zooplot.html#rst-zooplot"><span>Zoo plot</span></a> page for a general understanding of how the plot is made).</p>
+<a class="reference internal" href="zooplot.html#rst-zooplot"><em>Zoo plot</em></a> page for a general understanding of how the plot is made).</p>
 <p>Assuming these settings:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">limitStdDevs</span> <span class="o">=</span> <span class="bp">True</span>
@@ -508,7 +508,7 @@ with: input/testdata_A.txt, input/testdata_B.txt, input/testdata_C.txt and input
 <p>If you experience any difficulties reading your data file, we can either discuss this
 via email or you can send the data it to me ( josbouten at gmail dot com ) so that I can have a look at it.
 Please consider anonymizing the data before you send it to me by mail! Have a look at
-<a class="reference internal" href="tools.html#rst-anonymize"><span>anonymize.py</span></a>.</p>
+<a class="reference internal" href="tools.html#rst-anonymize"><em>anonymize.py</em></a>.</p>
 </div>
 <div class="section" id="data-exchange">
 <h2>Data exchange<a class="headerlink" href="#data-exchange" title="Permalink to this headline">¶</a></h2>
@@ -516,7 +516,7 @@ Please consider anonymizing the data before you send it to me by mail! Have a lo
 </div>
 <div class="section" id="data-anonymity">
 <h2>Data anonymity<a class="headerlink" href="#data-anonymity" title="Permalink to this headline">¶</a></h2>
-<p>If you want to anonymize your data e.g. in case you want to exchange data file with somebody, have a look at <a class="reference internal" href="tools.html#rst-anonymize"><span>anonymize.py</span></a>.</p>
+<p>If you want to anonymize your data e.g. in case you want to exchange data file with somebody, have a look at <a class="reference internal" href="tools.html#rst-anonymize"><em>anonymize.py</em></a>.</p>
 </div>
 <div class="section" id="bugs-and-feature-requests">
 <h2>Bugs and feature requests<a class="headerlink" href="#bugs-and-feature-requests" title="Permalink to this headline">¶</a></h2>
@@ -538,7 +538,7 @@ you can contact me at josbouten at gmail dot com.</p>
     </p>
     <p>
         &copy; Copyright 2015, Jos S. Bouten.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
     </p>
   </div>
 </footer>

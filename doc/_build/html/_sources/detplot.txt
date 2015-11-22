@@ -29,7 +29,7 @@ Choose the limits from: ::
     0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99, 99.5,
     99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999
 
-In the plot below they are set to 60%
+By setting the limits you can show more detail in the plot area.
 
 .. image:: images/detplot_with_diagonal.png
 

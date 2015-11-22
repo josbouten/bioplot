@@ -38,7 +38,7 @@ It will then show a list of chosen settings like so: ::
 
 This will show the settings read from the file 'some_other_settings_file'. ::
 
-    bioplot.py version 0.9.6.3, Copyright (C) 2014, 2015 Jos Bouten
+    bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
     Ignoring all command line parameters except -s
     Config info as read from some_other_settings_file:
     alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
@@ -134,13 +134,13 @@ The data points nearest to the crossing point are used and the crossing point is
 
  showEer = True
 
-Maximum value of False Accept Rate in %.
+Set the upper limits for the False Accept Rate in %.
 Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
 99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999 ::
 
  maxFalseAcceptRate = 60
 
-Maximum value of False Rejection Rate in %.
+Set the upper limits for the False Rejection Rate in %.
 Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
 99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999 ::
 
