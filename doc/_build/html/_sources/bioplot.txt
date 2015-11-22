@@ -39,45 +39,45 @@ On Ms Windows run: ::
 
 This wil output the following information: ::
 
-    Usage: bioplot.py [options] [option <arg1>] [<label1> <label2> <label3> ...]
-    bioplot.py version 0.9.4, Copyright (C) 2014, 2015 Jos Bouten
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `bioplot.py -l'.
-    This is free software, and you are welcome to redistribute it
-    under certain conditions; type `bioplot.py -l' for details.
-    This program was written by Jos Bouten.
-    You can contact me via josbouten at gmail dot com.
-
-    Options:
-      --version             show program's version number and exit
-      -h, --help            show this help message and exit
-      -Z, --zoo             show zoo plot
-      -A, --accuracy        show accuracy plot
-      -D, --det             show Det plot
-      -E, --eer             show EER plot
-      -T, --tippet          show Tippett plot
-      -M, --matrix          show matrix plot
-      -O, --roc             show roc plot
-      -R, --ranking         show ranking plot
-      -C, --histogramc      show cumulative histogram
-      -H, --histogram       show histogram
-      -k, --kernel          show kernel estimate in histogram
-      -e EXPNAME, --exp=EXPNAME
-                            name of experiment used in plot title, default = test
-      -i FILENAME, --inputfile=FILENAME
-                            filename of data file, default = input/testdata_A.txt
-      -t DATATYPE, --type=DATATYPE
-                            type of data, default = type3, use 'database' if you
-                            want to read data from a database.
-      -d THRESHOLD, --threshold=THRESHOLD
-                            system threshold for ranking plot, default = 0.7
-      -c CONFIGFILENAME, --config=CONFIGFILENAME
-                            use alternative config file
-      -l, --license         show license
-      -s, --settings        show settings only
-      -q, --quiet           do not show settings
-
-
-
+	Usage: ./bioplot.py [options] [option <arg1>] [<label1> <label2> <label3> ...]
+	bioplot.py version 0.9.6.2, Copyright (C) 2014, 2015 Jos Bouten
+	This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l'.
+	This is free software, and you are welcome to redistribute it
+	under certain conditions; type `bioplot.py -l' for details.
+	This program was written by Jos Bouten.
+	You can contact me via josbouten at gmail dot com.
+	
+	Options:
+  		--version             show program's version number and exit
+  		-h, --help            show this help message and exit
+  		-Z, --zoo             show zoo plot
+  		-A, --accuracy        show accuracy plot
+  		-D, --det             show Det plot
+  		-E, --eer             show EER plot
+  		-T, --tippet          show Tippett plot
+  		-M, --matrix          show matrix plot
+  		-O, --roc             show roc plot
+  		-R, --ranking         show ranking plot
+  		-C, --histogramc      show cumulative histogram
+  		-H, --histogram       show histogram
+  		-k, --kernel          show kernel estimate in histogram
+  		-e EXPNAME, --exp=EXPNAME
+                        	      name of experiment used in plot title, default = test
+  		-i FILENAME, --inputfile=FILENAME
+                        	      filename of data file, default = input/testdata_A.txt
+  		-t DATATYPE, --type=DATATYPE
+                        	      type of data, default = type3, use 'database' if you
+                        	      want to read data from a database.
+  		-d THRESHOLD, --threshold=THRESHOLD
+                        	      system threshold for ranking plot, default = 0.7
+  		-c CONFIGFILENAME, --config=CONFIGFILENAME
+                        	      use alternative config file
+  		-l, --license         show license
+  		-s, --settings        show settings only
+  		-q, --quiet           do not show settings
+		
+	
+	
 Note:
  - that you can use several options at the same time. The sequence is of no importance.
  - each time in this documentation you read 'python' as part of a command then on a windows platform use 'python.exe' (without the quotes).

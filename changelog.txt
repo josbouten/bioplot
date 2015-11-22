@@ -1,3 +1,6 @@
+# v0.9.6.2 22 November 2015
+Added some more small things to the doc.
+
 # v0.9.6.1 22 November 2015
 Added some small things to the doc.
 
