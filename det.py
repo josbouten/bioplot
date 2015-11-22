@@ -235,6 +235,11 @@ class Det(Probability):
 
         # Convert into DET scale
         pticks = [self.__ppndf__(float(v)) for v in desiredTicks]
+        print pticks
+
+        # Plot diagonal line to facilitate reading the EER-value(s) from the plot.
+        if self.config.getShowDiagonalInDet():
+            plt.plot(pticks, pticks, color='red', lw=1.0, linestyle="-.")
 
         ax = plt.gca()
 
