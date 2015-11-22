@@ -63,14 +63,7 @@ class Roc(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
 
-        # legendText = defaultdict(list)
-
         legendText = defaultdict(list)
-        # Add meta condition value name to legend text if there are more than one meta values.
-        if len(metaColors) > 1:
-            for thisMetaValue in sorted(colors.keys()):
-                legendText[thisMetaValue].append(thisMetaValue)
-
         # Compute and show the EER value if so desired.
         if self.config.getShowEerInRoc():
             eerObject = Eer(self.data, self.config, self.debug)
