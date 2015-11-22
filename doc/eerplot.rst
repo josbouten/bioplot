@@ -24,7 +24,7 @@ If you want to see cllr and cllrMin values in the plot's legend, set: ::
 
     [eer]
     showCllr = True
-    showCllrMin = True
+    showMinCllr = True
 
 .. image:: images/condition_A_and_B_eer_plot_cllr.png
 
