@@ -80,6 +80,9 @@ showCllr = True
 ; Show minimum Cllr values in the det plot.
 showMinCllr = True
 
+; Show diagonal in plot
+showDiagonal = True
+
 ; Show EER values in the det plot.
 showEer = True
 
