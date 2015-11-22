@@ -10,7 +10,7 @@ __author__ = 'drs. ing. Jos Bouten'
     when evaluating the performance of a biometric system.
 
 
-    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014, 2015 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
 You can contact me via josbouten at gmail dot com." % (argv[0], version),
-                               version="This is bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version, )
+                               version="This is bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten" % version, )
 parser.add_option('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
 parser.add_option('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
 parser.add_option('-D', '--det', action="store_true", dest="plotDet", help="show Det plot")
@@ -105,11 +105,7 @@ if options.showLicense:
     l.showLicense()
     exit(0)
 
-# if options.showVersion:
-#    print "This is bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
-#    exit(0)
-
-print "bioplot.py version %s, Copyright (C) 2014 Jos Bouten" % version
+print "bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten" % version
 
 # Name of the experiment, used as _title in plots.
 expName = options.expName
