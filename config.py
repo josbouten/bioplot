@@ -405,6 +405,12 @@ class Config:
         except Exception:
             self._showConfigInfo = self._showConfigInfoDefault
 
+        self._showDiagonalInDetDefault = True
+        try:
+            self._showDiagonalInDet = self.config.getboolean('det', 'showDiagonal')
+        except Exception:
+            self._showDiagonalInDet = self._showDiagonalInDetDefault
+
         self._showEerInDetDefault = True
         try:
             self._showEerInDet = self.config.getboolean('det', 'showEer')
@@ -787,6 +793,9 @@ class Config:
     def getShowConfigInfo(self):
         return self._showConfigInfo
 
+    def getShowDiagonalInDet(self):
+        return self._showDiagonalInDet
+
     def getShowEerInDet(self):
         return self._showEerInDet
 
@@ -940,6 +949,7 @@ class Config:
         string += ", roc.showCllr = " + str(self.getShowCllrInRoc())
         string += ", zoo.showCllr = " + str(self.getShowCllrInZoo())
         string += ", showConfigInfo = " + str(self.getShowConfigInfo())
+        string += ", showDiagonalInDet = " + str(self.getShowDiagonalInDet())
         string += ", showEdgeColor = " + str(self.getShowEdgeColor())
         string += ", roc.showEer = " + str(self.getShowEerInRoc())
         string += ", zoo.showEer = " + str(self.getShowEerInZoo())
@@ -949,6 +959,7 @@ class Config:
         string += ", showKernelInHist = " + str(self.getShowKernelInHist())
         string += ", showMatrixLabels = " + str(self.getShowMatrixLabels())
         string += ", showMetaInHist = " + str(self.getShowMetaInHist())
+        string += ", det.showMinCllr = " + str(self.getShowMinCllrInDet())
         string += ", eer.showMinCllr = " + str(self.getShowMinCllrInEer())
         string += ", roc.showMinCllr = " + str(self.getShowMinCllrInRoc())
         string += ", zoo.showMinCllr = " + str(self.getShowMinCllrInZoo())
