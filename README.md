@@ -5,8 +5,8 @@ Bioplot
 bioplot.py is a program which can draw several plots that can be used
 when evaluating the performance of a biometric system. 
 The plot types currently supported are:
-accuracy plot, cumulative score distribution plot, EER plot, histogram, matrix plot,
-ranking plot, tippett plot and zoo plot.
+accuracy plot, cumulative score distribution plot, DET plot, EER plot, histogram, matrix plot,
+ranking plot, roc plot, tippett plot and zoo plot.
 The example picture shows a so called zoo plot.
  
 Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )

@@ -12,8 +12,8 @@ But using the -c option you can specify your own settings file (see :ref:`rst_se
 These settings may be used to determine the way information is shown in a plot, what directory plot files
 are written to etc.
 
-The plot types currently supported are: :ref:`rst_accuracy`, :ref:`rst_eerplot`, :ref:`rst_histogram`,
-:ref:`rst_matrixplot`, :ref:`rst_rankingplot`, :ref:`rst_tippetplot` and :ref:`rst_zooplot`.
+The plot types currently supported are: :ref:`rst_accuracy`, :ref:`rst_detplot`, :ref:`rst_eerplot`, :ref:`rst_histogram`,
+:ref:`rst_matrixplot`, :ref:`rst_rankingplot`, :ref:`rst_rocplot`, :ref:`rst_tippetplot` and :ref:`rst_zooplot`.
 
 Please read INSTALL.txt, this html documentation (note that the file 'manual.txt' is obsolete) and bioplot.cfg before you try to use
 bioplot.py. You'll learn more of the program's potential than from its command line help message.

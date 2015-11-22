@@ -248,8 +248,8 @@ class Det(Probability):
         if title:
             plt.title("DET plot for " + self.data.getTitle())
             plt.grid(True)
-            plt.xlabel('False Rejection Rate [in %]')
-            plt.ylabel('False Acceptance Rate [in %]')
+            plt.xlabel('False Rejection Rate [%]')
+            plt.ylabel('False Acceptance Rate [%]')
         plt.legend(loc=1)
         #plt.legend()
         plt.show()
