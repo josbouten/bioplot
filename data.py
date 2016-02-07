@@ -42,7 +42,7 @@ from asyncwrite import AsyncWrite
 
 class Data(Format):
     """
-        Data object containing target and non target scores per test picture.
+        Data object containing target and non target scores per test subject.
     """
 
     def __init__(self, thisConfig, thisTitle, thisThreshold, thisDataType, thisDebug=True, thisSource='database'):

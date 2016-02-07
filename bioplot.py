@@ -27,7 +27,7 @@ __author__ = 'drs. ing. Jos Bouten'
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 '''
-import optparse
+import argparse
 from sys import exit, argv
 
 from config import Config
@@ -64,39 +64,39 @@ def printConfig(theseOptions, thisConfig):
 v = Version()
 version = v.getVersion()
 
-parser = optparse.OptionParser(usage="%s [options] [option <arg1>] [<label1> <label2> <label3> ...]\n\
-bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten\n\
+parser = argparse.ArgumentParser(description="%s [plot type] [<label1> <label2> <label3> ...]\n\
+bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten\n\
 This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
 You can contact me via josbouten at gmail dot com." % (argv[0], version),
                                version="This is bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten" % version, )
-parser.add_option('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
-parser.add_option('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
-parser.add_option('-D', '--det', action="store_true", dest="plotDet", help="show Det plot")
-parser.add_option('-E', '--eer', action="store_true", dest="plotEer", help="show EER plot")
-parser.add_option('-T', '--tippet', action="store_true", dest="plotTippet", help="show Tippett plot")
-parser.add_option('-M', '--matrix', action="store_true", dest="plotMatrix", help="show matrix plot")
-parser.add_option('-O', '--roc', action="store_true", dest="plotRoc", help="show roc plot")
-parser.add_option('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")
-parser.add_option('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
-parser.add_option('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
-parser.add_option('-k', '--kernel', action="store_true", dest="plotKernel", help="show kernel estimate in histogram")
-parser.add_option('-e', '--exp', action="store", dest="expName", default='test',
+parser.add_argument('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
+parser.add_argument('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
+parser.add_argument('-D', '--det', action="store_true", dest="plotDet", help="show Det plot")
+parser.add_argument('-E', '--eer', action="store_true", dest="plotEer", help="show EER plot")
+parser.add_argument('-T', '--tippet', action="store_true", dest="plotTippet", help="show Tippett plot")
+parser.add_argument('-M', '--matrix', action="store_true", dest="plotMatrix", help="show matrix plot")
+parser.add_argument('-O', '--roc', action="store_true", dest="plotRoc", help="show roc plot")
+parser.add_argument('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")
+parser.add_argument('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
+parser.add_argument('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
+parser.add_argument('-k', '--kernel', action="store_true", dest="plotKernel", help="show kernel estimate in histogram")
+parser.add_argument('-e', '--exp', action="store", dest="expName", default='test',
                   help="name of experiment used in plot title, default = test")
-parser.add_option('-i', '--inputfile', action="store", dest="filename", default='input/testdata_A.txt',
+parser.add_argument('-i', '--inputfile', action="store", dest="filename", default='input/testdata_A.txt',
                   help="filename of data file, default = input/testdata_A.txt")
-parser.add_option('-t', '--type', action="store", dest="dataType", default='type3',
+parser.add_argument('-t', '--type', action="store", dest="dataType", default='type3',
                   help="type of data, default = type3, use 'database' if you want to read data from a database.")
-parser.add_option('-d', '--threshold', action="store", dest="threshold", type="float", default=0.7,
+parser.add_argument('-d', '--threshold', action="store", dest="threshold", type=float, default=0.7,
                   help="system threshold for ranking plot, default = 0.7")
-parser.add_option('-c', '--config', action="store", dest="configFilename", default='bioplot.cfg',
+parser.add_argument('-c', '--config', action="store", dest="configFilename", default='bioplot.cfg',
                   help="use alternative config file")
-parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
-parser.add_option('-s', '--settings', action="store_true", dest="showOptions", help="show settings only")
-parser.add_option('-q', '--quiet', action="store_true", dest="quiet", help="do not show settings")
-options, remainder = parser.parse_args()
+parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
+parser.add_argument('-s', '--settings', action="store_true", dest="showOptions", help="show settings only")
+parser.add_argument('-q', '--quiet', action="store_true", dest="quiet", help="do not show settings")
+options = parser.parse_args()
 
 # Let's handle any request for the license first.
 # We stop the program after that.
@@ -105,7 +105,7 @@ if options.showLicense:
     l.showLicense()
     exit(0)
 
-print "bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten" % version
+print "bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % version
 
 # Name of the experiment, used as _title in plots.
 expName = options.expName

@@ -3,7 +3,7 @@
 """
     Tool to convert the output of BV result text files to bioplot data format.
 
-    Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 import sys
 import csv
 import collections
-import optparse
-
+import argparse
+import os.path
 from license import License
 
 
@@ -105,19 +105,20 @@ class BVData:
 
 
 if __name__ == '__main__':
-    version = "0.1"
-    parser = optparse.OptionParser(usage="%s [options filename] \n\
-    bv2bioplot.py version %s, Copyright (C) 2015 Jos Bouten\n\
-    bv2bioplot.py comes with ABSOLUTELY NO WARRANTY; for details type `bv2bioplot.py -l\'.\n\
-    This is free software, and you are welcome to redistribute it\n\
-    under certain conditions; type `bv2bioplot.py -l\' for details.\n\
-    This program was written by Jos Bouten.\n\
-    You can contact me via josbouten at gmail dot com." % (sys.argv[0], version),
-                                   version="This is bv2bioplot.py version %s, Copyright (C) 2015 Jos Bouten" % version, )
-    parser.add_option('-i', '--input', action="store", dest="inputfile", help="input file name")
-    parser.add_option('-o', '--output', action="store", dest="outputfile", help="output file name")
-    parser.add_option('-l', '--license', action="store_true", dest="showLicense", help="show license")
-    options, remainder = parser.parse_args()
+    version = "0.2"
+    progName = os.path.basename(sys.argv[0])
+    parser = argparse.ArgumentParser(description="%s version %s, Copyright (C) 2015, 2016 Jos Bouten.\
+    This program converts a bv results data file to a data file for bioplot.py.\
+    It comes with ABSOLUTELY NO WARRANTY; for details run \'%s -h\'.\
+    This is free software, and you are welcome to redistribute it\
+    under certain conditions; run \'%s -l\' for details.\
+    This program was written by Jos Bouten.\
+    You can contact me via josbouten at gmail dot com." % (progName, version, progName, progName),
+    version="This is %s version %s, Copyright (C) 2015, 2016 Jos Bouten" % (progName, version), )
+    parser.add_argument('-i', '--input', action="store", dest="inputfile", help="input file name")
+    parser.add_argument('-o', '--output', action="store", dest="outputfile", help="output file name")
+    parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
+    options = parser.parse_args()
 
     # Let's handle any request for the license first.
     # We stop the program after that.
