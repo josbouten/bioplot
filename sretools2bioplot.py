@@ -83,7 +83,7 @@ class SreData:
 if __name__ == '__main__':
     version = "0.2"
     progName = os.path.basename(sys.argv[0])
-    parser = argparse.ArgumentParser(description="%s [options filename] \n\
+    parser = argparse.ArgumentParser(description="%s [args filename] \n\
     %s version %s, Copyright (C) 2015, 2016 Jos Bouten\n\
     This program comes with ABSOLUTELY NO WARRANTY. For details run \'%s -h\'.\n\
     This is free software, and you are welcome to redistribute it\n\
@@ -94,22 +94,22 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--input', action="store", dest="inputfile", help="input file name")
     parser.add_argument('-o', '--output', action="store", dest="outputfile", help="output file name")
     parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
-    options = parser.parse_args()
+    args = parser.parse_args()
 
     # Let's handle any request for the license first.
     # We stop the program after that.
     debug = False
-    if options.showLicense:
+    if args.showLicense:
         l = License('LICENSE.txt', debug)
         l.showLicense()
         exit(0)
 
-    if options.inputfile:
+    if args.inputfile:
         metaValue = 'META'
-        sData = SreData(options.inputfile, metaValue, debug)
-        if options.outputfile:
+        sData = SreData(args.inputfile, metaValue, debug)
+        if args.outputfile:
             # Print converted data to file
-            sData.convert2bioplot(options.outputfile)
+            sData.convert2bioplot(args.outputfile)
         else:
             # Print to standard output device.
             sData.convert2bioplot('stdout')
