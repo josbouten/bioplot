@@ -28,7 +28,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 import argparse
-from sys import exit, argv
+import sys
 
 from config import Config
 from data import Data
@@ -45,7 +45,7 @@ from matrix import MatrixPlot
 from version import Version
 from utils import sanitize
 from license import License
-
+from os.path import basename
 
 def printConfig(theseOptions, thisConfig):
     if thisConfig.getFileNotFound():
@@ -63,14 +63,14 @@ def printConfig(theseOptions, thisConfig):
 
 v = Version()
 version = v.getVersion()
-
+progName = basename(sys.argv[0])
 parser = argparse.ArgumentParser(description="%s [plot type] [<label1> <label2> <label3> ...]\n\
 bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten\n\
 This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
-You can contact me via josbouten at gmail dot com." % (argv[0], version),
+You can contact me via josbouten at gmail dot com." % (progName, version),
                                version="This is bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten" % version, )
 parser.add_argument('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
 parser.add_argument('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
@@ -83,6 +83,7 @@ parser.add_argument('-R', '--ranking', action="store_true", dest="plotRanking", 
 parser.add_argument('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
 parser.add_argument('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
 parser.add_argument('-k', '--kernel', action="store_true", dest="plotKernel", help="show kernel estimate in histogram")
+parser.add_argument('-L', '--label', dest='labels', type=str, nargs='+', help="add labels to plot")
 parser.add_argument('-e', '--exp', action="store", dest="expName", default='test',
                   help="name of experiment used in plot title, default = test")
 parser.add_argument('-i', '--inputfile', action="store", dest="filename", default='input/testdata_A.txt',
@@ -96,45 +97,45 @@ parser.add_argument('-c', '--config', action="store", dest="configFilename", def
 parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
 parser.add_argument('-s', '--settings', action="store_true", dest="showOptions", help="show settings only")
 parser.add_argument('-q', '--quiet', action="store_true", dest="quiet", help="do not show settings")
-options = parser.parse_args()
+args = parser.parse_args()
 
 # Let's handle any request for the license first.
 # We stop the program after that.
-if options.showLicense:
+if args.showLicense:
     l = License('LICENSE.txt')
     l.showLicense()
     exit(0)
 
-print "bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % version
+print("bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % version)
 
 # Name of the experiment, used as _title in plots.
-expName = options.expName
+expName = args.expName
 
 # We do not like spaces!
-filename = sanitize(options.filename)
-# filename = options.filename
-dataType = options.dataType
+filename = sanitize(args.filename)
+# filename = args.filename
+dataType = args.dataType
 
 # Threshold used by biometric system to make a decision
 # only of interest if you want to plot the systems Accuracy.
-threshold = options.threshold
+threshold = args.threshold
 
-config = Config(options.configFilename)
+config = Config(args.configFilename)
 
 debug = config.getDebug()
 
-if options.quiet:
+if args.quiet:
     config.setShowConfigInfo(False)
 
-if options.showOptions:
+if args.showOptions:
     print "Ignoring all command line parameters except -s"
-    printConfig(options, config)
+    printConfig(args, config)
     exit(1)
 
 if config.getShowConfigInfo():
-    printConfig(options, config)
+    printConfig(args, config)
 
-print "Reading data from '%s'." % options.filename
+print "Reading data from '%s'." % args.filename
 
 data = Data(config, expName, threshold, dataType, debug, filename)
 
@@ -143,55 +144,54 @@ if config.getSaveScores():
     data.writeScores2file(data.getTargetScores(), expName, '_target.txt')
     data.writeScores2file(data.getNonTargetScores(), expName, '_non_target.txt')
 
-if len(remainder) > 0:
-    data.setLabelsToShowAlways(remainder)
+if args.labels:
+    if len(args.labels) > 0:
+        data.setLabelsToShowAlways(args.labels)
 
-
-if options.plotAccuracy:
+if args.plotAccuracy:
     accuracy = Accuracy(data, config, debug)
     accuracy.plot()
 
-if options.plotDet:
+if args.plotDet:
     det = Det(data, config, debug)
     det.plot()
 
-if options.plotEer:
+if args.plotEer:
     eer = Eer(data, config, debug)
     eer.plot()
 
-if options.plotHistCum:
+if args.plotHistCum:
     # Interested in EER plot? Then plot a cumulative histogram of the scores.
     # More crude than eer.plot and not differentiating between meta values.
     histogram = Histogram(data, config, 'cumulative', debug)
     histogram.plot()
 
-if options.plotHist:
+if args.plotHist:
     # Show histogram for data split by meta data value.
     useMeta = True
-    if options.plotKernel:
+    if args.plotKernel:
         # Add all target and non target data together, i.e. do not use meta data label info.
         useMeta = False
     histogram = Histogram(data, config, 'normal', debug, useMeta)
     histogram.plot()
 
-
-if options.plotMatrix:
+if args.plotMatrix:
     matrix = MatrixPlot(data, config, debug)
     matrix.plot()
 
-if options.plotRanking:
+if args.plotRanking:
     ranking = Ranking(data, config, debug)
     ranking.plot()
 
-if options.plotRoc:
+if args.plotRoc:
     roc = Roc(data, config, debug)
     roc.plot()
 
-if options.plotTippet:
+if args.plotTippet:
     tippet = Tippett(data, config, debug)
     tippet.plot()
 
-if options.plotZoo:
+if args.plotZoo:
     if config.getBoutenStyle() is True:
         zoo = BoutenZoo(data, config, debug)
         zoo.plot()
