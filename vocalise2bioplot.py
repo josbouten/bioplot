@@ -152,22 +152,22 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--input', action="store", dest="inputfile", help="input file name")
     parser.add_argument('-o', '--output', action="store", dest="outputfile", help="output file name")
     parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
-    options = parser.parse_args()
+    args = parser.parse_args()
 
     # Let's handle any request for the license first.
     # We stop the program after that.
     debug = False
-    if options.showLicense:
+    if args.showLicense:
         l = License('LICENSE.txt', debug)
         l.showLicense()
         exit(0)
 
-    if options.inputfile:
+    if args.inputfile:
         metaValue = 'META'
-        vData = VocaliseData(options.inputfile, metaValue, debug)
-        if options.outputfile:
+        vData = VocaliseData(args.inputfile, metaValue, debug)
+        if args.outputfile:
             # Print converted data to file
-            vData.convert2bioplot(options.outputfile)
+            vData.convert2bioplot(args.outputfile)
         else:
             # Print to standard output device.
             vData.convert2bioplot('stdout')
