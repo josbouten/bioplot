@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "BIOPLOT" "1" "November 23, 2015" "0.9.6.4" "bioplot"
+.TH "BIOPLOT" "1" "February 08, 2016" "0.9.7" "bioplot"
 .SH NAME
 bioplot \- bioplot Documentation
 .
@@ -90,42 +90,48 @@ This wil output the following information:
 .sp
 .nf
 .ft C
-Usage: ./bioplot.py [options] [option <arg1>] [<label1> <label2> <label3> ...]
-bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
-This program comes with ABSOLUTELY NO WARRANTY; for details run \(gabioplot.py \-l\(aq.
-This is free software, and you are welcome to redistribute it
-under certain conditions; type \(gabioplot.py \-l\(aq for details.
-This program was written by Jos Bouten.
-You can contact me via josbouten at gmail dot com.
+usage: bioplot.py [\-h] [\-v] [\-Z] [\-A] [\-D] [\-E] [\-T] [\-M] [\-O] [\-R] [\-C] [\-H]
+                  [\-k] [\-L LABELS [LABELS ...]] [\-e EXPNAME] [\-i FILENAME]
+                  [\-t DATATYPE] [\-d THRESHOLD] [\-c CONFIGFILENAME] [\-l] [\-s]
+                  [\-q]
 
-Options:
-        \-\-version             show program\(aqs version number and exit
-        \-h, \-\-help            show this help message and exit
-        \-Z, \-\-zoo             show zoo plot
-        \-A, \-\-accuracy        show accuracy plot
-        \-D, \-\-det             show Det plot
-        \-E, \-\-eer             show EER plot
-        \-T, \-\-tippet          show Tippett plot
-        \-M, \-\-matrix          show matrix plot
-        \-O, \-\-roc             show roc plot
-        \-R, \-\-ranking         show ranking plot
-        \-C, \-\-histogramc      show cumulative histogram
-        \-H, \-\-histogram       show histogram
-        \-k, \-\-kernel          show kernel estimate in histogram
-        \-e EXPNAME, \-\-exp=EXPNAME
-                              name of experiment used in plot title, default = test
-        \-i FILENAME, \-\-inputfile=FILENAME
-                              filename of data file, default = input/testdata_A.txt
-        \-t DATATYPE, \-\-type=DATATYPE
-                              type of data, default = type3, use \(aqdatabase\(aq if you
-                              want to read data from a database.
-        \-d THRESHOLD, \-\-threshold=THRESHOLD
-                              system threshold for ranking plot, default = 0.7
-        \-c CONFIGFILENAME, \-\-config=CONFIGFILENAME
-                              use alternative config file
-        \-l, \-\-license         show license
-        \-s, \-\-settings        show settings only
-        \-q, \-\-quiet           do not show settings
+bioplot.py [plot type] [<label1> <label2> <label3> ...] bioplot.py version
+0.9.7, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
+ABSOLUTELY NO WARRANTY; for details run \(gabioplot.py \-l\(aq. This is free
+software, and you are welcome to redistribute it under certain conditions;
+type \(gabioplot.py \-l\(aq for details. This program was written by Jos Bouten. You
+can contact me via josbouten at gmail dot com.
+
+optional arguments:
+  \-h, \-\-help            show this help message and exit
+  \-v, \-\-version         show program\(aqs version number and exit
+  \-Z, \-\-zoo             show zoo plot
+  \-A, \-\-accuracy        show accuracy plot
+  \-D, \-\-det             show Det plot
+  \-E, \-\-eer             show EER plot
+  \-T, \-\-tippet          show Tippett plot
+  \-M, \-\-matrix          show matrix plot
+  \-O, \-\-roc             show roc plot
+  \-R, \-\-ranking         show ranking plot
+  \-C, \-\-histogramc      show cumulative histogram
+  \-H, \-\-histogram       show histogram
+  \-k, \-\-kernel          show kernel estimate in histogram
+  \-L LABELS [LABELS ...], \-\-label LABELS [LABELS ...]
+                        add labels to plot
+  \-e EXPNAME, \-\-exp EXPNAME
+                        name of experiment used in plot title, default = test
+  \-i FILENAME, \-\-inputfile FILENAME
+                        filename of data file, default = input/testdata_A.txt
+  \-t DATATYPE, \-\-type DATATYPE
+                        type of data, default = type3, use \(aqdatabase\(aq if you
+                        want to read data from a database.
+  \-d THRESHOLD, \-\-threshold THRESHOLD
+                        system threshold for ranking plot, default = 0.7
+  \-c CONFIGFILENAME, \-\-config CONFIGFILENAME
+                        use alternative config file
+  \-l, \-\-license         show license
+  \-s, \-\-settings        show settings only
+  \-q, \-\-quiet           do not show settings
 .ft P
 .fi
 .UNINDENT
@@ -1341,13 +1347,13 @@ change the yellow background into a grey one.
 If you click on a data point in the plot, a text label will be shown near the point. This makes
 it possible to find the name of a data point in e.g. the quartile ranges.
 If you are curious where a specific label is in the zoo plot, you need not click on a lot of them to find it.
-You can specify the labels on the command line. If they are in the plot, they will be highlighted. Example:
+You can use \-L followed by the labels on the command line. If they are in the plot, they will be highlighted. Example:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-python ./bioplot.py \-e "condition A and B" \-i input/testdata_AB.txt \-Z 1100 1109 1042
+python ./bioplot.py \-e "condition A and B" \-i input/testdata_AB.txt \-Z \-L 1100 1109 1042
 .ft P
 .fi
 .UNINDENT
@@ -3106,6 +3112,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 .SH AUTHOR
 J.S. Bouten
 .SH COPYRIGHT
-2015, Jos S. Bouten
+2015, 2016 Jos S. Bouten
 .\" Generated by docutils manpage writer.
 .

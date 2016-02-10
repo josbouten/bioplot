@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Zoo plot &mdash; bioplot 0.9.6.4 documentation</title>
+    <title>Zoo plot &mdash; bioplot 0.9.7 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.6.4',
+        VERSION:     '0.9.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.6.4 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.7 documentation" href="index.html" />
     <link rel="next" title="Tools" href="tools.html" />
     <link rel="prev" title="Tippett plot" href="tippettplot.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.6.4</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.7</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -389,8 +389,8 @@ change the yellow background into a grey one.</p>
 <p>If you click on a data point in the plot, a text label will be shown near the point. This makes
 it possible to find the name of a data point in e.g. the quartile ranges.
 If you are curious where a specific label is in the zoo plot, you need not click on a lot of them to find it.
-You can specify the labels on the command line. If they are in the plot, they will be highlighted. Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -Z 1100 1109 1042
+You can use -L followed by the labels on the command line. If they are in the plot, they will be highlighted. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -Z -L 1100 1109 1042
 </pre></div>
 </div>
 <p>This will highlight label 1100, 1109 and 1042 in the zoo plot compiled from
@@ -448,7 +448,7 @@ E.g. in the conditionA and conditionB data plot, the delta is computed for movem
       
     </p>
     <p>
-        &copy; Copyright 2015, Jos S. Bouten.<br/>
+        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
     </p>
   </div>

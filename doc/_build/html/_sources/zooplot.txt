@@ -159,9 +159,9 @@ Highlighting labels
 If you click on a data point in the plot, a text label will be shown near the point. This makes
 it possible to find the name of a data point in e.g. the quartile ranges.
 If you are curious where a specific label is in the zoo plot, you need not click on a lot of them to find it.
-You can specify the labels on the command line. If they are in the plot, they will be highlighted. Example: ::
+You can use -L followed by the labels on the command line. If they are in the plot, they will be highlighted. Example: ::
 
-    python ./bioplot.py -e "condition A and B" -i input/testdata_AB.txt -Z 1100 1109 1042
+    python ./bioplot.py -e "condition A and B" -i input/testdata_AB.txt -Z -L 1100 1109 1042
 
 This will highlight label 1100, 1109 and 1042 in the zoo plot compiled from
 the data in 'testdata_AB.txt' and dim the colours of the other points in the plot

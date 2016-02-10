@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction to Bioplot &mdash; bioplot 0.9.6.4 documentation</title>
+    <title>Introduction to Bioplot &mdash; bioplot 0.9.7 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.6.4',
+        VERSION:     '0.9.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.6.4 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.7 documentation" href="index.html" />
     <link rel="next" title="INSTALL" href="install.html" />
     <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.6.4</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.7</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -273,42 +273,48 @@ On OSX and linux run:</p>
 </pre></div>
 </div>
 <p>This wil output the following information:</p>
-<div class="highlight-python"><div class="highlight"><pre>Usage: ./bioplot.py [options] [option &lt;arg1&gt;] [&lt;label1&gt; &lt;label2&gt; &lt;label3&gt; ...]
-bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
-This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l&#39;.
-This is free software, and you are welcome to redistribute it
-under certain conditions; type `bioplot.py -l&#39; for details.
-This program was written by Jos Bouten.
-You can contact me via josbouten at gmail dot com.
+<div class="highlight-python"><div class="highlight"><pre>usage: bioplot.py [-h] [-v] [-Z] [-A] [-D] [-E] [-T] [-M] [-O] [-R] [-C] [-H]
+                  [-k] [-L LABELS [LABELS ...]] [-e EXPNAME] [-i FILENAME]
+                  [-t DATATYPE] [-d THRESHOLD] [-c CONFIGFILENAME] [-l] [-s]
+                  [-q]
 
-Options:
-        --version             show program&#39;s version number and exit
-        -h, --help            show this help message and exit
-        -Z, --zoo             show zoo plot
-        -A, --accuracy        show accuracy plot
-        -D, --det             show Det plot
-        -E, --eer             show EER plot
-        -T, --tippet          show Tippett plot
-        -M, --matrix          show matrix plot
-        -O, --roc             show roc plot
-        -R, --ranking         show ranking plot
-        -C, --histogramc      show cumulative histogram
-        -H, --histogram       show histogram
-        -k, --kernel          show kernel estimate in histogram
-        -e EXPNAME, --exp=EXPNAME
-                              name of experiment used in plot title, default = test
-        -i FILENAME, --inputfile=FILENAME
-                              filename of data file, default = input/testdata_A.txt
-        -t DATATYPE, --type=DATATYPE
-                              type of data, default = type3, use &#39;database&#39; if you
-                              want to read data from a database.
-        -d THRESHOLD, --threshold=THRESHOLD
-                              system threshold for ranking plot, default = 0.7
-        -c CONFIGFILENAME, --config=CONFIGFILENAME
-                              use alternative config file
-        -l, --license         show license
-        -s, --settings        show settings only
-        -q, --quiet           do not show settings
+bioplot.py [plot type] [&lt;label1&gt; &lt;label2&gt; &lt;label3&gt; ...] bioplot.py version
+0.9.7, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
+ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l&#39;. This is free
+software, and you are welcome to redistribute it under certain conditions;
+type `bioplot.py -l&#39; for details. This program was written by Jos Bouten. You
+can contact me via josbouten at gmail dot com.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program&#39;s version number and exit
+  -Z, --zoo             show zoo plot
+  -A, --accuracy        show accuracy plot
+  -D, --det             show Det plot
+  -E, --eer             show EER plot
+  -T, --tippet          show Tippett plot
+  -M, --matrix          show matrix plot
+  -O, --roc             show roc plot
+  -R, --ranking         show ranking plot
+  -C, --histogramc      show cumulative histogram
+  -H, --histogram       show histogram
+  -k, --kernel          show kernel estimate in histogram
+  -L LABELS [LABELS ...], --label LABELS [LABELS ...]
+                        add labels to plot
+  -e EXPNAME, --exp EXPNAME
+                        name of experiment used in plot title, default = test
+  -i FILENAME, --inputfile FILENAME
+                        filename of data file, default = input/testdata_A.txt
+  -t DATATYPE, --type DATATYPE
+                        type of data, default = type3, use &#39;database&#39; if you
+                        want to read data from a database.
+  -d THRESHOLD, --threshold THRESHOLD
+                        system threshold for ranking plot, default = 0.7
+  -c CONFIGFILENAME, --config CONFIGFILENAME
+                        use alternative config file
+  -l, --license         show license
+  -s, --settings        show settings only
+  -q, --quiet           do not show settings
 </pre></div>
 </div>
 <dl class="docutils">
@@ -537,7 +543,7 @@ you can contact me at josbouten at gmail dot com.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, Jos S. Bouten.<br/>
+        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
     </p>
   </div>
