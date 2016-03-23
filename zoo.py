@@ -980,7 +980,8 @@ class Zoo(Format, Probability):
         """
         Draw a color legend for the metadata on the upper right
         side of the plot, if the metadata can be grouped in more
-        than one group. Only show the meta value if there are more than one.
+        than one group. Only show the meta value if there are more
+        than one.
         """
 
         nrColors = len(colors)
