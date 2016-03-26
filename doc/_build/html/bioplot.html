@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction to Bioplot &mdash; bioplot 0.9.7 documentation</title>
+    <title>Introduction to Bioplot &mdash; bioplot 0.9.8 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.7',
+        VERSION:     '0.9.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.7 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.8 documentation" href="index.html" />
     <link rel="next" title="INSTALL" href="install.html" />
     <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.7</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.8</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -279,7 +279,7 @@ On OSX and linux run:</p>
                   [-q]
 
 bioplot.py [plot type] [&lt;label1&gt; &lt;label2&gt; &lt;label3&gt; ...] bioplot.py version
-0.9.7, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
+0.9.8, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
 ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l&#39;. This is free
 software, and you are welcome to redistribute it under certain conditions;
 type `bioplot.py -l&#39; for details. This program was written by Jos Bouten. You
@@ -304,7 +304,7 @@ optional arguments:
   -e EXPNAME, --exp EXPNAME
                         name of experiment used in plot title, default = test
   -i FILENAME, --inputfile FILENAME
-                        filename of data file, default = input/testdata_A.txt
+                        filename list of filenames of data file(s), default = input/testdata_A.txt
   -t DATATYPE, --type DATATYPE
                         type of data, default = type3, use &#39;database&#39; if you
                         want to read data from a database.
@@ -328,7 +328,7 @@ optional arguments:
 </dl>
 <p>As you can tell from the list of options you need to choose what type of graph you want.
 Bioplot can produce several plots in a row with just one invocation of the program. E.g. if you run:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -A -E -i some_input_data_file.txt
+<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -A -E -i some_input_data_file.txt yet_another_input_file.txt
 </pre></div>
 </div>
 <p>the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.</p>
@@ -456,7 +456,7 @@ To get a nice plot it is wise to maximise the window and then press a key. Then 
 </div>
 <div class="section" id="data-files">
 <span id="rst-data-files"></span><h2>Data files<a class="headerlink" href="#data-files" title="Permalink to this headline">¶</a></h2>
-<p>The command line allows to specify a filename and a type. The default type is &#8216;type3&#8217; which corresponds to a text file
+<p>The command line allows to specify a filename or a list of filenames and a type. The default type is &#8216;type3&#8217; which corresponds to a text file
 with 7 fields. You need not specify type3 as it is a default. This data type allows you to specify scores of
 experiments where multiple files are used to make a model whether this is a training model or a test model.
 Note, if you do not provide an input file, the program uses input/testdata_A.txt.</p>
@@ -476,8 +476,8 @@ This can be mixed as in:</p>
 </pre></div>
 </div>
 <p>field 1: string: label identifying a subject (training data).</p>
-<p>field 2: string: name of data file containing biometric features or raw data originating from the subject denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
-<p>field 3: string: label identifying a subject (test data).</p>
+<p>field 2: string: name of data file containing biometric features or raw data originating from the subject denoted by field 1 used for making a test/evaluation model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
+<p>field 3: string: label identifying a subject (test/evaluation data).</p>
 <p>field 4: string: name of data file containing biometric features or raw data originating from the subject denoted by field 3 used for training the reference model. In the example you see a wav-file, but this can be any string identifying a file or feature set.</p>
 <p>field 5: string: floating point value: score of trial.</p>
 <p>field 6: boolean: ground truth.</p>
@@ -485,6 +485,26 @@ This can be mixed as in:</p>
 <p>Field 7 can be used to contrast scores of experiments in most plots.
 So if you have 2 experiments where you change one variable, when doing a cross
 identification test, the meta value can be used to group the experiment&#8217;s scores.</p>
+<p>Let&#8217;s have a look at an example data line:</p>
+<div class="highlight-python"><div class="highlight"><pre>803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
+</pre></div>
+</div>
+<p>This line describes the result of a speaker verification experiment in which was used:</p>
+<div class="highlight-python"><div class="highlight"><pre>- as training audio samples from the file 17133729a.wav
+- the label 803742 to identify the speaker in the training audio
+- the label 803593 to identify the speaker in the test/evaluation/disputed utterance
+- as evaluation audio samples from the file 16842970b.wav
+- the tag FALSE to denote that the training speaker is not the test/eval speaker
+- META_VAL1 as a label to identify the conditions of the experiment (e.g. this is an experiment
+  with training duration X seconds and test duration Y seconds, you may have various
+  variables and use other meta labels to identify those).
+</pre></div>
+</div>
+<p>The result of the verification experiment was a score of 2.108616847991943.</p>
+<p>If you have done experiments where the training model was made from several audio files, then
+in field 4 use some symbolic name.</p>
+<p>Note: bioplot.py uses the filenames in the data file only as symbols, the sample data in
+the files is not used in any way.</p>
 <p>E.g. you run an experiment with gender as the main variable and you collect scores of male
 to male and female to female comparisons. You need to set the meta value for each score
 accordingly. The meta value field allows bioplot to distinguish
@@ -508,13 +528,15 @@ _decodeType1Results in data.py to your own needs.</p>
 <p>There are several data files (of type3) which are meant as examples to play around
 with: input/testdata_A.txt, input/testdata_B.txt, input/testdata_C.txt and input/testdata_ABC.txt</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -e &quot;condition A&quot; -i testdata_A.txt -Z
+<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -Z
+python bioplot.py -e &quot;condition A and B&quot; -i input/testdata_A.txt input/testdata_B.txt -Z
 </pre></div>
 </div>
 <p>If you experience any difficulties reading your data file, we can either discuss this
 via email or you can send the data it to me ( josbouten at gmail dot com ) so that I can have a look at it.
 Please consider anonymizing the data before you send it to me by mail! Have a look at
 <a class="reference internal" href="tools.html#rst-anonymize"><em>anonymize.py</em></a>.</p>
+<p>Note: bioplot.py does not allow as input data a text file and a database at the same time.</p>
 </div>
 <div class="section" id="data-exchange">
 <h2>Data exchange<a class="headerlink" href="#data-exchange" title="Permalink to this headline">¶</a></h2>

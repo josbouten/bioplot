@@ -1,3 +1,6 @@
+# v0.9.8 25 March 2016
+Added support for multiple input files.
+
 # v0.9.7 7 Febr 2016
 Replaced optparse by argparse in bioplot.py,
 bv2bioplot.py, sretools2bioplot and vocalise2bioplot.py

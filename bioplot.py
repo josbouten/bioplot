@@ -86,8 +86,8 @@ parser.add_argument('-k', '--kernel', action="store_true", dest="plotKernel", he
 parser.add_argument('-L', '--label', dest='labels', type=str, nargs='+', help="add labels to plot")
 parser.add_argument('-e', '--exp', action="store", dest="expName", default='test',
                   help="name of experiment used in plot title, default = test")
-parser.add_argument('-i', '--inputfile', action="store", dest="filename", default='input/testdata_A.txt',
-                  help="filename of data file, default = input/testdata_A.txt")
+parser.add_argument('-i', '--inputfile', action="store", dest="filenames", nargs='+', default=['input/testdata_A.txt'],
+                  help="filename of filenames of data file(s) or name of database, default = input/testdata_A.txt")
 parser.add_argument('-t', '--type', action="store", dest="dataType", default='type3',
                   help="type of data, default = type3, use 'database' if you want to read data from a database.")
 parser.add_argument('-d', '--threshold', action="store", dest="threshold", type=float, default=0.7,
@@ -112,7 +112,7 @@ print("bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % versi
 expName = args.expName
 
 # We do not like spaces!
-filename = sanitize(args.filename)
+filenames = sanitize(args.filenames)
 # filename = args.filename
 dataType = args.dataType
 
@@ -135,9 +135,9 @@ if args.showOptions:
 if config.getShowConfigInfo():
     printConfig(args, config)
 
-print "Reading data from '%s'." % args.filename
+print "Reading data from '%s'." % args.filenames
 
-data = Data(config, expName, threshold, dataType, debug, filename)
+data = Data(config, expName, threshold, dataType, debug, filenames)
 
 if config.getSaveScores():
     # Write data to text files sorted by meta values.

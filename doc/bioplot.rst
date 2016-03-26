@@ -45,7 +45,7 @@ This wil output the following information: ::
                       [-q]
 
     bioplot.py [plot type] [<label1> <label2> <label3> ...] bioplot.py version
-    0.9.7, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
+    0.9.8, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
     ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l'. This is free
     software, and you are welcome to redistribute it under certain conditions;
     type `bioplot.py -l' for details. This program was written by Jos Bouten. You
@@ -70,7 +70,7 @@ This wil output the following information: ::
       -e EXPNAME, --exp EXPNAME
                             name of experiment used in plot title, default = test
       -i FILENAME, --inputfile FILENAME
-                            filename of data file, default = input/testdata_A.txt
+                            filename list of filenames of data file(s), default = input/testdata_A.txt
       -t DATATYPE, --type DATATYPE
                             type of data, default = type3, use 'database' if you
                             want to read data from a database.
@@ -90,7 +90,7 @@ Note:
 As you can tell from the list of options you need to choose what type of graph you want.
 Bioplot can produce several plots in a row with just one invocation of the program. E.g. if you run: ::
 
-    python bioplot.py -Z -A -E -i some_input_data_file.txt
+    python bioplot.py -Z -A -E -i some_input_data_file.txt yet_another_input_file.txt
 
 the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.
 
@@ -228,7 +228,7 @@ Note that using l and k may lead to warnings if e.g. the scores contain negative
 
 Data files
 ----------
-The command line allows to specify a filename and a type. The default type is 'type3' which corresponds to a text file
+The command line allows to specify a filename or a list of filenames and a type. The default type is 'type3' which corresponds to a text file
 with 7 fields. You need not specify type3 as it is a default. This data type allows you to specify scores of
 experiments where multiple files are used to make a model whether this is a training model or a test model.
 Note, if you do not provide an input file, the program uses input/testdata_A.txt.
@@ -250,9 +250,9 @@ This can be mixed as in: ::
 
 field 1: string: label identifying a subject (training data).
 
-field 2: string: name of data file containing biometric features or raw data originating from the subject denoted by field 1 used for making a test model. In the example you see a wav-file, but this can be any string identifying a file or feature set.
+field 2: string: name of data file containing biometric features or raw data originating from the subject denoted by field 1 used for making a test/evaluation model. In the example you see a wav-file, but this can be any string identifying a file or feature set.
 
-field 3: string: label identifying a subject (test data).
+field 3: string: label identifying a subject (test/evaluation data).
 
 field 4: string: name of data file containing biometric features or raw data originating from the subject denoted by field 3 used for training the reference model. In the example you see a wav-file, but this can be any string identifying a file or feature set.
 
@@ -265,6 +265,29 @@ field 7: meta data value for the experiment.
 Field 7 can be used to contrast scores of experiments in most plots.
 So if you have 2 experiments where you change one variable, when doing a cross
 identification test, the meta value can be used to group the experiment's scores.
+
+Let's have a look at an example data line: ::
+
+    803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
+
+This line describes the result of a speaker verification experiment in which was used: ::
+ 
+ - as training audio samples from the file 17133729a.wav
+ - the label 803742 to identify the speaker in the training audio
+ - the label 803593 to identify the speaker in the test/evaluation/disputed utterance
+ - as evaluation audio samples from the file 16842970b.wav
+ - the tag FALSE to denote that the training speaker is not the test/eval speaker
+ - META_VAL1 as a label to identify the conditions of the experiment (e.g. this is an experiment 
+   with training duration X seconds and test duration Y seconds, you may have various 
+   variables and use other meta labels to identify those).
+
+The result of the verification experiment was a score of 2.108616847991943.
+
+If you have done experiments where the training model was made from several audio files, then
+in field 4 use some symbolic name.
+
+Note: bioplot.py uses the filenames in the data file only as symbols, the sample data in 
+the files is not used in any way.
 
 E.g. you run an experiment with gender as the main variable and you collect scores of male
 to male and female to female comparisons. You need to set the meta value for each score
@@ -296,7 +319,8 @@ with: input/testdata_A.txt, input/testdata_B.txt, input/testdata_C.txt and input
 
 Example: ::
 
-  python bioplot.py -e "condition A" -i testdata_A.txt -Z
+  python bioplot.py -e "condition A" -i input/testdata_A.txt -Z 
+  python bioplot.py -e "condition A and B" -i input/testdata_A.txt input/testdata_B.txt -Z
 
 
 If you experience any difficulties reading your data file, we can either discuss this
@@ -304,6 +328,7 @@ via email or you can send the data it to me ( josbouten at gmail dot com ) so th
 Please consider anonymizing the data before you send it to me by mail! Have a look at
 :ref:`rst_anonymize`.
 
+Note: bioplot.py does not allow as input data a text file and a database at the same time.
 
 Data exchange
 -------------

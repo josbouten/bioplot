@@ -35,7 +35,7 @@ import sys
 from os import makedirs, path
 import collections
 
-from utils import sanitize, convert
+from utils import singleSanitize, convert
 from format import Format
 from asyncwrite import AsyncWrite
 
@@ -45,7 +45,7 @@ class Data(Format):
         Data object containing target and non target scores per test subject.
     """
 
-    def __init__(self, thisConfig, thisTitle, thisThreshold, thisDataType, thisDebug=True, thisSource='database'):
+    def __init__(self, thisConfig, thisTitle, thisThreshold, thisDataType, thisDebug=True, thisSources='database'):
         Format.__init__(self, thisDebug)
         self.config = thisConfig
         self._title = thisTitle
@@ -53,7 +53,7 @@ class Data(Format):
         self._dataType = thisDataType
         # Annotate _doves, _phantoms, _worms and _chameleons
         self.debug = thisDebug
-        self._source = thisSource
+        self._sources = thisSources
         self._format = Format(self.debug)
 
         self._plotType = None
@@ -89,16 +89,16 @@ class Data(Format):
         self._allowDups = self.config.getAllowDups()
 
         if self.debug:
-            print 'Data._source:', self._source
+            print 'Data._source(s):', self._sources
 
         # If the user did not specify a filename, we assume a database as the source.
-        if self._source == 'database':
+        if self._sources == 'database':
             print "You need to add some code for this to work!"
             # And remove the sys.exit(1) statement.
             sys.exit(1)
             res = self._readFromDatabase()
         else:
-            res = self._readFromFile(self._source)
+            res = self._readFromFiles(self._sources)
         #
         # Choose between decoder for type of results.
         #
@@ -480,12 +480,12 @@ class Data(Format):
         This function contains some (incomplete) example code in case you want to read
         data from a database. It is suggested to add some code here which does the following:
         1: connect to the database
-        2: read the data from the database and concatenate the data elements separateb by spaces
+        2: read the data from the database and concatenate the data elements separated by spaces
         so that you end up with a list of lines.
         3: then exit this function
         4: In _decodeType1Results transform the lines to the Type3 format and call _decodeType3Results there.
 
-        :return: list of lines containing data elements separated by spaces
+        :return: list of lines containing data elements separated by spaces.
         """
         conn = sqlite3.connect('database.sqlite')
         c = conn.cursor()
@@ -495,24 +495,32 @@ class Data(Format):
         # Score = distance measure / score between label1 and label2
         return res
 
-    def _readFromFile(self, filename):
+    def _readFromFiles(self, filenames):
         """
         Read raw lines of text from a text file.
         Strip lines of CR/LF
         :param filename: string: name of file containing text
         :return: list of strings
         """
-        try:
-            f = open(filename, 'r')
-            lines = f.readlines()
-            f.close()
-            res = []
-            for line in lines:
-                res.append(line.strip())
-            return res
-        except IOError, e:
-            print e
-            sys.exit(1)
+        def readFromFile(filename):
+            try:
+                f = open(filename, 'r')
+                lines = f.readlines()
+                f.close()
+                res = []
+                for line in lines:
+                    res.append(line.strip())
+                return res
+            except IOError, e:
+                print e
+                sys.exit(1)
+
+        ret = []
+        for filename in filenames:
+            ret = ret + readFromFile(filename)
+        return ret
+
+
 
     def writeScores2file(self, scoreDict, expName, extention):
         """
@@ -541,7 +549,7 @@ class Data(Format):
             filename = dataOutputPath + path.sep + expName + '_' + metaValue + extention
             # We do not like spaces in file names.
             # Sorry windows dudes and dudettes !
-            filename = sanitize(filename)
+            filename = singleSanitize(filename)
             if self.config.getAllwaysSave():
                 background = AsyncWrite(filename, scores, self.debug)
                 background.start()

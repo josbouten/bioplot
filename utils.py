@@ -30,7 +30,7 @@ from sys import exit
 
 import matplotlib.pyplot as plt
 
-def sanitize(filename):
+def singleSanitize(filename):
     filename = filename.replace(' ', '_')
     filename = filename.replace(',', '_')
     filename = filename.replace("'", '')
@@ -39,6 +39,11 @@ def sanitize(filename):
     filename = filename.replace('__', '_')
     return filename
 
+def sanitize(filenames):
+    ret = []
+    for filename in filenames:
+        ret.append(singleSanitize(filename))
+    return ret
 
 def convert(value):
     """

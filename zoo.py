@@ -35,7 +35,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
 from eer import Eer
-from utils import sanitize
+from utils import singleSanitize
 
 # import these super classes
 from format import Format
@@ -202,7 +202,7 @@ class Zoo(Format, Probability):
         if self.debug:
             print 'zoo.writeAnimals2file: path:', path
 
-        thisPlotTitle = sanitize(self.data.getTitle())
+        thisPlotTitle = singleSanitize(self.data.getTitle())
 
         #
         #  Worms
@@ -267,7 +267,6 @@ class Zoo(Format, Probability):
 
     def computeZooStats(self):
         """
-
         Compute mean target scores and mean non target scores to be used in zoo plot.
 
         """
@@ -1019,9 +1018,9 @@ class Zoo(Format, Probability):
                         else:
                             eerValue *= 100
                             if eerValue < 10.0:
-                                eerStr = "Eer:  %.2f%s" % (eerValue, '%')
+                                eerStr = "Eer:  %5.2f%s" % (eerValue, '%')
                             else:
-                                eerStr = "Eer: %2.2f%s" % (eerValue, '%')
+                                eerStr = "Eer: %5.2f%s" % (eerValue, '%')
                             legendText[thisMetaValue].append(eerStr)
                         break
 
@@ -1035,9 +1034,9 @@ class Zoo(Format, Probability):
                 for metaValue, cllrValue in cllrData:
                     if thisMetaValue == metaValue:
                         if type(cllrValue) is float:
-                            cllrStr = "Cllr: %.3f" % cllrValue
+                            cllrStr = "Cllr: %2.3f" % cllrValue
                         else:
-                            cllrStr = "Cllr: %s" % cllrValue
+                            cllrStr = "Cllr: %4s" % cllrValue
                         legendText[metaValue].append(cllrStr)
                         break
 
@@ -1051,9 +1050,9 @@ class Zoo(Format, Probability):
                 for metaValue, minCllrValue in minCllrData:
                     if thisMetaValue == metaValue:
                         if type(minCllrValue) is float:
-                            minCllrStr = "minCllr: %.3f" % minCllrValue
+                            minCllrStr = "minCllr: %2.3f" % minCllrValue
                         else:
-                            minCllrStr = "minCllr: %s" % minCllrValue
+                            minCllrStr = "minCllr: %4s" % minCllrValue
                         legendText[metaValue].append(minCllrStr)
                         break
 
