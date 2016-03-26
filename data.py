@@ -89,7 +89,9 @@ class Data(Format):
         self._allowDups = self.config.getAllowDups()
 
         if self.debug:
-            print 'Data._source(s):', self._sources
+            print 'Data._source(s):'
+            for el in self._sources:
+                print el
 
         # If the user did not specify a filename, we assume a database as the source.
         if self._sources == 'database':
