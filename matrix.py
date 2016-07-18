@@ -30,13 +30,9 @@ from math import sqrt
 import matplotlib.pyplot as plt
 from matplotlib.ticker import NullFormatter
 
-from pylab import gca
-import pylab
-
 from format import Format
 from config import Config
 from event import Event
-
 
 class MatrixPlot(Format):
     def __init__(self, thisData, thisConfig, thisDebug=True):
@@ -130,9 +126,8 @@ class MatrixPlot(Format):
             # gca().xaxis.set_major_formatter(nullfmt)
             # gca().xaxis.set_minor_formatter(nullfmt)
             pos = np.arange(len(tickLabels))
-            # pylab.xticks(pos, tickLabels)
-            pylab.xticks(pos, tickLabels, rotation=self.config.getLabelAngle())
-            pylab.yticks(pos, tickLabels)
+            plt.xticks(pos, tickLabels, rotation=self.config.getLabelAngle())
+            plt.yticks(pos, tickLabels)
             # plt.title("matrix plot for %s" % self.title)
             self.event = Event(self.config, fig, self.title, self.plotType, self.debug)
             fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
@@ -163,10 +158,10 @@ class MatrixPlot(Format):
                                           vmax=overallMax)
                     pos = np.arange(len(tickLabels))
                     # No labels.
-                    gca().yaxis.set_major_formatter(nullfmt)
-                    gca().yaxis.set_minor_formatter(nullfmt)
-                    gca().xaxis.set_major_formatter(nullfmt)
-                    gca().xaxis.set_minor_formatter(nullfmt)
+                    plt.gca().yaxis.set_major_formatter(nullfmt)
+                    plt.gca().yaxis.set_minor_formatter(nullfmt)
+                    plt.gca().xaxis.set_major_formatter(nullfmt)
+                    plt.gca().xaxis.set_minor_formatter(nullfmt)
                     plt.xticks(pos, tickLabels, rotation=self.config.getLabelAngle())
                     plt.yticks(pos, tickLabels)
 
@@ -179,7 +174,7 @@ class MatrixPlot(Format):
                 # the matrices are best visible when plotted above each other.
                 fig, ax = plt.subplots(nrOfMetaValues, 1, squeeze=False, figsize=(5 * nrOfMetaValues, 5))
                 pos = np.arange(len(tickLabels))
-                pylab.yticks(pos, tickLabels)
+                plt.yticks(pos, tickLabels)
                 plt.xticks(pos, tickLabels, rotation=70)
                 # plt.title("matrix plot for %s" % self.title)
                 self.event = Event(self.config, fig, self.title, self.plotType, self.debug)
@@ -195,11 +190,11 @@ class MatrixPlot(Format):
                                           vmax=overallMax)
                     # No labels.
                     pos = np.arange(len(tickLabels))
-                    pylab.xticks(pos, tickLabels, rotation=self.config.getLabelAngle())
-                    pylab.yticks(pos, tickLabels)
+                    plt.xticks(pos, tickLabels, rotation=self.config.getLabelAngle())
+                    plt.yticks(pos, tickLabels)
                     nullfmt = NullFormatter()
-                    gca().yaxis.set_major_formatter(nullfmt)
-                    gca().yaxis.set_minor_formatter(nullfmt)
+                    plt.gca().yaxis.set_major_formatter(nullfmt)
+                    plt.gca().yaxis.set_minor_formatter(nullfmt)
                     ax[yy, 0].set_title(metaValue, fontsize=18, color="red")
                     yy += 1
                     im.set_interpolation('none')
