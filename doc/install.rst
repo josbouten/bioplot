@@ -18,9 +18,13 @@ bioplot.py is stored): ::
     copy bioplot.cfg_4_windows.txt bioplot.cfg
 
 And change any settings in it relevant to your use case.
-From here on, you're ready to go. Run the main program from a terminal: ::
+From here on, you're ready to go. Run the main program from a terminal using python 2.7: ::
 
     python.exe bioplot.py -h 
+
+    or 
+
+    python2.7.exe bioplot.py -h 
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -55,9 +59,17 @@ Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link): ::
 
 And change any settings in it relevant to your use case.
 
-Then run the main program: ::
+Then run the main program using python 2.7: ::
 
     python bioplot.py -h
+
+    or
+
+    python2.7 bioplot.py -h
+
+    or
+
+    ./bioplot.py -h
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -108,9 +120,17 @@ Next, copy plot.cfg_4_osx to bioplot.cfg (or make a link): ::
 
 And change any settings in it relevant to your use case.
 
-From here on, you're ready to go. Run the main program from a terminal: ::
+From here on, you're ready to go. Run the main program from a terminal using python 2.7: ::
 
     python bioplot.py -h
+
+    or
+
+    python2.7 bioplot.py -h
+
+    or
+
+    ./bioplot.py -h
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
