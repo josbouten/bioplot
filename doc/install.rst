@@ -96,6 +96,8 @@ OSX
 
 Requirements
 ~~~~~~~~~~~~
+You need to have python2.7.x installed. 
+
 On OSX 10.9.5 run these commands: ::
 
     curl -O https://bootstrap.pypa.io/get-pip.py
