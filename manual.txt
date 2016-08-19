@@ -16,7 +16,7 @@ OSX users:
 
 Copy and paste this line into internet explorer:
 
-file:///Volume/Users/<username>/bioplot/doc/_build/html/index.html
+file:///Users/<username>/bioplot/doc/_build/html/index.html
 
 into safari.
 
@@ -24,7 +24,7 @@ Linux users:
 
 Copy and paste this line into internet explorer:
 
-file:///Volume/Users/<username>/bioplot/doc/_build/html/index.html
+file:///Users/<username>/bioplot/doc/_build/html/index.html
 
 into whatever browser you use.
 
