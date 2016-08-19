@@ -99,7 +99,7 @@ option in bioplot.cfg
 
 Finally have a look at the docs: copy and paste this line into internet explorer:
 
-file:///Volume/Users/<username>/bioplot/doc/_build/html/index.html
+file:///Users/<username>/bioplot/doc/_build/html/index.html
 
 into safari.
 
