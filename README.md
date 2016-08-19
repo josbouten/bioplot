@@ -125,7 +125,7 @@ OSX users:
 
 Copy and paste this line:
 
-<code>file:///Volume/Users/\<user name\>/bioplot/doc/\_build/html/index.html</code>
+<code>file:///Users/\<user name\>/bioplot/doc/\_build/html/index.html</code>
 
 into whatever browser you use.
 
