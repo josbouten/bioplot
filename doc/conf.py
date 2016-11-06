@@ -29,7 +29,7 @@ extensions = ['sphinx.ext.pngmath',
               'matplotlib.sphinxext.mathmpl',
               'matplotlib.sphinxext.only_directives',
               'matplotlib.sphinxext.plot_directive',
-              'matplotlib.sphinxext.ipython_directive',
+              #'matplotlib.sphinxext.ipython_directive',
               'sphinx.ext.autodoc',
               'sphinx.ext.doctest' ]
 
@@ -104,7 +104,6 @@ pygments_style = 'sphinx'
 # overflow: auto;
 # overflow-y: hidden;  /* fixes display issues on Chrome browsers */
 # to <pre> to make them scrollable.
-
 import sphinx_bootstrap_theme
 html_theme = 'bootstrap'
 html_theme_options = {
