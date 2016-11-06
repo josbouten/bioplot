@@ -1,4 +1,5 @@
 #!/usr/bin/env python2.7
+from __future__ import print_function    # (at top of module)
 
 __author__ = 'drs. ing. Jos Bouten'
 
@@ -26,13 +27,15 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
+
 import matplotlib.pyplot as plt
 from event import Event
 
 class Accuracy:
-    def __init__(self, thisData, thisConfig, thisDebug=True):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
+        self._printToFilename = thisExpName
         self.debug = thisDebug
         self.targetScores = self.data.getTargetScores()
         self.nonTargetScores = self.data.getNonTargetScores()
@@ -98,7 +101,7 @@ class Accuracy:
 
         :return:
         """
-        print 'Computing Accuracy, this may take a moment (or two)...'
+        print('Computing Accuracy, this may take a moment (or two)...')
         self.plotType = "accuracy_plot"
         x = []
         yAcc = []
@@ -112,7 +115,7 @@ class Accuracy:
             yBacc.append(balancedAccuracy)
             x.append(threshold)
             threshold += increment
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
@@ -138,4 +141,9 @@ class Accuracy:
                       xytext=(self.data.getDefaultThreshold(), balancedAccuracyAtDefault - 10), textcoords='data',
                       arrowprops=dict(arrowstyle='->', connectionstyle="arc3"), )
         plt.grid()
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()

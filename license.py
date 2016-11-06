@@ -32,17 +32,17 @@ class License:
     def showLicense(self):
         try:
             f = open(self.filename, 'rt')
-        except Exception, e:
-            print e
-            print "You should have received a copy of the GNU General Public License along \
+        except Exception as e:
+            print(e)
+            print("You should have received a copy of the GNU General Public License along \
                     with this program; if not, write to the Free Software Foundation, Inc., \
-                    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA."
+                    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.")
             sys.exit(1)
         else:
             lines = f.readlines()
             f.close()
             for line in lines:
-                print line.strip()
+                print(line.strip())
 
 
 if __name__ == '__main__':

@@ -49,12 +49,12 @@ from os.path import basename
 
 def printConfig(theseOptions, thisConfig):
     if thisConfig.getFileNotFound():
-        print "Config info taken from 'default values':\n%s" % thisConfig.toString()
+        print(("Config info taken from 'default values':\n%s" % thisConfig.toString()))
     else:
         if theseOptions.configFilename:
-            print "Config info as read from '%s':\n%s" % (theseOptions.configFilename, thisConfig.toString())
+            print(("Config info as read from '%s':\n%s" % (theseOptions.configFilename, thisConfig.toString())))
         else:
-            print "Config info taken from 'default values':\n%s" % thisConfig.toString()
+            print(("Config info taken from 'default values':\n%s" % thisConfig.toString()))
 
 
 #
@@ -62,16 +62,15 @@ def printConfig(theseOptions, thisConfig):
 #
 
 v = Version()
-version = v.getVersion()
 progName = basename(sys.argv[0])
+version = "This is bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % v.getVersion()
 parser = argparse.ArgumentParser(description="%s [plot type] [<label1> <label2> <label3> ...]\n\
-bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten\n\
+bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten.\n\
 This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
 This program was written by Jos Bouten.\n\
-You can contact me via josbouten at gmail dot com." % (progName, version),
-                               version="This is bioplot.py version %s, Copyright (C) 2014, 2015 Jos Bouten" % version, )
+You can contact me via josbouten at gmail dot com." % (progName, version))
 parser.add_argument('-Z', '--zoo', action="store_true", dest="plotZoo", help="show zoo plot")
 parser.add_argument('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
 parser.add_argument('-D', '--det', action="store_true", dest="plotDet", help="show Det plot")
@@ -106,7 +105,7 @@ if args.showLicense:
     l.showLicense()
     exit(0)
 
-print("bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % version)
+print(("bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % version))
 
 # Name of the experiment, used as _title in plots.
 expName = args.expName
@@ -128,17 +127,17 @@ if args.quiet:
     config.setShowConfigInfo(False)
 
 if args.showOptions:
-    print "Ignoring all command line parameters except -s"
+    print("Ignoring all command line parameters except -s")
     printConfig(args, config)
     exit(1)
 
 if config.getShowConfigInfo():
     printConfig(args, config)
 
-print "Reading data from:",
+print(("Reading data from:",))
 for el in args.filenames:
-    print el,
-print
+    print((el,))
+print()
 
 data = Data(config, expName, threshold, dataType, debug, filenames)
 
@@ -152,21 +151,21 @@ if args.labels:
         data.setLabelsToShowAlways(args.labels)
 
 if args.plotAccuracy:
-    accuracy = Accuracy(data, config, debug)
+    accuracy = Accuracy(data, config, expName, debug)
     accuracy.plot()
 
 if args.plotDet:
-    det = Det(data, config, debug)
+    det = Det(data, config, expName, debug)
     det.plot()
 
 if args.plotEer:
-    eer = Eer(data, config, debug)
+    eer = Eer(data, config, expName, debug)
     eer.plot()
 
 if args.plotHistCum:
     # Interested in EER plot? Then plot a cumulative histogram of the scores.
     # More crude than eer.plot and not differentiating between meta values.
-    histogram = Histogram(data, config, 'cumulative', debug)
+    histogram = Histogram(data, config, expName, 'cumulative', debug)
     histogram.plot()
 
 if args.plotHist:
@@ -175,29 +174,29 @@ if args.plotHist:
     if args.plotKernel:
         # Add all target and non target data together, i.e. do not use meta data label info.
         useMeta = False
-    histogram = Histogram(data, config, 'normal', debug, useMeta)
+    histogram = Histogram(data, config, expName, 'normal', debug, useMeta)
     histogram.plot()
 
 if args.plotMatrix:
-    matrix = MatrixPlot(data, config, debug)
+    matrix = MatrixPlot(data, config, expName, debug)
     matrix.plot()
 
 if args.plotRanking:
-    ranking = Ranking(data, config, debug)
+    ranking = Ranking(data, config, expName, debug)
     ranking.plot()
 
 if args.plotRoc:
-    roc = Roc(data, config, debug)
+    roc = Roc(data, config, expName, debug)
     roc.plot()
 
 if args.plotTippet:
-    tippet = Tippett(data, config, debug)
+    tippet = Tippett(data, config, expName, debug)
     tippet.plot()
 
 if args.plotZoo:
     if config.getBoutenStyle() is True:
-        zoo = BoutenZoo(data, config, debug)
+        zoo = BoutenZoo(data, config, expName, debug)
         zoo.plot()
     else:
-        zoo = AlexanderZoo(data, config, debug)
+        zoo = AlexanderZoo(data, config, expName, debug)
         zoo.plot()

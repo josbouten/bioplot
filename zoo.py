@@ -48,9 +48,10 @@ from utils import assignColors2MetaDataValue
 
 
 class Zoo(Format, Probability):
-    def __init__(self, thisData, thisConfig, thisDebug):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
         self.data = thisData
         self.config = thisConfig
+        self._expName = thisExpName
         self.debug = thisDebug
         Format.__init__(self, self.debug)
         Probability.__init__(self, self.data, self.config, self.debug)
@@ -120,10 +121,10 @@ class Zoo(Format, Probability):
         metaDataValues = self.data.getMetaDataValues()
         metaColors = self.config.getMetaColors()
         self.colors = assignColors2MetaDataValue(metaDataValues, metaColors)
-        self.nrColors = len(self.colors.keys())
+        self.nrColors = len(list(self.colors.keys()))
         if self.debug:
-            print 'colors:', self.colors
-            print 'nr colors:', len(self.colors.keys())
+            print('colors:', self.colors)
+            print('nr colors:', len(list(self.colors.keys())))
 
         # We need to assess each ellipse's area to choose its opacity.
         self.minSurfaceArea = collections.defaultdict(list)
@@ -180,27 +181,27 @@ class Zoo(Format, Probability):
                          subject.getNumberOfTargets(), subject.getNumberOfNonTargets(),
                          subject.getAgmStdDev(), subject.getAimStdDev()))
             f.close()
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             sys.exit(1)
 
     def _printText(self, name, l, filename):
         if l > 1:
-            print "Writing %d %ss to %s" % (l, name, filename)
+            print("Writing %d %ss to %s" % (l, name, filename))
         else:
-            print "Writing %d %s to %s" % (l, name, filename)
+            print("Writing %d %s to %s" % (l, name, filename))
 
     def writeAnimals2file(self):
         try:
             if not os.path.exists(self.config.getOutputPath()):
                 makedirs(self.config.getOutputPath())
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             sys.exit(1)
 
         path = self.config.getOutputPath() + os.path.sep
         if self.debug:
-            print 'zoo.writeAnimals2file: path:', path
+            print('zoo.writeAnimals2file: path:', path)
 
         thisPlotTitle = singleSanitize(self.data.getTitle())
 
@@ -214,7 +215,7 @@ class Zoo(Format, Probability):
             self._printText('worm', la, filename)
             self._writeSubjects2file(filename, animals)
         else:
-            print 'No _worms to save.'
+            print('No _worms to save.')
         #
         # Chameleons
         #
@@ -225,7 +226,7 @@ class Zoo(Format, Probability):
             self._printText('chameleon', la, filename)
             self._writeSubjects2file(filename, animals)
         else:
-            print 'No _chameleons to save.'
+            print('No _chameleons to save.')
         #
         # Phantoms
         #
@@ -236,7 +237,7 @@ class Zoo(Format, Probability):
             self._printText('phantom', la, filename)
             self._writeSubjects2file(filename, animals)
         else:
-            print 'No _phantoms to save.'
+            print('No _phantoms to save.')
         #
         # Doves
         #
@@ -247,7 +248,7 @@ class Zoo(Format, Probability):
             self._printText('dove', la, filename)
             self._writeSubjects2file(filename, animals)
         else:
-            print 'No _doves to save.'
+            print('No _doves to save.')
 
         limited = list(self.getLimited())
         la = len(limited)
@@ -256,7 +257,7 @@ class Zoo(Format, Probability):
             self._printText('label', la, filename)
             self._writeSubjects2file(filename, limited)
         else:
-            print 'No computed std dev values were limited.'
+            print('No computed std dev values were limited.')
 
     def _getValuesFromListOfDicts(self, thisDict, metaValue):
         ret = []
@@ -275,12 +276,12 @@ class Zoo(Format, Probability):
         lenAimsv = {}
 
         for metaValue in self.data.getMetaDataValues():
-            for subjectLabelPlusMetaValue in self.data.getTargetScores().keys():
+            for subjectLabelPlusMetaValue in list(self.data.getTargetScores().keys()):
                 if metaValue in subjectLabelPlusMetaValue:
                     elements = self.data.getTargetScores()[subjectLabelPlusMetaValue]
                     self.agmsv[subjectLabelPlusMetaValue] = self.data.compAverageScore(elements)
                     lenAgmsv[subjectLabelPlusMetaValue] = len(self.data.getTargetScores()[subjectLabelPlusMetaValue])
-            for subjectLabelPlusMetaValue in self.data.getNonTargetScores().keys():
+            for subjectLabelPlusMetaValue in list(self.data.getNonTargetScores().keys()):
                 if metaValue in subjectLabelPlusMetaValue:
                     elements = self.data.getNonTargetScores()[subjectLabelPlusMetaValue]
                     self.aimsv[subjectLabelPlusMetaValue] = self.data.compAverageScore(elements)
@@ -296,25 +297,25 @@ class Zoo(Format, Probability):
                 self.subjects[subjectLabelPlusMetaValue] = subject
 
         if len(self.subjects) == 0:
-            print "Error: Unable to compute zoo statistics."
-            print "No labels were found for which there are target AND non target scores."
+            print("Error: Unable to compute zoo statistics.")
+            print("No labels were found for which there are target AND non target scores.")
             sys.exit(1)
 
         if self.debug:
-            print 'computeZooStats:len(agmsv):', len(self.agmsv)
-            print 'computeZooStats:len(aimsv):', len(self.aimsv)
+            print('computeZooStats:len(agmsv):', len(self.agmsv))
+            print('computeZooStats:len(aimsv):', len(self.aimsv))
 
         for metaValue in self.data.getMetaDataValues():
             aimsValues = self._getValuesFromListOfDicts(self.aimsv, metaValue)
             if not len(aimsValues) > 1:
-                print "Not enough data to draw a zoo plot for %s." % metaValue
+                print("Not enough data to draw a zoo plot for %s." % metaValue)
                 break
             # Compute quartile ranges.
             self.aimsLow[metaValue] = stats.scoreatpercentile(aimsValues, 25)
             self.aimsHigh[metaValue] = stats.scoreatpercentile(aimsValues, 75)
             agmsValues = self._getValuesFromListOfDicts(self.agmsv, metaValue)
             if not len(agmsValues) > 1:
-                print "Not enough data to draw a zoo plot for %s." % metaValue
+                print("Not enough data to draw a zoo plot for %s." % metaValue)
                 break
             self.agmsLow[metaValue] = stats.scoreatpercentile(agmsValues, 25)
             self.agmsHigh[metaValue] = stats.scoreatpercentile(agmsValues, 75)
@@ -323,11 +324,11 @@ class Zoo(Format, Probability):
             # of values for target and non target experiments.
             self.aim_mi[metaValue] = self.agm_mi[metaValue] = self.data.getMaximum4ThisType()
             self.aim_ma[metaValue] = self.agm_ma[metaValue] = self.data.getMinimum4ThisType()
-            for subjectLabelPlusMetaValue in self.agmsv.keys():
+            for subjectLabelPlusMetaValue in list(self.agmsv.keys()):
                 self.agm_mi[metaValue], self.agm_ma[metaValue] = \
                     self.data.minMax(self.agmsv[subjectLabelPlusMetaValue], self.agm_mi[metaValue],
                                      self.agm_ma[metaValue])
-            for subjectLabelPlusMetaValue in self.aimsv.keys():
+            for subjectLabelPlusMetaValue in list(self.aimsv.keys()):
                 self.aim_mi[metaValue], self.aim_ma[metaValue] = \
                     self.data.minMax(self.aimsv[subjectLabelPlusMetaValue], self.aim_mi[metaValue],
                                      self.aim_ma[metaValue])
@@ -345,13 +346,13 @@ class Zoo(Format, Probability):
             self.agm_maxAll = max(self.agm_maxAll, self.agm_ma[metaValue])
             self.agm_minAll = min(self.agm_minAll, self.agm_mi[metaValue])
             if self.debug:
-                print "computeZooStats: %s agm_mi, agm_ma: %f %f" % (
-                    metaValue, self.agm_mi[metaValue], self.agm_ma[metaValue])
-                print "computeZooStats: %s aim_mi, aim_ma: %f %f" % (
-                    metaValue, self.aim_mi[metaValue], self.aim_ma[metaValue])
+                print("computeZooStats: %s agm_mi, agm_ma: %f %f" % (
+                    metaValue, self.agm_mi[metaValue], self.agm_ma[metaValue]))
+                print("computeZooStats: %s aim_mi, aim_ma: %f %f" % (
+                    metaValue, self.aim_mi[metaValue], self.aim_ma[metaValue]))
         if self.debug:
-            print "computeZooStats: agm_minAll, agm_maxAll: %f %f" % (self.agm_minAll, self.agm_maxAll)
-            print "computeZooStats: aim_minAll, aim_maxAll: %f %f" % (self.aim_minAll, self.aim_maxAll)
+            print("computeZooStats: agm_minAll, agm_maxAll: %f %f" % (self.agm_minAll, self.agm_maxAll))
+            print("computeZooStats: aim_minAll, aim_maxAll: %f %f" % (self.aim_minAll, self.aim_maxAll))
 
     def _sign(self, value):
         return cmp(value, 0)
@@ -378,7 +379,7 @@ class Zoo(Format, Probability):
             self.agmStdDevMax[metaValue] = self.config.getMinStdDev()
             self.aimStdDevMax[metaValue] = self.config.getMinStdDev()
 
-        for thisKey in self.subjects.keys():
+        for thisKey in list(self.subjects.keys()):
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
             # Target std dev for this subject.
@@ -392,7 +393,7 @@ class Zoo(Format, Probability):
                 subject.setSingleTargetScore(True)
                 # Value for stdDev will be set later.
                 if self.debug:
-                    print subject.getPattern(), ': singleTargetScore'
+                    print(subject.getPattern(), ': singleTargetScore')
 
             # Non target std dev for this subject.
             nonTargetScores4ThisSubject = self.data.getNonTargetScores()[thisKey]
@@ -405,13 +406,13 @@ class Zoo(Format, Probability):
             else:
                 subject.setSingleNonTargetScore(True)
                 if self.debug:
-                    print subject.getPattern(), ': singleNonTargetScore'
+                    print(subject.getPattern(), ': singleNonTargetScore')
                 # value for stdDev will be set later.
 
         # Select subjects that we could calculate a std dev for, so that we can normalise
         # these. The remaining subjects will be dealt with later.
 
-        for thisKey in self.subjects.keys():
+        for thisKey in list(self.subjects.keys()):
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
             if not subject.getSingleTargetScore():
@@ -426,7 +427,7 @@ class Zoo(Format, Probability):
                 self.agmStdDevStdDev[metaValue] = numpy.std(allTargetStdDevs[metaValue])
                 self.agmMeanStdDev[metaValue] = numpy.average(allTargetStdDevs[metaValue])
             else:
-                print "Not enough target scores to normalize std devs for metavalue %s!" % metaValue
+                print("Not enough target scores to normalize std devs for metavalue %s!" % metaValue)
                 # Implementation note: we could continue here after removing the metaValue from self.data._metaDataValues
                 sys.exit(1)
 
@@ -434,7 +435,7 @@ class Zoo(Format, Probability):
                 self.aimStdDevStdDev[metaValue] = numpy.std(allNonTargetStdDevs[metaValue])
                 self.aimMeanStdDev[metaValue] = numpy.average(allNonTargetStdDevs[metaValue])
             else:
-                print "Not enough non target scores to normalize std devs for metavalue %s!" % metaValue
+                print("Not enough non target scores to normalize std devs for metavalue %s!" % metaValue)
                 # Implementation note: we could continue here after removing the metaValue from self.data._metaDataValues
                 sys.exit(1)
 
@@ -445,13 +446,13 @@ class Zoo(Format, Probability):
             self.meanAgms[metaValue] = self.data.compAverageScore(theseAgmsValues)
             self.meanAims[metaValue] = self.data.compAverageScore(theseAimValues)
             if self.debug:
-                print "central point for %s will be at: %f %f" % (
-                    metaValue, self.meanAgms[metaValue], self.meanAims[metaValue])
+                print("central point for %s will be at: %f %f" % (
+                    metaValue, self.meanAgms[metaValue], self.meanAims[metaValue]))
 
         # Normalize stdev of all subjects.
         # Note this makes stdev values to be centered around zero.
 
-        for thisKey in self.subjects.keys():
+        for thisKey in list(self.subjects.keys()):
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
 
@@ -484,7 +485,7 @@ class Zoo(Format, Probability):
         maxStdDev = self.config.getMaxStdDev()
         # If the user wants to, the stdev values can be limited to a certain maximum value.
         if self.config.getLimitStdDevs():
-            for thisKey in self.subjects.keys():
+            for thisKey in list(self.subjects.keys()):
                 subject = self.subjects[thisKey]
                 if not subject.getSingleTargetScore():
                     agmNormStdDev = subject.getAgmNormStdDev()
@@ -510,7 +511,7 @@ class Zoo(Format, Probability):
             self.aim_mi[metaValue] = self.agm_mi[metaValue] = self.data.getMaximum4ThisType()
             self.aim_ma[metaValue] = self.agm_ma[metaValue] = self.data.getMinimum4ThisType()
 
-        for thisKey in self.subjects.keys():
+        for thisKey in list(self.subjects.keys()):
             subject = self.subjects[thisKey]
 
             metaValue = subject.getMetaValue()
@@ -523,7 +524,7 @@ class Zoo(Format, Probability):
         for metaValue in self.data.getMetaDataValues():
             self.agmMeanNormStdDev[metaValue] = 0.0
             self.aimMeanNormStdDev[metaValue] = 0.0
-        for thisKey in self.subjects.keys():
+        for thisKey in list(self.subjects.keys()):
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
             self.agmMeanNormStdDev[metaValue] += subject.getAgmNormStdDev()
@@ -561,16 +562,17 @@ class Zoo(Format, Probability):
 
         if self.debug:
             for metaValue in self.data.getMetaDataValues():
-                print "agmStdDevMax[%s]: %f" % (metaValue, self.agmStdDevMax[metaValue])
-                print "agmStdDevMin[%s]: %f" % (metaValue, self.agmStdDevMin[metaValue])
-                print "aimStdDevMax[%s]: %f" % (metaValue, self.aimStdDevMax[metaValue])
-                print "aimStdDevMin[%s]: %f" % (metaValue, self.aimStdDevMin[metaValue])
-                print "agm_mi[%s]: %f" % (metaValue, self.agm_mi[metaValue])
-                print "agm_ma[%s]: %f" % (metaValue, self.agm_ma[metaValue])
-                print "aim_mi[%s]: %f" % (metaValue, self.aim_mi[metaValue])
-                print "aim_ma[%s]: %f" % (metaValue, self.aim_ma[metaValue])
+                print("agmStdDevMax[%s]: %f" % (metaValue, self.agmStdDevMax[metaValue]))
+                print("agmStdDevMin[%s]: %f" % (metaValue, self.agmStdDevMin[metaValue]))
+                print("aimStdDevMax[%s]: %f" % (metaValue, self.aimStdDevMax[metaValue]))
+                print("aimStdDevMin[%s]: %f" % (metaValue, self.aimStdDevMin[metaValue]))
+                print("agm_mi[%s]: %f" % (metaValue, self.agm_mi[metaValue]))
+                print("agm_ma[%s]: %f" % (metaValue, self.agm_ma[metaValue]))
+                print("aim_mi[%s]: %f" % (metaValue, self.aim_mi[metaValue]))
+                print("aim_ma[%s]: %f" % (metaValue, self.aim_ma[metaValue]))
 
-    def isNear(self, x1, y1, (x2, y2), thresholdX, thresholdY):
+    def isNear(self, x1, y1, xxx_todo_changeme, thresholdX, thresholdY):
+        (x2, y2) = xxx_todo_changeme
         dX = x2 - x1
         dY = y2 - y1
 
@@ -590,12 +592,12 @@ class Zoo(Format, Probability):
         :return: list: list of labels within 0.1 unit std of position clicked.
         """
         if self.debug:
-            print "aimStdDevStdDev:", self.aimStdDevStdDev
-            print "agmStdDevStdDev:", self.agmStdDevStdDev
-            print "aimMeanStdDev:", self.aimMeanStdDev
-            print "agmMeanStdDev:", self.agmMeanStdDev
+            print("aimStdDevStdDev:", self.aimStdDevStdDev)
+            print("agmStdDevStdDev:", self.agmStdDevStdDev)
+            print("aimMeanStdDev:", self.aimMeanStdDev)
+            print("agmMeanStdDev:", self.agmMeanStdDev)
         ret = []
-        for thisKey in self.subjects.keys():
+        for thisKey in list(self.subjects.keys()):
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
             pattern = subject.getPattern()
@@ -630,7 +632,7 @@ class Zoo(Format, Probability):
         # Save the animals. Do the WWF thing!
         # See also http://www.worldwildlife.org
 
-        for subject in self.subjects.values():
+        for subject in list(self.subjects.values()):
             # Chameleons
             aims = subject.getAimsv()
             agms = subject.getAgmsv()
@@ -649,10 +651,10 @@ class Zoo(Format, Probability):
 
         # Print some of the stats
         if self.debug:
-            print("Number of _phantoms: %d" % (len(self._phantoms)))
-            print("Number of _worms: %d" % (len(self._worms)))
-            print("Number of _chameleons: %d" % (len(self._chameleons)))
-            print("Number of _doves: %d" % (len(self._doves)))
+            print(("Number of _phantoms: %d" % (len(self._phantoms))))
+            print(("Number of _worms: %d" % (len(self._worms))))
+            print(("Number of _chameleons: %d" % (len(self._chameleons))))
+            print(("Number of _doves: %d" % (len(self._doves))))
 
         # Save results to file.
         self.writeAnimals2file()
@@ -664,9 +666,9 @@ class Zoo(Format, Probability):
         lineWidth = self.config.getLineWidth()
         alpha = 1.0
         # We traverse over all patterns except the last.
-        for pattern in sorted(self.data.getMetaDataValues().keys()[:-1]):
+        for pattern in sorted(list(self.data.getMetaDataValues().keys())[:-1]):
             if self.debug:
-                print '_connectMetaValues:pattern:', pattern
+                print('_connectMetaValues:pattern:', pattern)
             labels = self.data.getMetaDataValues()[pattern]
 
             for thisLabel in labels:
@@ -693,20 +695,20 @@ class Zoo(Format, Probability):
                     allDistances += distances
                     cnt += 1
         if cnt == 0:
-            print "No ellipses were interconnected."
-            print "This means that most likely there were no labels found with contrasting"
-            print "meta data values, or there was insufficient data available to do so."
+            print("No ellipses were interconnected.")
+            print("This means that most likely there were no labels found with contrasting")
+            print("meta data values, or there was insufficient data available to do so.")
         else:
             # We want some stats, don't we?
             if self.debug:
-                print 'allAngles[:5] = ', allAngles[:5]
-                print 'allDistances[:5] = ', allDistances[:5]
+                print('allAngles[:5] = ', allAngles[:5])
+                print('allDistances[:5] = ', allDistances[:5])
 
         # This is still experimental and only makes sense when there are
         # 2 different experiments in the dataset (no more, no less).
         deltaZoo = self._compScore(allAngles, allDistances)
         if self.debug:
-            print '_connectMetaValues:Score: ', deltaZoo
+            print('_connectMetaValues:Score: ', deltaZoo)
         return allAngles, allDistances, deltaZoo
 
     def _compScore(self, angles, distances):
@@ -995,8 +997,8 @@ class Zoo(Format, Probability):
                 incr = max(incr, float((self.aim_ma[metaValue] - self.aim_mi[metaValue]) / 20.0 / nrColors))
 
         if self.debug:
-            print 'drawLegend:self.colors.items():', colors.items()
-            print 'drawLegend:self.colors.keys():', colors.keys()
+            print('drawLegend:self.colors.items():', list(colors.items()))
+            print('drawLegend:self.colors.keys():', list(colors.keys()))
 
         legendText = defaultdict(list)
         # Add meta condition value name to legend text if there are more than one meta values.
@@ -1006,15 +1008,15 @@ class Zoo(Format, Probability):
 
         # Compute and show the EER value if so desired.
         if self.config.getShowEerInZoo():
-            eerObject = Eer(self.data, self.config, self.debug)
+            eerObject = Eer(self.data, self.config, self._expName, self.debug)
             eerData = eerObject.computeProbabilities(self.eerFunc)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, PD, PP, X in eerData:
                     if thisMetaValue == metaValue:
                         try:
                             eerValue, score = eerObject.computeEer(PD, PP, X)
-                        except Exception, e:
-                            print "DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e)
+                        except Exception as e:
+                            print("DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e))
                         else:
                             eerValue *= 100
                             if eerValue < 10.0:
@@ -1029,7 +1031,7 @@ class Zoo(Format, Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
-                print cllrData
+                print(cllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, cllrValue in cllrData:
                     if thisMetaValue == metaValue:
@@ -1045,7 +1047,7 @@ class Zoo(Format, Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:
-                print "minCllrData:", minCllrData
+                print("minCllrData:", minCllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, minCllrValue in minCllrData:
                     if thisMetaValue == metaValue:
@@ -1246,14 +1248,14 @@ class Zoo(Format, Probability):
         angle = 0.0
         count = 0
         if self.debug:
-            print "_plotDistributions: agmsLow, agmsHigh, aimsLow, aimsHigh:"
+            print("_plotDistributions: agmsLow, agmsHigh, aimsLow, aimsHigh:")
             for metaValue in self.data.getMetaDataValues():
-                print metaValue, self.agmsLow[metaValue], self.agmsHigh[metaValue], \
-                    self.aimsLow[metaValue], self.aimsHigh[metaValue]
+                print(metaValue, self.agmsLow[metaValue], self.agmsHigh[metaValue], \
+                    self.aimsLow[metaValue], self.aimsHigh[metaValue])
 
         labelsDrawn = set()
         labelsToShow = self.data.getLabelsToShowAlways()
-        for thisKey in self.subjects.keys():
+        for thisKey in list(self.subjects.keys()):
             subject = self.subjects[thisKey]
             metaValue = subject.getMetaValue()
             # Show subject label and the # of targets and non targets the ellipse was drawn for.
@@ -1394,5 +1396,5 @@ class Zoo(Format, Probability):
                 self._plotHelperCircles(axesZoo)
 
         if self.debug:
-            print '_plotDistributions:count:', count
+            print('_plotDistributions:count:', count)
 

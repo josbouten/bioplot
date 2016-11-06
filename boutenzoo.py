@@ -43,11 +43,13 @@ from circularhist import CircularHistPlot
 
 
 class BoutenZoo(Zoo):
-    def __init__(self, thisData, thisConfig, thisDebug):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
         self.data = thisData
         self.config = thisConfig
+        self._expName = thisExpName
+        self._printToFilename = thisExpName
         self.debug = thisDebug
-        Zoo.__init__(self, self.data, self.config, self.debug)
+        Zoo.__init__(self, self.data, self.config, self._expName, self.debug)
 
         self.title = self.data.getTitle()
         # All ellipses will have their own annotation.
@@ -110,7 +112,7 @@ class BoutenZoo(Zoo):
         allColors = []
         alpha = 1.0
         if self.debug:
-            print 'self.colors:', self.colors
+            print('self.colors:', self.colors)
         for value in sorted(histData):
             try:
                 allColors.append(self.colors[value])
@@ -122,7 +124,7 @@ class BoutenZoo(Zoo):
             n, bins, patches = axes.hist(allData, bins=nrBins, normed=self.config.getNormHist(), color=allColors,
                                          alpha=alpha, orientation=orientation, label=allLabels)
         except Exception:
-            print "Error: could not plot histogram for %s values." % extraLabel
+            print("Error: could not plot histogram for %s values." % extraLabel)
             pass
         axes.legend()
         axes.grid(True)
@@ -131,7 +133,8 @@ class BoutenZoo(Zoo):
         yagerStyle = self.config.getYagerStyle()
         self.useColorsForQuartileRanges = self.config.getUseColorsForQuartileRanges()
         self.annotateEllipsesInQuartiles = self.config.getAnnotateEllipsesInQuartiles()
-        self.fig = plt.figure(1, figsize=(8, 8))
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
+        #self.fig = plt.figure(1, figsize=(8, 8))
         self.computeZooStatsAlexanderStyle()
 
         thisPlot, axesZoo, axesHistX, axesHistY, axesHistC = self._prepareFigs()
@@ -166,7 +169,12 @@ class BoutenZoo(Zoo):
         # Do the WWF-thing!
         self.saveExceptionalAnimals()
         # plt.show(block=True)
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()
 
     def _plotZooAlexanderStyle(self, axesZoo, yagerStyle=False):
         # Plot a list of ellipses each visualising a score distribution for a target.

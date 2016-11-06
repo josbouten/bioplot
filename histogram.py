@@ -55,10 +55,11 @@ from utils import assignColors2MetaDataValue
 
 
 class Histogram(Format):
-    def __init__(self, thisData, thisConfig, thisType='normal', thisDebug=True, thisUseMeta=False):
+    def __init__(self, thisData, thisConfig, thisExpName, thisType='normal', thisDebug=True, thisUseMeta=False):
         Format.__init__(self, thisDebug)
         self.data = thisData
         self.config = thisConfig
+        self._printToFilename = thisExpName
         self.type = thisType
         self.debug = thisDebug
         self.title = self.data.getTitle()
@@ -86,7 +87,7 @@ class Histogram(Format):
             targetScores = self.data.getTargetScoreValues()
             nonTargetScores = self.data.getNonTargetScoreValues()
 
-            self.fig = plt.figure()
+            self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
             self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
             self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
 
@@ -98,7 +99,7 @@ class Histogram(Format):
                          histtype='step', cumulative=-1)
                 plt.hist(targetScores, bins=nrBins, normed=self.config.getNormHist(), color='green', alpha=0.7,
                          histtype='step', cumulative=True)
-                plt.title(r"Cumulative histogram for '%s'" % self.title)
+                plt.title("Cumulative histogram for '%s'" % self.title)
             else:
                 n, bins2, patches = plt.hist(nonTargetScores, nrBins, normed=self.config.getNormHist(), color='red',
                                              alpha=1.0)
@@ -114,25 +115,30 @@ class Histogram(Format):
                     sigma2 = numpy.std(nonTargetScores)
                     y2 = mlab.normpdf(bins2, mu2, sigma2)
                     plt.plot(bins2, y2, 'b--')
-                    plt.title(r"Histogram for '{0:s}': mu, sigma = ({1:0.2f}, {2:0.2f}) ({3:0.2f}, {4:0.2f})".format(
+                    plt.title("Histogram for '{0:s}': mu, sigma = ({1:0.2f}, {2:0.2f}) ({3:0.2f}, {4:0.2f})".format(
                         self.title, mu1, sigma1, mu2, sigma2))
                 else:
-                    plt.title(r"Histogram for '%s" % self.title)
+                    plt.title("Histogram for '%s" % self.title)
             plt.grid(True)
             plt.legend()
-            plt.xlabel('red: non target scores, green: target scores')
-            plt.ylabel('Probability')
+            plt.xlabel("red: non target scores, green: target scores")
+            plt.ylabel("Probability")
 
             # Set the formatter
             formatter = FuncFormatter(self._to_percent)
             plt.gca().yaxis.set_major_formatter(formatter)
-            plt.show()
+            if self.config.getPrintToFile():
+                filename = "%s_%s_%s.%s" % (self._printToFilename, self.plotType, self.type, "png")
+                print("Writing plot to %s" % filename)
+                plt.savefig(filename, orientation='landscape', papertype='letter')
+            else:
+                plt.show()
 
     def plotHistogramWithMeta(self):
         self.plotType = "histogram_plot"
         targetScores = self.data.getTargetScoreValues()
         nonTargetScores = self.data.getNonTargetScoreValues()
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
 
@@ -150,15 +156,15 @@ class Histogram(Format):
                 # Split target and non target scores per meta data value
                 valueSet = self.data.getMetaDataValues().keys()
                 if self.debug:
-                    print 'valueSet:', valueSet
+                    print('valueSet:', valueSet)
                 targetHistData = {}
                 nonTargetHistData = {}
                 metaColors = self.config.getMetaColors()
                 self.colors = assignColors2MetaDataValue(self.data.getMetaDataValues(), metaColors)
                 self.nrColors = len(self.colors.keys())
                 if self.debug:
-                    print 'colors:', self.colors
-                    print 'nr colors:', self.nrColors
+                    print('colors:', self.colors)
+                    print('nr colors:', self.nrColors)
 
                 for value in valueSet:
                     targetHistData[value] = []
@@ -188,7 +194,7 @@ class Histogram(Format):
                     except Exception:
                         pass
                 if self.debug:
-                    print 'allColors:', allColors
+                    print('allColors:', allColors)
                 try:
                     if len(self.colors) > 1:
                         # If we pair colours, this makes it difficult to distinguish between target and non target
@@ -198,12 +204,12 @@ class Histogram(Format):
                     else:
                         plt.hist(allData, bins=nrBins, normed=self.config.getNormHist(), alpha=alpha, label=allLabels)
                 except Exception:
-                    print "Error: could not plot histogram!"
-                    print "len(allData): %d\nnrBins: %d" % (len(allData), self.config.getNrBins())
-                    print "allLabels: %s" % allLabels
+                    print("Error: could not plot histogram!")
+                    print("len(allData): %d\nnrBins: %d" % (len(allData), self.config.getNrBins()))
+                    print("allLabels: %s" % allLabels)
                     pass
                 else:
-                    plt.title(r"Histogram for '%s'" % self.title)
+                    plt.title("Histogram for '%s'" % self.title)
                     plt.legend()
             else:
                 plt.hist(nonTargetScores, bins=nrBins, normed=self.config.getNormHist(), facecolor='red', alpha=1.0)
@@ -211,4 +217,9 @@ class Histogram(Format):
                 plt.title(r"Histogram for '%s'" % self.title)
         plt.grid(True)
         plt.xlabel('Target and Non Target Scores')
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s_%s.%s" % (self._printToFilename, self.plotType, self.type, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()

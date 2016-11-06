@@ -37,7 +37,7 @@ class CircularHistPlot:
     def plot(self):
         N = len(self.angles)
         if self.debug:
-            print 'CircularHistPlot: N:', N
+            print('CircularHistPlot: N:', N)
         hist, bin_edges = np.histogram(self.angles, bins=N, normed=True, density=False)
         maxHeight = max(hist) * 1.0
         theta = np.linspace(0.0, 2 * np.pi, N, endpoint=False)

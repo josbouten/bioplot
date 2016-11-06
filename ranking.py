@@ -29,9 +29,10 @@ from event import Event
 from utils import assignColors2MetaDataValue
 
 class Ranking:
-    def __init__(self, thisData, thisConfig, thisDebug=True):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
+        self._printToFilename = thisExpName
         self.debug = thisDebug
         self.title = self.data.getTitle()
         self.labels = None
@@ -56,7 +57,7 @@ class Ranking:
                 return index
             index += 1
         if self.debug:
-            print '_find:found:', index
+            print('_find:found:', index)
         return index
 
     def computeRanking(self, metaValue):
@@ -66,7 +67,7 @@ class Ranking:
         :return: dict of ranking positions for key = label.
         """
         if self.debug:
-            print 'Computing ranking'
+            print('Computing ranking')
 
         self.labels = self.data.getTargetLabels()
         ranking = {}
@@ -78,12 +79,12 @@ class Ranking:
                 ranking[label] = thisRank
                 maxRank = max(maxRank, thisRank)
                 cnt += 1
-            except Exception:
-                print 'not found'
+            except Exception as e:
+                print('not found')
                 pass
         if self.debug:
-            print 'computeRanking.max:', maxRank
-            print 'computeRanking:number of ranks found:', cnt
+            print('computeRanking.max:', maxRank)
+            print('computeRanking:number of ranks found:', cnt)
         return ranking, maxRank
 
     def getNrLabels(self, ranking, thisRank):
@@ -111,7 +112,7 @@ class Ranking:
         """
         Cumulative Ranking Plot
         """
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.plotType = "ranking_plot"
         self.event = Event(self.config, self.fig, self.title, self.plotType, self.debug)
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
@@ -138,8 +139,13 @@ class Ranking:
                 axes.set_title("Ranking plot for '%s'" % self.title)
                 plt.xlabel("Rank %s" % self._mkPercentString(y))
                 only_once = False
-            print metaValue
+            print(metaValue)
         plt.ylabel('Probability')
         axes.legend(loc=5)
         plt.grid()
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()

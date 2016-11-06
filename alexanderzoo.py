@@ -35,10 +35,11 @@ import collections
 
 
 class AlexanderZoo(Zoo):
-    def __init__(self, thisData, thisConfig, thisDebug):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
         Zoo.__init__(self, thisData, thisConfig, thisDebug)
         self.config = thisConfig
         self.data = thisData
+        self._printToFilename = thisExpName
         self.debug = thisDebug
         # All ellipses will have their own annotation.
         self._pointsWithAnnotation = []
@@ -46,7 +47,7 @@ class AlexanderZoo(Zoo):
         self._outputPath = self.config.getOutputPath()
 
         if self.debug:
-            print 'nrMeta:', self.data.getNrDistinctMetaDataValues()
+            print('nrMeta:', self.data.getNrDistinctMetaDataValues())
         self._title = self.data.getTitle()
 
         self.aimsStdDev = collections.defaultdict(float)
@@ -65,12 +66,17 @@ class AlexanderZoo(Zoo):
 
         # Gather some stats
         self.saveExceptionalAnimals()
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()
 
     def _plotZooAlexanderStyle(self, yagerStyle=True):
         self.computeZooStatsAlexanderStyle()
         # plot a list of ellipses each visualising a score distribution for a target
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.drawLegend(self.colors)
 
         self.event = Event(self.config, self.fig, self._title, self.plotType, self.debug)

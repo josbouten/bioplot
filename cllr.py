@@ -184,8 +184,8 @@ if __name__ == '__main__':
             f.close()
             for line in lines:
                 ret.append(float(line))
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
         return ret
 
 
@@ -194,6 +194,6 @@ if __name__ == '__main__':
     c = Cllr([], [], thisDebug=True)
     targetScores = readData(targetFilename)
     nonTargetScores = readData(nonTargetFilename)
-    print c._cllr(targetScores, nonTargetScores)
-    print c._minCllr(targetScores, nonTargetScores)
-    print "Result should be 0.645767685989 and 0.146121418712"
+    print(c._cllr(targetScores, nonTargetScores))
+    print(c._minCllr(targetScores, nonTargetScores))
+    print("Result should be 0.645767685989 and 0.146121418712")

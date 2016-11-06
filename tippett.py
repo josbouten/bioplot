@@ -30,9 +30,10 @@ from probability import Probability
 from utils import assignColors2MetaDataValue
 
 class Tippett(Probability):
-    def __init__(self, thisData, thisConfig, thisDebug=True):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
+        self._printToFilename = thisExpName
         self.debug = thisDebug
         self.plotType = 'tippett_plot'
         Probability.__init__(self, self.data, self.config, self.debug)
@@ -41,7 +42,7 @@ class Tippett(Probability):
 
 
     def plot(self):
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
@@ -58,4 +59,9 @@ class Tippett(Probability):
         plt.xlabel('score')
         plt.ylabel('Probability (cumulative distribution function)')
         plt.grid()
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()

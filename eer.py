@@ -34,9 +34,11 @@ from collections import defaultdict
 import sys
 
 class Eer(Probability):
-    def __init__(self, thisData, thisConfig, thisDebug=True):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
+        self._printToFilename = thisExpName
+        self._expName = thisExpName
         self.debug = thisDebug
         Probability.__init__(self, self.data, self.config, self.debug)
         self.plotType = 'eer_plot'
@@ -93,22 +95,22 @@ class Eer(Probability):
             PD[j] = nts / lnt
         index2score, eer = self._intersectionPoint(PD, PP)
         if self.debug:
-            print 'compProbs:index2score:', index2score
-            print 'compProbs:eer:', eer
+            print('compProbs:index2score:', index2score)
+            print('compProbs:eer:', eer)
         score = X[index2score]
         return eer, score, PD, PP, X
 
     def computeEer(self, PD, PP, X):
         try:
             index2score, eer = self._intersectionPoint(PD, PP)
-        except Exception, e:
-            print 'Exception in computeEer:', e
-            print 'You may have too few data points to compute an eer value.'
+        except Exception as e:
+            print('Exception in computeEer:', e)
+            print('You may have too few data points to compute an eer value.')
             sys.exit(1)
         else:
             if self.debug:
-                print 'computeEer:index2score:', index2score
-                print 'computeEer:eer:', eer
+                print('computeEer:index2score:', index2score)
+                print('computeEer:eer:', eer, 'for experiment:', self._expName)
             score = X[index2score]
             return eer, score
 
@@ -122,7 +124,7 @@ class Eer(Probability):
         return thisLegendText
 
     def plot(self):
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
@@ -139,7 +141,7 @@ class Eer(Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
-                print cllrData
+                print(cllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, cllrValue in cllrData:
                     if thisMetaValue == metaValue:
@@ -155,7 +157,7 @@ class Eer(Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:
-                print "minCllrData:", minCllrData
+                print("minCllrData:", minCllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, minCllrValue in minCllrData:
                     if thisMetaValue == metaValue:
@@ -171,7 +173,7 @@ class Eer(Probability):
             try:
                 eer, score = self.computeEer(PD, PP, X)
             except Exception:
-                print "Eer: problem computing EER for %s" % metaValue
+                print("Eer: problem computing EER for %s" % metaValue)
                 labelText = "P(pros), %s, Eer: undefined" % metaValue
             else:
                 labelText = "P(pros), %s, Eer: %0.2f%s at %0.2f" % (metaValue, eer * 100, '%', score)
@@ -183,4 +185,9 @@ class Eer(Probability):
             plt.ylabel('Probability')
         plt.grid()
         plt.legend(loc=5)  # position logend at center right
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()

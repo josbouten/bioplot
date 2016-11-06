@@ -35,9 +35,11 @@ from probability import Probability
 
 
 class Roc(Probability):
-    def __init__(self, thisData, thisConfig, thisDebug=True):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
+        self._expName = thisExpName
+        self._printToFilename = thisExpName
         self.debug = thisDebug
         self.plotType = 'roc_plot'
         self.fig = None
@@ -54,7 +56,7 @@ class Roc(Probability):
         return thisLegendText
 
     def plot(self):
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
@@ -66,15 +68,15 @@ class Roc(Probability):
         legendText = defaultdict(list)
         # Compute and show the EER value if so desired.
         if self.config.getShowEerInRoc():
-            eerObject = Eer(self.data, self.config, self.debug)
+            eerObject = Eer(self.data, self.config, self._expName, self.debug)
             eerData = eerObject.computeProbabilities(self.eerFunc)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, PD, PP, X in eerData:
                     if thisMetaValue == metaValue:
                         try:
                             eerValue, score = eerObject.computeEer(PD, PP, X)
-                        except Exception, e:
-                            print "DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e)
+                        except Exception as e:
+                            print("DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e))
                         else:
                             eerValue *= 100
                             if eerValue < 10.0:
@@ -89,7 +91,7 @@ class Roc(Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
-                print cllrData
+                print(cllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, cllrValue in cllrData:
                     if thisMetaValue == metaValue:
@@ -105,7 +107,7 @@ class Roc(Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:
-                print "minCllrData:", minCllrData
+                print("minCllrData:", minCllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, minCllrValue in minCllrData:
                     if thisMetaValue == metaValue:
@@ -133,4 +135,9 @@ class Roc(Probability):
         plt.ylabel('P(true positive)')
         plt.grid()
         plt.legend(loc=5)  # position logend at center right
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()

@@ -26,7 +26,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-import ConfigParser
+import configparser
 import sys
 import numpy as np
 import os.path
@@ -35,7 +35,7 @@ import os.path
 class Config:
     def __init__(self, thisConfigFilename):
         self.configFilename = thisConfigFilename
-        self.config = ConfigParser.RawConfigParser()
+        self.config = configparser.RawConfigParser()
         self._fileNotFound = False
         # Rates for accept and rejection rates in Det-plot.
         self._allowedRates = ["0.001", "0.002", "0.005", "0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1", "2", "5", "10",
@@ -45,11 +45,11 @@ class Config:
         if os.path.exists(self.configFilename):
             try:
                 self.config.read(self.configFilename)
-            except Exception, e:
-                print e
+            except Exception as e:
+                print(e)
                 sys.exit(1)
         else:
-            print "Error reading '%s', file not found." % self.configFilename
+            print("Error reading '%s', file not found." % self.configFilename)
             self._fileNotFound = True
 
         # Show vertical axis as in Alexander et al [2014].
@@ -255,6 +255,26 @@ class Config:
         except Exception:
             self._nrSamples4Probability = self._nrSamples4EERDefault
 
+        self._maxFalseAcceptRateDefault = 60
+        try:
+            self._maxFalseAcceptRate = self.config.getfloat('det', 'maxFalseAcceptRate')
+        except Exception:
+            self._maxFalseAcceptRate = self._maxFalseAcceptRateDefault
+
+        self._maxFalseRejectionRateDefault = 60
+        try:
+            self._maxFalseRejectionRate = self.config.getfloat('det', 'maxFalseRejectionRate')
+        except Exception:
+            self._maxFalseRejectionRate = self._maxFalseRejectionRateDefault
+
+        if str(self._maxFalseAcceptRate) not in self._allowedRates:
+            print("Warning: value for maxFalseAcceptRate not allowed, using default value: %s" % self._maxFalseAcceptRateDefault)
+            self._maxFalseAcceptRate = self._maxFalseAcceptRateDefault
+
+        if str(self._maxFalseRejectionRate) not in self._allowedRates:
+            print("Warning: value for maxFalseRejectionRate not allowed, using default value: %s" % self._maxFalseRejectionRateDefault)
+            self._maxFalseRejectionRate = self._maxFalseRejectionRateDefault
+
         self._minimumOpacityValueDefault = 0.1
         try:
             self._minimumOpacityValue = self.config.getfloat('zoo', 'minimumOpacityValue')
@@ -281,26 +301,24 @@ class Config:
         # and multiply by a scaleFactor to make them visible as not too small and
         # not too bit
 
-        self._maxFalseAcceptRateDefault = 60
+        self._printToFileDefault = True
         try:
-            self._maxFalseAcceptRate = self.config.getfloat('det', 'maxFalseAcceptRate')
-        except Exception:
-            self._maxFalseAcceptRate = self._maxFalseAcceptRateDefault
+            self._printToFile = self.config.getboolean('cfg', 'printToFile')
+        except:
+            self._printToFile = self._printToFileDefault
+
+        self._printToFileHeightDefault = 10
+        try:
+            self._printToFileHeight = self.config.getboolean('cfg', 'printToFileHeight')
+        except:
+            self._printToFileHeight = self._printToFileHeightDefault
+
+        self._printToFileWidthDefault = 15
+        try:
+            self._printToFileWidth = self.config.getboolean('cfg', 'printToFileWidth')
+        except:
+            self._printToFileWidth = self._printToFileWidthDefault
             
-        self._maxFalseRejectionRateDefault = 60
-        try:
-            self._maxFalseRejectionRate = self.config.getfloat('det', 'maxFalseRejectionRate')
-        except Exception:
-            self._maxFalseRejectionRate = self._maxFalseRejectionRateDefault
-
-        if str(self._maxFalseAcceptRate) not in self._allowedRates:
-            print "Warning: value for maxFalseAcceptRate not allowed, using default value: %s" % self._maxFalseAcceptRateDefault
-            self._maxFalseAcceptRate = self._maxFalseAcceptRateDefault
-
-        if str(self._maxFalseRejectionRate) not in self._allowedRates:
-            print "Warning: value for maxFalseRejectionRate not allowed, using default value: %s" % self._maxFalseRejectionRateDefault
-            self._maxFalseRejectionRate = self._maxFalseRejectionRateDefault
-
         self._saveScoresDefault = True
         try:
             self._saveScores = self.config.getboolean('cfg', 'saveScores')
@@ -667,7 +685,7 @@ class Config:
         for (meta, colorValue) in self._colors:
             rgb = self._convertColor2RGB(colorValue)
             if rgb is None:
-                print "Format Error: %s %s will be ignored:" % (meta, colorValue)
+                print("Format Error: %s %s will be ignored:" % (meta, colorValue))
             else:
                 colors.append(rgb)
         return colors
@@ -714,7 +732,7 @@ class Config:
         else:
             nrBins = 50
         if self.getDebug():
-            print 'config::getNrBins:nrBins:', nrBins
+            print('config::getNrBins:nrBins:', nrBins)
         return nrBins
 
     def getNrAccPoints(self):
@@ -739,6 +757,15 @@ class Config:
         :return: string: path to data directory
         """
         return self._outputPath
+
+    def getPrintToFile(self):
+        return self._printToFile
+    
+    def getPrintToFileWidth(self):
+        return self._printToFileWidth
+    
+    def getPrintToFileHeight(self):
+        return self._printToFileHeight
 
     def getRunningWindows(self):
         return self._runningWindows
@@ -936,6 +963,7 @@ class Config:
         string += ", nrSamples4Probability = " + str(self.getNrSamples4Probability())
         string += ", opacity4Ellipses = " + str(self.getOpacity4Ellipses())
         string += ", outputPath = " + self.getOutputPath()
+        string += ", printToFile = " + str(self.getPrintToFile())
         string += ", runningWindows = " + str(self.getRunningWindows())
         string += ", runningOSX = " + str(self.getRunningOSX())
         string += ", saveScores = " + str(self.getSaveScores())
@@ -983,4 +1011,4 @@ class Config:
 
 if __name__ == '__main__':
     config = Config('nonexisting_file')
-    print 'main:', config.toString()
+    print('main:', config.toString())

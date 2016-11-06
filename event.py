@@ -45,7 +45,7 @@ class Event:
         :return: nothing
         """
         if self.debug:
-            print("You pressed key {:s}".format(event.key))
+            print(("You pressed key {:s}".format(event.key)))
         filename = self.title + "_" + self.plotType + '.png'
 
         # Spaces in filenames are a nuisance.
@@ -54,8 +54,8 @@ class Event:
         try:
             if not os.path.exists(self.config.getOutputPath()):
                 makedirs(self.config.getOutputPath())
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             sys.exit(1)
 
         # Note: l, k, g, s and f are predefined keys
@@ -70,4 +70,4 @@ class Event:
 
         path = self.config.getOutputPath() + os.path.sep + filename
         self.fig.savefig(path, bbox_inches=0)
-        print 'Figure was saved to:', path
+        print('Figure was saved to:', path)

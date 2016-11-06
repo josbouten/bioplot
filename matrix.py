@@ -35,10 +35,11 @@ from config import Config
 from event import Event
 
 class MatrixPlot(Format):
-    def __init__(self, thisData, thisConfig, thisDebug=True):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
         Format.__init__(self, thisDebug)
         self.data = thisData
         self.config = thisConfig
+        self._printToFilename = thisExpName
         self.debug = thisDebug
         self.colorMap = plt.get_cmap(self.config.getMatrixColorMap())
         self.SPECIAL_SCORE = 12345
@@ -105,7 +106,7 @@ class MatrixPlot(Format):
                 overallMax = max(overallMax, ma)
         checkerPlotIsPossible, x, y = self._checkCheckerPlot(nrOfMetaValues)
         if self.debug:
-            print 'plot: check:', checkerPlotIsPossible, self.config.getMinNrScores4MatrixPlot()
+            print('plot: check:', checkerPlotIsPossible, self.config.getMinNrScores4MatrixPlot())
         if checkerPlotIsPossible and self.config.getCombineMatrices():
             # Combine all matrices in one square or oblong matrix and plot that.
             (scores, meta, tickLabels) = matrixAccu[0]
@@ -152,7 +153,7 @@ class MatrixPlot(Format):
                 xx = 0
                 for (matrix, metaValue, tickLabels) in matrixAccu:
                     if self.debug:
-                        print 'plot, metaValue:', metaValue, 'minScore:', overallMin, 'maxScore:', overallMax
+                        print('plot, metaValue:', metaValue, 'minScore:', overallMin, 'maxScore:', overallMax)
                     # Plot matrices in separate figures OR combine all of them in one big square matrix ?
                     im = ax[0, xx].imshow(matrix, cmap=self.colorMap, origin='lower', norm=None, vmin=overallMin,
                                           vmax=overallMax)
@@ -184,7 +185,7 @@ class MatrixPlot(Format):
                 yy = 0
                 for (matrix, metaValue, tickLabels) in matrixAccu:
                     if self.debug:
-                        print 'plot, metaValue:', metaValue, 'minScore:', overallMin, 'maxScore:', overallMax
+                        print('plot, metaValue:', metaValue, 'minScore:', overallMin, 'maxScore:', overallMax)
                     # Plot matrices in separate figures OR combine all of them in one big square matrix ?
                     im = ax[yy, 0].imshow(matrix, cmap=self.colorMap, origin='lower', norm=None, vmin=overallMin,
                                           vmax=overallMax)
@@ -199,7 +200,11 @@ class MatrixPlot(Format):
                     yy += 1
                     im.set_interpolation('none')
                     cnt += 1
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s%s.%s" % (self._printToFilename, self.plotType, ".png")
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()
 
     def _findMaxNrOccurencesOfLabel2(self, listOfLabelsAndScores):
         labelCounter = Counter()
@@ -301,5 +306,5 @@ if __name__ == '__main__':
     data.makeRandomMatrix(rand=True)
     matrixPlot = MatrixPlot(data, config, debug)
     for nr in range(10):
-        print 'checker plot is possible:', nr, matrixPlot._checkCheckerPlot(nr)
+        print('checker plot is possible:', nr, matrixPlot._checkCheckerPlot(nr))
     matrixPlot.plot()

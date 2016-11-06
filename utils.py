@@ -3,7 +3,6 @@
 __author__ = 'drs. ing. Jos Bouten'
 
 '''
-
     utils.py
 
     A set of utility functions.
@@ -129,6 +128,6 @@ def write2file(filename, thisList):
         for el in thisList:
             f.write("%s\n" % el)
         f.close()
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
         exit(1)

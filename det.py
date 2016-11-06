@@ -22,10 +22,12 @@ from probability import Probability
 from event import Event
 
 class Det(Probability):
-    def __init__(self, thisData, thisConfig, thisDebug):
+    def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
         self._debug = thisDebug
         self.data = thisData
         self.config = thisConfig
+        self._expName = thisExpName
+        self._printToFilename = thisExpName
         self.debug = thisDebug
         Probability.__init__(self, self.data, self.config, self.debug)
         self.plotType = 'det_plot'
@@ -101,7 +103,7 @@ class Det(Probability):
                 r = 1.0 - p
             else:
                 r = p
-            if r <= 0.0: raise RuntimeError, 'ERROR Found r = %g\n' % r
+            if r <= 0.0: raise(RuntimeError, 'ERROR Found r = %g\n' % r)
             r = math.sqrt((-1.0) * math.log(r))
             retval = (((self.__C3__ * r + self.__C2__) * r + self.__C1__) * r + self.__C0__) \
                      / ((self.__D2__ * r + self.__D1__) * r + 1.0)
@@ -134,7 +136,7 @@ class Det(Probability):
         return thisLegendText
 
     def plot(self):
-        self.fig = plt.figure()
+        self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
@@ -148,15 +150,15 @@ class Det(Probability):
 
         # Compute and show the EER value if so desired.
         if self.config.getShowEerInDet():
-            eerObject = Eer(self.data, self.config, self.debug)
+            eerObject = Eer(self.data, self.config, self._expName, self.debug)
             eerData = eerObject.computeProbabilities(self.eerFunc)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, PD, PP, X in eerData:
                     if thisMetaValue == metaValue:
                         try:
                             eerValue, score = eerObject.computeEer(PD, PP, X)
-                        except Exception, e:
-                            print "DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e)
+                        except Exception as e:
+                            print("DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e))
                         else:
                             eerValue *= 100
                             if eerValue < 10.0:
@@ -171,7 +173,7 @@ class Det(Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
-                print cllrData
+                print(cllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, cllrValue in cllrData:
                     if thisMetaValue == metaValue:
@@ -187,7 +189,7 @@ class Det(Probability):
             cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:
-                print "minCllrData:", minCllrData
+                print("minCllrData:", minCllrData)
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue, minCllrValue in minCllrData:
                     if thisMetaValue == metaValue:
@@ -210,7 +212,7 @@ class Det(Probability):
 
         # Available styles: please note that we plot up to the number of styles
         # available. So, for coloured plots, we can go up to 6 lines in a single
-        # plot. For grayscaled ones, up to 12. If you need more plots just extend the
+        # plot. For gray scaled ones, up to 12. If you need more plots just extend the
         # list bellow.
 
         limits = ('0.1', str(self.config.getMaxFalseRejectionRate()), '0.1', str(self.config.getMaxFalseAcceptRate()))
@@ -218,7 +220,7 @@ class Det(Probability):
         # Check limits.
         for k in limits:
             if k not in desiredLabels:
-                raise SyntaxError, 'Unsupported limit %s. Please use one of %s' % (k, desiredLabels)
+                raise(SyntaxError, 'Unsupported limit %s. Please use one of %s' % (k, desiredLabels))
 
         for metaValue in metaDataValues:
             negatives = [np.array([k for k in self.data.getNonTargetScores4MetaValue(metaValue)], dtype='float64')]
@@ -250,10 +252,14 @@ class Det(Probability):
         ax.set_yticks(pticks[fa_minIndex:fa_maxIndex])
         ax.set_yticklabels(desiredLabels[fa_minIndex:fa_maxIndex], size='x-small')
         if title:
-            plt.title("DET plot for " + self.data.getTitle())
+            plt.title("DET plot for '" + self.data.getTitle() + "'")
             plt.grid(True)
             plt.xlabel('False Rejection Rate [%]')
             plt.ylabel('False Acceptance Rate [%]')
         plt.legend(loc=1)
-        #plt.legend()
-        plt.show()
+        if self.config.getPrintToFile():
+            filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
+            print("Writing plot to %s" % filename)
+            plt.savefig(filename, orientation='landscape', papertype='letter')
+        else:
+            plt.show()

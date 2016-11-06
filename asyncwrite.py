@@ -36,7 +36,7 @@ class AsyncWrite(threading.Thread):
 
     def run(self):
         if self.debug:
-            print "Writing data to: %s." % self.filename
+            print("Writing data to: %s." % self.filename)
         try:
             f = open(self.filename, 'w')
             for score in self.scores:
@@ -44,7 +44,7 @@ class AsyncWrite(threading.Thread):
                     f.write("%s\n" % str(el))
             f.close()
             if self.debug:
-                print "Finished writing to: %s." % self.filename
-        except IOError, e:
-            print e
+                print("Finished writing to: %s." % self.filename)
+        except IOError as e:
+            print(e)
             sys.exit(1)

@@ -89,13 +89,13 @@ class Data(Format):
         self._allowDups = self.config.getAllowDups()
 
         if self.debug:
-            print 'Data._source(s):'
+            print('Data._source(s):')
             for el in self._sources:
-                print el
+                print(el)
 
         # If the user did not specify a filename, we assume a database as the source.
         if self._sources == 'database':
-            print "You need to add some code for this to work!"
+            print("You need to add some code for this to work!")
             # And remove the sys.exit(1) statement.
             sys.exit(1)
             res = self._readFromDatabase()
@@ -107,12 +107,12 @@ class Data(Format):
         if self._dataType == 'type3':
             self._decodeType3Results(res)
         elif self._dataType == 'type2':
-            print "Type2 data is not supported anymore. Convert it to type3!"
+            print("Type2 data is not supported anymore. Convert it to type3!")
             sys.exit(1)
         elif self._dataType == 'type1':
             self._decodeType1Results(res)
         else:
-            print "Unknown data type, must be 'type1' or 'type3'."
+            print("Unknown data type, must be 'type1' or 'type3'.")
             sys.exit(1)
 
     def getMax(self):
@@ -167,7 +167,7 @@ class Data(Format):
 
     def _extractValues(self, thisList):
         ret = []
-        for el in thisList.values():
+        for el in list(thisList.values()):
             ret += el
         return ret
 
@@ -194,8 +194,8 @@ class Data(Format):
                   ...
         """
         row = collections.defaultdict(list)
-        odata = collections.OrderedDict(sorted(data.items(), key=lambda x: x[0], reverse=True))
-        for pattern in odata.keys():
+        odata = collections.OrderedDict(sorted(list(data.items()), key=lambda x: x[0], reverse=True))
+        for pattern in list(odata.keys()):
             thisMetaValue = self.getMetaFromPattern(pattern)
             if thisMetaValue == metaValue:
                 label = self.getLabelFromPattern(pattern)
@@ -276,7 +276,7 @@ class Data(Format):
         :param ma: float: maximum input value
         :return: minimum value and maximum value
         """
-        for key in scoreDict.keys():
+        for key in list(scoreDict.keys()):
             if label in key:
                 mi = min(scoreDict[key], mi)
                 ma = max(scoreDict[key], ma)
@@ -351,10 +351,10 @@ class Data(Format):
                 l1, f1, l2, f2, score, truth, metaValue = line.split(splitChar)
                 if splitChar:
                     l1, f1, l2, f2, score, truth, metaValue = self._sanitize(l1, f1, l2, f2, score, truth, metaValue)
-            except Exception, e:
-                print 'Error in', line
-                print 'Use either comma or space as separator.'
-                print e
+            except Exception as e:
+                print('Error in', line)
+                print('Use either comma or space as separator.')
+                print(e)
             else:
                 # We want to sort the data when choosing colors.
                 # Therefore we convert to numbers if possible
@@ -372,9 +372,9 @@ class Data(Format):
                 # If the score is not numerical, then we skip everything.
                 try:
                     score = float(score)
-                except Exception, e:
-                    print 'Error in', line
-                    print e
+                except Exception as e:
+                    print('Error in', line)
+                    print(e)
                 else:
                     self._miAll = min(self._miAll, score)
                     self._maAll = max(self._maAll, score)
@@ -421,28 +421,28 @@ class Data(Format):
                         self._nonTargetCnt[metaValue] += 1
                         self._nonTargetLabels.add(l1)
         if self.debug:
-            print 'Number of results in file:', resCnt
-            print 'Number of subjects:', len(self._results4Subject)
-        print 'Number of scores:', totCnt
+            print('Number of results in file:', resCnt)
+            print('Number of subjects:', len(self._results4Subject))
+        print('Number of scores:', totCnt)
         if totCnt == 0:
-            print 'No scores were found. Maybe the dataType is not set correctly.'
-            print "DataType is '%s'" % self._dataType
-            print 'Is this correct?'
+            print('No scores were found. Maybe the dataType is not set correctly.')
+            print("DataType is '%s'" % self._dataType)
+            print('Is this correct?')
             sys.exit(1)
-        print "Number of target scores for: "
+        print("Number of target scores for: ")
         for metaValue in self._targetCnt:
-            print metaValue, self._targetCnt[metaValue],
-        print
-        print "Number of non target scores for: "
+            print(metaValue, self._targetCnt[metaValue], end=' ')
+        print()
+        print("Number of non target scores for: ")
         for metaValue in self._nonTargetCnt:
-            print metaValue, self._nonTargetCnt[metaValue],
-        print
-        print 'Total number of target scores:', self.compLen(self._targetScores)
-        print 'Total number of non target scores:', self.compLen(self._nonTargetScores)
-        print 'Number of repeats (multiple instances of same data in input):', revRepeatCnt
-        print 'Number of selfies (A vs A):', selfCnt
+            print(metaValue, self._nonTargetCnt[metaValue], end=' ')
+        print()
+        print('Total number of target scores:', self.compLen(self._targetScores))
+        print('Total number of non target scores:', self.compLen(self._nonTargetScores))
+        print('Number of repeats (multiple instances of same data in input):', revRepeatCnt)
+        print('Number of selfies (A vs A):', selfCnt)
         self._nrDistinctMetaDataValues = len(self._metaDataValues)
-        print 'Nr of distinct meta data values:', self._nrDistinctMetaDataValues
+        print('Nr of distinct meta data values:', self._nrDistinctMetaDataValues)
 
     def _decodeType1Results(self, res):
         """
@@ -473,7 +473,7 @@ class Data(Format):
 
         """
         tot = 0
-        for k in scoreDict.keys():
+        for k in list(scoreDict.keys()):
             tot += len(scoreDict[k])
         return tot
 
@@ -513,8 +513,8 @@ class Data(Format):
                 for line in lines:
                     res.append(line.strip())
                 return res
-            except IOError, e:
-                print e
+            except IOError as e:
+                print(e)
                 sys.exit(1)
 
         ret = []
@@ -533,12 +533,12 @@ class Data(Format):
         :return: not a thing
         """
         dataOutputPath = self.config.getOutputPath()
-        k = scoreDict.keys()
+        k = list(scoreDict.keys())
         try:
             if not path.exists(dataOutputPath):
                 makedirs(dataOutputPath)
-        except Exception, e:
-            print 'writeScores2file', e
+        except Exception as e:
+            print('writeScores2file', e)
             sys.exit(1)
 
         scoresPerMetaValue = collections.defaultdict(list)
@@ -562,4 +562,4 @@ class Data(Format):
                     background.start()
                     background.join()
                 else:
-                    print "File %s already exists." % filename
+                    print("File %s already exists." % filename)
