@@ -50,9 +50,6 @@ printToFileHeight = 10
 ; The width of the plot in inches.
 printToFileWidth = 15
 
-; Show config info at start of program on commandline
-showConfigInfo = True
-
 ; Are we running on OSX or not?
 runningOSX = True
 
