@@ -49,6 +49,7 @@ class BoutenZoo(Zoo):
         self._expName = thisExpName
         self._printToFilename = thisExpName
         self.debug = thisDebug
+        self.plotType = "zoo_plot"
         Zoo.__init__(self, self.data, self.config, self._expName, self.debug)
 
         self.title = self.data.getTitle()
@@ -170,6 +171,7 @@ class BoutenZoo(Zoo):
         self.saveExceptionalAnimals()
         # plt.show(block=True)
         if self.config.getPrintToFile():
+            self.plotType = "zoo_plot"
             filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
             print("Writing plot to %s" % filename)
             plt.savefig(filename, orientation='landscape', papertype='letter')
