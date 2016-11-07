@@ -65,7 +65,7 @@ v = Version()
 progName = basename(sys.argv[0])
 version = "This is bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % v.getVersion()
 parser = argparse.ArgumentParser(description="%s [plot type] [<label1> <label2> <label3> ...]\n\
-bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten.\n\
+bioplot.py version %s.\n\
 This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l\'.\n\
 This is free software, and you are welcome to redistribute it\n\
 under certain conditions; type `bioplot.py -l\' for details.\n\
@@ -104,8 +104,6 @@ if args.showLicense:
     l = License('LICENSE.txt')
     l.showLicense()
     exit(0)
-
-print(("bioplot.py version %s, Copyright (C) 2014, 2015, 2016 Jos Bouten" % version))
 
 # Name of the experiment, used as _title in plots.
 expName = args.expName
