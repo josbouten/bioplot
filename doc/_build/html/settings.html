@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Settings &mdash; bioplot 0.9.8 documentation</title>
+    <title>Settings &mdash; bioplot 0.9.9 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.8',
+        VERSION:     '0.9.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.8 documentation" href="index.html" />
+    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
     <link rel="next" title="Known Issues" href="issues.html" />
     <link rel="prev" title="Tools" href="tools.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.8</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -266,18 +266,18 @@ start bioplot like this:</p>
 alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
 annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8,
 interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569),
-limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60,
-maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99,
-minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50,
-nrBins = 100, nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False,
+limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99,
+maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3,
+minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50, nrBins = 100,
+nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = False,
 saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
-showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True,
-showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True,
-showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True,
-eer.showMinCllr = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True,
-showSingleValueAsUnitValue = False, showStdev = False, showTextAtReferenceAtStartup = False, showUnitDataPoint = True,
-spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True,
-yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, zWidth = 0.65
+showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True,
+showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True,
+showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, roc.showMinCllr = True,
+zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = False,
+showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True,
+useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1,
+zWidth = 0.65
 </pre></div>
 </div>
 <p>This will show the settings read from the file &#8216;some_other_settings_file&#8217;.</p>
@@ -317,6 +317,26 @@ alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
 </div>
 <p>Path to dir where results and plots are stored.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">outputPath</span> <span class="o">=</span> <span class="n">output</span>
+
+       <span class="c1"># How wide and high do you want the ellipses in the zoo plot to be.</span>
+       <span class="c1"># Since they cover 3 std&#39;s at max we normalize their height and width values</span>
+       <span class="c1"># to the figure&#39;s full resolution width (assuming a square plot)</span>
+       <span class="c1"># and multiply by a scaleFactor to make them visible as not too small and</span>
+       <span class="c1"># not too bit</span>
+</pre></div>
+</div>
+<p>In stead of plotting on screen you can send plots to file.
+The name of the file will be &lt;exp_name&gt;_&lt;plot_type&gt;_plot.png
+Set printToFile to True to plot to file (default = False).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">printToFile</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>The height of the plot in inches.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">printToFileHeight</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>The width of the plot in inches.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">printToFileWidth</span> <span class="o">=</span> <span class="mi">15</span>
 </pre></div>
 </div>
 <p>Are we running on OSX or not?

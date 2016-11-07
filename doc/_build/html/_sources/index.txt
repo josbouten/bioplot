@@ -28,6 +28,7 @@ Contents:
    issues
    implementation_notes
    license
+
 * :ref:`search`
 
 License

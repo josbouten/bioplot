@@ -2,6 +2,24 @@ UPDATE
 ======
 
 ------
+v0.9.9
+------
+Because of the transition fof the code base to python3.x you need to start bioplot.py with python3.x
+Bioplot should run with any version of python equal to or higher than 3.0
+If on your system you have both versions, make sure to use the right one. This can be enforced by
+explicitely prepending it to the command like so (assume you run the command from the command line
+in the bioplot code directory): ::
+
+	On Ms Windows (after installing anaconda3)
+	python.exe ./bioplot.py -h
+
+	On OSX
+	python3 ./bioplot.py -h
+
+	On linux
+	python3 ./bioplot.py -h
+
+------
 v0.9.4
 ------
 
@@ -48,6 +66,3 @@ Do not forget to set your screen's resolution in [cfg] using screenResolution (i
 
     [cfg]
     screenResolution = 1600x1200
-
-
-

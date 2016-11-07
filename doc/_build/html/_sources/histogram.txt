@@ -45,3 +45,9 @@ of the histogram after zooming in: ::
 .. image:: images/condition_AB_histogram_plot_detail.png
 
 If you are interested in a cumulative plot, have a look at :ref:`rst_eerplot`.
+
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_histogram.png. ::
+
+        [cfg]
+        printToFile = True

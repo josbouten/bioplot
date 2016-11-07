@@ -28,3 +28,8 @@ If you want to see cllr and cllrMin values in the plot's legend, set: ::
 
 .. image:: images/condition_A_and_B_eer_plot_cllr.png
 
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly. 
+The file name will be <experiment name>_eer_plot.png. ::
+
+	[cfg]
+	printToFile = True
