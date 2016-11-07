@@ -36,11 +36,19 @@ alwaysSave = True
 ; when trying to debug the code.
 debug = False
 
-; Show config info at start of program on commandline
-showConfigInfo = True
-
 ; Path to dir where results and plots are stored.
 outputPath = output
+
+; In stead of plotting on screen you can send plots to file.
+; The name of the file will be <exp_name>_<plot_type>_plot.png
+; Set printToFile to True to plot to file (default = False).
+printToFile = False
+
+; The height of the plot in inches.
+printToFileHeight = 10
+
+; The width of the plot in inches.
+printToFileWidth = 15
 
 ; Are we running on OSX or not?
 runningOSX = False
@@ -54,6 +62,9 @@ runningWindows = True
 
 ; Save all scores to text file separated in target and non target scores per meta value.
 saveScores = True
+
+; Show config info at start of program on commandline
+showConfigInfo = True
 
 [data]
 ; If set to True 'allowDups' allows for both scores in a symmetric trial to be used.
