@@ -3,7 +3,7 @@
 """
     license.py, class to read and show the license.
 
-    Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

@@ -8,7 +8,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
     Parse and read values from config file 'bioplot.cfg'
 
-    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -289,19 +289,22 @@ class Config:
         except Exception:
             self._outputPath = self._outputPathDefault
 
+        # How wide and high do you want the ellipses in the zoo plot to be.
+        # Since they cover 3 std's at max we normalize their height and width values
+        # to the figure's full resolution width (assuming a square plot)
+        # and multiply by a scaleFactor to make them visible as not too small and
+        # not too bit
+
         self._opacity4EllipsesDefault = 0.7
         try:
             self._opacity4Ellipses = self.config.getfloat('zoo', 'opacity4Ellipses').strip()
         except Exception:
             self._opacity4Ellipses = self._opacity4EllipsesDefault
 
-        # How wide and high do we want the ellipses in the zoo plot to be.
-        # Since they cover 3 std's at max we normalize their height and width values
-        # to the figure's full resolution width (assuming a square plot)
-        # and multiply by a scaleFactor to make them visible as not too small and
-        # not too bit
-
-        self._printToFileDefault = True
+	# In stead of plotting on screen you can send plots to file.
+	# The name of the file will be <exp_name>_<plot_type>_plot.png
+	# E.g. test123_zoo_plot.png
+        self._printToFileDefault = False
         try:
             self._printToFile = self.config.getboolean('cfg', 'printToFile')
         except:
