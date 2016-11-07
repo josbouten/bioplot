@@ -73,12 +73,6 @@ Path to dir where results and plots are stored. ::
 
  outputPath = output
 
-        # How wide and high do you want the ellipses in the zoo plot to be.
-        # Since they cover 3 std's at max we normalize their height and width values
-        # to the figure's full resolution width (assuming a square plot)
-        # and multiply by a scaleFactor to make them visible as not too small and
-        # not too bit
-
 In stead of plotting on screen you can send plots to file.
 The name of the file will be <exp_name>_<plot_type>_plot.png
 Set printToFile to True to plot to file (default = False). ::
