@@ -13,3 +13,9 @@ Run this command: ::
     python ./bioplot.py -e "condition A and B" -i input/testdata_AB.txt -T
 
 .. image:: images/condition_A_and_B_tippett_plot.png
+
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_tippett_plot.png. ::
+
+        [cfg]
+        printToFile = True

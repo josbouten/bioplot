@@ -39,3 +39,9 @@ If you do not like to see a line on the diagonal of the plot by default, then ch
    showDiagonal = False
 
 .. image:: images/det2_condition_ABC.png
+
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_det_plot.png. ::
+
+        [cfg]
+        printToFile = True

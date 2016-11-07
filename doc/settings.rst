@@ -18,23 +18,22 @@ start bioplot like this: ::
 
 It will then show a list of chosen settings like so: ::
 
-    Config info taken from 'default values':
-    alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
-    annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8, 
-    interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569), 
-    limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, 
-    maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, 
-    minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50, 
-    nrBins = 100, nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False,
-    saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True, 
-    showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, 
-    showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, 
-    showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, 
-    eer.showMinCllr = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, 
-    showSingleValueAsUnitValue = False, showStdev = False, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, 
-    spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, 
-    yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, zWidth = 0.65
-
+	Config info taken from 'default values':
+	alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True, 
+	annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8, 
+	interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569), 
+	limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99, 
+	maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3, 
+	minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50, nrBins = 100, 
+	nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = False, 
+	saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True, 
+	showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True, 
+	showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True, 
+	showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, roc.showMinCllr = True, 
+	zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = False, 
+	showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, 
+	useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, 
+	zWidth = 0.65
 
 This will show the settings read from the file 'some_other_settings_file'. ::
 
@@ -73,6 +72,26 @@ Show config info at start of program on command line. ::
 Path to dir where results and plots are stored. ::
 
  outputPath = output
+
+        # How wide and high do you want the ellipses in the zoo plot to be.
+        # Since they cover 3 std's at max we normalize their height and width values
+        # to the figure's full resolution width (assuming a square plot)
+        # and multiply by a scaleFactor to make them visible as not too small and
+        # not too bit
+
+In stead of plotting on screen you can send plots to file.
+The name of the file will be <exp_name>_<plot_type>_plot.png
+Set printToFile to True to plot to file (default = False). ::
+
+	printToFile = False
+
+The height of the plot in inches. ::
+
+	printToFileHeight = 10
+
+The width of the plot in inches. ::
+
+	printToFileWidth = 15
 
 Are we running on OSX or not?
 The Labels by default show black text on a yellow background.

@@ -28,3 +28,9 @@ The threshold value can be set via the command line option '-d' or the 'threshol
                         sensitivity + specificity        0.5 * true positives                   0.5 * true negatives
     balanced accuracy = -------------------------- = --------------------------------  +  ----------------------------------
                                     2                true positives + false negatives      true negatives + false positives
+
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_accuracy.png. ::
+
+        [cfg]
+        printToFile = True

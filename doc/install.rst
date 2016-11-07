@@ -4,11 +4,8 @@ INSTALL
 Ms Windows
 ----------
 Follow the instructions found here: http://matplotlib.org/users/installing.html.
-I've tried anaconda 2.01 (32 bit version) on W7 32 bits, and I've heard that it works on XP and with the 64 bit
-version on W8. Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
-So it seems you can choose whatever version of Ms Windows you like. Anaconda will install python 2.7.x and a load of
-python modules amongst which numpy, matplotlib, pyplot and scikit-learn.
-You will be able to run bioplot.py and do much more pythony things ;-)
+Download anaconda3-4.2.0 (32 bit version) on W7 32 bits or the 64 bits version according to your machine's architecture.
+Anaconda will install python 3.x and a load of python modules amongst which numpy, matplotlib, pyplot and scikit-learn. You will be able to run bioplot.py and do much more pythony things ;-)
 
 Download the zip file from the github page and unzip its contents to a local directory.
 
@@ -24,7 +21,7 @@ From here on, you're ready to go. Run the main program from a terminal using pyt
 
     or 
 
-    python2.7.exe bioplot.py -h 
+    python3.exe bioplot.py -h 
 
 to find out how to use it.
 Also look at bioplot.cfg to find out about additional options not available
@@ -47,7 +44,7 @@ Linux
 
 Requirements
 ~~~~~~~~~~~~
-You need to have python2.7.x installed. On most linux systems this is the case.
+From v0.9.9 on you need to have python3.x installed. On most linux systems this is the case.
 Then install matplotlib (e.g. version 1.3.1 or higher) and some other modules using:
 
 sudo apt-get install python-matplotlib python-numpy python-scipy
@@ -59,13 +56,13 @@ Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link): ::
 
 And change any settings in it relevant to your use case.
 
-Then run the main program using python 2.7: ::
+Then run the main program using python 3: ::
 
     python bioplot.py -h
 
     or
 
-    python2.7 bioplot.py -h
+    python3 bioplot.py -h
 
     or
 
@@ -96,7 +93,7 @@ OSX
 
 Requirements
 ~~~~~~~~~~~~
-You need to have python2.7.x installed. 
+You need to have python3.x installed. 
 
 On OSX 10.9.5 run these commands: ::
 
@@ -104,7 +101,7 @@ On OSX 10.9.5 run these commands: ::
 
     python get-pip.py
 
-    pip2 install matplotlib
+    pip3 install matplotlib
 
     sudo git clone https://github.com/josbouten/bioplot.git
 
@@ -122,13 +119,13 @@ Next, copy plot.cfg_4_osx to bioplot.cfg (or make a link): ::
 
 And change any settings in it relevant to your use case.
 
-From here on, you're ready to go. Run the main program from a terminal using python 2.7: ::
+From here on, you're ready to go. Run the main program from a terminal using python 3: ::
 
     python bioplot.py -h
 
     or
 
-    python2.7 bioplot.py -h
+    python3 bioplot.py -h
 
     or
 

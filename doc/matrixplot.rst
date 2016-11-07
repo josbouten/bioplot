@@ -27,6 +27,13 @@ If you want to see some labels in the plot, add the following to bioplot.cfg: ::
     labelAngle = 70
 
 .. image:: images/matrix_data_6conditions_with_labels.png
+
 The matrices above contain artifical data. In real experiments not all labels may have the same number of scores. This may be due to data shortage, a model not being computed etc. In that case bioplot will accept the scores that exist and plot as many as possible. This is visible in the matrices below. On the right hand side data that is missing is replaced by some average value. The scaling of the grey values is not influenced by these values.
 
 .. image:: images/real_data_matrix_plot.png
+
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_matrix_plot.png. ::
+
+        [cfg]
+        printToFile = True

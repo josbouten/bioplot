@@ -18,3 +18,9 @@ If you want to see EER, Cllr and/or MinCllr values in the plot's legend, set: ::
     showEer = True
     showCllr = True
     showMinCllr = True
+
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_roc_plot.png. ::
+
+        [cfg]
+        printToFile = True

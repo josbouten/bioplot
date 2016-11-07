@@ -213,3 +213,9 @@ E.g. in the conditionA and conditionB data plot, the delta is computed for movem
 The interface used to display the plots allows the user to zoom in on any part of the plots shown.
 
 .. image:: images/condition_A_and_B_zoo_plot_zoom.png
+
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_zoo_plot.png. ::
+
+        [cfg]
+        printToFile = True
