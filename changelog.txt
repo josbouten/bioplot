@@ -1,6 +1,6 @@
-# v0.9.9 1 Nov 2016
+# v0.9.9 7 Nov 2016
 Added writing plot to file
-Converted all code to python3
+Converted all code to python3.5
 
 # v0.9.8b 19 August 2016
 Path to Users directory on OSX changed in doc.
