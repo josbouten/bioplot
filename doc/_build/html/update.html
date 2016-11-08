@@ -89,6 +89,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -244,8 +247,8 @@
 <h1>UPDATE<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="v0-9-9">
 <h2>v0.9.9<a class="headerlink" href="#v0-9-9" title="Permalink to this headline">¶</a></h2>
-<p>Because of the transition of the code base to python3.x you need to start bioplot.py with python3.x
-Bioplot should run with any version of python equal to or higher than 3.0
+<p>Because of the transition of the code base to python3.5 you need to start bioplot.py with python3.5
+Bioplot should run with any version of python equal to or higher than 3.0.
 If on your system you have both versions, make sure to use the right one. This can be enforced by
 explicitely prepending it to the command like so (assume you run the command from the command line
 in the bioplot code directory):</p>
@@ -257,6 +260,30 @@ python3 ./bioplot.py -h
 
 On linux
 python3 ./bioplot.py -h
+</pre></div>
+</div>
+<p>If you are experiencing problems with matplotlib you may need get an error message when it is imported. You may see something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>File &quot;/Users/jos/projects/bioplot/utils.py&quot;, line 30, in &lt;module&gt;
+  import matplotlib.pyplot as plt
+File &quot;/Users/jos/anaconda/lib/python3.5/site-packages/matplotlib/pyplot.py&quot;, line 114, in &lt;module&gt;
+  _backend_mod, new_figure_manager, draw_if_interactive, _show = pylab_setup()
+File &quot;/Users/jos/anaconda/lib/python3.5/site-packages/matplotlib/backends/__init__.py&quot;, line 32, in pylab_setup
+  globals(),locals(),[backend_name],0)
+File &quot;/Users/jos/anaconda/lib/python3.5/site-packages/matplotlib/backends/backend_macosx.py&quot;, line 24, in &lt;module&gt;
+  from matplotlib.backends import _macosx
+
+RuntimeError: Python is not installed as a framework. The Mac OS X backend will
+not be able to function correctly if Python is not installed as a framework.
+See the Python documentation for more information on installing Python as a
+framework on Mac OS X. Please either reinstall Python as a framework, or try
+one of the other backends. If you are Working with Matplotlib in a virtual
+enviroment see &#39;Working with Matplotlib in Virtual environments&#39; in the Matplotlib
+FAQ
+</pre></div>
+</div>
+<p>To remedy this set the plotting backend in /Users/&lt;your user name&gt;/.matplotlib/matplotlibrc.
+If the file does not exist, make it and put the following content in it:</p>
+<div class="highlight-python"><div class="highlight"><pre>backend: TkAgg
 </pre></div>
 </div>
 </div>

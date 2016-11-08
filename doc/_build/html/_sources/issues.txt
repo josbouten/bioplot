@@ -9,8 +9,10 @@ definition of the separation characters in format.py and choose non ambiguous re
 
 Matplotlib on OSX and Ms Windows
 --------------------------------
-The software works well with matplotlib-1.3.1. Some matplotlib versions that are out there will show a plot on the
+The software works well with matplotlib-1.5 and up. Some matplotlib versions that are out there will show a plot on the
 screen and then exit immediately. If you encounter this, let me know. This can be easily helped. Given that I encountered
 this only with older versions of matplotlib I have not implemented any measures for it in the current version of bioplot.
 
 There are some issues with labels in the zoo plots. See :ref:`rst_zooplot_labels`.
+
+You may need to set the backend for matplotlib. See :ref:`rst_install_matplotlib`.

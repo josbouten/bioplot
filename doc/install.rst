@@ -141,6 +141,16 @@ Set your screen's resolution in [cfg] using screenResolution: ::
     [cfg]
     screenResolution = 1600x1200
 
+
+.. _rst_install_matplotlib:
+
+Matplotlib backend
+~~~~~~~~~~~~~~~~~~
+You may need to set the matplotlib backend to TkAgg
+Create the file  /Users/<your user name>/.matplotlib/matplotlibrc and put the following line in: ::
+
+	backend: TkAgg
+
 Man pages
 ~~~~~~~~~
 If you want to include the bioplot doc as part of the OSX manual system, include  bioplot/doc/_build/man/bioplot.1 in your manpath.

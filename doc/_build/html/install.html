@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">Update notifications</a></li>
 </ul>
@@ -197,6 +198,7 @@
 </li>
 <li><a class="reference internal" href="#osx">OSX</a><ul>
 <li><a class="reference internal" href="#id2">Requirements</a></li>
+<li><a class="reference internal" href="#matplotlib-backend">Matplotlib backend</a></li>
 <li><a class="reference internal" href="#id3">Man pages</a></li>
 <li><a class="reference internal" href="#id4">Update notifications</a></li>
 </ul>
@@ -256,7 +258,7 @@
 <h2>Ms Windows<a class="headerlink" href="#ms-windows" title="Permalink to this headline">¶</a></h2>
 <p>Follow the instructions found here: <a class="reference external" href="http://matplotlib.org/users/installing.html">http://matplotlib.org/users/installing.html</a>.
 Download anaconda3-4.2.0 (32 bit version) on W7 32 bits or the 64 bits version according to your machine&#8217;s architecture.
-Anaconda will install python 3.x and a load of python modules amongst which numpy, matplotlib, pyplot and scikit-learn. You will be able to run bioplot.py and do much more pythony things ;-)</p>
+Anaconda will install python 3.5 and a load of python modules amongst which numpy, matplotlib, pyplot and scikit-learn. You will be able to run bioplot.py and do much more pythony things ;-)</p>
 <p>Download the zip file from the github page and unzip its contents to a local directory.</p>
 <p>Copy bioplot.cfg_4_windows.txt to bioplot.cfg in the working directory (the directory where
 bioplot.py is stored):</p>
@@ -292,7 +294,7 @@ send me an email if you want to be notified of changes.</p>
 <h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
-<p>From v0.9.9 on you need to have python3.x installed. On most linux systems this is the case.
+<p>From v0.9.9 on you need to have python3.5 installed. On most linux systems this is the case.
 Then install matplotlib and some other modules using:</p>
 <p>sudo apt-get install python3-matplotlib python3-numpy python3-scipy</p>
 <p>I tried it on Ubuntu 14.04 and it worked like a charm.
@@ -334,7 +336,7 @@ send me an email if you want to be notified of changes.</p>
 <h2>OSX<a class="headerlink" href="#osx" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
 <h3>Requirements<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>You need to have python3.x installed.</p>
+<p>You need to have python3.5 installed.</p>
 <p>On OSX 10.9.5 run these commands:</p>
 <div class="highlight-python"><div class="highlight"><pre>curl -O https://bootstrap.pypa.io/get-pip.py
 
@@ -381,6 +383,14 @@ in bioplot.cfg:</p>
 <p>Set your screen&#8217;s resolution in [cfg] using screenResolution:</p>
 <div class="highlight-python"><div class="highlight"><pre>[cfg]
 screenResolution = 1600x1200
+</pre></div>
+</div>
+</div>
+<div class="section" id="matplotlib-backend">
+<span id="rst-install-matplotlib"></span><h3>Matplotlib backend<a class="headerlink" href="#matplotlib-backend" title="Permalink to this headline">¶</a></h3>
+<p>You may need to set the matplotlib backend to TkAgg
+Create the file  /Users/&lt;your user name&gt;/.matplotlib/matplotlibrc and put the following line in:</p>
+<div class="highlight-python"><div class="highlight"><pre>backend: TkAgg
 </pre></div>
 </div>
 </div>

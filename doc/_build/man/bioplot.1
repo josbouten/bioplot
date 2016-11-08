@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "BIOPLOT" "1" "November 06, 2016" "0.9.8" "bioplot"
+.TH "BIOPLOT" "1" "November 08, 2016" "0.9.9" "bioplot"
 .SH NAME
 bioplot \- bioplot Documentation
 .
@@ -534,11 +534,8 @@ you can contact me at josbouten at gmail dot com.
 .SS Ms Windows
 .sp
 Follow the instructions found here: \fI\%http://matplotlib.org/users/installing.html\fP\&.
-I\(aqve tried anaconda 2.01 (32 bit version) on W7 32 bits, and I\(aqve heard that it works on XP and with the 64 bit
-version on W8. Moreover I\(aqve tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
-So it seems you can choose whatever version of Ms Windows you like. Anaconda will install python 2.7.x and a load of
-python modules amongst which numpy, matplotlib, pyplot and scikit\-learn.
-You will be able to run bioplot.py and do much more pythony things ;\-)
+Download anaconda3\-4.2.0 (32 bit version) on W7 32 bits or the 64 bits version according to your machine\(aqs architecture.
+Anaconda will install python 3.5 and a load of python modules amongst which numpy, matplotlib, pyplot and scikit\-learn. You will be able to run bioplot.py and do much more pythony things ;\-)
 .sp
 Download the zip file from the github page and unzip its contents to a local directory.
 .sp
@@ -566,7 +563,7 @@ python.exe bioplot.py \-h
 
 or
 
-python2.7.exe bioplot.py \-h
+python3.exe bioplot.py \-h
 .ft P
 .fi
 .UNINDENT
@@ -597,10 +594,10 @@ send me an email if you want to be notified of changes.
 .SS Linux
 .SS Requirements
 .sp
-You need to have python2.7.x installed. On most linux systems this is the case.
-Then install matplotlib (e.g. version 1.3.1 or higher) and some other modules using:
+From v0.9.9 on you need to have python3.5 installed. On most linux systems this is the case.
+Then install matplotlib and some other modules using:
 .sp
-sudo apt\-get install python\-matplotlib python\-numpy python\-scipy
+sudo apt\-get install python3\-matplotlib python3\-numpy python3\-scipy
 .sp
 I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link):
@@ -617,17 +614,13 @@ cp bioplot.cfg_4_linux bioplot.cfg
 .sp
 And change any settings in it relevant to your use case.
 .sp
-Then run the main program using python 2.7:
+Then run the main program using python 3:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-python bioplot.py \-h
-
-or
-
-python2.7 bioplot.py \-h
+python3 ./bioplot.py \-h
 
 or
 
@@ -665,7 +658,7 @@ send me an email if you want to be notified of changes.
 .SS OSX
 .SS Requirements
 .sp
-You need to have python2.7.x installed.
+You need to have python3.5 installed.
 .sp
 On OSX 10.9.5 run these commands:
 .INDENT 0.0
@@ -677,7 +670,7 @@ curl \-O https://bootstrap.pypa.io/get\-pip.py
 
 python get\-pip.py
 
-pip2 install matplotlib
+pip3 install matplotlib
 
 sudo git clone https://github.com/josbouten/bioplot.git
 .ft P
@@ -691,7 +684,7 @@ From bioplot v0.9.4 on you\(aqll need to install the python machine learning lib
 .sp
 .nf
 .ft C
-sudo pip install scikit\-learn
+sudo pip3 install scikit\-learn
 .ft P
 .fi
 .UNINDENT
@@ -723,17 +716,13 @@ cp plot.cfg_4_osx bioplot.cfg
 .sp
 And change any settings in it relevant to your use case.
 .sp
-From here on, you\(aqre ready to go. Run the main program from a terminal using python 2.7:
+From here on, you\(aqre ready to go. Run the main program from a terminal using python 3:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-python bioplot.py \-h
-
-or
-
-python2.7 bioplot.py \-h
+python3 bioplot.py \-h
 
 or
 
@@ -776,6 +765,20 @@ screenResolution = 1600x1200
 .fi
 .UNINDENT
 .UNINDENT
+.SS Matplotlib backend
+.sp
+You may need to set the matplotlib backend to TkAgg
+Create the file  /Users/<your user name>/.matplotlib/matplotlibrc and put the following line in:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+backend: TkAgg
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SS Man pages
 .sp
 If you want to include the bioplot doc as part of the OSX manual system, include  bioplot/doc/_build/man/bioplot.1 in your manpath.
@@ -784,6 +787,70 @@ If you want to include the bioplot doc as part of the OSX manual system, include
 Since there is no way for me to know who downloaded bioplot, other than the downloader telling me,
 send me an email if you want to be notified of changes.
 .SH UPDATE
+.SS v0.9.9
+.sp
+Because of the transition of the code base to python3.5 you need to start bioplot.py with python3.5
+Bioplot should run with any version of python equal to or higher than 3.0.
+If on your system you have both versions, make sure to use the right one. This can be enforced by
+explicitely prepending it to the command like so (assume you run the command from the command line
+in the bioplot code directory):
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+On Ms Windows (after installing anaconda3)
+python.exe ./bioplot.py \-h
+
+On OSX
+python3 ./bioplot.py \-h
+
+On linux
+python3 ./bioplot.py \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+If you are experiencing problems with matplotlib you may need get an error message when it is imported. You may see something like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+File "/Users/jos/projects/bioplot/utils.py", line 30, in <module>
+  import matplotlib.pyplot as plt
+File "/Users/jos/anaconda/lib/python3.5/site\-packages/matplotlib/pyplot.py", line 114, in <module>
+  _backend_mod, new_figure_manager, draw_if_interactive, _show = pylab_setup()
+File "/Users/jos/anaconda/lib/python3.5/site\-packages/matplotlib/backends/__init__.py", line 32, in pylab_setup
+  globals(),locals(),[backend_name],0)
+File "/Users/jos/anaconda/lib/python3.5/site\-packages/matplotlib/backends/backend_macosx.py", line 24, in <module>
+  from matplotlib.backends import _macosx
+
+RuntimeError: Python is not installed as a framework. The Mac OS X backend will
+not be able to function correctly if Python is not installed as a framework.
+See the Python documentation for more information on installing Python as a
+framework on Mac OS X. Please either reinstall Python as a framework, or try
+one of the other backends. If you are Working with Matplotlib in a virtual
+enviroment see \(aqWorking with Matplotlib in Virtual environments\(aq in the Matplotlib
+FAQ
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+To remedy this set the plotting backend in /Users/<your user name>/.matplotlib/matplotlibrc.
+If the file does not exist, make it and put the following content in it:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+backend: TkAgg
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SS v0.9.4
 .SS OSX
 .sp
@@ -906,6 +973,20 @@ balanced accuracy = \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- = \-\-\
 .fi
 .UNINDENT
 .UNINDENT
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_accuracy.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH DET PLOT
 .sp
 Will plot a detection error trade off plot or DET plot.
@@ -981,6 +1062,20 @@ showDiagonal = False
 .UNINDENT
 .UNINDENT
 [image]
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_det_plot.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH EER PLOT
 .sp
 Will plot a cumulative score plot showing the odds of a false positive and false negative
@@ -1020,6 +1115,20 @@ showMinCllr = True
 .UNINDENT
 .UNINDENT
 [image]
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_eer_plot.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH HISTOGRAM
 .sp
 A histogram can be used to view the distribution of target and non target scores.
@@ -1088,6 +1197,20 @@ python ./bioplot.py \-e "condition A and B" \-i input/testdata_AB.txt \-H
 [image]
 .sp
 If you are interested in a cumulative plot, have a look at rst_eerplot\&.
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_histogram.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH MATRIX PLOT
 .sp
 A matrix plot can be used to compare scores of different experiments with eachother. It is also usefull to display correlations. If the scores contain labels compared to other labels each comparison resulting in one score, then the plot will show a correlation plot. If labels are compared to multiple instances of other labels, each resulting in groups of scores, then these groups are averages.
@@ -1130,6 +1253,20 @@ labelAngle = 70
 .sp
 The matrices above contain artifical data. In real experiments not all labels may have the same number of scores. This may be due to data shortage, a model not being computed etc. In that case bioplot will accept the scores that exist and plot as many as possible. This is visible in the matrices below. On the right hand side data that is missing is replaced by some average value. The scaling of the grey values is not influenced by these values.
 [image]
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_matrix_plot.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH RANKING PLOT
 .sp
 Bioplot.py allows you to plot a ranking plot. Example run:
@@ -1146,6 +1283,20 @@ python ./bioplot.py \-e \(aqexp AB\(aq \-i input/testdata_AB.txt \-R
 .sp
 E.g. if looking for a picture in a database a face recognition system may return a list of potential hits. This plot shows what the odds are that the target will be in the first N pictures.
 [image]
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_ranking_plot.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH ROC PLOT
 .sp
 Will plot a so called Receiver Operating Characteristic also known as ROC plot.
@@ -1178,6 +1329,20 @@ showMinCllr = True
 .fi
 .UNINDENT
 .UNINDENT
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_roc_plot.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH TIPPETT PLOT
 .sp
 Will plot a tippet plot showing the odds of a false positive and false negative
@@ -1197,6 +1362,20 @@ python ./bioplot.py \-e "condition A and B" \-i input/testdata_AB.txt \-T
 .UNINDENT
 .UNINDENT
 [image]
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_tippett_plot.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH ZOO PLOT
 .SS Traditional plot
 .sp
@@ -1482,6 +1661,20 @@ E.g. in the conditionA and conditionB data plot, the delta is computed for movem
 .sp
 The interface used to display the plots allows the user to zoom in on any part of the plots shown.
 [image]
+.sp
+If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
+The file name will be <experiment name>_zoo_plot.png.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+printToFile = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH TOOLS
 .SS anonymize.py
 .sp
@@ -1641,18 +1834,18 @@ Config info taken from \(aqdefault values\(aq:
 alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
 annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8,
 interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569),
-limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60,
-maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99,
-minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50,
-nrBins = 100, nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, runningWindows = False, runningOSX = False,
+limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99,
+maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99, minNrScores4MatrixPlot = 3,
+minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50, nrBins = 100,
+nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = False,
 saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
-showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True,
-showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True,
-showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True,
-eer.showMinCllr = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True,
-showSingleValueAsUnitValue = False, showStdev = False, showTextAtReferenceAtStartup = False, showUnitDataPoint = True,
-spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True,
-yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, zWidth = 0.65
+showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True,
+showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True,
+showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, roc.showMinCllr = True,
+zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = False,
+showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True,
+useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1,
+zWidth = 0.65
 .ft P
 .fi
 .UNINDENT
@@ -1745,6 +1938,44 @@ Path to dir where results and plots are stored.
 .nf
 .ft C
 outputPath = output
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+In stead of plotting on screen you can send plots to file.
+The name of the file will be <exp_name>_<plot_type>_plot.png
+Set printToFile to True to plot to file (default = False).
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+printToFile = False
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The height of the plot in inches.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+printToFileHeight = 10
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The width of the plot in inches.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+printToFileWidth = 15
 .ft P
 .fi
 .UNINDENT
@@ -2703,11 +2934,13 @@ If they are in your data set, e.g. as part of a label or meta data value, either
 definition of the separation characters in format.py and choose non ambiguous replacements.
 .SS Matplotlib on OSX and Ms Windows
 .sp
-The software works well with matplotlib\-1.3.1. Some matplotlib versions that are out there will show a plot on the
+The software works well with matplotlib\-1.5 and up. Some matplotlib versions that are out there will show a plot on the
 screen and then exit immediately. If you encounter this, let me know. This can be easily helped. Given that I encountered
 this only with older versions of matplotlib I have not implemented any measures for it in the current version of bioplot.
 .sp
 There are some issues with labels in the zoo plots. See rst_zooplot_labels\&.
+.sp
+You may need to set the backend for matplotlib. See rst_install_matplotlib\&.
 .SH IMPLEMENTATION NOTES
 .SS histogram.py
 .sp

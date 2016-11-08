@@ -19,6 +19,30 @@ in the bioplot code directory): ::
 	On linux
 	python3 ./bioplot.py -h
 
+If you are experiencing problems with matplotlib you may need get an error message when it is imported. You may see something like this: ::
+
+  File "/Users/jos/projects/bioplot/utils.py", line 30, in <module>
+    import matplotlib.pyplot as plt
+  File "/Users/jos/anaconda/lib/python3.5/site-packages/matplotlib/pyplot.py", line 114, in <module>
+    _backend_mod, new_figure_manager, draw_if_interactive, _show = pylab_setup()
+  File "/Users/jos/anaconda/lib/python3.5/site-packages/matplotlib/backends/__init__.py", line 32, in pylab_setup
+    globals(),locals(),[backend_name],0)
+  File "/Users/jos/anaconda/lib/python3.5/site-packages/matplotlib/backends/backend_macosx.py", line 24, in <module>
+    from matplotlib.backends import _macosx
+
+  RuntimeError: Python is not installed as a framework. The Mac OS X backend will 
+  not be able to function correctly if Python is not installed as a framework. 
+  See the Python documentation for more information on installing Python as a 
+  framework on Mac OS X. Please either reinstall Python as a framework, or try 
+  one of the other backends. If you are Working with Matplotlib in a virtual 
+  enviroment see 'Working with Matplotlib in Virtual environments' in the Matplotlib 
+  FAQ
+
+To remedy this set the plotting backend in /Users/<your user name>/.matplotlib/matplotlibrc. 
+If the file does not exist, make it and put the following content in it: ::
+
+	backend: TkAgg
+
 ------
 v0.9.4
 ------
