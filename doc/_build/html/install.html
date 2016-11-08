@@ -293,8 +293,8 @@ send me an email if you want to be notified of changes.</p>
 <div class="section" id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <p>From v0.9.9 on you need to have python3.x installed. On most linux systems this is the case.
-Then install matplotlib (e.g. version 1.3.1 or higher) and some other modules using:</p>
-<p>sudo apt-get install python-matplotlib python-numpy python-scipy</p>
+Then install matplotlib and some other modules using:</p>
+<p>sudo apt-get install python3-matplotlib python3-numpy python3-scipy</p>
 <p>I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link):</p>
 <div class="highlight-python"><div class="highlight"><pre>cp bioplot.cfg_4_linux bioplot.cfg
@@ -302,11 +302,7 @@ Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link):</p>
 </div>
 <p>And change any settings in it relevant to your use case.</p>
 <p>Then run the main program using python 3:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -h
-
-or
-
-python3 bioplot.py -h
+<div class="highlight-python"><div class="highlight"><pre>python3 ./bioplot.py -h
 
 or
 
@@ -350,7 +346,7 @@ sudo git clone https://github.com/josbouten/bioplot.git
 </pre></div>
 </div>
 <p>From bioplot v0.9.4 on you&#8217;ll need to install the python machine learning library scikit-learn:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo pip install scikit-learn
+<div class="highlight-python"><div class="highlight"><pre>sudo pip3 install scikit-learn
 </pre></div>
 </div>
 <p>Then change the owner of the bioplot directory to your user:</p>
@@ -363,11 +359,7 @@ sudo git clone https://github.com/josbouten/bioplot.git
 </div>
 <p>And change any settings in it relevant to your use case.</p>
 <p>From here on, you&#8217;re ready to go. Run the main program from a terminal using python 3:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -h
-
-or
-
-python3 bioplot.py -h
+<div class="highlight-python"><div class="highlight"><pre>python3 bioplot.py -h
 
 or
 

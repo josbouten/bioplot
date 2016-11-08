@@ -45,9 +45,9 @@ Linux
 Requirements
 ~~~~~~~~~~~~
 From v0.9.9 on you need to have python3.x installed. On most linux systems this is the case.
-Then install matplotlib (e.g. version 1.3.1 or higher) and some other modules using:
+Then install matplotlib and some other modules using:
 
-sudo apt-get install python-matplotlib python-numpy python-scipy
+sudo apt-get install python3-matplotlib python3-numpy python3-scipy
 
 I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link): ::
@@ -58,11 +58,7 @@ And change any settings in it relevant to your use case.
 
 Then run the main program using python 3: ::
 
-    python bioplot.py -h
-
-    or
-
-    python3 bioplot.py -h
+    python3 ./bioplot.py -h
 
     or
 
@@ -107,7 +103,7 @@ On OSX 10.9.5 run these commands: ::
 
 From bioplot v0.9.4 on you'll need to install the python machine learning library scikit-learn: ::
 
-    sudo pip install scikit-learn
+    sudo pip3 install scikit-learn
 
 Then change the owner of the bioplot directory to your user: ::
 
@@ -120,10 +116,6 @@ Next, copy plot.cfg_4_osx to bioplot.cfg (or make a link): ::
 And change any settings in it relevant to your use case.
 
 From here on, you're ready to go. Run the main program from a terminal using python 3: ::
-
-    python bioplot.py -h
-
-    or
 
     python3 bioplot.py -h
 
