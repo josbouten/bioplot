@@ -41,11 +41,10 @@ Linux
 Requirements
 ~~~~~~~~~~~~
 From v0.9.9 on you need to have python3.5 installed. On most linux systems this is the case.
-Then install matplotlib and some other modules using:
+Then install matplotlib and some other modules using: ::
 
-sudo apt-get install python3-matplotlib python3-numpy python3-scipy
+	sudo apt-get install python3-matplotlib python3-numpy python3-scipy
 
-I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy bioplot.cfg_4_linux to bioplot.cfg (or make a link): ::
 
     cp bioplot.cfg_4_linux bioplot.cfg

@@ -27,7 +27,7 @@ Linux
 You need to have python3.5 installed. On most linux systems this is already the case.
 First install git, matplotlib and some other modules using:
 
-<code>$ sudo apt-get install python-matplotlib python-numpy python-scipy git python-sklearn</code>
+<code>$ sudo apt-get install python3-matplotlib python3-numpy python3-scipy git python3-sklearn</code>
 
 Next, install bioplot using either git:
 
