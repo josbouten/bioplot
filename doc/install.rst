@@ -5,7 +5,7 @@ Ms Windows
 ----------
 Follow the instructions found here: http://matplotlib.org/users/installing.html.
 Download anaconda3-4.2.0 (32 bit version) on W7 32 bits or the 64 bits version according to your machine's architecture.
-Anaconda will install python 3.x and a load of python modules amongst which numpy, matplotlib, pyplot and scikit-learn. You will be able to run bioplot.py and do much more pythony things ;-)
+Anaconda will install python 3.5 and a load of python modules amongst which numpy, matplotlib, pyplot and scikit-learn. You will be able to run bioplot.py and do much more pythony things ;-)
 
 Download the zip file from the github page and unzip its contents to a local directory.
 
@@ -44,7 +44,7 @@ Linux
 
 Requirements
 ~~~~~~~~~~~~
-From v0.9.9 on you need to have python3.x installed. On most linux systems this is the case.
+From v0.9.9 on you need to have python3.5 installed. On most linux systems this is the case.
 Then install matplotlib and some other modules using:
 
 sudo apt-get install python3-matplotlib python3-numpy python3-scipy
@@ -89,7 +89,7 @@ OSX
 
 Requirements
 ~~~~~~~~~~~~
-You need to have python3.x installed. 
+You need to have python3.5 installed. 
 
 On OSX 10.9.5 run these commands: ::
 

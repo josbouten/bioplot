@@ -4,8 +4,8 @@ UPDATE
 ------
 v0.9.9
 ------
-Because of the transition of the code base to python3.x you need to start bioplot.py with python3.x
-Bioplot should run with any version of python equal to or higher than 3.0
+Because of the transition of the code base to python3.5 you need to start bioplot.py with python3.5
+Bioplot should run with any version of python equal to or higher than 3.0.
 If on your system you have both versions, make sure to use the right one. This can be enforced by
 explicitely prepending it to the command like so (assume you run the command from the command line
 in the bioplot code directory): ::
