@@ -33,10 +33,10 @@ send me an email if you want to be kept in the loop with changes or updates.
 
 Linux
 =====
-You need to have python2.7.x installed. On most linux systems this is the case.
+You need to have python3 installed. On most linux systems this is the case.
 Then install matplotlib and some other modules using:
 
-sudo apt-get install python-matplotlib python-numpy python-scipy
+sudo apt-get install python3-matplotlib python3-numpy python3-scipy
 
 I tried it on Ubuntu 14.04 and it worked like a charm.
 Next, copy plot.cfg_4_linux to bioplot.cfg
@@ -68,15 +68,15 @@ curl -O https://bootstrap.pypa.io/get-pip.py
 
 python get-pip.py
 
-pip2 install matplotlib
+pip3 install matplotlib
 
-sudo pip install scikit-learn
+sudo pip3 install scikit-learn
 
 sudo git clone https://github.com/josbouten/bioplot.git
 
 From bioplot v0.9.4 on you'll need to install the python machine learning library scikit-learn:
 
-sudo pip install scikit-learn
+sudo pip3 install scikit-learn
 
 Then change the owner of the bioplot directory to your user:
 
