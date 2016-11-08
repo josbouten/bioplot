@@ -15,11 +15,7 @@ bioplot.py is stored): ::
     copy bioplot.cfg_4_windows.txt bioplot.cfg
 
 And change any settings in it relevant to your use case.
-From here on, you're ready to go. Run the main program from a terminal using python 2.7: ::
-
-    python.exe bioplot.py -h 
-
-    or 
+From here on, you're ready to go. Run the main program from a terminal using: ::
 
     python3.exe bioplot.py -h 
 

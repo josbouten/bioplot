@@ -553,16 +553,12 @@ copy bioplot.cfg_4_windows.txt bioplot.cfg
 .UNINDENT
 .sp
 And change any settings in it relevant to your use case.
-From here on, you\(aqre ready to go. Run the main program from a terminal using python 2.7:
+From here on, you\(aqre ready to go. Run the main program from a terminal using:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-python.exe bioplot.py \-h
-
-or
-
 python3.exe bioplot.py \-h
 .ft P
 .fi
@@ -2950,7 +2946,7 @@ When drawing a histogram lots of warnings like this one may be seen on the scree
 .sp
 .nf
 .ft C
-/usr/lib/pymodules/python2.7/matplotlib/cbook.py:1711: DeprecationWarning: using a non\-integer number instead of an
+DeprecationWarning: using a non\-integer number instead of an
 integer will result in an error in the future
 result = np.zeros(new_shape, a.dtype)
 .ft P

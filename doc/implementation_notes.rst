@@ -6,7 +6,7 @@ histogram.py
 
 When drawing a histogram lots of warnings like this one may be seen on the screen: ::
 
-    /usr/lib/pymodules/python2.7/matplotlib/cbook.py:1711: DeprecationWarning: using a non-integer number instead of an
+    DeprecationWarning: using a non-integer number instead of an
     integer will result in an error in the future
     result = np.zeros(new_shape, a.dtype)
 

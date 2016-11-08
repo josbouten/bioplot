@@ -9,7 +9,7 @@ accuracy plot, cumulative score distribution plot, DET plot, EER plot, histogram
 ranking plot, roc plot, tippett plot and zoo plot.
 The example picture shows a so called zoo plot.
  
-Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
+Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@ Installation
 
 Linux
 -----
-You need to have python2.7.x installed. On most linux systems this is already the case.
-I tried it on Ubuntu 14.04 and it worked like a charm.
+You need to have python3.5 installed. On most linux systems this is already the case.
 First install git, matplotlib and some other modules using:
 
 <code>$ sudo apt-get install python-matplotlib python-numpy python-scipy git python-sklearn</code>
@@ -53,9 +52,8 @@ option in bioplot.cfg. Finally, there is the html doc you might want to read ...
 Ms Windows
 ----------
 Follow the instructions found here: http://matplotlib.org/users/installing.html
-I've tried anaconda 2.01 (32 bit version) on W7 32 bits, and I've heard that it works on XP and with the 64 bit version on W8 as well.
-Moreover I've tried anaconda 2.2.0.x with W10 (the preview) 64 bits, and it works as well.
-So it seems you can choose whatever version of windows you like. Anaconda will install python 2.7.x and a load of python modules amongst which numpy, matplotlib, pyplot.
+Download anaconda 3-4.2.0 (32 bit version) on W7 32 bits or the 64 bits version accoring to your machine's architecture.
+Anaconda will install python 3.5 and a load of python modules amongst which numpy, matplotlib, pyplot.
 You will be able to run bioplot.py and do much more pythony things ;-)
 
 Download the zip file from the github page and unzip its contents to a local directory.
@@ -64,7 +62,7 @@ Copy plot.cfg_4_windows.txt to bioplot.cfg in this local directory and run the m
 program from that directory to find out how to use it (and read the html doc).
 
 
-<code>python.exe bioplot.py -h</code>
+<code>python3.5.exe bioplot.py -h</code>
 
 Also look at bioplot.cfg to find out about additional options not available
 via the command line interface. There are lots of them. Their values are shown on the
@@ -105,8 +103,8 @@ option in bioplot.cfg. Finally, there is the html doc you might want to read ...
 Note: in contrast to the example plots supplied labels in plots on OSX will appear in
 black on a grey background.
 
-Usage
------
+Usage or Problems
+-----------------
 READ THE DOCS!
 
 Windows users:
