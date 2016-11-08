@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3.5
 
 """
     Tool to convert the input data for sretools (D. van Leeuwen) to bioplot data format.

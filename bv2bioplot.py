@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3.5
 
 """
     Tool to convert the output of BV result text files to bioplot data format.
