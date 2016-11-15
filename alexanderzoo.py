@@ -36,7 +36,7 @@ import collections
 
 class AlexanderZoo(Zoo):
     def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
-        Zoo.__init__(self, thisData, thisConfig, thisDebug)
+        Zoo.__init__(self, thisData, thisConfig, thisExpName, thisDebug)
         self.config = thisConfig
         self.data = thisData
         self._printToFilename = thisExpName

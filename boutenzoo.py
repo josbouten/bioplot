@@ -44,13 +44,13 @@ from circularhist import CircularHistPlot
 
 class BoutenZoo(Zoo):
     def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
+        Zoo.__init__(self, thisData, thisConfig, thisExpName, thisDebug)
         self.data = thisData
         self.config = thisConfig
         self._expName = thisExpName
         self._printToFilename = thisExpName
         self.debug = thisDebug
         self.plotType = "zoo_plot"
-        Zoo.__init__(self, self.data, self.config, self._expName, self.debug)
 
         self.title = self.data.getTitle()
         # All ellipses will have their own annotation.
