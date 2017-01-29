@@ -59,8 +59,8 @@ class BVData:
         if thisFilename != 'stdout':
             try:
                 f = open(thisFilename, 'wt')
-            except Exception, e:
-                print e
+            except Exception as e:
+                print(str(e))
                 sys.exit(1)
         delimiter = '|'
         speaker4Model = collections.defaultdict(list)
@@ -89,9 +89,9 @@ class BVData:
                     truth = "FALSE"
                 if thisFilename != 'stdout':
                     f.write("%s %s %s %s %s %s %s\n" % (speaker, testModel, speaker4Model[testModel],
-                                speaker4Model[testModel] + '_' + testModel, str(score), truth, self.metaValue))
+                            speaker4Model[testModel] + '_' + testModel, str(score), truth, self.metaValue))
                 else:
-                    print speaker, testModel, speaker4Model[testModel], testModel, score, truth, self.metaValue
+                    print((speaker, testModel, speaker4Model[testModel], testModel, score, truth, self.metaValue))
                     # print speaker, testModel, speaker4Model[testModel], speaker4Model[testModel] + \
                     #                 '_' + testModel, score, truth, self.metaValue
         if len(self.errorsInRow) > 0:
@@ -103,22 +103,24 @@ class BVData:
         if thisFilename != 'stdout':
             f.close()
 
-
-if __name__ == '__main__':
+def parseArguments():
+    # Define command line parser and get cli arguments.
     version = "0.2"
     progName = os.path.basename(sys.argv[0])
-    parser = argparse.ArgumentParser(description="%s version %s, Copyright (C) 2015, 2016 Jos Bouten.\
-    This program converts a bv results data file to a data file for bioplot.py.\
-    It comes with ABSOLUTELY NO WARRANTY; for details run \'%s -h\'.\
-    This is free software, and you are welcome to redistribute it\
-    under certain conditions; run \'%s -l\' for details.\
-    This program was written by Jos Bouten.\
-    You can contact me via josbouten at gmail dot com." % (progName, version, progName, progName),
-    version="This is %s version %s, Copyright (C) 2015, 2016 Jos Bouten" % (progName, version), )
+    parser = argparse.ArgumentParser(description="%s version %s, Copyright (C) 2015, 2016, 2017 Jos Bouten.\
+        This program converts a bv results data file to a data file for bioplot.py.\
+        It comes with ABSOLUTELY NO WARRANTY; for details run \'%s -h\'.\
+        This is free software, and you are welcome to redistribute it\
+        under certain conditions; run \'%s -l\' for details.\
+        This program was written by Jos Bouten.\
+        You can contact me via josbouten at gmail dot com." % (progName, version, progName, progName))
     parser.add_argument('-i', '--input', action="store", dest="inputfile", help="input file name")
     parser.add_argument('-o', '--output', action="store", dest="outputfile", help="output file name")
     parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+if __name__ == '__main__':
+    args = parseArguments()
 
     # Let's handle any request for the license first.
     # We stop the program after that.

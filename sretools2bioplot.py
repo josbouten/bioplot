@@ -51,14 +51,14 @@ class SreData:
         :return:
         """
         '''
-        :param thisFilename:
-        :return:
+        :param thisFilename: string: name of output file
+        :return: not a thing
         '''
         if thisFilename != 'stdout':
             try:
                 f = open(thisFilename, 'wt')
-            except Exception, e:
-                print e
+            except Exception as e:
+                print(str(e))
                 sys.exit(1)
         delimiter = ','
         with open(self.inputFilename, 'rb') as csvfile:
@@ -73,28 +73,34 @@ class SreData:
                     score = row[4]
                     truth = row[5]
                     if thisFilename != 'stdout':
-                        f.write("%s %s %s %s %s %s %s\n" % \
-                            (idTrain, trainFilename, idTest, testFilename, str(score), truth, self.metaValue))
+                        f.write("%s %s %s %s %s %s %s\n" %
+                                (idTrain, trainFilename, idTest, testFilename, str(score), truth, self.metaValue))
                     else:
-                        print idTrain, trainFilename, idTest, testFilename, str(score), truth, self.metaValue
+                        print(idTrain, trainFilename, idTest, testFilename, str(score), truth, self.metaValue)
         if thisFilename != 'stdout':
             f.close()
 
-if __name__ == '__main__':
+
+def parseArguments():
+    # Define command line parser and get cli arguments.
     version = "0.2"
     progName = os.path.basename(sys.argv[0])
     parser = argparse.ArgumentParser(description="%s [args filename] \n\
-    %s version %s, Copyright (C) 2015, 2016 Jos Bouten\n\
-    This program comes with ABSOLUTELY NO WARRANTY. For details run \'%s -h\'.\n\
-    This is free software, and you are welcome to redistribute it\n\
-    under certain conditions; run \'%s -l\' for details.\n\
-    This program was written by Jos Bouten.\n\
-    You can contact me via josbouten at gmail dot com." % (progName, progName, version, progName, progName),
-    version="This is %s version %s, Copyright (C) 2015, 2016 Jos Bouten" % (progName, version), )
+        %s version %s, Copyright (C) 2015, 2016, 2017 Jos Bouten\n\
+        This program comes with ABSOLUTELY NO WARRANTY. For details run \'%s -h\'.\n\
+        This is free software, and you are welcome to redistribute it\n\
+        under certain conditions; run \'%s -l\' for details.\n\
+        This program was written by Jos Bouten.\n\
+        You can contact me via josbouten at gmail dot com." % (progName, progName, version, progName, progName))
     parser.add_argument('-i', '--input', action="store", dest="inputfile", help="input file name")
     parser.add_argument('-o', '--output', action="store", dest="outputfile", help="output file name")
     parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    # Define command line parser and get cli arguments.
+    args = parseArguments()
 
     # Let's handle any request for the license first.
     # We stop the program after that.

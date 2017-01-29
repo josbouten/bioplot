@@ -106,8 +106,8 @@ class VocaliseData:
         if thisFilename != 'stdout':
             try:
                 f = open(thisFilename, 'wt')
-            except Exception, e:
-                print e
+            except Exception as e:
+                print(e)
                 sys.exit(1)
         for m, modelName in enumerate(self.modelNames):
             for t, testName in enumerate(self.testNames):
@@ -119,13 +119,13 @@ class VocaliseData:
                     truthValue = 'FALSE'
                 try:
                     if thisFilename == 'stdout':
-                        print shortModelName, modelName, shortTestName, testName, self.scores[testName][m], \
-                            truthValue, self.metaValue
+                        print(shortModelName, modelName, shortTestName, testName, self.scores[testName][m],
+                              truthValue, self.metaValue)
                     else:
                         f.write("%s %s %s %s %s %s %s\n" % (shortModelName, modelName, shortTestName, testName,
-                            str(self.scores[testName][m]), truthValue, self.metaValue))
-                except Exception, e:
-                    print e
+                                                            str(self.scores[testName][m]), truthValue, self.metaValue))
+                except Exception as e:
+                    print(e)
                     pass
                     # If for whatever reason there is no score for a given combination of
                     # test model vs training model, then we skip the experiment.
@@ -137,23 +137,25 @@ class VocaliseData:
             for el in self.errorsInRow:
                 sys.stderr.write("%s\n" % (str(el)))
 
-
-if __name__ == '__main__':
+def parseArguments():
+    # Define command line parser and get cli arguments.
     version = "0.2"
     progName = os.path.basename(sys.argv[0])
     parser = argparse.ArgumentParser(description="%s version %s, Copyright (C) 2015, 2016 Jos Bouten.\
-    This program converts an vocalise data file to a input data file for bioplot.py.\
-    %s comes with ABSOLUTELY NO WARRANTY; for details run \'%s -h\'.\
-    This is free software, and you are welcome to redistribute it\
-    under certain conditions; run \'%s -l\' for details.\
-    This program was written by Jos Bouten.\
-    You can contact me via josbouten at gmail dot com." % (progName, version, progName, progName, progName),
-    version="This is %s version %s, Copyright (C) 2015, 2016 Jos Bouten" % (progName, version), )
+        This program converts an vocalise data file to a input data file for bioplot.py.\
+        %s comes with ABSOLUTELY NO WARRANTY; for details run \'%s -h\'.\
+        This is free software, and you are welcome to redistribute it\
+        under certain conditions; run \'%s -l\' for details.\
+        This program was written by Jos Bouten.\
+        You can contact me via josbouten at gmail dot com." % (progName, version, progName, progName, progName))
     parser.add_argument('-i', '--input', action="store", dest="inputfile", help="input file name")
     parser.add_argument('-o', '--output', action="store", dest="outputfile", help="output file name")
     parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
-    args = parser.parse_args()
+    return parser.parse_args()
 
+if __name__ == '__main__':
+    # Define command line parser and get cli arguments.
+    args = parseArguments()
     # Let's handle any request for the license first.
     # We stop the program after that.
     debug = False
