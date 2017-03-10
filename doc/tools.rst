@@ -10,11 +10,11 @@ That should make it hard for anyone to decode it. In case you want to exchange d
 preserve the anonymity of the subjects. You can e.g. use this script if you want to send me a data set in case you have
 problems processing it. Use it like so: ::
 
-     python anonymize.py input_file output_file
+     python3 anonymize.py input_file output_file
 
 Example: ::
 
-    python anonymize.py example_data.txt example_data_anonymized.txt
+    python3 anonymize.py example_data.txt example_data_anonymized.txt
 
 If you now look at the contents of the files (only the first few lines are shown), you will see that all elements except
 the score, truth value and meta data label have been replaced by hash values: ::
@@ -33,14 +33,24 @@ the score, truth value and meta data label have been replaced by hash values: ::
     8ef620b7e211385969b72d04b9ad7d760cf0f7e5f4b19ad32b85dd046c110f70 a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -0.42766955655065264 FALSE 60s_2x30s
     4bb2c3af939742181003c57fc21c06fe2236c06d365963b2c7ceacc3df3e6e0c a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -2.838987423178022 FALSE 60s_2x30s
 
-For anonymization the sha256 hash function is used. For most purposes this should be adequaat.
+For anonymization the sha256 hash function is used. For most purposes this should be adequate.
+
+raw2bioplot.py
+--------------
+Read a file containing target scores (one per line) and a file containing non target scores (one per line) and convert
+them into a data file for bioplot. You can specify a label using -l. This will be used in the legend of the plot. By
+default the label will be 'test'.
+
+Example of usage: ::
+
+    python3 raw2bioplot.py -t target_scores.txt -n non_target_scores.txt -l conditionA -o data4bioplot.txt
 
 bv2bioplot.py
 -------------
 Convert a bv results data file to a data file for bioplot.
 Example of usage: ::
 
-    python bv2bioplot.py  -i inputfile -o outputfile
+    python3 bv2bioplot.py  -i inputfile -o outputfile
 
 sretools2bioplot.py
 -------------------
@@ -59,7 +69,7 @@ Example of input: ::
 
 Example of usage: ::
 
-    python sretools2bioplot.py -i inputfile -o outputfile
+    python3 sretools2bioplot.py -i inputfile -o outputfile
 
 vocalise2bioplot.py
 -------------------
@@ -67,4 +77,4 @@ Convert a vocalise data file to a data file for bioplot.
 
 Example of usage: ::
 
-    python vocalise2bioplot.py -i inputfile -o outputfile
+    python3 vocalise2bioplot.py -i inputfile -o outputfile

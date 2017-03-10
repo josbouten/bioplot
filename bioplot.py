@@ -59,8 +59,7 @@ def printConfig(theseOptions, thisConfig):
 def parseArguments():
     v = Version()
     progName = basename(sys.argv[0])
-    version = "This is bioplot.py version %s, Copyright (C) 2014, 2015, 2016, 2017 Jos Bouten" % v.getVersion()
-    version = "This is bioplot.py version %s, Copyright (C) 2014, 2015, 2016, 2017 Jos Bouten" % v.getVersion()
+    version = "This is bioplot.py version %s, Copyright (C) 2014, 2015, 2016, 2017: Jos Bouten" % v.getVersion()
     parser = argparse.ArgumentParser(description="%s [plot type] [<label1> <label2> <label3> ...]\n\
     bioplot.py version %s.\n\
     This program comes with ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l\'.\n\

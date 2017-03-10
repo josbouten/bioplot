@@ -3,13 +3,11 @@
 # This code was taken from http://www.tabularasa-euproject.org/
 # It is published under the GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
+# Andre Anjos <andre.anjos@idiap.ch>
+# Wed 11 May 2011 09:16:39 CEST
+
 # The code was integrated in bioplot by creating a Det object and
 # refactoring the code to convert it into fitting methods.
-
-
-
-# Andre Anjos <andre.anjos@idiap.ch>
-# Wed 11 May 2011 09:16:39 CEST 
 
 import math
 import numpy as np
@@ -228,7 +226,9 @@ class Det(Probability):
             thisLegendText = self._makeLegendText(legendText, metaValue)
             for neg, pos in zip(negatives, positives):
                 ppfar, ppfrr = self._evalDET(neg, pos, points)
-                plt.plot(ppfrr, ppfar, label=thisLegendText, color=colors[metaValue])
+                #plt.plot(ppfrr, ppfar, label=thisLegendText, color=colors[metaValue])
+                plt.plot(ppfar, ppfrr, label=thisLegendText, color=colors[metaValue])
+
 
         fr_minIndex = desiredLabels.index(limits[0])
         fr_maxIndex = desiredLabels.index(limits[1])
@@ -244,18 +244,17 @@ class Det(Probability):
 
         ax = plt.gca()
 
-        plt.axis([pticks[fr_minIndex], pticks[fr_maxIndex],
-                  pticks[fa_minIndex], pticks[fa_maxIndex]])
+        plt.axis([pticks[fa_minIndex], pticks[fa_maxIndex], pticks[fr_minIndex], pticks[fr_maxIndex]])
 
-        ax.set_xticks(pticks[fr_minIndex:fr_maxIndex])
-        ax.set_xticklabels(desiredLabels[fr_minIndex:fr_maxIndex], size='x-small', rotation='vertical')
-        ax.set_yticks(pticks[fa_minIndex:fa_maxIndex])
-        ax.set_yticklabels(desiredLabels[fa_minIndex:fa_maxIndex], size='x-small')
+        ax.set_yticks(pticks[fr_minIndex:fr_maxIndex])
+        ax.set_yticklabels(desiredLabels[fr_minIndex:fr_maxIndex], size='x-small', rotation='vertical')
+        ax.set_xticks(pticks[fa_minIndex:fa_maxIndex])
+        ax.set_xticklabels(desiredLabels[fa_minIndex:fa_maxIndex], size='x-small')
         if title:
             plt.title("DET plot for '" + self.data.getTitle() + "'")
             plt.grid(True)
-            plt.xlabel('False Rejection Rate [%]')
-            plt.ylabel('False Acceptance Rate [%]')
+            plt.ylabel('False Rejection Rate [%]')
+            plt.xlabel('False Acceptance Rate [%]')
         plt.legend(loc=1)
         if self.config.getPrintToFile():
             filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
