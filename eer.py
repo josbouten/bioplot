@@ -106,7 +106,7 @@ class Eer(Probability):
         except Exception as e:
             print('Exception in computeEer:', e)
             print('You may have too few data points to compute an eer value.')
-            sys.exit(1)
+            #sys.exit(1)
         else:
             if self.debug:
                 print('computeEer:index2score:', index2score)
@@ -184,7 +184,7 @@ class Eer(Probability):
             plt.xlabel('raw score')
             plt.ylabel('Probability')
         plt.grid()
-        plt.legend(loc=5)  # position logend at center right
+        plt.legend(loc=5)  # Position legend at center right.
         if self.config.getPrintToFile():
             filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
             print("Writing plot to %s" % filename)

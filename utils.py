@@ -29,20 +29,33 @@ from sys import exit
 
 import matplotlib.pyplot as plt
 
-def singleSanitize(filename):
-    filename = filename.replace(' ', '_')
-    filename = filename.replace(',', '_')
-    filename = filename.replace("'", '')
-    filename = filename.replace(':', '_')
-    filename = filename.replace(';', '_')
-    filename = filename.replace('__', '_')
-    return filename
+def singleSanitize(text):
+    '''
+    Remove some characters that will lead to problems when used in a textual annotation of a plot.
+    :param text: string of characters: ditry string
+    :return: string of characters: sanitized string
+    '''
+    text = text.replace(' ', '_')
+    text = text.replace(',', '_')
+    text = text.replace("'", '')
+    text = text.replace(':', '_')
+    text = text.replace(';', '_')
+    text = text.replace('__', '_')
+    return text
 
-def sanitize(filenames):
-    ret = []
-    for filename in filenames:
-        ret.append(singleSanitize(filename))
-    return ret
+def sanitize(data):
+    '''
+    Sanitize list of text strings or text string
+    :param data: list or single string to be sanitized
+    :return: list or string
+    '''
+    if isinstance(data, list):
+        ret = []
+        for filename in data:
+            ret.append(singleSanitize(filename))
+            return ret
+    else:
+        return(singleSanitize(data))
 
 def convert(value):
     """
