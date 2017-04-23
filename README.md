@@ -9,7 +9,7 @@ accuracy plot, cumulative score distribution plot, DET plot, EER plot, histogram
 ranking plot, roc plot, tippett plot and zoo plot.
 The example picture shows a so called zoo plot.
  
-Copyright (C) 2014, 2015, 2016, 2017 Jos Bouten ( josbouten at gmail dot com )
+Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

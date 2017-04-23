@@ -1,4 +1,4 @@
-# v1.2 14 April 2017
+# v1.2 23 April 2017
 Changed several copyright notices
 Added the number of target and non targets experiment counts to several plots.
 This will make clear how many scores were used to plot them.
