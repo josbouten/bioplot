@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Implementation notes &mdash; bioplot 0.9.9 documentation</title>
+    <title>Implementation notes &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="License" href="license.html" />
     <link rel="prev" title="Known Issues" href="issues.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -97,12 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -131,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -243,13 +247,13 @@
 <div class="section" id="histogram-py">
 <h2>histogram.py<a class="headerlink" href="#histogram-py" title="Permalink to this headline">¶</a></h2>
 <p>When drawing a histogram lots of warnings like this one may be seen on the screen:</p>
-<div class="highlight-python"><div class="highlight"><pre>DeprecationWarning: using a non-integer number instead of an
+<div class="highlight-python"><div class="highlight"><pre><span></span>DeprecationWarning: using a non-integer number instead of an
 integer will result in an error in the future
 result = np.zeros(new_shape, a.dtype)
 </pre></div>
 </div>
 <p>To suppress warnings like this a filter was added in histogram.py to filter out this specific warning using:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -257,13 +261,13 @@ result = np.zeros(new_shape, a.dtype)
 <div class="section" id="cllr-py">
 <h2>cllr.py<a class="headerlink" href="#cllr-py" title="Permalink to this headline">¶</a></h2>
 <p>When computing minimum Cllr values warnings are suppressed when computing log values.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c1"># disable runtime warnings for a short time since log(0) will raise a warning.</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># disable runtime warnings for a short time since log(0) will raise a warning.</span>
 <span class="n">old_warn_setup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The minCllr function computes the &#8216;minimum cost of log likelihood ratio&#8217; measure as given in IDIAP&#8217;s BOB code &#8220;measure/calibration.py&#8221;.
 Have a look here <a class="reference external" href="http://idiap.github.io/bob/">http://idiap.github.io/bob/</a> and at this:</p>
-<div class="highlight-python"><div class="highlight"><pre>@inproceedings{bob2012, author = {A. Anjos AND L. El Shafey AND R. Wallace AND M. G\\&quot;unther AND C. McCool AND S. Marcel}, title = {Bob: a free signal processing and machine learning toolbox for researchers}, year = {2012}, month = oct, booktitle = {20th ACM Conference on Multimedia Systems (ACMMM), Nara, Japan}, publisher = {ACM Press}, url = {http://publications.idiap.ch/downloads/papers/2012/Anjos_Bob_ACMMM12.pdf},}
+<div class="highlight-python"><div class="highlight"><pre><span></span>@inproceedings{bob2012, author = {A. Anjos AND L. El Shafey AND R. Wallace AND M. G\\&quot;unther AND C. McCool AND S. Marcel}, title = {Bob: a free signal processing and machine learning toolbox for researchers}, year = {2012}, month = oct, booktitle = {20th ACM Conference on Multimedia Systems (ACMMM), Nara, Japan}, publisher = {ACM Press}, url = {http://publications.idiap.ch/downloads/papers/2012/Anjos_Bob_ACMMM12.pdf},}
 </pre></div>
 </div>
 <p>However no use is made of BOB&#8217;s pavx function as it would require linking c++ code. Instead sklearn&#8217;s isotonic
@@ -289,7 +293,7 @@ doc/_build/man/bioplot.1 and doc/_build/html/index.html.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

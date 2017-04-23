@@ -1,7 +1,50 @@
 UPDATE
 ======
 
-------
+------------
+All versions
+------------
+Keep a copy of bioplot.cfg with your latest settings before updating anything.
+
+Note: each version you download is self contained. You do not need anything from an existing version to run a new one.
+
+If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
+If you want to replace the bioplot version with a new one download the latest zip file from the github page, rename the
+old bioplot directory to bioplot.org and unzip the new version. Then copy your input and output files from the input and
+output dir from the old version into the corresponding directory of the new one.
+
+Merge your favourite settings in the saved version of bioplot.cfg with the new one. On osx or linux I would use diff or vimdiff for this.
+As I'm not a windows user, if you are, you're on your own.
+
+From here on, you're ready to go.
+Have a look at the changelog.txt file, the man pages, the html docs and bioplot.cfg to find out about new functions and
+settings and read the update section for possible extra update steps.
+
+When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg.
+So in case of OSX use: ::
+
+    [cfg]
+    runningOSX = True
+    runningWindows = False
+
+Or in case of a compatible MS Windows OS use: ::
+
+    [cfg]
+    runningOSX = False
+    runningWindows = True
+
+Linux users set both to False.
+Do not forget to set your screen's resolution in [cfg] using screenResolution (in this example it is set to 1600x1200). ::
+
+    [cfg]
+    screenResolution = 1600x1200
+
+
+V1.4
+----
+bioplot will run on python3.x only. Some new flags were added to bioplot.cfg.
+You may want to merge your own version with this one.
+
 v0.9.9
 ------
 Because of the transition of the code base to python3.5 you need to start bioplot.py with python3.5
@@ -53,40 +96,3 @@ From bioplot v0.9.4 on you'll need to install the python machine learning librar
 
     sudo pip install scikit-learn
 
-------------
-All versions
-------------
-Keep a copy of bioplot.cfg with your latest settings before updating anything.
-
-Note: each version you download is self contained. You do not need anything from an existing version to run a new one.
-
-If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
-If you want to replace the bioplot version with a new one download the latest zip file from the github page, rename the
-old bioplot directory to bioplot.org and unzip the new version. Then copy your input and output files from the input and
-output dir from the old version into the corresponding directory of the new one.
-
-Merge your favourite settings in the saved version of bioplot.cfg with the new one. On osx or linux I would use diff or vimdiff for this.
-As I'm not a windows user, if you are, you're on your own.
-
-From here on, you're ready to go.
-Have a look at the changelog.txt file, the man pages, the html docs and bioplot.cfg to find out about new functions and
-settings and read the update section for possible extra update steps.
-
-When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg.
-So in case of OSX use: ::
-
-    [cfg]
-    runningOSX = True
-    runningWindows = False
-
-Or in case of a compatible MS Windows OS use: ::
-
-    [cfg]
-    runningOSX = False
-    runningWindows = True
-
-Linux users set both to False.
-Do not forget to set your screen's resolution in [cfg] using screenResolution (in this example it is set to 1600x1200). ::
-
-    [cfg]
-    screenResolution = 1600x1200

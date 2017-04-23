@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction to Bioplot &mdash; bioplot 0.9.9 documentation</title>
+    <title>Introduction to Bioplot &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="INSTALL" href="install.html" />
     <link rel="prev" title="Welcome to bioplot’s documentation!" href="index.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -96,11 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -129,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -265,29 +271,28 @@ click on a point to see the associated label, save the plot in a file etc. etc.<
 <p>What bioplot.py basically does is: read a data file and plot one or more interactive graphs.
 You can run bioplot.py from the command line. The follow command will show help info for bioplot:
 On OSX and linux run:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -h
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -h
 </pre></div>
 </div>
 <p>On Ms Windows run:</p>
-<div class="highlight-python"><div class="highlight"><pre>python.exe bioplot.py -h
+<div class="highlight-python"><div class="highlight"><pre><span></span>python.exe bioplot.py -h
 </pre></div>
 </div>
 <p>This wil output the following information:</p>
-<div class="highlight-python"><div class="highlight"><pre>usage: bioplot.py [-h] [-v] [-Z] [-A] [-D] [-E] [-T] [-M] [-O] [-R] [-C] [-H]
-                  [-k] [-L LABELS [LABELS ...]] [-e EXPNAME] [-i FILENAME]
-                  [-t DATATYPE] [-d THRESHOLD] [-c CONFIGFILENAME] [-l] [-s]
-                  [-q]
+<div class="highlight-python"><div class="highlight"><pre><span></span>usage: bioplot.py [-h] [-Z] [-A] [-D] [-E] [-T] [-M] [-O] [-R] [-C] [-H] [-k]
+                  [-L LABELS [LABELS ...]] [-e EXPNAME]
+                  [-i FILENAMES [FILENAMES ...]] [-t DATATYPE] [-d THRESHOLD]
+                  [-c CONFIGFILENAME] [-l] [-s] [-q]
 
 bioplot.py [plot type] [&lt;label1&gt; &lt;label2&gt; &lt;label3&gt; ...] bioplot.py version
-0.9.8, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
-ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l&#39;. This is free
-software, and you are welcome to redistribute it under certain conditions;
-type `bioplot.py -l&#39; for details. This program was written by Jos Bouten. You
-can contact me via josbouten at gmail dot com.
+This is bioplot.py version 1.2, Copyright (C) 2014: Jos Bouten
+This program comes with ABSOLUTELY NO WARRANTY; for details run
+`bioplot.py -l&#39;. This is free software, and you are welcome to redistribute it
+under certain conditions; type `bioplot.py -l&#39; for details. This program was
+written by Jos Bouten. You can contact me via josbouten at gmail dot com.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -v, --version         show program&#39;s version number and exit
   -Z, --zoo             show zoo plot
   -A, --accuracy        show accuracy plot
   -D, --det             show Det plot
@@ -303,8 +308,9 @@ optional arguments:
                         add labels to plot
   -e EXPNAME, --exp EXPNAME
                         name of experiment used in plot title, default = test
-  -i FILENAME, --inputfile FILENAME
-                        filename list of filenames of data file(s), default = input/testdata_A.txt
+  -i FILENAMES [FILENAMES ...], --inputfile FILENAMES [FILENAMES ...]
+                        filename of filenames of data file(s) or name of
+                        database, default = input/testdata_A.txt
   -t DATATYPE, --type DATATYPE
                         type of data, default = type3, use &#39;database&#39; if you
                         want to read data from a database.
@@ -328,7 +334,7 @@ optional arguments:
 </dl>
 <p>As you can tell from the list of options you need to choose what type of graph you want.
 Bioplot can produce several plots in a row with just one invocation of the program. E.g. if you run:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -A -E -i some_input_data_file.txt yet_another_input_file.txt
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -Z -A -E -i some_input_data_file.txt yet_another_input_file.txt
 </pre></div>
 </div>
 <p>the program will produce a zoo plot, an accuracy plot and an EER plot one after the other.</p>
@@ -351,20 +357,20 @@ to it and write them in text files (unless you set saveScores to False in bioplo
 For this to be usefull always add a name for the experiment you were running to the command line,
 otherwise the prefix &#8216;test&#8217; is used.</p>
 <p>The experiment name is used in the titles of the plots and in the filenames bioplot produces.</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -e myFirstExperiment
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -Z -e myFirstExperiment
 </pre></div>
 </div>
 <p>You can use these file for further processing. The experiment name you specify is used as part
 of the filename: &lt;exp_name&gt;_&lt;meta_value&gt;_non_target.txt, &lt;exp_name&gt;_&lt;meta_value&gt;_target.txt.
 The &lt;meta_value&gt; is taken from the last column of data in the data files:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">myFirstExperiment_conditionA_target</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">myFirstExperiment_conditionA_target</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">myFirstExperiment_conditionA_non_target</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>The files are stored in the directory specified by &#8216;outputPath&#8217; in
 bioplot.cfg in it&#8217;s [cfg] section. The default path will be &#8216;output&#8217; in
 the current directory. You can change this behaviour in bioplot.cfg via the following settings:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">outputPath</span> <span class="o">=</span> <span class="n">output</span>
 <span class="n">saveScores</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">alwasySave</span> <span class="o">=</span> <span class="bp">False</span>
@@ -373,7 +379,7 @@ the current directory. You can change this behaviour in bioplot.cfg via the foll
 <p>If the output path does not exist, bioplot will try to create it. Note: this may require privileges to be set propperly.
 If you run the program repeatedly using the same experiment name, the scores are not saved again, saving some processing
 time, unless you add the following setting to the config file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">alwaysSave</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -384,14 +390,14 @@ you need to delete them before running bioplot.py again (or set alwaysSave to Tr
 <p>If you choose to plot a zoo plot, the labels which fall within the doves, chameleons, worms and phantom quartiles
 are saved in individual text files: &lt;exp_name&gt;_chameleons.txt, &lt;exp_name&gt;_doves.txt, &lt;exp_name&gt;_phantoms.txt and
 &lt;exp_name&gt;_worms.txt. This automatically documents all outliers.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">myFirstExperiment_chameleons</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">myFirstExperiment_chameleons</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">myFirstExperiment_doves</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">myFirstExperiment_phantoms</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">myFirstExperiment_worms</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>The content of output/myFirstExperiment_chameleons.txt looks like this:</p>
-<div class="highlight-python"><div class="highlight"><pre># label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
+<div class="highlight-python"><div class="highlight"><pre><span></span># label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
 116 conditionB -0.563504928571 -1.07438894059 14 202 -0.502857 1.25531696972
 1118 conditionA -0.264748666667 -1.07494067871 30 249 2.000000 -0.733892414191
 226 conditionB -0.555475 -1.06827121759 1 216 0.010000 -0.717001903115
@@ -406,18 +412,18 @@ are saved in individual text files: &lt;exp_name&gt;_chameleons.txt, &lt;exp_nam
 deviation are stored in a file &lt;exp name&gt;_limited.txt together with the violating score (have a look at the
 <a class="reference internal" href="zooplot.html#rst-zooplot"><span>Zoo plot</span></a> page for a general understanding of how the plot is made).</p>
 <p>Assuming these settings:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">limitStdDevs</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">maxStdDev</span> <span class="o">=</span> <span class="mf">2.0</span>
 <span class="n">minStdDev</span> <span class="o">=</span> <span class="mf">0.01</span>
 </pre></div>
 </div>
 <p>the following command will produce the file &#8216;myFirstExperiment_limited.txt&#8217; where the standard deviations are limited to a maximum value of 2 * unit std dev:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -Z -i input/testdata_AB.txt -e myFirstExperiment
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -Z -i input/testdata_AB.txt -e myFirstExperiment
 </pre></div>
 </div>
 <p>This will result into the following content in output/myFirstExperiment_limited.txt (shown partially):</p>
-<div class="highlight-python"><div class="highlight"><pre># label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
+<div class="highlight-python"><div class="highlight"><pre><span></span># label, metavalue, average_target_score, average_non_target_score, nr_of_target_scores, nr_of_non_target_scores, average_target_score_stdev, average_non_target_score_stdev
 223 conditionA -0.6239485 -1.0987091784 2 213 -0.294772 2.0
 1129 conditionB -0.481959666667 -1.09234021145 12 227 2.000000 -0.487198065101
 57 conditionB -1.08974608333 -1.07881886634 12 202 -0.719556 -2.0
@@ -443,7 +449,7 @@ will allow you to save the plot anywhere you choose to. If you press a different
 the directory specified by outputPath. This happens any time you press a key!</p>
 <p>Note: the keys l, k, g, s and f are predefined keys of the gui. They provide additional functions.
 With them you can:</p>
-<div class="highlight-python"><div class="highlight"><pre>g: toggle grid on / off
+<div class="highlight-python"><div class="highlight"><pre><span></span>g: toggle grid on / off
 k: toggle between linear horizontal scale and logaritmic horizontal scale
 l: toggle between linear vertical scale and logaritmic vertical scale
 s: open save menu
@@ -461,7 +467,7 @@ with 7 fields. You need not specify type3 as it is a default. This data type all
 experiments where multiple files are used to make a model whether this is a training model or a test model.
 Note, if you do not provide an input file, the program uses input/testdata_A.txt.</p>
 <p>The data file should contain data in a format like this example:</p>
-<div class="highlight-python"><div class="highlight"><pre>803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
+<div class="highlight-python"><div class="highlight"><pre><span></span>803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
 148407 47968376b.wav 898232 08087650a.wav 0.336018745422363 FALSE META_VAL3
 179408 34192626a.wav 803721 16749939b.wav 1.263523664188385 FALSE META_VAL2
 803442 48588750a.wav 803442 15560933b.wav 4.423274517059326 TRUE  META_VAL2
@@ -469,7 +475,7 @@ Note, if you do not provide an input file, the program uses input/testdata_A.txt
 </div>
 <p>Separation by comma&#8217;s is also accepted.
 This can be mixed as in:</p>
-<div class="highlight-python"><div class="highlight"><pre>803742,17133729a.wav,803593,16842970b.wav,2.108616847991943,FALSE,META_VAL1
+<div class="highlight-python"><div class="highlight"><pre><span></span>803742,17133729a.wav,803593,16842970b.wav,2.108616847991943,FALSE,META_VAL1
 148407,47968376b.wav,898232,08087650a.wav,0.336018745422363,FALSE,META_VAL3
 179408 34192626a.wav 803721 16749939b.wav 1.263523664188385 FALSE META_VAL2
 803442,48588750a.wav,803442,15560933b.wav,4.423274517059326,TRUE, META_VAL2
@@ -486,11 +492,11 @@ This can be mixed as in:</p>
 So if you have 2 experiments where you change one variable, when doing a cross
 identification test, the meta value can be used to group the experiment&#8217;s scores.</p>
 <p>Let&#8217;s have a look at an example data line:</p>
-<div class="highlight-python"><div class="highlight"><pre>803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
+<div class="highlight-python"><div class="highlight"><pre><span></span>803742 17133729a.wav 803593 16842970b.wav 2.108616847991943 FALSE META_VAL1
 </pre></div>
 </div>
 <p>This line describes the result of a speaker verification experiment in which was used:</p>
-<div class="highlight-python"><div class="highlight"><pre>- as training audio samples from the file 17133729a.wav
+<div class="highlight-python"><div class="highlight"><pre><span></span>- as training audio samples from the file 17133729a.wav
 - the label 803742 to identify the speaker in the training audio
 - the label 803593 to identify the speaker in the test/evaluation/disputed utterance
 - as evaluation audio samples from the file 16842970b.wav
@@ -520,7 +526,7 @@ the special characters mentioned below under &#8216;Known Issues&#8217;.</p>
 <p>File &#8216;type1&#8217; is a database based data format and meant as an example on how to use bioplot in combination with a
 database of scores. Specify &#8216;database&#8217; as filename on the command line.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -i database -t type1 -e &#39;data taken from db&#39; -Z
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -i database -t type1 -e &#39;data taken from db&#39; -Z
 </pre></div>
 </div>
 <p>You will have to adapt the query in the function _readFromDatabase and the function
@@ -528,7 +534,7 @@ _decodeType1Results in data.py to your own needs.</p>
 <p>There are several data files (of type3) which are meant as examples to play around
 with: input/testdata_A.txt, input/testdata_B.txt, input/testdata_C.txt and input/testdata_ABC.txt</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -Z
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -Z
 python bioplot.py -e &quot;condition A and B&quot; -i input/testdata_A.txt input/testdata_B.txt -Z
 </pre></div>
 </div>
@@ -565,7 +571,7 @@ you can contact me at josbouten at gmail dot com.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

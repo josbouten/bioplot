@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>UPDATE &mdash; bioplot 0.9.9 documentation</title>
+    <title>UPDATE &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="Accuracy plot" href="accuracy.html" />
     <link rel="prev" title="INSTALL" href="install.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,9 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -99,12 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">UPDATE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v0-9-9">v0.9.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -133,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -188,12 +190,15 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">UPDATE</a><ul>
+<li><a class="reference internal" href="#all-versions">All versions</a><ul>
+<li><a class="reference internal" href="#v1-4">V1.4</a></li>
 <li><a class="reference internal" href="#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#v0-9-4">v0.9.4</a><ul>
 <li><a class="reference internal" href="#osx">OSX</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#all-versions">All versions</a></li>
 </ul>
 </li>
 </ul>
@@ -245,14 +250,51 @@
       
   <div class="section" id="update">
 <h1>UPDATE<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="all-versions">
+<h2>All versions<a class="headerlink" href="#all-versions" title="Permalink to this headline">¶</a></h2>
+<p>Keep a copy of bioplot.cfg with your latest settings before updating anything.</p>
+<p>Note: each version you download is self contained. You do not need anything from an existing version to run a new one.</p>
+<p>If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
+If you want to replace the bioplot version with a new one download the latest zip file from the github page, rename the
+old bioplot directory to bioplot.org and unzip the new version. Then copy your input and output files from the input and
+output dir from the old version into the corresponding directory of the new one.</p>
+<p>Merge your favourite settings in the saved version of bioplot.cfg with the new one. On osx or linux I would use diff or vimdiff for this.
+As I&#8217;m not a windows user, if you are, you&#8217;re on your own.</p>
+<p>From here on, you&#8217;re ready to go.
+Have a look at the changelog.txt file, the man pages, the html docs and bioplot.cfg to find out about new functions and
+settings and read the update section for possible extra update steps.</p>
+<p>When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg.
+So in case of OSX use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Or in case of a compatible MS Windows OS use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>Linux users set both to False.
+Do not forget to set your screen&#8217;s resolution in [cfg] using screenResolution (in this example it is set to 1600x1200).</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>[cfg]
+screenResolution = 1600x1200
+</pre></div>
+</div>
+<div class="section" id="v1-4">
+<h3>V1.4<a class="headerlink" href="#v1-4" title="Permalink to this headline">¶</a></h3>
+<p>bioplot will run on python3.x only. Some new flags were added to bioplot.cfg.
+You may want to merge your own version with this one.</p>
+</div>
 <div class="section" id="v0-9-9">
-<h2>v0.9.9<a class="headerlink" href="#v0-9-9" title="Permalink to this headline">¶</a></h2>
+<h3>v0.9.9<a class="headerlink" href="#v0-9-9" title="Permalink to this headline">¶</a></h3>
 <p>Because of the transition of the code base to python3.5 you need to start bioplot.py with python3.5
 Bioplot should run with any version of python equal to or higher than 3.0.
 If on your system you have both versions, make sure to use the right one. This can be enforced by
 explicitely prepending it to the command like so (assume you run the command from the command line
 in the bioplot code directory):</p>
-<div class="highlight-python"><div class="highlight"><pre>On Ms Windows (after installing anaconda3)
+<div class="highlight-python"><div class="highlight"><pre><span></span>On Ms Windows (after installing anaconda3)
 python.exe ./bioplot.py -h
 
 On OSX
@@ -263,7 +305,7 @@ python3 ./bioplot.py -h
 </pre></div>
 </div>
 <p>If you are experiencing problems with matplotlib you may need get an error message when it is imported. You may see something like this:</p>
-<div class="highlight-python"><div class="highlight"><pre>File &quot;/Users/jos/projects/bioplot/utils.py&quot;, line 30, in &lt;module&gt;
+<div class="highlight-python"><div class="highlight"><pre><span></span>File &quot;/Users/jos/projects/bioplot/utils.py&quot;, line 30, in &lt;module&gt;
   import matplotlib.pyplot as plt
 File &quot;/Users/jos/anaconda/lib/python3.5/site-packages/matplotlib/pyplot.py&quot;, line 114, in &lt;module&gt;
   _backend_mod, new_figure_manager, draw_if_interactive, _show = pylab_setup()
@@ -283,8 +325,9 @@ FAQ
 </div>
 <p>To remedy this set the plotting backend in /Users/&lt;your user name&gt;/.matplotlib/matplotlibrc.
 If the file does not exist, make it and put the following content in it:</p>
-<div class="highlight-python"><div class="highlight"><pre>backend: TkAgg
+<div class="highlight-python"><div class="highlight"><pre><span></span>backend: TkAgg
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="v0-9-4">
@@ -292,42 +335,9 @@ If the file does not exist, make it and put the following content in it:</p>
 <div class="section" id="osx">
 <h3>OSX<a class="headerlink" href="#osx" title="Permalink to this headline">¶</a></h3>
 <p>From bioplot v0.9.4 on you&#8217;ll need to install the python machine learning library scikit-learn:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo pip install scikit-learn
+<div class="highlight-python"><div class="highlight"><pre><span></span>sudo pip install scikit-learn
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="all-versions">
-<h2>All versions<a class="headerlink" href="#all-versions" title="Permalink to this headline">¶</a></h2>
-<p>Keep a copy of bioplot.cfg with your latest settings before updating anything.</p>
-<p>Note: each version you download is self contained. You do not need anything from an existing version to run a new one.</p>
-<p>If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
-If you want to replace the bioplot version with a new one download the latest zip file from the github page, rename the
-old bioplot directory to bioplot.org and unzip the new version. Then copy your input and output files from the input and
-output dir from the old version into the corresponding directory of the new one.</p>
-<p>Merge your favourite settings in the saved version of bioplot.cfg with the new one. On osx or linux I would use diff or vimdiff for this.
-As I&#8217;m not a windows user, if you are, you&#8217;re on your own.</p>
-<p>From here on, you&#8217;re ready to go.
-Have a look at the changelog.txt file, the man pages, the html docs and bioplot.cfg to find out about new functions and
-settings and read the update section for possible extra update steps.</p>
-<p>When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg.
-So in case of OSX use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
-<span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">False</span>
-</pre></div>
-</div>
-<p>Or in case of a compatible MS Windows OS use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
-<span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">True</span>
-</pre></div>
-</div>
-<p>Linux users set both to False.
-Do not forget to set your screen&#8217;s resolution in [cfg] using screenResolution (in this example it is set to 1600x1200).</p>
-<div class="highlight-python"><div class="highlight"><pre>[cfg]
-screenResolution = 1600x1200
-</pre></div>
 </div>
 </div>
 </div>
@@ -344,7 +354,7 @@ screenResolution = 1600x1200
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

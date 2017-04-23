@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Histogram &mdash; bioplot 0.9.9 documentation</title>
+    <title>Histogram &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="Matrix plot" href="matrixplot.html" />
     <link rel="prev" title="EER plot" href="eerplot.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -96,11 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -129,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -240,7 +246,7 @@
 <span id="rst-histogram"></span><h1>Histogram<a class="headerlink" href="#histogram" title="Permalink to this headline">¶</a></h1>
 <p>A histogram can be used to view the distribution of target and non target scores.</p>
 <p>Run this command to see an example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -H
+<div class="highlight-python"><div class="highlight"><pre><span></span>python ./bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -H
 </pre></div>
 </div>
 <img alt="_images/condition_A_histogram_plot.png" src="_images/condition_A_histogram_plot.png" />
@@ -251,7 +257,7 @@
 <p>By default the bins of the datasets shown in the histogram are normalized. Especially with large differences in numbers
 this makes it possible to see the score ranges of the target and non target scores. Otherwise the target scores in particular
 might not be clearly visible. If you do not want this, set normHist to False:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">histogram</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">histogram</span><span class="p">]</span>
 <span class="n">normHist</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
@@ -261,7 +267,7 @@ might not be clearly visible. If you do not want this, set normHist to False:</p
 <h2>Number of bins<a class="headerlink" href="#number-of-bins" title="Permalink to this headline">¶</a></h2>
 <p>You can set the  number of bins. Either specify a number or rice, sqrt or sturges.
 See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width">https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width</a></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">histogram</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">histogram</span><span class="p">]</span>
 <span class="n">nrBins</span> <span class="o">=</span> <span class="mi">150</span>
 </pre></div>
 </div>
@@ -270,14 +276,14 @@ See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#
 <h2>Combined experiments<a class="headerlink" href="#combined-experiments" title="Permalink to this headline">¶</a></h2>
 <p>Obviously you can also visualize combined experiments. Here is an example of the command. The plot shows a region
 of the histogram after zooming in:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -H
+<div class="highlight-python"><div class="highlight"><pre><span></span>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -H
 </pre></div>
 </div>
 <img alt="_images/condition_AB_histogram_plot_detail.png" src="_images/condition_AB_histogram_plot_detail.png" />
 <p>If you are interested in a cumulative plot, have a look at <a class="reference internal" href="eerplot.html#rst-eerplot"><span>EER plot</span></a>.</p>
 <p>If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
 The file name will be &lt;experiment name&gt;_histogram.png.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">printToFile</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -296,7 +302,7 @@ The file name will be &lt;experiment name&gt;_histogram.png.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

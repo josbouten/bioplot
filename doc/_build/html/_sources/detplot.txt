@@ -18,6 +18,11 @@ If you want to see Cllr and minCllr values in the plot's legend, set: ::
     showCllr = True
     showMinCllr = True
 
+If you want to know how many target and non target scores the plot is based on, set: ::
+
+    [det]
+    showCounts = True
+
 You can set the upper limits for the False Accept rate and False Rejection Rate in the config file: ::
 
     [det]

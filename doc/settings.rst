@@ -18,29 +18,16 @@ start bioplot like this: ::
 
 It will then show a list of chosen settings like so: ::
 
-	Config info taken from 'default values':
-	alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True, 
-	annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8, 
-	interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569), 
-	limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99, 
-	maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3, 
-	minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50, nrBins = 100, 
-	nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = False, 
-	saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True, 
-	showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True, 
-	showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True, 
-	showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, roc.showMinCllr = True, 
-	zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = False, 
-	showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, 
-	useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1, 
-	zWidth = 0.65
+    Config info taken from 'default values':
+    alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False, dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569), limitStdDevs = False, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 99.999, maxFalseRejectionRate = 99.999, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2, minStdDev = 0.01, noHistAnnot = False, normHist = True, nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = True, saveScores = True, scaleFactor = 100, screenResolution = 1600x1024, showAnnotationsAtStartup = False, showMeanScores = True, showCircularHistogram = True, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, eer.showCounts = True, det.showCounts = True, roc.showCounts = True, tippet.showCounts = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = True, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63, zLeft = 0.05, zWidth = 0.65
 
-This will show the settings read from the file 'some_other_settings_file'. ::
+This will show the settings read from the file 'bioplot.cfg'. ::
 
-    bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
     Ignoring all command line parameters except -s
-    Config info as read from some_other_settings_file:
-    alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
+    Config info as read from 'bioplot.cfg':
+    alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
+    annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False, dimmingFactor = 0.8, interconnectMetaValues = True,
+    etc. etc.
 
 If you do not want to see the list of settings each time bioplot is run, set ::
 
@@ -77,15 +64,15 @@ In stead of plotting on screen you can send plots to file.
 The name of the file will be <exp_name>_<plot_type>_plot.png
 Set printToFile to True to plot to file (default = False). ::
 
-	printToFile = False
+    printToFile = False
 
 The height of the plot in inches. ::
 
-	printToFileHeight = 10
+    printToFileHeight = 10
 
 The width of the plot in inches. ::
 
-	printToFileWidth = 15
+    printToFileWidth = 15
 
 Are we running on OSX or not?
 The Labels by default show black text on a yellow background.
@@ -93,7 +80,7 @@ The yellow background may be too large for the text.
 If so, set runningOSX to True, this will change the yellow
 background into a grey one and make the background fit the text in size. ::
 
- runningOSX = False
+    runningOSX = False
 
 Are we running on Microsoft Windows or not?
 The Labels by default show black text on a yellow background.
@@ -101,11 +88,11 @@ The yellow background may be too large for the text.
 If so, set runningWindows to True, this will change the yellow
 background into a grey one and make the background fit the text in size. ::
 
- runningWindows = False
+    runningWindows = False
 
 Save all scores to text file separated in target and non target scores per meta value. ::
 
- saveScores = True
+    saveScores = True
 
 [data]
 ------

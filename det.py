@@ -13,11 +13,11 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from utils import assignColors2MetaDataValue
-from collections import defaultdict
-from cllr import Cllr
+from legendtext import LegendText
 from eer import Eer
 from probability import Probability
 from event import Event
+
 
 class Det(Probability):
     def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
@@ -101,7 +101,7 @@ class Det(Probability):
                 r = 1.0 - p
             else:
                 r = p
-            if r <= 0.0: raise(RuntimeError, 'ERROR Found r = %g\n' % r)
+            if r <= 0.0: raise (RuntimeError, 'ERROR Found r = %g\n' % r)
             r = math.sqrt((-1.0) * math.log(r))
             retval = (((self.__C3__ * r + self.__C2__) * r + self.__C1__) * r + self.__C0__) \
                      / ((self.__D2__ * r + self.__D1__) * r + 1.0)
@@ -124,18 +124,9 @@ class Det(Probability):
         far, frr = self._evalROC(negatives, positives, points)
         return (__ppndf_array__(far), __ppndf_array__(frr))
 
-    def _makeLegendText(self, legendText, metaValue):
-        thisLegendText = '%s, ' % metaValue
-        # Compile legend text.
-        for el in legendText[metaValue]:
-            thisLegendText += el + ', '
-            # Remove last comma and space.
-        thisLegendText = thisLegendText[:-2]
-        return thisLegendText
-
     def plot(self):
         self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
-        self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
+        self.event = Event(self.config, self.fig, self._expName, self.plotType, self.debug)
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
@@ -144,66 +135,29 @@ class Det(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
 
-        legendText = defaultdict(list)
+        eerObject = Eer(self.data, self.config, self.data.getTitle(), self.debug)
+        eerData = eerObject.computeProbabilities(self.eerFunc)
+        eerValue = {}
+        score = {}
+        for thisMetaValue in sorted(colors.keys()):
+            for metaValue, PD, PP, X in eerData:
+                if thisMetaValue == metaValue:
+                    try:
+                        eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
+                    except Exception as e:
+                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
+                    else:
+                        eerValue[metaValue] *= 100
+                    break
 
-        # Compute and show the EER value if so desired.
-        if self.config.getShowEerInDet():
-            eerObject = Eer(self.data, self.config, self._expName, self.debug)
-            eerData = eerObject.computeProbabilities(self.eerFunc)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, PD, PP, X in eerData:
-                    if thisMetaValue == metaValue:
-                        try:
-                            eerValue, score = eerObject.computeEer(PD, PP, X)
-                        except Exception as e:
-                            print("DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e))
-                        else:
-                            eerValue *= 100
-                            if eerValue < 10.0:
-                                eerStr = "Eer:  %.2f%s" % (eerValue, '%')
-                            else:
-                                eerStr = "Eer: %2.2f%s" % (eerValue, '%')
-                            legendText[thisMetaValue].append(eerStr)
-                        break
-
-        # Compute and show the Cllr value if so desired.
-        if self.config.getShowCllrInDet():
-            cllrObject = Cllr(self.data, self.config, self.debug)
-            cllrData = cllrObject.getCllr()
-            if self.debug:
-                print(cllrData)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, cllrValue in cllrData:
-                    if thisMetaValue == metaValue:
-                        if type(cllrValue) is float:
-                            cllrStr = "Cllr: %.3f" % cllrValue
-                        else:
-                            cllrStr = "Cllr: %s" % cllrValue
-                        legendText[metaValue].append(cllrStr)
-                        break
-
-        # Compute and show the CllrMin value if so desired.
-        if self.config.getShowMinCllrInDet():
-            cllrObject = Cllr(self.data, self.config, self.debug)
-            minCllrData = cllrObject.getMinCllr()
-            if self.debug:
-                print("minCllrData:", minCllrData)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, minCllrValue in minCllrData:
-                    if thisMetaValue == metaValue:
-                        if type(minCllrValue) is float:
-                            minCllrStr = "minCllr: %.3f" % minCllrValue
-                        else:
-                            minCllrStr = "minCllr: %s" % minCllrValue
-                        legendText[metaValue].append(minCllrStr)
-                        break
         points = 100
         title = 'DET plot'
         figure = plt.gcf()
         figure.set_figheight(figure.get_figheight() * 1.3)
 
         desiredTicks = ["0.00001", "0.00002", "0.00005", "0.0001", "0.0002", "0.0005", "0.001", "0.002", "0.005",
-                        "0.01", "0.02", "0.05", "0.1", "0.2", "0.4", "0.6", "0.8", "0.9", "0.95", "0.98", "0.99", "0.995",
+                        "0.01", "0.02", "0.05", "0.1", "0.2", "0.4", "0.6", "0.8", "0.9", "0.95", "0.98", "0.99",
+                        "0.995",
                         "0.998", "0.999", "0.9995", "0.9998", "0.9999", "0.99995", "0.99998", "0.99999"]
 
         desiredLabels = self.config.getAllowedRates()
@@ -218,17 +172,20 @@ class Det(Probability):
         # Check limits.
         for k in limits:
             if k not in desiredLabels:
-                raise(SyntaxError, 'Unsupported limit %s. Please use one of %s' % (k, desiredLabels))
+                raise (SyntaxError, 'Unsupported limit %s. Please use one of %s' % (k, desiredLabels))
+
+        lt = LegendText(self.data, colors, self.config, self.config.getShowCllrInDet(),
+                        self.config.getShowMinCllrInDet(), self.config.getShowEerInDet(),
+                        self.config.getShowCountsInDet(),
+                        eerValue, score, self.debug)
+        legendText = lt.make()
 
         for metaValue in metaDataValues:
             negatives = [np.array([k for k in self.data.getNonTargetScores4MetaValue(metaValue)], dtype='float64')]
             positives = [np.array([k for k in self.data.getTargetScores4MetaValue(metaValue)], dtype='float64')]
-            thisLegendText = self._makeLegendText(legendText, metaValue)
             for neg, pos in zip(negatives, positives):
                 ppfar, ppfrr = self._evalDET(neg, pos, points)
-                #plt.plot(ppfrr, ppfar, label=thisLegendText, color=colors[metaValue])
-                plt.plot(ppfar, ppfrr, label=thisLegendText, color=colors[metaValue])
-
+                plt.plot(ppfar, ppfrr, label=legendText[metaValue], color=colors[metaValue])
 
         fr_minIndex = desiredLabels.index(limits[0])
         fr_maxIndex = desiredLabels.index(limits[1])
@@ -247,9 +204,9 @@ class Det(Probability):
         plt.axis([pticks[fa_minIndex], pticks[fa_maxIndex], pticks[fr_minIndex], pticks[fr_maxIndex]])
 
         ax.set_yticks(pticks[fr_minIndex:fr_maxIndex])
-        ax.set_yticklabels(desiredLabels[fr_minIndex:fr_maxIndex], size='x-small', rotation='vertical')
+        ax.set_yticklabels(desiredLabels[fr_minIndex:fr_maxIndex], size='x-small', rotation='horizontal')
         ax.set_xticks(pticks[fa_minIndex:fa_maxIndex])
-        ax.set_xticklabels(desiredLabels[fa_minIndex:fa_maxIndex], size='x-small')
+        ax.set_xticklabels(desiredLabels[fa_minIndex:fa_maxIndex], size='x-small', rotation='vertical')
         if title:
             plt.title("DET plot for '" + self.data.getTitle() + "'")
             plt.grid(True)

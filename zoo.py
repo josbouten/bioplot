@@ -5,7 +5,7 @@
 
     Basic object which is super to the boutenzoo and alexanderzoo objects
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1073,9 +1073,14 @@ class Zoo(Format, Probability):
         else:
             factor = 20.0
 
-        divFactor = 25.0
-        # Increase factor to move legend to the right.
-        # Decrease factor to move legend to the left.
+        if self.config.getBoutenStyle():
+            # There is less room on the RHS, therefore divFactor needs to be smaller.
+            divFactor = 15.0
+        else:
+            divFactor = 25.0
+        # Increase divFactor to move legend to the right.
+        # Decrease divFactor to move legend to the left.
+        # Obviously this depends on the resolution of the screen used.
         xWidth = float((self.agm_maxAll - self.agm_minAll) / divFactor)
 
         yBase = self.aim_minAll

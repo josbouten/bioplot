@@ -10,7 +10,7 @@ __author__ = 'drs. ing. Jos Bouten'
     Create target results file and non target results file for computation
     of e.g. EER or plot DET-curves etc.
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -135,25 +135,25 @@ class Data(Format):
 
     def getTargetScores(self):
         """
-        :return: dict of target scores. Key = label.
+        :return: dict of target scores.
         """
         return self._targetScores
 
     def getTargetCnt(self):
         """
-        :return: return dict containing target counts. Use metaValue as key.
+        :return: return dict containing target counts.
         """
         return self._targetCnt
 
     def getNonTargetScores(self):
         """
-        :return: return dict of non target scores. Key = label
+        :return: return dict of non target scores.
         """
         return self._nonTargetScores
 
     def getNonTargetCnt(self):
         """
-        :return: return dict containing non target counts. Use metaValue as key.
+        :return: return dict containing non target counts.
         """
         return self._nonTargetCnt
 

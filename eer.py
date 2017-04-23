@@ -5,7 +5,7 @@
 
     Object used to extract compute EER and plot EER in score plot.
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,9 +29,8 @@ from probability import Probability
 import numpy as np
 import listutils as lu
 from utils import assignColors2MetaDataValue
-from cllr import Cllr
-from collections import defaultdict
-import sys
+from legendtext import LegendText
+
 
 class Eer(Probability):
     def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
@@ -106,7 +105,7 @@ class Eer(Probability):
         except Exception as e:
             print('Exception in computeEer:', e)
             print('You may have too few data points to compute an eer value.')
-            #sys.exit(1)
+            # sys.exit(1)
         else:
             if self.debug:
                 print('computeEer:index2score:', index2score)
@@ -126,7 +125,7 @@ class Eer(Probability):
     def plot(self):
         self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
         self.event = Event(self.config, self.fig, self.data.getTitle(), self.plotType, self.debug)
-        # For saving the pic we use a generic event object
+        # For saving the pic we use a generic event object.
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
 
@@ -135,51 +134,35 @@ class Eer(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
 
-        legendText = defaultdict(list)
-        # Compute and show the Cllr value if so desired.
-        if self.config.getShowCllrInEer():
-            cllrObject = Cllr(self.data, self.config, self.debug)
-            cllrData = cllrObject.getCllr()
-            if self.debug:
-                print(cllrData)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, cllrValue in cllrData:
-                    if thisMetaValue == metaValue:
-                        if type(cllrValue) is float:
-                            cllrStr = "Cllr: %.3f" % cllrValue
-                        else:
-                            cllrStr = "Cllr: %s" % cllrValue
-                        legendText[metaValue].append(cllrStr)
-                        break
+        eerObject = Eer(self.data, self.config, self._expName, self.debug)
+        eerData = eerObject.computeProbabilities(self.eerFunc)
+        eerValue = {}
+        score = {}
+        for thisMetaValue in sorted(colors.keys()):
+            for metaValue, PD, PP, X in eerData:
+                if thisMetaValue == metaValue:
+                    try:
+                        eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
+                    except Exception as e:
+                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
+                    else:
+                        eerValue[metaValue] *= 100
+                    break
 
-        # Compute and show the CllrMin value if so desired.
-        if self.config.getShowMinCllrInEer():
-            cllrObject = Cllr(self.data, self.config, self.debug)
-            minCllrData = cllrObject.getMinCllr()
-            if self.debug:
-                print("minCllrData:", minCllrData)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, minCllrValue in minCllrData:
-                    if thisMetaValue == metaValue:
-                        if type(minCllrValue) is float:
-                            minCllrStr = "minCllr: %.3f" % minCllrValue
-                        else:
-                            minCllrStr = "minCllr: %s" % minCllrValue
-                        legendText[metaValue].append(minCllrStr)
-                        break
+        lt = LegendText(self.data, colors, self.config, self.config.getShowCllrInEer(), 
+                        self.config.getShowMinCllrInEer(), True,
+                        self.config.getShowCountsInEer(),
+                        eerValue, score, self.debug)
+
+        legendText = lt.make()
 
         for (metaValue, PD, PP, X) in eerData:
-            thisLegendText = self._makeLegendText(legendText, metaValue)
-            try:
-                eer, score = self.computeEer(PD, PP, X)
-            except Exception:
-                print("Eer: problem computing EER for %s" % metaValue)
-                labelText = "P(pros), %s, Eer: undefined" % metaValue
-            else:
-                labelText = "P(pros), %s, Eer: %0.2f%s at %0.2f" % (metaValue, eer * 100, '%', score)
+            labelText = "P(pros): %s" % lt.half(legendText[metaValue])[0]
             pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
-            labelText = "P(def), %s" % thisLegendText
+
+            labelText = "P(def): %s" % lt.half(legendText[metaValue])[1]
             pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
+
             axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
             plt.xlabel('raw score')
             plt.ylabel('Probability')

@@ -6,7 +6,7 @@ __author__ = 'drs. ing. Jos Bouten'
     class MatrixData is an object which can be used to test the matrix
     plot routine in matrix.py
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -116,8 +116,8 @@ class MatrixData(Format):
         """
         try:
             f = open("matrix_%s.txt" % metaValue, 'wt')
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
         else:
             (x, y) = matrix.shape
             for i in range(x):
@@ -170,5 +170,5 @@ if __name__ == '__main__':
     d = MatrixData(config, debug)
 
     d.makeRandomMatrix(False)
-    print d.getMinimum(), d.getMaximum()
-    print d.getData()
+    print(d.getMinimum(), d.getMaximum())
+    print(d.getData())

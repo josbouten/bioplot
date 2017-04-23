@@ -5,7 +5,7 @@ __author__ = 'drs. ing. Jos Bouten'
     matrix.py: basic matrix plot routine, will plot a matrix of
     scores in grey values for each meta data value.
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten@gmail.com )
+    Copyright (C) 2014 Jos Bouten ( josbouten@gmail.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

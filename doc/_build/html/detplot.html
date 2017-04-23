@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DET plot &mdash; bioplot 0.9.9 documentation</title>
+    <title>DET plot &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="EER plot" href="eerplot.html" />
     <link rel="prev" title="Accuracy plot" href="accuracy.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -96,11 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -129,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -235,39 +241,44 @@
 <span id="rst-detplot"></span><h1>DET plot<a class="headerlink" href="#det-plot" title="Permalink to this headline">¶</a></h1>
 <p>Will plot a detection error trade off plot or DET plot.</p>
 <p>Example command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A, B and C&quot; -i input/testdata_ABC.txt -D
+<div class="highlight-python"><div class="highlight"><pre><span></span>python ./bioplot.py -e &quot;condition A, B and C&quot; -i input/testdata_ABC.txt -D
 </pre></div>
 </div>
 <img alt="_images/det_plot_ohne_etwas.png" src="_images/det_plot_ohne_etwas.png" />
 <p>If you want to see Cllr and minCllr values in the plot&#8217;s legend, set:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">det</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">det</span><span class="p">]</span>
 <span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
+<p>If you want to know how many target and non target scores the plot is based on, set:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">det</span><span class="p">]</span>
+<span class="n">showCounts</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
 <p>You can set the upper limits for the False Accept rate and False Rejection Rate in the config file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">det</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">det</span><span class="p">]</span>
 <span class="n">maxFalseAcceptRate</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="n">maxFalseRejectionRate</span> <span class="o">=</span> <span class="mi">60</span>
 </pre></div>
 </div>
 <p>Choose the limits from:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">,</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">,</span>
 <span class="mf">99.8</span><span class="p">,</span> <span class="mf">99.9</span><span class="p">,</span> <span class="mf">99.95</span><span class="p">,</span> <span class="mf">99.98</span><span class="p">,</span> <span class="mf">99.99</span><span class="p">,</span> <span class="mf">99.995</span><span class="p">,</span> <span class="mf">99.998</span><span class="p">,</span> <span class="mf">99.999</span>
 </pre></div>
 </div>
 <p>By setting the limits you can show more detail in the plot area.</p>
 <img alt="_images/detplot_with_diagonal.png" src="_images/detplot_with_diagonal.png" />
 <p>If you do not like to see a line on the diagonal of the plot by default, then choose this setting:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">det</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">det</span><span class="p">]</span>
 <span class="n">showDiagonal</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <img alt="_images/det2_condition_ABC.png" src="_images/det2_condition_ABC.png" />
 <p>If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
 The file name will be &lt;experiment name&gt;_det_plot.png.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">printToFile</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -285,7 +296,7 @@ The file name will be &lt;experiment name&gt;_det_plot.png.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

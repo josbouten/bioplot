@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Zoo plot &mdash; bioplot 0.9.9 documentation</title>
+    <title>Zoo plot &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="Tools" href="tools.html" />
     <link rel="prev" title="Tippett plot" href="tippettplot.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -96,11 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -129,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -251,19 +257,19 @@ a plot of dots where each dot represents the scores for one subject. The plot be
 The zoo&#8217;s special animals (points within quartile ranges) are coloured differently to make them stand out more.
 Note: there must be at least one target and one non target score to be able to include a subject&#8217;s data in the zoo plot.</p>
 <p>Run this command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -Z
+<div class="highlight-python"><div class="highlight"><pre><span></span>python ./bioplot.py -e &quot;condition A&quot; -i input/testdata_A.txt -Z
 </pre></div>
 </div>
 <img alt="_images/condition_A_traditional_zoo_plot.png" src="_images/condition_A_traditional_zoo_plot.png" />
 <p>You can combine multiple data sets in one plot. The next plot below shows combined data of 3 experiments (A, B and C).
 The legend shows the eer and cllr values for the respective conditions. Note that each data set has its own quartile ranges.</p>
 <p>Run this command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A, B and C&quot; -i input/testdata_ABC.txt -Z
+<div class="highlight-python"><div class="highlight"><pre><span></span>python ./bioplot.py -e &quot;condition A, B and C&quot; -i input/testdata_ABC.txt -Z
 </pre></div>
 </div>
 <img alt="_images/condition_ABC_traditional_zoo_plot.png" src="_images/condition_ABC_traditional_zoo_plot.png" />
 <p>You can choose which error measures to show in the plot by setting any of the options below to true:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showEER</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
@@ -290,13 +296,13 @@ Finally to scale the ellipses their width and height is divided by a scale facto
 This scale factor is related to the number of pixels in the display used to plot the zoo plot.
 A value of 150 works nicely for a 1600 ... 1280x1024 display.
 To get this type of plot set the following options in your settings file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">alexanderStyle</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">150</span>
 </pre></div>
 </div>
 <p>Set the screen resolution in layout:</p>
-<div class="highlight-python"><div class="highlight"><pre>[layout]
+<div class="highlight-python"><div class="highlight"><pre><span></span>[layout]
 screenResolution = 1600x1024
 </pre></div>
 </div>
@@ -307,7 +313,7 @@ In this case bioplot provides the option to either set the normalized std dev fo
 minimum value which will result in a flat line for that dimension of the ellipse
 or assume this subject is similar to other subjects and set the normalized std dev for this subject to the
 unit value derived from the other subject target and non target scores. The default is to use the minimum value allowed.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showSingleValueAsUnitValue</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showSingleValueAsUnitValue</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>See also minStdDev in section [zoo] in bioplot.cfg.</p>
@@ -318,7 +324,7 @@ unit value derived from the other subject target and non target scores. The defa
 This makes the vertical axis show lower scores at the top than at the bottom.
 If you do not like this layout set yagerstyle to False in the config file (the default is True) and the vertical
 axis will be reversed.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">yagerstyle</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -350,7 +356,7 @@ Note that the labels are of no consequence! They are there for your convenience.
 Values should be in R,G,B format specifying integer values
 or hexadecimal values (6 digits). Search for colour values on the web using &#8216;html colours&#8217; as the search string
 and you will find various lists and examples.</p>
-<div class="highlight-python"><div class="highlight"><pre>[metacolours]
+<div class="highlight-python"><div class="highlight"><pre><span></span>[metacolours]
 IWouldCallThisBlueIsh = 3399FF
 Orangy = 255,125,10
 rustLike = 96,17,0
@@ -370,7 +376,7 @@ same label.</p>
 <span id="rst-zooplot-labels"></span><h2>Labels<a class="headerlink" href="#labels" title="Permalink to this headline">¶</a></h2>
 <p>In some of the plots above you have seen examples of labels shown when you click on the plot. The information shown can
 be configured via the config file. You can choose among these:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">showNrTargetsAndNonTargets</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showMeanScores</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showStdDev</span> <span class="o">=</span> <span class="bp">True</span>
@@ -390,7 +396,7 @@ change the yellow background into a grey one.</p>
 it possible to find the name of a data point in e.g. the quartile ranges.
 If you are curious where a specific label is in the zoo plot, you need not click on a lot of them to find it.
 You can use -L followed by the labels on the command line. If they are in the plot, they will be highlighted. Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -Z -L 1100 1109 1042
+<div class="highlight-python"><div class="highlight"><pre><span></span>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -Z -L 1100 1109 1042
 </pre></div>
 </div>
 <p>This will highlight label 1100, 1109 and 1042 in the zoo plot compiled from
@@ -400,7 +406,7 @@ will be displayed near the points selected.</p>
 <img alt="zoo plot for experiment with condition A and B" src="_images/condition_A_and_B_not_interconnected_zoo_plot.png" />
 <p>Lines can be drawn between the ellipses to connect labels which are equal. This makes
 it easy to see what the effect of the parameter change is. Choose this setting:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">interconnectMetaValues</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -410,7 +416,7 @@ it easy to see what the effect of the parameter change is. Choose this setting:<
 <h2>Zooplots combined with Histograms<a class="headerlink" href="#zooplots-combined-with-histograms" title="Permalink to this headline">¶</a></h2>
 <p>In the plot shown below the zoo plot is bordered by histograms showing the distributions of the target and non target
 scores. To get bioplot to show this, set the following option in bioplot.cfg:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">zoo</span><span class="p">]</span>
 <span class="n">boutenStyle</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -435,7 +441,7 @@ E.g. in the conditionA and conditionB data plot, the delta is computed for movem
 <img alt="_images/condition_A_and_B_zoo_plot_zoom.png" src="_images/condition_A_and_B_zoo_plot_zoom.png" />
 <p>If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
 The file name will be &lt;experiment name&gt;_zoo_plot.png.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">printToFile</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -454,7 +460,7 @@ The file name will be &lt;experiment name&gt;_zoo_plot.png.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

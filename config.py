@@ -8,7 +8,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
     Parse and read values from config file 'bioplot.cfg'
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -126,6 +126,30 @@ class Config:
             self._combineMatrices = self.config.getboolean('matrix', 'combineMatrices')
         except Exception:
             self._combineMatrices = self._combineMatricesDefault
+            
+        self._showCountsDefaultInErr = True
+        try:
+            self._showCountsInEer = self.config.getboolean('eer', 'showCounts')
+        except Exception:
+            self._showCountsInEer = self._showCountsDefaultInErr
+
+        self._showCountsDefaultInDet = True
+        try:
+            self._showCountsInDet = self.config.getboolean('det', 'showCounts')
+        except Exception:
+            self._showCountsInDet = self._showCountsDefaultInDet
+
+        self._showCountsDefaultInTippett = True
+        try:
+            self._showCountsInTippett = self.config.getboolean('tippett', 'showCounts')
+        except Exception:
+            self._showCountsInTippett = self._showCountsDefaultInTippett
+
+        self._showCountsDefaultInRoc = True
+        try:
+            self._showCountsInRoc = self.config.getboolean('roc', 'showCounts')
+        except Exception:
+            self._showCountsInRoc = self._showCountsDefaultInRoc
 
         # If set to true, debug will make all object produce lots of info
         # which may be of use when debugging the program.
@@ -763,7 +787,19 @@ class Config:
 
     def getPrintToFile(self):
         return self._printToFile
+
+    def getShowCountsInEer(self):
+        return self._showCountsInEer
     
+    def getShowCountsInDet(self):
+        return self._showCountsInDet
+
+    def getShowCountsInTippett(self):
+        return self._showCountsInTippett
+
+    def getShowCountsInRoc(self):
+        return self._showCountsInRoc
+
     def getPrintToFileWidth(self):
         return self._printToFileWidth
     
@@ -992,6 +1028,10 @@ class Config:
         string += ", showMetaInHist = " + str(self.getShowMetaInHist())
         string += ", det.showMinCllr = " + str(self.getShowMinCllrInDet())
         string += ", eer.showMinCllr = " + str(self.getShowMinCllrInEer())
+        string += ", eer.showCounts = " + str(self.getShowCountsInEer())
+        string += ", det.showCounts = " + str(self.getShowCountsInDet())
+        string += ", roc.showCounts = " + str(self.getShowCountsInRoc())
+        string += ", tippet.showCounts = " + str(self.getShowCountsInTippett())
         string += ", roc.showMinCllr = " + str(self.getShowMinCllrInRoc())
         string += ", zoo.showMinCllr = " + str(self.getShowMinCllrInZoo())
         string += ", showNrTargetsAndNonTargets = " + str(self.getShowNrTargetsAndNonTargets())

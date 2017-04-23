@@ -6,7 +6,7 @@ __author__ = 'jos'
     Object used write data to a text file in a thread so not to stop
     the output of the gui while writing data.
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

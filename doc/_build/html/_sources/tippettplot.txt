@@ -14,6 +14,16 @@ Run this command: ::
 
 .. image:: images/condition_A_and_B_tippett_plot.png
 
+If you want to see the cllr and cllrMin, nr of target and nontarget scores and eer values in the plot's legend, set: ::
+
+    [roc]
+    showCllr = True
+    showMinCllr = True
+    showCounts = True
+    showEer = True
+
+.. image:: images/condition_A_and_B_tippett_plot_all_metadata.png
+
 If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
 The file name will be <experiment name>_tippett_plot.png. ::
 

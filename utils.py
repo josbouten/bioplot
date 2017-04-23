@@ -7,7 +7,7 @@ __author__ = 'drs. ing. Jos Bouten'
 
     A set of utility functions.
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -136,6 +136,12 @@ def plotIt2(y1, y2, label1, label2):
     plt.show()
 
 def write2file(filename, thisList):
+    '''
+    Write a list of strings to a file
+    :param filename: string: name of file to write data to
+    :param thisList: list of strings: data to be written
+    :return: not a thing
+    '''
     try:
         f = open(filename, 'wt')
         for el in thisList:

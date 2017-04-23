@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>EER plot &mdash; bioplot 0.9.9 documentation</title>
+    <title>EER plot &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="Histogram" href="histogram.html" />
     <link rel="prev" title="DET plot" href="detplot.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -96,11 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -129,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -240,22 +246,24 @@ nrSamples4Probability in bioplot.cgf in section [probability]. The default is 25
 The EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
 The data points nearest to the crossing point are used and the crossing point is computed via interpolation.</p>
 <p>Example command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -E
+<div class="highlight-python"><div class="highlight"><pre><span></span>python ./bioplot.py -e &quot;condition A and B&quot; -i input/testdata_AB.txt -E
 </pre></div>
 </div>
 <img alt="_images/condition_A_and_B_eer_plot.png" src="_images/condition_A_and_B_eer_plot.png" />
 <p>All plots are shown in a window that allows you to zoom in on events. Here the plot is zoomed in around the intersection points of the graphs.</p>
 <img alt="_images/condition_A_and_B_eer_plot_zoom.png" src="_images/condition_A_and_B_eer_plot_zoom.png" />
-<p>If you want to see cllr and cllrMin values in the plot&#8217;s legend, set:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">eer</span><span class="p">]</span>
+<p>If you want to see the cllr and cllrMin, nr of target and nontarget scores and eer values in the plot&#8217;s legend, set:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">eer</span><span class="p">]</span>
 <span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showCounts</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
-<img alt="_images/condition_A_and_B_eer_plot_cllr.png" src="_images/condition_A_and_B_eer_plot_cllr.png" />
+<img alt="_images/condition_A_and_B_all_metadata.png" src="_images/condition_A_and_B_all_metadata.png" />
 <p>If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
 The file name will be &lt;experiment name&gt;_eer_plot.png.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">printToFile</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -273,7 +281,7 @@ The file name will be &lt;experiment name&gt;_eer_plot.png.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

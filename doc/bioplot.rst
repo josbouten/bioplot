@@ -39,21 +39,20 @@ On Ms Windows run: ::
 
 This wil output the following information: ::
 
-    usage: bioplot.py [-h] [-v] [-Z] [-A] [-D] [-E] [-T] [-M] [-O] [-R] [-C] [-H]
-                      [-k] [-L LABELS [LABELS ...]] [-e EXPNAME] [-i FILENAME]
-                      [-t DATATYPE] [-d THRESHOLD] [-c CONFIGFILENAME] [-l] [-s]
-                      [-q]
+    usage: bioplot.py [-h] [-Z] [-A] [-D] [-E] [-T] [-M] [-O] [-R] [-C] [-H] [-k]
+                      [-L LABELS [LABELS ...]] [-e EXPNAME]
+                      [-i FILENAMES [FILENAMES ...]] [-t DATATYPE] [-d THRESHOLD]
+                      [-c CONFIGFILENAME] [-l] [-s] [-q]
 
     bioplot.py [plot type] [<label1> <label2> <label3> ...] bioplot.py version
-    0.9.8, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
-    ABSOLUTELY NO WARRANTY; for details run `bioplot.py -l'. This is free
-    software, and you are welcome to redistribute it under certain conditions;
-    type `bioplot.py -l' for details. This program was written by Jos Bouten. You
-    can contact me via josbouten at gmail dot com.
+    This is bioplot.py version 1.2, Copyright (C) 2014: Jos Bouten
+    This program comes with ABSOLUTELY NO WARRANTY; for details run
+    `bioplot.py -l'. This is free software, and you are welcome to redistribute it
+    under certain conditions; type `bioplot.py -l' for details. This program was
+    written by Jos Bouten. You can contact me via josbouten at gmail dot com.
 
     optional arguments:
       -h, --help            show this help message and exit
-      -v, --version         show program's version number and exit
       -Z, --zoo             show zoo plot
       -A, --accuracy        show accuracy plot
       -D, --det             show Det plot
@@ -69,8 +68,9 @@ This wil output the following information: ::
                             add labels to plot
       -e EXPNAME, --exp EXPNAME
                             name of experiment used in plot title, default = test
-      -i FILENAME, --inputfile FILENAME
-                            filename list of filenames of data file(s), default = input/testdata_A.txt
+      -i FILENAMES [FILENAMES ...], --inputfile FILENAMES [FILENAMES ...]
+                            filename of filenames of data file(s) or name of
+                            database, default = input/testdata_A.txt
       -t DATATYPE, --type DATATYPE
                             type of data, default = type3, use 'database' if you
                             want to read data from a database.

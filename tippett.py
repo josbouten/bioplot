@@ -1,12 +1,12 @@
 __author__ = 'jos'
-#!/usr/bin/env python
+# !/usr/bin/env python
 
 '''
     tippet.py
 
     Object to plot a Tippett plot.
 
-    Copyright (C) 2014, 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,11 +28,15 @@ import matplotlib.pyplot as plt
 from event import Event
 from probability import Probability
 from utils import assignColors2MetaDataValue
+from legendtext import LegendText
+from eer import Eer
+
 
 class Tippett(Probability):
     def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
         self.config = thisConfig
+        self._expName = thisExpName
         self._printToFilename = thisExpName
         self.debug = thisDebug
         self.plotType = 'tippett_plot'
@@ -40,6 +44,14 @@ class Tippett(Probability):
         self.fig = None
         self.event = None
 
+    def _makeLegendText(self, legendText, metaValue):
+        thisLegendText = '%s, ' % metaValue
+        # Compile legend text.
+        for el in legendText[metaValue]:
+            thisLegendText += el + ', '
+            # Remove last comma and space.
+        thisLegendText = thisLegendText[:-2]
+        return thisLegendText
 
     def plot(self):
         self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
@@ -47,13 +59,37 @@ class Tippett(Probability):
         # For saving the pic we use a generic event object
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
-        eerData = self.computeProbabilities(self.tippetFunc)
         metaDataValues = self.data.getMetaDataValues()
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
+
+        eerObject = Eer(self.data, self.config, self._expName, self.debug)
+        eerData = self.computeProbabilities(self.eerFunc)
+        eerValue = {}
+        score = {}
+        for thisMetaValue in sorted(colors.keys()):
+            for metaValue, PD, PP, X in eerData:
+                if thisMetaValue == metaValue:
+                    try:
+                        eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
+                    except Exception as e:
+                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
+                    else:
+                        eerValue[metaValue] *= 100
+                    break
+        lt = LegendText(self.data, colors, self.config, self.config.getShowCllrInTippett(), 
+                        self.config.getShowMinCllrInTippett(), self.config.getShowEerInTippett(), 
+                        self.config.getShowCountsInTippett(),
+                        eerValue, score, self.debug)
+
+        legendText = lt.make()
+
+        eerData = self.computeProbabilities(self.tippetFunc)
+
         for (metaValue, PD, PP, X) in eerData:
-            pFr, = axes.plot(X, PP, 's-', label="P(pros), %s" % metaValue, color=colors[metaValue])
-            pFa, = axes.plot(X, PD, 'o-', label="P(def), %s" % metaValue, color=colors[metaValue])
+            pFr, = axes.plot(X, PP, 's-', label="P(pros): %s" % lt.half(legendText[metaValue])[0], color=colors[metaValue])
+            pFa, = axes.plot(X, PD, 'o-', label="P(def): %s" % lt.half(legendText[metaValue])[1], color=colors[metaValue])
+
         plt.legend()
         axes.set_title("Tippett Plot: P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
         plt.xlabel('score')

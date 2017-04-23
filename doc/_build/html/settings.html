@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Settings &mdash; bioplot 0.9.9 documentation</title>
+    <title>Settings &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="Known Issues" href="issues.html" />
     <link rel="prev" title="Tools" href="tools.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -96,12 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -130,6 +134,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -252,44 +257,32 @@
 <div class="section" id="settings-file">
 <h2>settings file<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h2>
 <p>Bioplot will read settings from the file bioplot.cfg by default. To use a different settings file use the -c option.</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -c some_other_settings_file
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -c some_other_settings_file
 </pre></div>
 </div>
 <p>The file bioplot.cfg contains many sections. Below for each section the variables are explained and for each the default value is shown.
 To change the behaviour of bioplot, change the setting in the settings file. Misspelled options are ignored. By default bioplot will print
 the values for all options on the command line when started. If you want to explicitly check them without making any plot or reading any data,
 start bioplot like this:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bioplot.py -s
+<div class="highlight-python"><div class="highlight"><pre><span></span>python bioplot.py -s
 </pre></div>
 </div>
 <p>It will then show a list of chosen settings like so:</p>
-<div class="highlight-python"><div class="highlight"><pre>Config info taken from &#39;default values&#39;:
-alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
-annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8,
-interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569),
-limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99,
-maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3,
-minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50, nrBins = 100,
-nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = False,
-saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
-showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True,
-showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True,
-showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, roc.showMinCllr = True,
-zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = False,
-showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True,
-useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1,
-zWidth = 0.65
+<div class="highlight-python"><div class="highlight"><pre><span></span>Config info taken from &#39;default values&#39;:
+alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False, dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569), limitStdDevs = False, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 99.999, maxFalseRejectionRate = 99.999, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = -1e+99, minimum4Type3 = -1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2, minStdDev = 0.01, noHistAnnot = False, normHist = True, nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = True, saveScores = True, scaleFactor = 100, screenResolution = 1600x1024, showAnnotationsAtStartup = False, showMeanScores = True, showCircularHistogram = True, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, eer.showCounts = True, det.showCounts = True, roc.showCounts = True, tippet.showCounts = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = True, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63, zLeft = 0.05, zWidth = 0.65
 </pre></div>
 </div>
-<p>This will show the settings read from the file &#8216;some_other_settings_file&#8217;.</p>
-<div class="highlight-python"><div class="highlight"><pre>bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
+<p>This will show the settings read from the file &#8216;bioplot.cfg&#8217;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>mbp:bioplot jos$ ./bioplot.py -s
 Ignoring all command line parameters except -s
-Config info as read from some_other_settings_file:
-alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
+Config info as read from &#39;bioplot.cfg&#39;:
+alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
+annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False, dimmingFactor = 0.8, interconnectMetaValues = True,
+etc. etc.
 </pre></div>
 </div>
 <p>If you do not want to see the list of settings each time bioplot is run, set</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cfg</span><span class="p">]</span>
 <span class="n">showConfigInfo</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
@@ -297,41 +290,41 @@ alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
 <div class="section" id="accuracy">
 <h2>[accuracy]<a class="headerlink" href="#accuracy" title="Permalink to this headline">¶</a></h2>
 <p>Number of points the accuracy is calculated for.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">nrPoints</span> <span class="o">=</span> <span class="mi">100</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">nrPoints</span> <span class="o">=</span> <span class="mi">100</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="cfg">
 <h2>[cfg]<a class="headerlink" href="#cfg" title="Permalink to this headline">¶</a></h2>
 <p>Always save the target and non target scores, even if the files already exist.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">alwaysSave</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">alwaysSave</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>&#8216;colorMap&#8217; is deprecated; have a look at [metacolors].</p>
 <p>Set debug flag to True: will print a lot of info which might be of use when trying to debug the code.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">debug</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">debug</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Show config info at start of program on command line.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showConfigInfo</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showConfigInfo</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Path to dir where results and plots are stored.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">outputPath</span> <span class="o">=</span> <span class="n">output</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">outputPath</span> <span class="o">=</span> <span class="n">output</span>
 </pre></div>
 </div>
 <p>In stead of plotting on screen you can send plots to file.
 The name of the file will be &lt;exp_name&gt;_&lt;plot_type&gt;_plot.png
 Set printToFile to True to plot to file (default = False).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">printToFile</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">printToFile</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>The height of the plot in inches.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">printToFileHeight</span> <span class="o">=</span> <span class="mi">10</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">printToFileHeight</span> <span class="o">=</span> <span class="mi">10</span>
 </pre></div>
 </div>
 <p>The width of the plot in inches.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">printToFileWidth</span> <span class="o">=</span> <span class="mi">15</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">printToFileWidth</span> <span class="o">=</span> <span class="mi">15</span>
 </pre></div>
 </div>
 <p>Are we running on OSX or not?
@@ -339,7 +332,7 @@ The Labels by default show black text on a yellow background.
 The yellow background may be too large for the text.
 If so, set runningOSX to True, this will change the yellow
 background into a grey one and make the background fit the text in size.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">runningOSX</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Are we running on Microsoft Windows or not?
@@ -347,11 +340,11 @@ The Labels by default show black text on a yellow background.
 The yellow background may be too large for the text.
 If so, set runningWindows to True, this will change the yellow
 background into a grey one and make the background fit the text in size.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">runningWindows</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Save all scores to text file separated in target and non target scores per meta value.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">saveScores</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">saveScores</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 </div>
@@ -360,63 +353,63 @@ background into a grey one and make the background fit the text in size.</p>
 <p>If set to True &#8216;allowDups&#8217; allows for both scores in a symmetric trial to be used.
 This means that the score of P vs Q and the score of Q vs P is used.
 Otherwise only the first encountered in the raw scores is used.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">allowDups</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">allowDups</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Minimum value we expect for a score in type3 data.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">minimum4Type3</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0E+99</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">minimum4Type3</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0E+99</span>
 </pre></div>
 </div>
 <p>Maximum value we expect for a score in type3 data.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">maximum4Type3</span> <span class="o">=</span> <span class="mf">1.0E+99</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">maximum4Type3</span> <span class="o">=</span> <span class="mf">1.0E+99</span>
 </pre></div>
 </div>
 <p>Minimum value we expect for a score in type1 data.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">minimum4Type1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0E+99</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">minimum4Type1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0E+99</span>
 </pre></div>
 </div>
 <p>Maximum value we expect for a score in type1 data.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">maximum4Type1</span> <span class="o">=</span> <span class="mf">1.0E+99</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">maximum4Type1</span> <span class="o">=</span> <span class="mf">1.0E+99</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="det">
 <h2>[det]<a class="headerlink" href="#det" title="Permalink to this headline">¶</a></h2>
 <p>Show Cllr value(s).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show minimum Cllr value(s).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show Eer value(s).
 Note, the EER is calculated as the point in a cumulative score plot where the line showing the target scores crosses the line for the non target scores.
 The data points nearest to the crossing point are used and the crossing point is computed via interpolation.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Set the upper limits for the False Accept Rate in %.
 Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
 99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">maxFalseAcceptRate</span> <span class="o">=</span> <span class="mi">60</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">maxFalseAcceptRate</span> <span class="o">=</span> <span class="mi">60</span>
 </pre></div>
 </div>
 <p>Set the upper limits for the False Rejection Rate in %.
 Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 40, 60, 80, 90, 95, 98, 99,
 99.5, 99.8, 99.9, 99.95, 99.98, 99.99, 99.995, 99.998, 99.999</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">maxFalseRejectionRate</span> <span class="o">=</span> <span class="mi">60</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">maxFalseRejectionRate</span> <span class="o">=</span> <span class="mi">60</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="eer">
 <h2>[eer]<a class="headerlink" href="#eer" title="Permalink to this headline">¶</a></h2>
 <p>Show Cllr value(s) in the plot.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show minimum Cllr value(s) in the plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 </div>
@@ -425,19 +418,19 @@ Choose from 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 2
 <p>Number of bins in the histogram.
 Either specify a number or rice, sqrt or sturges.
 See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width">https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width</a></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">nrBins</span> <span class="o">=</span> <span class="mi">75</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">nrBins</span> <span class="o">=</span> <span class="mi">75</span>
 </pre></div>
 </div>
 <p>Normalize histogram.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">normHist</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">normHist</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show meta data values in histogram.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showMetaInHist</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showMetaInHist</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show kernel in histogram (if true, meta data values are disregarded).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showKernelInHist</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showKernelInHist</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 </div>
@@ -452,39 +445,39 @@ See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#
 </div>
 <p>Do not change them unless you are certain what they are for.</p>
 <p>Left bottom x-position of zoo plot in boutenZoo style layout.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">zLeft</span> <span class="o">=</span> <span class="mf">0.05</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">zLeft</span> <span class="o">=</span> <span class="mf">0.05</span>
 </pre></div>
 </div>
 <p>Width of zoo plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">zWidth</span> <span class="o">=</span> <span class="mf">0.65</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">zWidth</span> <span class="o">=</span> <span class="mf">0.65</span>
 </pre></div>
 </div>
 <p>Left bottom y-position of zoo plot in boutenZoo style layout.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">zBottom</span> <span class="o">=</span> <span class="mf">0.05</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">zBottom</span> <span class="o">=</span> <span class="mf">0.05</span>
 </pre></div>
 </div>
 <p>Height of zoo plot in boutenZoo style layout.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">zHeight</span> <span class="o">=</span> <span class="mf">0.63</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">zHeight</span> <span class="o">=</span> <span class="mf">0.63</span>
 </pre></div>
 </div>
 <p>Height of top histogram in boutenZoo style layout.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">xHeight</span> <span class="o">=</span> <span class="mf">0.2</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">xHeight</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
 <p>Width of right hand side histogram in boutenZoo style layout.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">yWidth</span> <span class="o">=</span> <span class="mf">0.2</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">yWidth</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
 <p>Resolution of screen used width x height, eg 1280x1024</p>
-<div class="highlight-python"><div class="highlight"><pre>screenResolution = 1600x1024
+<div class="highlight-python"><div class="highlight"><pre><span></span>screenResolution = 1600x1024
 </pre></div>
 </div>
 <p>Spacing between zoo plot and left side of histograms in boutenZoo style layout.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">spacing</span> <span class="o">=</span> <span class="mf">0.02</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">spacing</span> <span class="o">=</span> <span class="mf">0.02</span>
 </pre></div>
 </div>
 <p>Use same scale for vertical axis as for horizontal axis.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showEqualAxes</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showEqualAxes</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 </div>
@@ -494,25 +487,25 @@ See <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram#
 In the cross identification plot, we want at least
 this number of scores per label, otherwise skip
 the label.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">minNrScores4MatrixPlot</span> <span class="o">=</span> <span class="mi">25</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">minNrScores4MatrixPlot</span> <span class="o">=</span> <span class="mi">25</span>
 </pre></div>
 </div>
 <p>Color map of the plot. Choose a colormap: Greys, Spectral, gist_ncar, hsv, gist_rainbow or prism</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">matrixColorMap</span> <span class="o">=</span> <span class="n">Greys</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">matrixColorMap</span> <span class="o">=</span> <span class="n">Greys</span>
 </pre></div>
 </div>
 <p>When set to True: combine matrices (if there are multiple
 because of different meta values) in a square or oblong matrix,
 otherwise make a horizontal bar or vertical column of matrices.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">combineMatrices</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">combineMatrices</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show labels at tick marks.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showMatrixLabels</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showMatrixLabels</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Rotate xtick labels at a degree.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">labelAngle</span> <span class="o">=</span> <span class="mi">70</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelAngle</span> <span class="o">=</span> <span class="mi">70</span>
 </pre></div>
 </div>
 </div>
@@ -534,7 +527,7 @@ or hexadecimal values (6 digits). Have a look at <a class="reference external" h
 you will get inspired to use some nice colours in the plots.
 Alternatively you can search for color values on the web using &#8216;html colors&#8217; as the search string
 and you will find various lists and examples.</p>
-<div class="highlight-python"><div class="highlight"><pre>Orangy = 255,125,10
+<div class="highlight-python"><div class="highlight"><pre><span></span>Orangy = 255,125,10
 someSortOfPink = 255,54,160
 IWouldCallThisBlueIsh = 3399FF
 OneOf50ShadesOfGrey = 10,5,8
@@ -550,22 +543,22 @@ definatelyRed = 255,0,0
 <p>Number of threshold values used to calculate P(defense)
 and P(prosecution) from target and non target scores
 per meta value.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">nrSamples4Probability</span> <span class="o">=</span> <span class="mi">500</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">nrSamples4Probability</span> <span class="o">=</span> <span class="mi">500</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="roc">
 <h2>[roc]<a class="headerlink" href="#roc" title="Permalink to this headline">¶</a></h2>
 <p>Show Cllr value(s) in the roc plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show minimum Cllr value(s) in the roc plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show EER value(s) in the roc plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showEer</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 </div>
@@ -573,37 +566,37 @@ per meta value.</p>
 <h2>[zoo]<a class="headerlink" href="#zoo" title="Permalink to this headline">¶</a></h2>
 <p>Show ellipses at position of data points representing standard deviation of target and non target scores
 as published by Alexander et al. &#64; IAFPA conference Zurich, Switzerland, 2014.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">alexanderStyle</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">alexanderStyle</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Transparency value for inner most reference circle.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">alpha4References</span> <span class="o">=</span> <span class="mf">1.0</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">alpha4References</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
 <p>Transparency value for unit circles.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">alpha4UnitCircles</span> <span class="o">=</span> <span class="mf">0.5</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">alpha4UnitCircles</span> <span class="o">=</span> <span class="mf">0.5</span>
 </pre></div>
 </div>
 <p>Show DOVES CHAMELEONS and other labels in different colors.
 When set to single, all will be grey.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">animalColors</span> <span class="o">=</span> <span class="n">multi</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">animalColors</span> <span class="o">=</span> <span class="n">multi</span>
 </pre></div>
 </div>
 <p>Show labels for quartile data points at startup.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">annotateEllipsesInQuartiles</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">annotateEllipsesInQuartiles</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Add target and non target score histogram to zoo plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">boutenStyle</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">boutenStyle</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>If we add labels to the command line, we dimm al the none matching points and
 ellipses by this factor thus making the given labels more prominent.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">dimmingFactor</span> <span class="o">=</span> <span class="mf">0.8</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">dimmingFactor</span> <span class="o">=</span> <span class="mf">0.8</span>
 </pre></div>
 </div>
 <p>Draw lines between labels with opposing metadata values (only if alexanderStyle = True).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">interconnectMetaValues</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">interconnectMetaValues</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Color used for label in zoo plot.
@@ -611,86 +604,86 @@ Note: don&#8217;t use white or some very light colour as the plot&#8217;s
 canvas is white and you would not see much of a label then.
 Values should be in R,G,B format using integer values (e.g. 105, 225, 5)
 or hexadecimal values (e.g. 0FA022).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">labelColor</span> <span class="o">=</span> <span class="n">A0A0A0</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">labelColor</span> <span class="o">=</span> <span class="n">A0A0A0</span>
 </pre></div>
 </div>
 <p>Limit the std dev values of average target and average non target scores.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">limitStdDevs</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">limitStdDevs</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Width of lines interconnecting ellipses in zoo plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">lineWidth</span> <span class="o">=</span> <span class="mf">1.0</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">lineWidth</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
 <p>Maximum normalized standard deviation allowed for an ellipse in the zoo plot.
 Values any higher are limited to this number of normalized standard deviations.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">maxStdDev</span> <span class="o">=</span> <span class="mf">6.0</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">maxStdDev</span> <span class="o">=</span> <span class="mf">6.0</span>
 </pre></div>
 </div>
 <p>Opacity can be varied from small to large ellipses.
 The opacity values are normalised using the surface area of the ellipse.
 If it gets too small, the ellipses will not be visible anymore.
 Therefore it is limited to this value.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">minimumOpacityValue</span> <span class="o">=</span> <span class="mf">0.2</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">minimumOpacityValue</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
 <p>Minimum normalized standard deviation allowed for an ellipse in the zoo plot.
 Values any lower are limited to this number of normalized standard deviations.
 minStDev may not exceed 1.0.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">minStdDev</span> <span class="o">=</span> <span class="mf">0.01</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">minStdDev</span> <span class="o">=</span> <span class="mf">0.01</span>
 </pre></div>
 </div>
 <p>Histogram annotation on x-axis. When True will prevent the use of x-axis labels in the histograms added to the zoo plot.
 Tricky ... This parameter implies a double negative.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">noHistAnnot</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">noHistAnnot</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Opacity of ellipses if useOpacityForBigEllipses is set to False.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">opacity4Ellipses</span> <span class="o">=</span> <span class="mf">0.7</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">opacity4Ellipses</span> <span class="o">=</span> <span class="mf">0.7</span>
 </pre></div>
 </div>
 <p>Scale ellipses to screen resolution. 100 should be good for 1600x1024 until 1280x1024.
 Make it smaller if you want bigger ellipses.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">100</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">100</span>
 </pre></div>
 </div>
 <p>Show all annotations when starting program; one click on the figure will make them disappear.
 Will only work if interconnectMetaValues is set to False.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showAnnotationsAtStartup</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showAnnotationsAtStartup</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Show average target match score and non match score in popup when data point is clicked.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showAverageScores</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showAverageScores</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show histogram of shift of points depending on meta data values.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showCircularHistogram</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showCircularHistogram</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show Cllr values in legend of relevant plots.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show edge of ellipse in same color as ellipse (otherwise black).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showEdgeColor</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showEdgeColor</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Show circles around unit ellipse that can be used to resize the plot so that the unit circle
 will be shown as a circle. This will make it easier to interpret the std values for average target vs
 average non target data points.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showHelperCircles</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showHelperCircles</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show min Cllr values in legend of relevant plots.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showMinCllr</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show nr of target and nr of non target scores for a data point in zoo plot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showNrTargetsAndNonTargets</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showNrTargetsAndNonTargets</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Show reference ellipses or not.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showReference</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showReference</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>In the data set there may be subjects with limited scores available. In case there is only one target score,
@@ -699,34 +692,34 @@ In this case bioplot provides the option to either set the normalized std dev fo
 minimum value which will result in a flat line for that dimension of the ellipse
 or assume this subject is similar to other subjects and set the normalized std dev for this subject to the
 unit value derived from the other subject target and non target scores. The default is to use the minimum value allowed.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showSingleValueAsUnitValue</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showSingleValueAsUnitValue</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Show std dev values of data points when clicked.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showStdDev</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showStdDev</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Do not show text with reference ellipses.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showTextAtReferenceAtStartup</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showTextAtReferenceAtStartup</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Show mean of average target and non target points as a black dot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">showUnitDataPoint</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">showUnitDataPoint</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Give distinct colors to data points within quartile ranges. This is only done when the
 metadata field contains only one distinct value.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">useColorsForQuartileRanges</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">useColorsForQuartileRanges</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p>Big ellipses may overshadow smaller ones at the same position.
 Using opacity makes the smaller ones visible again.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">useOpacityForBigEllipses</span> <span class="o">=</span> <span class="bp">False</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">useOpacityForBigEllipses</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>Use vertical axis as proposed by Yager et al.
 When set to False the y-axis will be inversed.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">yagerStyle</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">yagerStyle</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 </div>
@@ -744,7 +737,7 @@ When set to False the y-axis will be inversed.</p>
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

@@ -8,7 +8,27 @@ anonymize.py
 This script will convert a bioplot data file into an anonymized data file by replacing all relevant elements by a hash value.
 That should make it hard for anyone to decode it. In case you want to exchange data with anyone, you can thus
 preserve the anonymity of the subjects. You can e.g. use this script if you want to send me a data set in case you have
-problems processing it. Use it like so: ::
+problems processing it. You can see the input parameters anonimyze uses like so: ::
+
+    python3 anonymize.py -h
+
+    usage: anonymize.py [-h] -o OUTPUTFILE -i INPUTFILE
+
+    anonymize.py version 0.2, Copyright (C) 2014, Jos Bouten. This program
+    anonymizes a bioplot data file. anonymize.py comes with ABSOLUTELY NO
+    WARRANTY; for details run anonymize.py -h This is free software, and you are
+    welcome to redistribute it under certain conditions; please read LICENSE.TXT
+    supplied with this program. This program was written by Jos Bouten. You can
+    contact me via josbouten at gmail dot com.
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -o OUTPUTFILE, --outputfile OUTPUTFILE
+                            output file name
+      -i INPUTFILE, --inputfile INPUTFILE
+                            input file name
+
+So you will be using it like so: ::
 
      python3 anonymize.py input_file output_file
 

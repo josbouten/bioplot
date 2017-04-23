@@ -114,6 +114,9 @@ showCllr = True
 ; Show minimum Cllr values.
 showMinCllr = True
 
+; Show number of target and number of non target test used in plot
+showCounts = True
+
 [histogram]
 # Either specify a number or rice, sqrt or sturges.
 # See https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width
@@ -235,6 +238,14 @@ showMinCllr = True
 
 ; Show EER values in the roc plot.
 showEer = True
+
+; Show number of target and non target trials in legend of plot
+showCounts = True
+
+
+[tippett]
+; Show number of target and non target trials in legend of plot
+showCounts = True
 
 [zoo]
 ; Show ellipses at position of data points representing standard deviation of target and non target scores

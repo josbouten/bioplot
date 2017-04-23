@@ -5,7 +5,7 @@
 
     Object used to plot a Receiver Operating Characteristic i.e. ROC-curve.
 
-    Copyright (C) 2015, 2016 Jos Bouten ( josbouten at gmail dot com )
+    Copyright (C) 2015 Jos Bouten ( josbouten at gmail dot com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,8 +28,7 @@ from event import Event
 import numpy as np
 from utils import assignColors2MetaDataValue
 from sklearn import metrics
-from cllr import Cllr
-from collections import defaultdict
+from legendtext import LegendText
 from eer import Eer
 from probability import Probability
 
@@ -65,62 +64,28 @@ class Roc(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
 
-        legendText = defaultdict(list)
-        # Compute and show the EER value if so desired.
-        if self.config.getShowEerInRoc():
-            eerObject = Eer(self.data, self.config, self._expName, self.debug)
-            eerData = eerObject.computeProbabilities(self.eerFunc)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, PD, PP, X in eerData:
-                    if thisMetaValue == metaValue:
-                        try:
-                            eerValue, score = eerObject.computeEer(PD, PP, X)
-                        except Exception as e:
-                            print("DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e))
-                        else:
-                            eerValue *= 100
-                            if eerValue < 10.0:
-                                eerStr = "Eer:  %.2f%s" % (eerValue, '%')
-                            else:
-                                eerStr = "Eer: %2.2f%s" % (eerValue, '%')
-                            legendText[thisMetaValue].append(eerStr)
-                        break
+        eerObject = Eer(self.data, self.config, self._expName, self.debug)
+        eerData = eerObject.computeProbabilities(self.eerFunc)
+        eerValue = {}
+        score = {}
+        for thisMetaValue in sorted(colors.keys()):
+            for metaValue, PD, PP, X in eerData:
+                if thisMetaValue == metaValue:
+                    try:
+                        eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
+                    except Exception as e:
+                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
+                    else:
+                        eerValue[metaValue] *= 100
+                    break
+        lt = LegendText(self.data, colors, self.config, self.config.getShowCllrInRoc(), 
+                        self.config.getShowMinCllrInRoc(), self.config.getShowEerInRoc(), 
+                        self.config.getShowCountsInRoc(),
+                        eerValue, score, self.debug)
 
-        # Compute and show the Cllr value if so desired.
-        if self.config.getShowCllrInRoc():
-            cllrObject = Cllr(self.data, self.config, self.debug)
-            cllrData = cllrObject.getCllr()
-            if self.debug:
-                print(cllrData)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, cllrValue in cllrData:
-                    if thisMetaValue == metaValue:
-                        if type(cllrValue) is float:
-                            cllrStr = "Cllr: %.3f" % cllrValue
-                        else:
-                            cllrStr = "Cllr: %s" % cllrValue
-                        legendText[metaValue].append(cllrStr)
-                        break
-
-        # Compute and show the CllrMin value if so desired.
-        if self.config.getShowMinCllrInRoc():
-            cllrObject = Cllr(self.data, self.config, self.debug)
-            minCllrData = cllrObject.getMinCllr()
-            if self.debug:
-                print("minCllrData:", minCllrData)
-            for thisMetaValue in sorted(colors.keys()):
-                for metaValue, minCllrValue in minCllrData:
-                    if thisMetaValue == metaValue:
-                        if type(minCllrValue) is float:
-                            minCllrStr = "minCllr: %.3f" % minCllrValue
-                        else:
-                            minCllrStr = "minCllr: %s" % minCllrValue
-                        legendText[metaValue].append(minCllrStr)
-                        break
+        legendText = lt.make()
 
         for metaValue in metaDataValues:
-            thisLegendText = self._makeLegendText(legendText, metaValue)
-
             targetScores = self.data.getTargetScores4MetaValue(metaValue)
             nonTargetScores = self.data.getNonTargetScores4MetaValue(metaValue)
             allScores = targetScores + nonTargetScores
@@ -128,13 +93,13 @@ class Roc(Probability):
             truthValues[0:len(targetScores)] = 1
             truthValues[len(targetScores):] = 0
             fpr, tpr, thresholds = metrics.roc_curve(truthValues, allScores, pos_label=1)
-            bla, = axes.plot(fpr, tpr, 'x-', label=thisLegendText, color=colors[metaValue])
+            bla, = axes.plot(fpr, tpr, 'x-', label=legendText[metaValue], color=colors[metaValue])
             #axes.set_title("Receiver Operating Characteristic for '%s'" % self.data.getTitle())
             axes.set_title("ROC plot for '%s'" % self.data.getTitle())
         plt.xlabel('P(false positive)')
         plt.ylabel('P(true positive)')
         plt.grid()
-        plt.legend(loc=5)  # position logend at center right
+        plt.legend(loc=5)  # Position legend at center right.
         if self.config.getPrintToFile():
             filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
             print("Writing plot to %s" % filename)

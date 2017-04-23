@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tools &mdash; bioplot 0.9.9 documentation</title>
+    <title>Tools &mdash; bioplot 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.9',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bioplot 0.9.9 documentation" href="index.html" />
+    <link rel="top" title="bioplot 1.2 documentation" href="index.html" />
     <link rel="next" title="Settings" href="settings.html" />
     <link rel="prev" title="Zoo plot" href="zooplot.html" />
 <meta charset='utf-8'>
@@ -50,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           bioplot</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.9.9</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -89,6 +89,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#osx">OSX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#matplotlib-backend">Matplotlib backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id3">Man pages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#id4">Update notifications</a></li>
 </ul>
@@ -96,11 +97,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="update.html">UPDATE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v1-4">V1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update.html#v0-9-9">v0.9.9</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#v0-9-4">v0.9.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="update.html#osx">OSX</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#all-versions">All versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accuracy.html">Accuracy plot</a></li>
@@ -129,6 +134,7 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#anonymize-py">anonymize.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raw2bioplot-py">raw2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bv2bioplot-py">bv2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -185,6 +191,7 @@
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">Tools</a><ul>
 <li><a class="reference internal" href="#anonymize-py">anonymize.py</a></li>
+<li><a class="reference internal" href="#raw2bioplot-py">raw2bioplot.py</a></li>
 <li><a class="reference internal" href="#bv2bioplot-py">bv2bioplot.py</a></li>
 <li><a class="reference internal" href="#sretools2bioplot-py">sretools2bioplot.py</a></li>
 <li><a class="reference internal" href="#vocalise2bioplot-py">vocalise2bioplot.py</a></li>
@@ -244,17 +251,37 @@
 <p>This script will convert a bioplot data file into an anonymized data file by replacing all relevant elements by a hash value.
 That should make it hard for anyone to decode it. In case you want to exchange data with anyone, you can thus
 preserve the anonymity of the subjects. You can e.g. use this script if you want to send me a data set in case you have
-problems processing it. Use it like so:</p>
-<div class="highlight-python"><div class="highlight"><pre>python anonymize.py input_file output_file
+problems processing it. You can see the input parameters anonimyze uses like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 anonymize.py -h
+
+usage: anonymize.py [-h] -o OUTPUTFILE -i INPUTFILE
+
+anonymize.py version 0.2, Copyright (C) 2014, Jos Bouten. This program
+anonymizes a bioplot data file. anonymize.py comes with ABSOLUTELY NO
+WARRANTY; for details run anonymize.py -h This is free software, and you are
+welcome to redistribute it under certain conditions; please read LICENSE.TXT
+supplied with this program. This program was written by Jos Bouten. You can
+contact me via josbouten at gmail dot com.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUTFILE, --outputfile OUTPUTFILE
+                        output file name
+  -i INPUTFILE, --inputfile INPUTFILE
+                        input file name
+</pre></div>
+</div>
+<p>So you will be using it like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 anonymize.py input_file output_file
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>python anonymize.py example_data.txt example_data_anonymized.txt
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 anonymize.py example_data.txt example_data_anonymized.txt
 </pre></div>
 </div>
 <p>If you now look at the contents of the files (only the first few lines are shown), you will see that all elements except
 the score, truth value and meta data label have been replaced by hash values:</p>
-<div class="highlight-python"><div class="highlight"><pre>==&gt; input/example_data.txt &lt;==
+<div class="highlight-python"><div class="highlight"><pre><span></span>==&gt; input/example_data.txt &lt;==
 114846 0000000005146119b 114854 bla -1.3412277399322274 FALSE 60s_2x30s
 114847 0000000005146119b 114854 bla -2.2384162803080474 FALSE 60s_2x30s
 114848 0000000005146119b 114854 bla -0.22776277505632123 FALSE 60s_2x30s
@@ -269,13 +296,23 @@ bb663b5dedca2fac332f3c7aa53155f3e7e038fe02faefbb85d8315616f603cd a7f2c50142fe068
 4bb2c3af939742181003c57fc21c06fe2236c06d365963b2c7ceacc3df3e6e0c a7f2c50142fe068f12f8fb530559069cf5ae8ce254ef92bfc1530f6162d8be09 f0b9eb4dd3befe3018195f76384bcd4d33e79f520319968b87d7babf40b1d21f 4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703 -2.838987423178022 FALSE 60s_2x30s
 </pre></div>
 </div>
-<p>For anonymization the sha256 hash function is used. For most purposes this should be adequaat.</p>
+<p>For anonymization the sha256 hash function is used. For most purposes this should be adequate.</p>
+</div>
+<div class="section" id="raw2bioplot-py">
+<h2>raw2bioplot.py<a class="headerlink" href="#raw2bioplot-py" title="Permalink to this headline">¶</a></h2>
+<p>Read a file containing target scores (one per line) and a file containing non target scores (one per line) and convert
+them into a data file for bioplot. You can specify a label using -l. This will be used in the legend of the plot. By
+default the label will be &#8216;test&#8217;.</p>
+<p>Example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 raw2bioplot.py -t target_scores.txt -n non_target_scores.txt -l conditionA -o data4bioplot.txt
+</pre></div>
+</div>
 </div>
 <div class="section" id="bv2bioplot-py">
 <h2>bv2bioplot.py<a class="headerlink" href="#bv2bioplot-py" title="Permalink to this headline">¶</a></h2>
 <p>Convert a bv results data file to a data file for bioplot.
 Example of usage:</p>
-<div class="highlight-python"><div class="highlight"><pre>python bv2bioplot.py  -i inputfile -o outputfile
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 bv2bioplot.py  -i inputfile -o outputfile
 </pre></div>
 </div>
 </div>
@@ -285,7 +322,7 @@ Example of usage:</p>
 <p>Sretools consist of utilities witten in R which accept several columns of data.
 This script is an example which you can use to use that same data as input for bioplot.</p>
 <p>Example of input:</p>
-<div class="highlight-python"><div class="highlight"><pre>Tspid,Tfrid,Mspid,Mfrid,score,target
+<div class="highlight-python"><div class="highlight"><pre><span></span>Tspid,Tfrid,Mspid,Mfrid,score,target
 114849,0000000005712904a,114849,0000000005713112b,5.368496418,TRUE
 114849,0000000005712904a,114853,0000000005281055b,1.67685461,FALSE
 114849,0000000005712904a,114853,0000000005288357b,1.363172889,FALSE
@@ -293,7 +330,7 @@ This script is an example which you can use to use that same data as input for b
 </pre></div>
 </div>
 <p>Example of usage:</p>
-<div class="highlight-python"><div class="highlight"><pre>python sretools2bioplot.py -i inputfile -o outputfile
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 sretools2bioplot.py -i inputfile -o outputfile
 </pre></div>
 </div>
 </div>
@@ -301,7 +338,7 @@ This script is an example which you can use to use that same data as input for b
 <h2>vocalise2bioplot.py<a class="headerlink" href="#vocalise2bioplot-py" title="Permalink to this headline">¶</a></h2>
 <p>Convert a vocalise data file to a data file for bioplot.</p>
 <p>Example of usage:</p>
-<div class="highlight-python"><div class="highlight"><pre>python vocalise2bioplot.py -i inputfile -o outputfile
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 vocalise2bioplot.py -i inputfile -o outputfile
 </pre></div>
 </div>
 </div>
@@ -319,7 +356,7 @@ This script is an example which you can use to use that same data as input for b
       
     </p>
     <p>
-        &copy; Copyright 2015, 2016 Jos S. Bouten.<br/>
+        &copy; Copyright 2014 Jos S. Bouten.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>

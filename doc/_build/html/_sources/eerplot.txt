@@ -20,13 +20,15 @@ All plots are shown in a window that allows you to zoom in on events. Here the p
 
 .. image:: images/condition_A_and_B_eer_plot_zoom.png
 
-If you want to see cllr and cllrMin values in the plot's legend, set: ::
+If you want to see the cllr and cllrMin, nr of target and nontarget scores and eer values in the plot's legend, set: ::
 
     [eer]
     showCllr = True
     showMinCllr = True
+    showCounts = True
+    showEer = True
 
-.. image:: images/condition_A_and_B_eer_plot_cllr.png
+.. image:: images/condition_A_and_B_all_metadata.png
 
 If you want to print the plot to a file instead of to the screen, set printToFile accordingly. 
 The file name will be <experiment name>_eer_plot.png. ::

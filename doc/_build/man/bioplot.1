@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "BIOPLOT" "1" "November 08, 2016" "0.9.9" "bioplot"
+.TH "BIOPLOT" "1" "April 23, 2017" "1.2" "bioplot"
 .SH NAME
 bioplot \- bioplot Documentation
 .
@@ -90,21 +90,20 @@ This wil output the following information:
 .sp
 .nf
 .ft C
-usage: bioplot.py [\-h] [\-v] [\-Z] [\-A] [\-D] [\-E] [\-T] [\-M] [\-O] [\-R] [\-C] [\-H]
-                  [\-k] [\-L LABELS [LABELS ...]] [\-e EXPNAME] [\-i FILENAME]
-                  [\-t DATATYPE] [\-d THRESHOLD] [\-c CONFIGFILENAME] [\-l] [\-s]
-                  [\-q]
+usage: bioplot.py [\-h] [\-Z] [\-A] [\-D] [\-E] [\-T] [\-M] [\-O] [\-R] [\-C] [\-H] [\-k]
+                  [\-L LABELS [LABELS ...]] [\-e EXPNAME]
+                  [\-i FILENAMES [FILENAMES ...]] [\-t DATATYPE] [\-d THRESHOLD]
+                  [\-c CONFIGFILENAME] [\-l] [\-s] [\-q]
 
 bioplot.py [plot type] [<label1> <label2> <label3> ...] bioplot.py version
-0.9.8, Copyright (C) 2014, 2015, 2016 Jos Bouten This program comes with
-ABSOLUTELY NO WARRANTY; for details run \(gabioplot.py \-l\(aq. This is free
-software, and you are welcome to redistribute it under certain conditions;
-type \(gabioplot.py \-l\(aq for details. This program was written by Jos Bouten. You
-can contact me via josbouten at gmail dot com.
+This is bioplot.py version 1.2, Copyright (C) 2014: Jos Bouten
+This program comes with ABSOLUTELY NO WARRANTY; for details run
+\(gabioplot.py \-l\(aq. This is free software, and you are welcome to redistribute it
+under certain conditions; type \(gabioplot.py \-l\(aq for details. This program was
+written by Jos Bouten. You can contact me via josbouten at gmail dot com.
 
 optional arguments:
   \-h, \-\-help            show this help message and exit
-  \-v, \-\-version         show program\(aqs version number and exit
   \-Z, \-\-zoo             show zoo plot
   \-A, \-\-accuracy        show accuracy plot
   \-D, \-\-det             show Det plot
@@ -120,8 +119,9 @@ optional arguments:
                         add labels to plot
   \-e EXPNAME, \-\-exp EXPNAME
                         name of experiment used in plot title, default = test
-  \-i FILENAME, \-\-inputfile FILENAME
-                        filename list of filenames of data file(s), default = input/testdata_A.txt
+  \-i FILENAMES [FILENAMES ...], \-\-inputfile FILENAMES [FILENAMES ...]
+                        filename of filenames of data file(s) or name of
+                        database, default = input/testdata_A.txt
   \-t DATATYPE, \-\-type DATATYPE
                         type of data, default = type3, use \(aqdatabase\(aq if you
                         want to read data from a database.
@@ -790,6 +790,70 @@ If you want to include the bioplot doc as part of the OSX manual system, include
 Since there is no way for me to know who downloaded bioplot, other than the downloader telling me,
 send me an email if you want to be notified of changes.
 .SH UPDATE
+.SS All versions
+.sp
+Keep a copy of bioplot.cfg with your latest settings before updating anything.
+.sp
+Note: each version you download is self contained. You do not need anything from an existing version to run a new one.
+.sp
+If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
+If you want to replace the bioplot version with a new one download the latest zip file from the github page, rename the
+old bioplot directory to bioplot.org and unzip the new version. Then copy your input and output files from the input and
+output dir from the old version into the corresponding directory of the new one.
+.sp
+Merge your favourite settings in the saved version of bioplot.cfg with the new one. On osx or linux I would use diff or vimdiff for this.
+As I\(aqm not a windows user, if you are, you\(aqre on your own.
+.sp
+From here on, you\(aqre ready to go.
+Have a look at the changelog.txt file, the man pages, the html docs and bioplot.cfg to find out about new functions and
+settings and read the update section for possible extra update steps.
+.sp
+When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg.
+So in case of OSX use:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+runningOSX = True
+runningWindows = False
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Or in case of a compatible MS Windows OS use:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+runningOSX = False
+runningWindows = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Linux users set both to False.
+Do not forget to set your screen\(aqs resolution in [cfg] using screenResolution (in this example it is set to 1600x1200).
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[cfg]
+screenResolution = 1600x1200
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS V1.4
+.sp
+bioplot will run on python3.x only. Some new flags were added to bioplot.cfg.
+You may want to merge your own version with this one.
 .SS v0.9.9
 .sp
 Because of the transition of the code base to python3.5 you need to start bioplot.py with python3.5
@@ -864,66 +928,6 @@ From bioplot v0.9.4 on you\(aqll need to install the python machine learning lib
 .nf
 .ft C
 sudo pip install scikit\-learn
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.SS All versions
-.sp
-Keep a copy of bioplot.cfg with your latest settings before updating anything.
-.sp
-Note: each version you download is self contained. You do not need anything from an existing version to run a new one.
-.sp
-If you want to only try the new version, download the latest zip file from the github page and unzip it to a new local directory.
-If you want to replace the bioplot version with a new one download the latest zip file from the github page, rename the
-old bioplot directory to bioplot.org and unzip the new version. Then copy your input and output files from the input and
-output dir from the old version into the corresponding directory of the new one.
-.sp
-Merge your favourite settings in the saved version of bioplot.cfg with the new one. On osx or linux I would use diff or vimdiff for this.
-As I\(aqm not a windows user, if you are, you\(aqre on your own.
-.sp
-From here on, you\(aqre ready to go.
-Have a look at the changelog.txt file, the man pages, the html docs and bioplot.cfg to find out about new functions and
-settings and read the update section for possible extra update steps.
-.sp
-When running OSX or Windows do not forget to set either runningOSX or runningWindows in the [cfg] section in bioplot.cfg.
-So in case of OSX use:
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-[cfg]
-runningOSX = True
-runningWindows = False
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.sp
-Or in case of a compatible MS Windows OS use:
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-[cfg]
-runningOSX = False
-runningWindows = True
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.sp
-Linux users set both to False.
-Do not forget to set your screen\(aqs resolution in [cfg] using screenResolution (in this example it is set to 1600x1200).
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-[cfg]
-screenResolution = 1600x1200
 .ft P
 .fi
 .UNINDENT
@@ -1022,6 +1026,19 @@ showMinCllr = True
 .UNINDENT
 .UNINDENT
 .sp
+If you want to know how many target and non target scores the plot is based on, set:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[det]
+showCounts = True
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
 You can set the upper limits for the False Accept rate and False Rejection Rate in the config file:
 .INDENT 0.0
 .INDENT 3.5
@@ -1104,7 +1121,7 @@ python ./bioplot.py \-e "condition A and B" \-i input/testdata_AB.txt \-E
 All plots are shown in a window that allows you to zoom in on events. Here the plot is zoomed in around the intersection points of the graphs.
 [image]
 .sp
-If you want to see cllr and cllrMin values in the plot\(aqs legend, set:
+If you want to see the cllr and cllrMin, nr of target and nontarget scores and eer values in the plot\(aqs legend, set:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -1113,6 +1130,8 @@ If you want to see cllr and cllrMin values in the plot\(aqs legend, set:
 [eer]
 showCllr = True
 showMinCllr = True
+showCounts = True
+showEer = True
 .ft P
 .fi
 .UNINDENT
@@ -1318,20 +1337,22 @@ python ./bioplot.py \-e "condition A, B and C" \-i input/testdata_ABC.txt \-O
 .UNINDENT
 [image]
 .sp
-If you want to see EER, Cllr and/or MinCllr values in the plot\(aqs legend, set:
+If you want to see the cllr and cllrMin, nr of target and nontarget scores and eer values in the plot\(aqs legend, set:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
 [roc]
-showEer = True
 showCllr = True
 showMinCllr = True
+showCounts = True
+showEer = True
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
+[image]
 .sp
 If you want to print the plot to a file instead of to the screen, set printToFile accordingly.
 The file name will be <experiment name>_roc_plot.png.
@@ -1360,6 +1381,23 @@ Run this command:
 .nf
 .ft C
 python ./bioplot.py \-e "condition A and B" \-i input/testdata_AB.txt \-T
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+[image]
+.sp
+If you want to see the cllr and cllrMin, nr of target and nontarget scores and eer values in the plot\(aqs legend, set:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[roc]
+showCllr = True
+showMinCllr = True
+showCounts = True
+showEer = True
 .ft P
 .fi
 .UNINDENT
@@ -1684,13 +1722,41 @@ printToFile = True
 This script will convert a bioplot data file into an anonymized data file by replacing all relevant elements by a hash value.
 That should make it hard for anyone to decode it. In case you want to exchange data with anyone, you can thus
 preserve the anonymity of the subjects. You can e.g. use this script if you want to send me a data set in case you have
-problems processing it. Use it like so:
+problems processing it. You can see the input parameters anonimyze uses like so:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-python anonymize.py input_file output_file
+python3 anonymize.py \-h
+
+usage: anonymize.py [\-h] \-o OUTPUTFILE \-i INPUTFILE
+
+anonymize.py version 0.2, Copyright (C) 2014, Jos Bouten. This program
+anonymizes a bioplot data file. anonymize.py comes with ABSOLUTELY NO
+WARRANTY; for details run anonymize.py \-h This is free software, and you are
+welcome to redistribute it under certain conditions; please read LICENSE.TXT
+supplied with this program. This program was written by Jos Bouten. You can
+contact me via josbouten at gmail dot com.
+
+optional arguments:
+  \-h, \-\-help            show this help message and exit
+  \-o OUTPUTFILE, \-\-outputfile OUTPUTFILE
+                        output file name
+  \-i INPUTFILE, \-\-inputfile INPUTFILE
+                        input file name
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+So you will be using it like so:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+python3 anonymize.py input_file output_file
 .ft P
 .fi
 .UNINDENT
@@ -1702,7 +1768,7 @@ Example:
 .sp
 .nf
 .ft C
-python anonymize.py example_data.txt example_data_anonymized.txt
+python3 anonymize.py example_data.txt example_data_anonymized.txt
 .ft P
 .fi
 .UNINDENT
@@ -1733,7 +1799,24 @@ bb663b5dedca2fac332f3c7aa53155f3e7e038fe02faefbb85d8315616f603cd a7f2c50142fe068
 .UNINDENT
 .UNINDENT
 .sp
-For anonymization the sha256 hash function is used. For most purposes this should be adequaat.
+For anonymization the sha256 hash function is used. For most purposes this should be adequate.
+.SS raw2bioplot.py
+.sp
+Read a file containing target scores (one per line) and a file containing non target scores (one per line) and convert
+them into a data file for bioplot. You can specify a label using \-l. This will be used in the legend of the plot. By
+default the label will be \(aqtest\(aq.
+.sp
+Example of usage:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+python3 raw2bioplot.py \-t target_scores.txt \-n non_target_scores.txt \-l conditionA \-o data4bioplot.txt
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SS bv2bioplot.py
 .sp
 Convert a bv results data file to a data file for bioplot.
@@ -1743,7 +1826,7 @@ Example of usage:
 .sp
 .nf
 .ft C
-python bv2bioplot.py  \-i inputfile \-o outputfile
+python3 bv2bioplot.py  \-i inputfile \-o outputfile
 .ft P
 .fi
 .UNINDENT
@@ -1777,7 +1860,7 @@ Example of usage:
 .sp
 .nf
 .ft C
-python sretools2bioplot.py \-i inputfile \-o outputfile
+python3 sretools2bioplot.py \-i inputfile \-o outputfile
 .ft P
 .fi
 .UNINDENT
@@ -1792,7 +1875,7 @@ Example of usage:
 .sp
 .nf
 .ft C
-python vocalise2bioplot.py \-i inputfile \-o outputfile
+python3 vocalise2bioplot.py \-i inputfile \-o outputfile
 .ft P
 .fi
 .UNINDENT
@@ -1834,36 +1917,24 @@ It will then show a list of chosen settings like so:
 .nf
 .ft C
 Config info taken from \(aqdefault values\(aq:
-alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
-annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = False, debug = False, dimmingFactor = 0.8,
-interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569),
-limitStdDevs = True, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 60, maxFalseRejectionRate = 60, maximum4Type1 = 1e+99,
-maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99, minNrScores4MatrixPlot = 3,
-minimumOpacityValue = 0.1, minStdDev = 0.01, noHistAnnot = False, normHist = False, nrAccPoints = 50, nrBins = 100,
-nrSamples4Probability = 200, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = False,
-saveScores = True, scaleFactor = 150, screenResolution = 1280x1024, showAnnotationsAtStartup = False, showMeanScores = True,
-showCircularHistogram = False, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True,
-showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True,
-showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, roc.showMinCllr = True,
-zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = False,
-showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True,
-useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.08, zHeight = 0.63, zLeft = 0.1,
-zWidth = 0.65
+alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True, annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False, dimmingFactor = 0.8, interconnectMetaValues = True, labelAngle = 70, labelColor = (0.6274509803921569, 0.6274509803921569, 0.6274509803921569), limitStdDevs = False, lineWidth = 1.0, matrixColorMap = Greys, maxFalseAcceptRate = 99.999, maxFalseRejectionRate = 99.999, maximum4Type1 = 1e+99, maximum4Type3 = 1e+99, maxStdDev = 6.0, minimum4Type1 = \-1e+99, minimum4Type3 = \-1e+99, minNrScores4MatrixPlot = 3, minimumOpacityValue = 0.2, minStdDev = 0.01, noHistAnnot = False, normHist = True, nrAccPoints = 100, nrBins = 75, nrSamples4Probability = 500, opacity4Ellipses = 0.7, outputPath = output, printToFile = False, runningWindows = False, runningOSX = True, saveScores = True, scaleFactor = 100, screenResolution = 1600x1024, showAnnotationsAtStartup = False, showMeanScores = True, showCircularHistogram = True, det.showCllr = True, eer.showCllr = True, roc.showCllr = True, zoo.showCllr = True, showConfigInfo = True, showDiagonalInDet = True, showEdgeColor = True, roc.showEer = True, zoo.showEer = True, showHelperCircles = True, showKernelInHist = True, showMatrixLabels = True, showMetaInHist = True, det.showMinCllr = True, eer.showMinCllr = True, eer.showCounts = True, det.showCounts = True, roc.showCounts = True, tippet.showCounts = True, roc.showMinCllr = True, zoo.showMinCllr = True, showNrTargetsAndNonTargets = True, showReference = True, showSingleValueAsUnitValue = False, showStdev = True, showTextAtReferenceAtStartup = False, showUnitDataPoint = True, spacing = 0.02, useColorsForQuartileRanges = True, useOpacityForBigEllipses = False, xHeight = 0.2, yagerStyle = True, yWidth = 0.2, zBottom = 0.05, zHeight = 0.63, zLeft = 0.05, zWidth = 0.65
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-This will show the settings read from the file \(aqsome_other_settings_file\(aq.
+This will show the settings read from the file \(aqbioplot.cfg\(aq.
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-bioplot.py version 0.9.6.4, Copyright (C) 2014, 2015 Jos Bouten
+mbp:bioplot jos$ ./bioplot.py \-s
 Ignoring all command line parameters except \-s
-Config info as read from some_other_settings_file:
-alexanderStyle = True, alwaysSave = True, allowDups = False, etc. etc.
+Config info as read from \(aqbioplot.cfg\(aq:
+alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
+annotateEllipsesInQuartiles = False, boutenStyle = True, combineMatrices = True, debug = False, dimmingFactor = 0.8, interconnectMetaValues = True,
+etc. etc.
 .ft P
 .fi
 .UNINDENT
@@ -3394,7 +3465,7 @@ Public License instead of this License.
 search
 .UNINDENT
 .sp
-Copyright (C) 2014, 2015 Jos Bouten ( josbouten at gmail dot com )
+Copyright (C) 2014 Jos Bouten ( josbouten at gmail dot com )
 .sp
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -3412,6 +3483,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 .SH AUTHOR
 J.S. Bouten
 .SH COPYRIGHT
-2015, 2016 Jos S. Bouten
+2014 Jos S. Bouten
 .\" Generated by docutils manpage writer.
 .
