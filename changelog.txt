@@ -1,4 +1,4 @@
-# V1.2.1 4 mei 2017
+# V1.2.1 4 May 2017
 Added some more instructions to install bioplot on OSX.
 Thanks Jonas for the tips!
 
