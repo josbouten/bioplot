@@ -45,7 +45,7 @@ This wil output the following information: ::
                       [-c CONFIGFILENAME] [-l] [-s] [-q]
 
     bioplot.py [plot type] [<label1> <label2> <label3> ...] bioplot.py version
-    This is bioplot.py version 1.2, Copyright (C) 2014: Jos Bouten
+    This is bioplot.py version 1.2.1, Copyright (C) 2014: Jos Bouten
     This program comes with ABSOLUTELY NO WARRANTY; for details run
     `bioplot.py -l'. This is free software, and you are welcome to redistribute it
     under certain conditions; type `bioplot.py -l' for details. This program was
@@ -321,7 +321,6 @@ Example: ::
 
   python bioplot.py -e "condition A" -i input/testdata_A.txt -Z 
   python bioplot.py -e "condition A and B" -i input/testdata_A.txt input/testdata_B.txt -Z
-
 
 If you experience any difficulties reading your data file, we can either discuss this
 via email or you can send the data it to me ( josbouten at gmail dot com ) so that I can have a look at it.

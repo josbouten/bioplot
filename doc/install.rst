@@ -86,19 +86,23 @@ Requirements
 ~~~~~~~~~~~~
 You need to have python3.5 installed. 
 
-On OSX 10.9.5 run these commands: ::
+On OSX 10.9.5 anf higher run these commands: ::
 
     curl -O https://bootstrap.pypa.io/get-pip.py
 
     python get-pip.py
 
-    pip3 install matplotlib
+You'll need to install the libraries matplotlib, numpy and scikit-learn: ::
+
+    sudo pip3 install matplotlib
+    sudo pip3 install numpy
+    sudo pip3 install scikit-learn
+
+An OSX Git installer is maintained and available for download at the Git website, at http://git-scm.com/download/mac.
+Download it and install it by double clicking the dmg file. Then follow the instructions.
+Next check out the source code of bioplot from the github repository: ::
 
     sudo git clone https://github.com/josbouten/bioplot.git
-
-From bioplot v0.9.4 on you'll need to install the python machine learning library scikit-learn: ::
-
-    sudo pip3 install scikit-learn
 
 Then change the owner of the bioplot directory to your user: ::
 
@@ -141,7 +145,7 @@ Set your screen's resolution in [cfg] using screenResolution: ::
 
 Matplotlib backend
 ~~~~~~~~~~~~~~~~~~
-You may need to set the matplotlib backend to TkAgg
+You may need to set the matplotlib backend to TkAgg.
 Create the file  /Users/<your user name>/.matplotlib/matplotlibrc and put the following line in: ::
 
 	backend: TkAgg

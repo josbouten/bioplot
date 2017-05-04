@@ -1,5 +1,9 @@
+# V1.2.1 4 mei 2017
+Added some more instructions to install bioplot on OSX.
+Thanks Jonas for the tips!
+
 # v1.2 23 April 2017
-Changed several copyright notices
+Changed several copyright notices.
 Added the number of target and non targets experiment counts to several plots.
 This will make clear how many scores were used to plot them.
 Added argument parser to anonymize.py

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "BIOPLOT" "1" "April 23, 2017" "1.2" "bioplot"
+.TH "BIOPLOT" "1" "May 04, 2017" "1.2.1" "bioplot"
 .SH NAME
 bioplot \- bioplot Documentation
 .
@@ -96,7 +96,7 @@ usage: bioplot.py [\-h] [\-Z] [\-A] [\-D] [\-E] [\-T] [\-M] [\-O] [\-R] [\-C] [\
                   [\-c CONFIGFILENAME] [\-l] [\-s] [\-q]
 
 bioplot.py [plot type] [<label1> <label2> <label3> ...] bioplot.py version
-This is bioplot.py version 1.2, Copyright (C) 2014: Jos Bouten
+This is bioplot.py version 1.2.1, Copyright (C) 2014: Jos Bouten
 This program comes with ABSOLUTELY NO WARRANTY; for details run
 \(gabioplot.py \-l\(aq. This is free software, and you are welcome to redistribute it
 under certain conditions; type \(gabioplot.py \-l\(aq for details. This program was
@@ -663,7 +663,7 @@ send me an email if you want to be notified of changes.
 .sp
 You need to have python3.5 installed.
 .sp
-On OSX 10.9.5 run these commands:
+On OSX 10.9.5 anf higher run these commands:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -672,22 +672,34 @@ On OSX 10.9.5 run these commands:
 curl \-O https://bootstrap.pypa.io/get\-pip.py
 
 python get\-pip.py
-
-pip3 install matplotlib
-
-sudo git clone https://github.com/josbouten/bioplot.git
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-From bioplot v0.9.4 on you\(aqll need to install the python machine learning library scikit\-learn:
+You\(aqll need to install the libraries matplotlib, numpy and scikit\-learn:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
+sudo pip3 install matplotlib
+sudo pip3 install numpy
 sudo pip3 install scikit\-learn
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+An OSX Git installer is maintained and available for download at the Git website, at \fI\%http://git\-scm.com/download/mac\fP\&.
+Download it and install it by double clicking the dmg file. Then follow the instructions.
+Next check out the source code of bioplot from the github repository:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+sudo git clone https://github.com/josbouten/bioplot.git
 .ft P
 .fi
 .UNINDENT
@@ -770,7 +782,7 @@ screenResolution = 1600x1200
 .UNINDENT
 .SS Matplotlib backend
 .sp
-You may need to set the matplotlib backend to TkAgg
+You may need to set the matplotlib backend to TkAgg.
 Create the file  /Users/<your user name>/.matplotlib/matplotlibrc and put the following line in:
 .INDENT 0.0
 .INDENT 3.5
@@ -850,10 +862,8 @@ screenResolution = 1600x1200
 .fi
 .UNINDENT
 .UNINDENT
-.SS V1.4
 .sp
-bioplot will run on python3.x only. Some new flags were added to bioplot.cfg.
-You may want to merge your own version with this one.
+bioplot will run on python3.x only.
 .SS v0.9.9
 .sp
 Because of the transition of the code base to python3.5 you need to start bioplot.py with python3.5
@@ -1929,7 +1939,6 @@ This will show the settings read from the file \(aqbioplot.cfg\(aq.
 .sp
 .nf
 .ft C
-mbp:bioplot jos$ ./bioplot.py \-s
 Ignoring all command line parameters except \-s
 Config info as read from \(aqbioplot.cfg\(aq:
 alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,

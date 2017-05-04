@@ -40,10 +40,7 @@ Do not forget to set your screen's resolution in [cfg] using screenResolution (i
     screenResolution = 1600x1200
 
 
-V1.4
-----
-bioplot will run on python3.x only. Some new flags were added to bioplot.cfg.
-You may want to merge your own version with this one.
+bioplot will run on python3.x only.
 
 v0.9.9
 ------

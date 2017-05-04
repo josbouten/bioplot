@@ -23,7 +23,6 @@ It will then show a list of chosen settings like so: ::
 
 This will show the settings read from the file 'bioplot.cfg'. ::
 
-    mbp:bioplot jos$ ./bioplot.py -s
     Ignoring all command line parameters except -s
     Config info as read from 'bioplot.cfg':
     alexanderStyle = True, alwaysSave = True, allowDups = False, alpha4References = 1.0, alpha4UnitCircles = 0.5, animalColors = True,
