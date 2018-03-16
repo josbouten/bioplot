@@ -47,6 +47,7 @@ from utils import sanitize
 from license import License
 from os.path import basename
 
+
 def printConfig(theseOptions, thisConfig):
     if thisConfig.getFileNotFound():
         print(("Config info taken from 'default values':\n%s" % thisConfig.toString()))
@@ -55,6 +56,7 @@ def printConfig(theseOptions, thisConfig):
             print(("Config info as read from '%s':\n%s" % (theseOptions.configFilename, thisConfig.toString())))
         else:
             print(("Config info taken from 'default values':\n%s" % thisConfig.toString()))
+
 
 def parseArguments():
     v = Version()
@@ -77,11 +79,13 @@ def parseArguments():
     parser.add_argument('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")
     parser.add_argument('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
     parser.add_argument('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
-    parser.add_argument('-k', '--kernel', action="store_true", dest="plotKernel", help="show kernel estimate in histogram")
+    parser.add_argument('-k', '--kernel', action="store_true", dest="plotKernel",
+                        help="show kernel estimate in histogram")
     parser.add_argument('-L', '--label', dest='labels', type=str, nargs='+', help="add labels to plot")
     parser.add_argument('-e', '--exp', action="store", dest="expName", default='test',
                         help="name of experiment used in plot title, default = test")
-    parser.add_argument('-i', '--inputfile', action="store", dest="filenames", nargs='+', default=['input/testdata_A.txt'],
+    parser.add_argument('-i', '--inputfile', action="store", dest="filenames", nargs='+',
+                        default=['input/testdata_A.txt'],
                         help="filename of filenames of data file(s) or name of database, default = input/testdata_A.txt")
     parser.add_argument('-t', '--type', action="store", dest="dataType", default='type3',
                         help="type of data, default = type3, use 'database' if you want to read data from a database.")
@@ -93,6 +97,7 @@ def parseArguments():
     parser.add_argument('-s', '--settings', action="store_true", dest="showOptions", help="show settings only")
     parser.add_argument('-q', '--quiet', action="store_true", dest="quiet", help="do not show settings")
     return parser.parse_args()
+
 
 #
 #  Main
@@ -152,16 +157,25 @@ if args.labels:
         data.setLabelsToShowAlways(args.labels)
 
 if args.plotAccuracy:
-    accuracy = Accuracy(data, config, expName, debug)
-    accuracy.plot()
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        accuracy = Accuracy(data, config, expName, debug)
+        accuracy.plot()
+    else:
+        print("Not enough data.")
 
 if args.plotDet:
-    det = Det(data, config, expName, debug)
-    det.plot()
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        det = Det(data, config, expName, debug)
+        det.plot()
+    else:
+        print("Not enough data.")
 
 if args.plotEer:
-    eer = Eer(data, config, expName, debug)
-    eer.plot()
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        eer = Eer(data, config, expName, debug)
+        eer.plot()
+    else:
+        print("Not enough data.")
 
 if args.plotHistCum:
     # Interested in EER plot? Then plot a cumulative histogram of the scores.
@@ -183,21 +197,33 @@ if args.plotMatrix:
     matrix.plot()
 
 if args.plotRanking:
-    ranking = Ranking(data, config, expName, debug)
-    ranking.plot()
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        ranking = Ranking(data, config, expName, debug)
+        ranking.plot()
+    else:
+        print("Not enough data.")
 
 if args.plotRoc:
-    roc = Roc(data, config, expName, debug)
-    roc.plot()
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        roc = Roc(data, config, expName, debug)
+        roc.plot()
+    else:
+        print("Not enough data.")
 
 if args.plotTippet:
-    tippet = Tippett(data, config, expName, debug)
-    tippet.plot()
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        tippet = Tippett(data, config, expName, debug)
+        tippet.plot()
+    else:
+        print("Not enough data.")
 
 if args.plotZoo:
-    if config.getBoutenStyle() is True:
-        zoo = BoutenZoo(data, config, expName, debug)
-        zoo.plot()
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        if config.getBoutenStyle() is True:
+            zoo = BoutenZoo(data, config, expName, debug)
+            zoo.plot()
+        else:
+            zoo = AlexanderZoo(data, config, expName, debug)
+            zoo.plot()
     else:
-        zoo = AlexanderZoo(data, config, expName, debug)
-        zoo.plot()
+        print("Not enough data.")

@@ -95,12 +95,15 @@ class LegendText:
             cllrData = cllrObject.getCllr()
             for thisMetaValue in sorted(self._colors.keys()):
                 for metaValue, x in cllrData:
-                    if thisMetaValue == metaValue:
-                        if self._eerValue[metaValue] < 10.0:
-                            eerStr = "Eer:  %.2f%s" % (self._eerValue[metaValue], '%')
-                        else:
-                            eerStr = "Eer: %2.2f%s" % (self._eerValue[metaValue], '%')
-                        legendText[metaValue].append(eerStr)
+                    if len(self._eerValue) > 0:
+                        if thisMetaValue == metaValue:
+                            if self._eerValue[metaValue] < 10.0:
+                                eerStr = "Eer:  %.2f%s" % (self._eerValue[metaValue], '%')
+                            else:
+                                eerStr = "Eer: %2.2f%s" % (self._eerValue[metaValue], '%')
+                            legendText[metaValue].append(eerStr)
+                            break
+                    else:
                         break
 
         if self._showCounts:
