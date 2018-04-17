@@ -140,11 +140,6 @@ if args.showOptions:
 if config.getShowConfigInfo():
     printConfig(args, config)
 
-print(("Reading data from:",))
-for el in args.filenames:
-    print((el,))
-print()
-
 data = Data(config, expName, threshold, dataType, debug, filenames)
 
 if config.getSaveScores():

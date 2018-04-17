@@ -53,7 +53,7 @@ def sanitize(data):
         ret = []
         for filename in data:
             ret.append(singleSanitize(filename))
-            return ret
+        return ret
     else:
         return(singleSanitize(data))
 

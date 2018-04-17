@@ -519,9 +519,9 @@ class Data(Format):
 
         ret = []
         for filename in filenames:
+            print("Reading data from: {}".format(filename))
             ret = ret + readFromFile(filename)
         return ret
-
 
 
     def writeScores2file(self, scoreDict, expName, extention):
