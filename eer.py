@@ -44,6 +44,24 @@ class Eer(Probability):
         self.fig = None
         self.event = None
 
+        metaDataValues = self.data.getMetaDataValues()
+        metaColors = self.config.getMetaColors()
+        self.colors = assignColors2MetaDataValue(metaDataValues, metaColors)
+
+        self.eerData = self.computeProbabilities(self.eerFunc)
+        self.eerValue = {}
+        self.score = {}
+        for thisMetaValue in sorted(self.colors.keys()):
+            for metaValue, PD, PP, X in self.eerData:
+                if thisMetaValue == metaValue:
+                    try:
+                        self.eerValue[metaValue], self.score[metaValue] = self.computeEer(PD, PP, X)
+                    except Exception as e:
+                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
+                    else:
+                        self.eerValue[metaValue] *= 100
+                    break
+
     def _intersectionPoint(self, PD, PP):
         indices = lu.findEqual(PD, PP)
         if len(indices) == 0:
@@ -129,39 +147,19 @@ class Eer(Probability):
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
 
-        eerData = self.computeProbabilities(self.eerFunc)
-        metaDataValues = self.data.getMetaDataValues()
-        metaColors = self.config.getMetaColors()
-        colors = assignColors2MetaDataValue(metaDataValues, metaColors)
-
-        eerObject = Eer(self.data, self.config, self._expName, self.debug)
-        eerData = eerObject.computeProbabilities(self.eerFunc)
-        eerValue = {}
-        score = {}
-        for thisMetaValue in sorted(colors.keys()):
-            for metaValue, PD, PP, X in eerData:
-                if thisMetaValue == metaValue:
-                    try:
-                        eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
-                    except Exception as e:
-                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
-                    else:
-                        eerValue[metaValue] *= 100
-                    break
-
-        lt = LegendText(self.data, colors, self.config, self.config.getShowCllrInEer(), 
+        lt = LegendText(self.data, self.colors, self.config, self.config.getShowCllrInEer(),
                         self.config.getShowMinCllrInEer(), True,
                         self.config.getShowCountsInEer(),
-                        eerValue, score, self.debug)
+                        self.eerValue, self.score, self.debug)
 
         legendText = lt.make()
 
-        for (metaValue, PD, PP, X) in eerData:
+        for (metaValue, PD, PP, X) in self.eerData:
             labelText = "P(pros): %s" % lt.half(legendText[metaValue])[0]
-            pFr, = axes.plot(X, PP, 's-', label=labelText, color=colors[metaValue])
+            pFr, = axes.plot(X, PP, 's-', label=labelText, color=self.colors[metaValue])
 
             labelText = "P(def): %s" % lt.half(legendText[metaValue])[1]
-            pFa, = axes.plot(X, PD, 'o-', label=labelText, color=colors[metaValue])
+            pFa, = axes.plot(X, PD, 'o-', label=labelText, color=self.colors[metaValue])
 
             axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
             plt.xlabel('raw score')

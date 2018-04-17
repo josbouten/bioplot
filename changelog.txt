@@ -1,5 +1,6 @@
 # v1.3 17. April 2018
-Repaired bug: when offering multiple files as input now all are read.
+Optimized code and repaired some bugs: when offering multiple files as input now all are read.
+
 
 # V1.2.1 4 May 2017
 Added some more instructions to install bioplot on OSX.

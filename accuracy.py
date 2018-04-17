@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.5
-from __future__ import print_function    # (at top of module)
+from __future__ import print_function  # (at top of module)
 
 __author__ = 'drs. ing. Jos Bouten'
 
@@ -27,9 +27,9 @@ __author__ = 'drs. ing. Jos Bouten'
 
 '''
 
-
 import matplotlib.pyplot as plt
 from event import Event
+
 
 class Accuracy:
     def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
@@ -78,7 +78,7 @@ class Accuracy:
                     if float(s) >= threshold:
                         nrTruePositives += 1
                     else:
-                        nrFalseNegatives +=1
+                        nrFalseNegatives += 1
         ln = self.data.compLen(self.nonTargetScores)
         if ln > 0:
             for k in self.nonTargetScores.keys():
@@ -90,10 +90,9 @@ class Accuracy:
         randomAcc = float(nrTruePositives + nrTrueNegatives) / float(lt + ln)
 
         balancedAcc = 0.5 * nrTruePositives / (nrTruePositives + nrFalseNegatives) + \
-                       0.5 * nrTrueNegatives / (nrTrueNegatives + nrFalsePositives)
+                      0.5 * nrTrueNegatives / (nrTrueNegatives + nrFalsePositives)
 
         return 100 * randomAcc, 100 * balancedAcc
-
 
     def plot(self):
         """
@@ -136,10 +135,11 @@ class Accuracy:
                       xy=(self.data.getDefaultThreshold(), accuracyAtDefault), xycoords='data',
                       xytext=(self.data.getDefaultThreshold(), accuracyAtDefault - 10), textcoords='data',
                       arrowprops=dict(arrowstyle='->', connectionstyle="arc3"), )
-        axes.annotate("t=%0.2f, balanced acc=%0.2f%s" % (self.data.getDefaultThreshold(), balancedAccuracyAtDefault, '%'),
-                      xy=(self.data.getDefaultThreshold(), balancedAccuracyAtDefault), xycoords='data',
-                      xytext=(self.data.getDefaultThreshold(), balancedAccuracyAtDefault - 10), textcoords='data',
-                      arrowprops=dict(arrowstyle='->', connectionstyle="arc3"), )
+        axes.annotate(
+            "t=%0.2f, balanced acc=%0.2f%s" % (self.data.getDefaultThreshold(), balancedAccuracyAtDefault, '%'),
+            xy=(self.data.getDefaultThreshold(), balancedAccuracyAtDefault), xycoords='data',
+            xytext=(self.data.getDefaultThreshold(), balancedAccuracyAtDefault - 10), textcoords='data',
+            arrowprops=dict(arrowstyle='->', connectionstyle="arc3"), )
         plt.grid()
         if self.config.getPrintToFile():
             filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
