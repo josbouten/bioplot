@@ -27,8 +27,8 @@ from collections import defaultdict
 
 
 class LegendText:
-    def __init__(self, thisData, theseColors, thisConfig, thisShowCllr, thisShowMinCllr, thisShowEer, thisShowCounts,
-                 thisEerValue, thisScore, thisDebug=False):
+    def __init__(self, thisData, thisCllrObject, theseColors, thisConfig, thisShowCllr, thisShowMinCllr, thisShowEer, thisShowCounts,
+                 thisEerValue, thisDebug=False):
         '''
         
         :param thisData: object: 
@@ -43,6 +43,7 @@ class LegendText:
         :param thisDebug: boolean: when true 
         '''
         self._data = thisData
+        self._cllrObject = thisCllrObject
         self._colors = theseColors
         self._config = thisConfig
         self._showCllr = thisShowCllr
@@ -50,7 +51,6 @@ class LegendText:
         self._showEer = thisShowEer
         self._showCounts = thisShowCounts
         self._eerValue = thisEerValue
-        self._score = thisScore
         self._debug = thisDebug
 
     # getShowCllr, getShowMinCllr, getShowEer
@@ -59,8 +59,7 @@ class LegendText:
         legendText = defaultdict(list)
         # Compute and show the Cllr value if so desired.
         if self._showCllr:
-            cllrObject = Cllr(self._data, self._config, self._debug)
-            cllrData = cllrObject.getCllr()
+            cllrData = self._cllrObject.getCllr()
             if self._debug:
                 print(cllrData)
             for thisMetaValue in sorted(self._colors.keys()):
@@ -75,8 +74,7 @@ class LegendText:
 
         # Compute and show the CllrMin value if so desired.
         if self._showMinCllr:
-            cllrObject = Cllr(self._data, self._config, self._debug)
-            minCllrData = cllrObject.getMinCllr()
+            minCllrData = self._cllrObject.getMinCllr()
             if self._debug:
                 print("minCllrData:", minCllrData)
             for thisMetaValue in sorted(self._colors.keys()):
@@ -91,8 +89,7 @@ class LegendText:
 
         # Compute and show the EER value if so desired.
         if self._showEer:
-            cllrObject = Cllr(self._data, self._config, self._debug)
-            cllrData = cllrObject.getCllr()
+            cllrData = self._cllrObject.getCllr()
             for thisMetaValue in sorted(self._colors.keys()):
                 for metaValue, x in cllrData:
                     if len(self._eerValue) > 0:

@@ -1,3 +1,7 @@
+# v1.4 20. April 2018
+When plotting zoo, det, roc or tippet plots where eer and cllr values may be added to the legend,
+eer and cllr values are calculated only once to speed up plotting.
+
 # v1.3 17. April 2018
 Optimized code and repaired some bugs: when offering multiple files as input now all are read.
 

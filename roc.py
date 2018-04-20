@@ -34,8 +34,10 @@ from probability import Probability
 
 
 class Roc(Probability):
-    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
+    def __init__(self, thisData, thisEer, thisCllr, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
+        self._eerObject = thisEer
+        self._cllrObject = thisCllr
         self.config = thisConfig
         self._expName = thisExpName
         self._printToFilename = thisExpName
@@ -64,25 +66,10 @@ class Roc(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
 
-        eerObject = Eer(self.data, self.config, self._expName, self.debug)
-        eerData = eerObject.computeProbabilities(self.eerFunc)
-        eerValue = {}
-        score = {}
-        for thisMetaValue in sorted(colors.keys()):
-            for metaValue, PD, PP, X in eerData:
-                if thisMetaValue == metaValue:
-                    try:
-                        eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
-                    except Exception as e:
-                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
-                    else:
-                        eerValue[metaValue] *= 100
-                    break
-        lt = LegendText(self.data, colors, self.config, self.config.getShowCllrInRoc(), 
-                        self.config.getShowMinCllrInRoc(), self.config.getShowEerInRoc(), 
-                        self.config.getShowCountsInRoc(),
-                        eerValue, score, self.debug)
-
+        lt = LegendText(self.data, self._cllrObject, colors, self.config, self.config.getShowCllrInDet(),
+                        self.config.getShowMinCllrInDet(), self.config.getShowEerInDet(),
+                        self.config.getShowCountsInDet(),
+                        self._eerObject.eerValue, self.debug)
         legendText = lt.make()
 
         for metaValue in metaDataValues:

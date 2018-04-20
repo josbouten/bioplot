@@ -36,6 +36,7 @@ from alexanderzoo import AlexanderZoo
 from boutenzoo import BoutenZoo
 from det import Det
 from eer import Eer
+from cllr import CllrWrapper
 from tippett import Tippett
 from histogram import Histogram
 from accuracy import Accuracy
@@ -129,6 +130,11 @@ config = Config(args.configFilename)
 
 debug = config.getDebug()
 
+compute_eer = False
+compute_cllr = False
+eerObject = None
+cllrObject = None
+
 if args.quiet:
     config.setShowConfigInfo(False)
 
@@ -141,6 +147,12 @@ if config.getShowConfigInfo():
     printConfig(args, config)
 
 data = Data(config, expName, threshold, dataType, debug, filenames)
+
+if args.plotDet or args.plotEer or args.plotRoc or args.plotTippet or args.plotZoo:
+    compute_eer = True
+    compute_cllr = True
+    cllrObject = CllrWrapper(data, config, debug)
+    eerObject = Eer(data, cllrObject, config, expName, debug)
 
 if config.getSaveScores():
     # Write data to text files sorted by meta values.
@@ -160,15 +172,14 @@ if args.plotAccuracy:
 
 if args.plotDet:
     if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
-        det = Det(data, config, expName, debug)
+        det = Det(data, eerObject, cllrObject, config, expName, debug)
         det.plot()
     else:
         print("Not enough data.")
 
 if args.plotEer:
     if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
-        eer = Eer(data, config, expName, debug)
-        eer.plot()
+        eerObject.plot()
     else:
         print("Not enough data.")
 
@@ -200,14 +211,14 @@ if args.plotRanking:
 
 if args.plotRoc:
     if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
-        roc = Roc(data, config, expName, debug)
+        roc = Roc(data, eerObject, cllrObject, config, expName, debug)
         roc.plot()
     else:
         print("Not enough data.")
 
 if args.plotTippet:
     if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
-        tippet = Tippett(data, config, expName, debug)
+        tippet = Tippett(data, eerObject, cllrObject, config, expName, debug)
         tippet.plot()
     else:
         print("Not enough data.")
@@ -215,10 +226,10 @@ if args.plotTippet:
 if args.plotZoo:
     if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
         if config.getBoutenStyle() is True:
-            zoo = BoutenZoo(data, config, expName, debug)
+            zoo = BoutenZoo(data, eerObject, cllrObject, config, expName, debug)
             zoo.plot()
         else:
-            zoo = AlexanderZoo(data, config, expName, debug)
+            zoo = AlexanderZoo(data, eerObject, cllrObject, config, expName, debug)
             zoo.plot()
     else:
         print("Not enough data.")

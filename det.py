@@ -20,9 +20,11 @@ from event import Event
 
 
 class Det(Probability):
-    def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
+    def __init__(self, thisData, thisEerObject, thisCllrObject, thisConfig, thisExpName, thisDebug):
         self._debug = thisDebug
         self.data = thisData
+        self._eerObject = thisEerObject
+        self._cllrObject = thisCllrObject
         self.config = thisConfig
         self._expName = thisExpName
         self._printToFilename = thisExpName
@@ -135,20 +137,20 @@ class Det(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
 
-        eerObject = Eer(self.data, self.config, self.data.getTitle(), self.debug)
-        eerData = eerObject.computeProbabilities(self.eerFunc)
-        eerValue = {}
-        score = {}
-        for thisMetaValue in sorted(colors.keys()):
-            for metaValue, PD, PP, X in eerData:
-                if thisMetaValue == metaValue:
-                    try:
-                        eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
-                    except Exception as e:
-                        print("Problem computing EER for %s: %s" % (thisMetaValue, e))
-                    else:
-                        eerValue[metaValue] *= 100
-                    break
+        # eerObject = Eer(self.data, self.config, self.data.getTitle(), self.debug)
+        # eerData = eerObject.computeProbabilities(self.eerFunc)
+        # eerValue = {}
+        # score = {}
+        # for thisMetaValue in sorted(colors.keys()):
+        #     for metaValue, PD, PP, X in eerData:
+        #         if thisMetaValue == metaValue:
+        #             try:
+        #                 eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
+        #             except Exception as e:
+        #                 print("Problem computing EER for %s: %s" % (thisMetaValue, e))
+        #             else:
+        #                 eerValue[metaValue] *= 100
+        #             break
 
         points = 100
         title = 'DET plot'
@@ -174,10 +176,10 @@ class Det(Probability):
             if k not in desiredLabels:
                 raise (SyntaxError, 'Unsupported limit %s. Please use one of %s' % (k, desiredLabels))
 
-        lt = LegendText(self.data, colors, self.config, self.config.getShowCllrInDet(),
+        lt = LegendText(self.data, self._cllrObject, colors, self.config, self.config.getShowCllrInDet(),
                         self.config.getShowMinCllrInDet(), self.config.getShowEerInDet(),
                         self.config.getShowCountsInDet(),
-                        eerValue, score, self.debug)
+                        self._eerObject.eerValue, self.debug)
         legendText = lt.make()
 
         for metaValue in metaDataValues:

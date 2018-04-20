@@ -173,6 +173,18 @@ class Cllr:
                 ret.append((metaValue, "undef"))
         return ret
 
+class CllrWrapper:
+    def __init__(self, thisData, thisConfig, thisDebug=True):
+        cllrObj = Cllr(thisData, thisConfig, thisDebug)
+        self._minCllr = cllrObj.getMinCllr()
+        self._cllr = cllrObj.getCllr()
+
+    def getMinCllr(self):
+        return self._minCllr
+
+    def getCllr(self):
+        return self._cllr
+
 
 if __name__ == '__main__':
 

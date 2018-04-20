@@ -977,7 +977,7 @@ class Zoo(Format, Probability):
             annotation.set_visible(False)
         return annotation
 
-    def drawLegend(self, colors):
+    def drawLegend(self, colors, eerObject, cllrObject):
         """
         Draw a color legend for the metadata on the upper right
         side of the plot, if the metadata can be grouped in more
@@ -1008,27 +1008,19 @@ class Zoo(Format, Probability):
 
         # Compute and show the EER value if so desired.
         if self.config.getShowEerInZoo():
-            eerObject = Eer(self.data, self.config, self._expName, self.debug)
-            eerData = eerObject.computeProbabilities(self.eerFunc)
             for thisMetaValue in sorted(colors.keys()):
-                for metaValue, PD, PP, X in eerData:
+                for metaValue in eerObject.eerValue:
                     if thisMetaValue == metaValue:
-                        try:
-                            eerValue, score = eerObject.computeEer(PD, PP, X)
-                        except Exception as e:
-                            print("DrawLegend: problem computing EER for %s: %s" % (thisMetaValue, e))
+                        eerValue = eerObject.eerValue[metaValue] * 100
+                        if eerValue < 10.0:
+                            eerStr = "Eer:  %5.2f%s" % (eerValue, '%')
                         else:
-                            eerValue *= 100
-                            if eerValue < 10.0:
-                                eerStr = "Eer:  %5.2f%s" % (eerValue, '%')
-                            else:
-                                eerStr = "Eer: %5.2f%s" % (eerValue, '%')
-                            legendText[thisMetaValue].append(eerStr)
+                            eerStr = "Eer: %5.2f%s" % (eerValue, '%')
+                        legendText[thisMetaValue].append(eerStr)
                         break
 
         # Compute and show the Cllr value if so desired.
         if self.config.getShowCllrInZoo():
-            cllrObject = Cllr(self.data, self.config, self.debug)
             cllrData = cllrObject.getCllr()
             if self.debug:
                 print(cllrData)
@@ -1044,7 +1036,6 @@ class Zoo(Format, Probability):
 
         # Compute and show the CllrMin value if so desired.
         if self.config.getShowMinCllrInZoo():
-            cllrObject = Cllr(self.data, self.config, self.debug)
             minCllrData = cllrObject.getMinCllr()
             if self.debug:
                 print("minCllrData:", minCllrData)

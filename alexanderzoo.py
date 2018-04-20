@@ -35,10 +35,12 @@ import collections
 
 
 class AlexanderZoo(Zoo):
-    def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
+    def __init__(self, thisData, thisEerObject, thisCllerObject, thisConfig, thisExpName, thisDebug):
         Zoo.__init__(self, thisData, thisConfig, thisExpName, thisDebug)
         self.config = thisConfig
         self.data = thisData
+        self._eerObject = thisEerObject
+        self._cllrObject = thisCllerObject
         self._printToFilename = thisExpName
         self.debug = thisDebug
         # All ellipses will have their own annotation.
@@ -77,7 +79,7 @@ class AlexanderZoo(Zoo):
         self.computeZooStatsAlexanderStyle()
         # plot a list of ellipses each visualising a score distribution for a target
         self.fig = plt.figure(figsize=(self.config.getPrintToFileWidth(), self.config.getPrintToFileHeight()))
-        self.drawLegend(self.colors)
+        self.drawLegend(self.colors, self._eerObject, self._cllrObject)
 
         self.event = Event(self.config, self.fig, self._title, self.plotType, self.debug)
         # For saving the pic we use a generic event object

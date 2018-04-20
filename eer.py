@@ -33,8 +33,9 @@ from legendtext import LegendText
 
 
 class Eer(Probability):
-    def __init__(self, thisData, thisConfig, thisExpName, thisDebug=True):
+    def __init__(self, thisData, thisCllrWrapper, thisConfig, thisExpName, thisDebug=True):
         self.data = thisData
+        self.cllr = thisCllrWrapper
         self.config = thisConfig
         self._printToFilename = thisExpName
         self._expName = thisExpName
@@ -50,7 +51,6 @@ class Eer(Probability):
 
         self.eerData = self.computeProbabilities(self.eerFunc)
         self.eerValue = {}
-        self.score = {}
         for thisMetaValue in sorted(self.colors.keys()):
             for metaValue, PD, PP, X in self.eerData:
                 if thisMetaValue == metaValue:
@@ -147,10 +147,10 @@ class Eer(Probability):
         self.fig.canvas.mpl_connect('key_press_event', self.event.onEvent)
         axes = self.fig.add_subplot(111)
 
-        lt = LegendText(self.data, self.colors, self.config, self.config.getShowCllrInEer(),
+        lt = LegendText(self.data, self.cllr, self.colors, self.config, self.config.getShowCllrInEer(),
                         self.config.getShowMinCllrInEer(), True,
                         self.config.getShowCountsInEer(),
-                        self.eerValue, self.score, self.debug)
+                        self.eerValue, self.debug)
 
         legendText = lt.make()
 
@@ -162,7 +162,7 @@ class Eer(Probability):
             pFa, = axes.plot(X, PD, 'o-', label=labelText, color=self.colors[metaValue])
 
             axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
-            plt.xlabel('raw score')
+            plt.xlabel('Score')
             plt.ylabel('Probability')
         plt.grid()
         plt.legend(loc=5)  # Position legend at center right.

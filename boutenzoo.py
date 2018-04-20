@@ -43,9 +43,11 @@ from circularhist import CircularHistPlot
 
 
 class BoutenZoo(Zoo):
-    def __init__(self, thisData, thisConfig, thisExpName, thisDebug):
+    def __init__(self, thisData, thisEerObject, thisCllrObject, thisConfig, thisExpName, thisDebug):
         Zoo.__init__(self, thisData, thisConfig, thisExpName, thisDebug)
         self.data = thisData
+        self._eerObject = thisEerObject
+        self._cllrObject = thisCllrObject
         self.config = thisConfig
         self._expName = thisExpName
         self._printToFilename = thisExpName
@@ -76,7 +78,7 @@ class BoutenZoo(Zoo):
 
         # Define layout.
         axesZoo = self.fig.add_axes(rectZoo)
-        self.drawLegend(self.colors)
+        self.drawLegend(self.colors, self._eerObject, self._cllrObject)
         axesHistx = self.fig.add_axes(rectHistx)
         axesHisty = self.fig.add_axes(rectHisty)
 
