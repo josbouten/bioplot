@@ -1,3 +1,7 @@
+# v1.5 28. April 2018
+Eer value is printed on screen for each meta value
+Number of targets and nontargets for each meta value is printed in a formatted table now.
+
 # v1.4 20. April 2018
 When plotting zoo, det, roc or tippet plots where eer and cllr values may be added to the legend,
 eer and cllr values are calculated only once to speed up plotting.

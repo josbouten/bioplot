@@ -95,9 +95,9 @@ class LegendText:
                     if len(self._eerValue) > 0:
                         if thisMetaValue == metaValue:
                             if self._eerValue[metaValue] < 10.0:
-                                eerStr = "Eer:  %.2f%s" % (self._eerValue[metaValue], '%')
+                                eerStr = "Eer:  %.2f%s" % (self._eerValue[metaValue] * 100, '%')
                             else:
-                                eerStr = "Eer: %2.2f%s" % (self._eerValue[metaValue], '%')
+                                eerStr = "Eer: %2.2f%s" % (self._eerValue[metaValue] * 100, '%')
                             legendText[metaValue].append(eerStr)
                             break
                     else:

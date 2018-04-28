@@ -51,11 +51,15 @@ class Eer(Probability):
 
         self.eerData = self.computeProbabilities(self.eerFunc)
         self.eerValue = {}
+        self.score = {}
         for thisMetaValue in sorted(self.colors.keys()):
             for metaValue, PD, PP, X in self.eerData:
                 if thisMetaValue == metaValue:
                     try:
                         self.eerValue[metaValue], self.score[metaValue] = self.computeEer(PD, PP, X)
+                        print("EER: {:.4f} % at score: {:.4f} and meta value: {}".format(
+                            self.eerValue[metaValue] * 100, self.score[metaValue], metaValue)
+                        )
                     except Exception as e:
                         print("Problem computing EER for %s: %s" % (thisMetaValue, e))
                     else:
@@ -66,7 +70,7 @@ class Eer(Probability):
         indices = lu.findEqual(PD, PP)
         if len(indices) == 0:
             indices = lu.findElementsBiggerInList(PD, PP)
-            # get last element
+            # Get last element.
             ind1 = indices[-1]
             ind2 = ind1 + 1
             c11 = PD[ind1]
@@ -80,42 +84,6 @@ class Eer(Probability):
             x = indices[1] - 1
             y = PD[indices[1]]
         return int(x), y
-
-    def eerResample_org(self, targetScores, nonTargetScores):
-
-        """
-            Compute eer and score at which eer point lies from target and non target scores.
-            for j = 1 : length(Xx)
-              PP(j) = 1 - (length(find(target_scores >= Xx(j))) / length(target_scores))
-              PD(j) = length(find(non_target_scores >= Xx(j))) / length(non_target_scores)
-            end
-
-        """
-
-        mi = self.data.getMin()
-        ma = self.data.getMax()
-        thisRange = abs(ma - mi)
-
-        # We want N steps on the score (horizontal) axis.
-        N = self.config.getNrSamples4Probability()
-
-        lt = len(targetScores) * 1.0
-        lnt = len(nonTargetScores) * 1.0
-        X = np.arange(mi, ma, thisRange / N)
-        lx = len(X)
-        PD = np.zeros(lx)
-        PP = np.zeros(lx)
-        for j in np.arange(lx):
-            ts = len(lu.findIndex2EqualOrBigger(targetScores, X[j])) * 1.0
-            nts = len(lu.findIndex2EqualOrBigger(nonTargetScores, X[j])) * 1.0
-            PP[j] = self.eerFunc(ts, lt)
-            PD[j] = nts / lnt
-        index2score, eer = self._intersectionPoint(PD, PP)
-        if self.debug:
-            print('compProbs:index2score:', index2score)
-            print('compProbs:eer:', eer)
-        score = X[index2score]
-        return eer, score, PD, PP, X
 
     def computeEer(self, PD, PP, X):
         try:

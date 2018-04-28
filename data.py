@@ -429,16 +429,22 @@ class Data(Format):
             print("DataType is '%s'" % self._dataType)
             print('Is this correct?')
             sys.exit(1)
-        print("Number of target scores for: ")
-        for metaValue in self._targetCnt:
-            print(metaValue, self._targetCnt[metaValue], end=' ')
-        print()
-        print("Number of non target scores for: ")
+        print("Number of target and non target scores for: ")
+        maxLen = 0
         for metaValue in self._nonTargetCnt:
-            print(metaValue, self._nonTargetCnt[metaValue], end=' ')
-        print()
-        print('Total number of target scores:', self.compLen(self._targetScores))
-        print('Total number of non target scores:', self.compLen(self._nonTargetScores))
+            maxLen = max(maxLen, len(metaValue))
+        template = "{:<%d}" % maxLen
+        scoreLen = len(str(self.compLen(self._nonTargetScores)))
+        template += " {:>%d} {:>%d}" % (scoreLen + 1, scoreLen + 1)
+
+        for metaValue in self._targetCnt:
+            #print("{:<10} {:>7} {:>7}".format(metaValue, self._targetCnt[metaValue], self._nonTargetCnt[metaValue]))
+            print(template.format(metaValue, self._targetCnt[metaValue], self._nonTargetCnt[metaValue]))
+        # print("Number of non target scores for: ")
+
+        print(template.format("Total", self.compLen(self._targetScores), self.compLen(self._nonTargetScores)))
+        # print('Total number of target scores:', self.compLen(self._targetScores))
+        # print('Total number of non target scores:', self.compLen(self._nonTargetScores))
         print('Number of repeats (multiple instances of same data in input):', revRepeatCnt)
         print('Number of selfies (A vs A):', selfCnt)
         self._nrDistinctMetaDataValues = len(self._metaDataValues)
