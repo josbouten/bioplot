@@ -201,11 +201,14 @@ if __name__ == '__main__':
         return ret
 
 
-    targetFilename = 'input/targetscores.txt'
-    nonTargetFilename = 'input/nontargetscores.txt'
+    targetFilename = '/home/jos/projects/bioplot/input/targetscores.txt'
+    nonTargetFilename = '/home/jos/projects/bioplot/input/nontargetscores.txt'
     c = Cllr([], [], thisDebug=True)
     targetScores = readData(targetFilename)
     nonTargetScores = readData(nonTargetFilename)
-    print(c._cllr(targetScores, nonTargetScores))
-    print(c._minCllr(targetScores, nonTargetScores))
-    print("Result should be 0.645767685989 and 0.146121418712")
+    print("cllr: {}".format(c._cllr(targetScores, nonTargetScores)))
+
+    print("cllrMin: {}".format(c._minCllr(targetScores, nonTargetScores)))
+    print("Result should be 0.6457676859893993 and 0.1461214187117134")
+    assert(c._cllr(targetScores, nonTargetScores) == 0.6457676859893993)
+    assert(c._minCllr(targetScores, nonTargetScores) == 0.1461214187117134)

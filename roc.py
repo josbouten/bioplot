@@ -24,13 +24,13 @@
 """
 
 import matplotlib.pyplot as plt
-from event import Event
 import numpy as np
-from utils import assignColors2MetaDataValue
 from sklearn import metrics
+
+from event import Event
 from legendtext import LegendText
-from eer import Eer
 from probability import Probability
+from utils import assignColors2MetaDataValue
 
 
 class Roc(Probability):

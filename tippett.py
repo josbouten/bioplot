@@ -25,11 +25,11 @@ __author__ = 'jos'
 '''
 
 import matplotlib.pyplot as plt
+
 from event import Event
+from legendtext import LegendText
 from probability import Probability
 from utils import assignColors2MetaDataValue
-from legendtext import LegendText
-from eer import Eer
 
 
 class Tippett(Probability):

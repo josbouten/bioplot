@@ -14,7 +14,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from utils import assignColors2MetaDataValue
 from legendtext import LegendText
-from eer import Eer
 from probability import Probability
 from event import Event
 

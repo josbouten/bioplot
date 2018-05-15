@@ -24,12 +24,12 @@
 """
 
 import matplotlib.pyplot as plt
-from event import Event
-from probability import Probability
-import numpy as np
+
 import listutils as lu
-from utils import assignColors2MetaDataValue
+from event import Event
 from legendtext import LegendText
+from probability import Probability
+from utils import assignColors2MetaDataValue
 
 
 class Eer(Probability):

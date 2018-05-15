@@ -22,29 +22,25 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-import sys
-import os.path
-from os import makedirs
-from scipy import stats
-import numpy
 import collections
+import os.path
+import sys
+from collections import defaultdict
 from math import sqrt, atan2, sin, tan, pi
+from os import makedirs
 
 import matplotlib.pyplot as plt
-
+import numpy
 from matplotlib.patches import Ellipse
-
-from eer import Eer
-from utils import singleSanitize
+from scipy import stats
 
 # import these super classes
 from format import Format
-from cllr import Cllr
 from probability import Probability
-from collections import defaultdict
 from subject import Subject
 # import utilities
 from utils import assignColors2MetaDataValue
+from utils import singleSanitize
 
 
 class Zoo(Format, Probability):

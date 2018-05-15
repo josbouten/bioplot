@@ -1,3 +1,6 @@
+# v1.6 15. May 2018
+Optimized imports
+
 # v1.5 28. April 2018
 Eer value is printed on screen for each meta value
 Number of targets and nontargets for each meta value is printed in a formatted table now.

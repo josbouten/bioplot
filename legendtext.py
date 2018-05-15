@@ -22,7 +22,6 @@
 
 '''
 
-from cllr import Cllr
 from collections import defaultdict
 
 
