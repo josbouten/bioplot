@@ -129,9 +129,9 @@ class Eer(Probability):
             labelText = "P(def): %s" % lt.half(legendText[metaValue])[1]
             pFa, = axes.plot(X, PD, 'o-', label=labelText, color=self.colors[metaValue])
 
-            axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
-            plt.xlabel('Score')
-            plt.ylabel('Probability')
+        axes.set_title("P(defense) and P(prosecution) for '%s'" % self.data.getTitle())
+        plt.xlabel('Score')
+        plt.ylabel('Probability')
         plt.grid()
         plt.legend(loc=5)  # Position legend at center right.
         if self.config.getPrintToFile():

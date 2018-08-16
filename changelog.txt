@@ -1,3 +1,10 @@
+# v1.6.2 10. July 2018
+Set allowDups to True.
+
+# v1.6.1 29. June 2018
+Added ranking odds in plot for all meta data values.
+The experiment name is used to store data. In stead of taking the name verbatim all spaces are replaced by underscores to make the file name more *nix compatible.
+
 # v1.6 15. May 2018
 Optimized imports
 
@@ -13,37 +20,37 @@ eer and cllr values are calculated only once to speed up plotting.
 Optimized code and repaired some bugs: when offering multiple files as input now all are read.
 
 
-# V1.2.1 4 May 2017
+# V1.2.1 4. May 2017
 Added some more instructions to install bioplot on OSX.
 Thanks Jonas for the tips!
 
-# v1.2 23 April 2017
+# v1.2 23. April 2017
 Changed several copyright notices.
 Added the number of target and non targets experiment counts to several plots.
 This will make clear how many scores were used to plot them.
 Added argument parser to anonymize.py
 
-# v1.1 12 March 2017
+# v1.1 12. March 2017
 Writing plot to file repaired.
 
-# v1.0 10 March 2017
+# v1.0 10. March 2017
 Added raw2bioplot.py conversion program.
 
-# v0.9.9.2 29 Nov 2017
+# v0.9.9.2 29. Nov 2017
 Converted tools to python3
 Moved argparse handling to a method
 
-# v0.9.9.1 14 Nov 2016
+# v0.9.9.1 14. Nov 2016
 Resolved init super class bug in alexanderzoo.py
 
-# v0.9.9 7 Nov 2016
+# v0.9.9 7 Nov. 2016
 Added writing plot to file
 Converted all code to python3.5
 
-# v0.9.8b 19 August 2016
+# v0.9.8b 19. August 2016
 Path to Users directory on OSX changed in doc.
 
-# v0.9.8a 3 August 2016
+# v0.9.8a 3. August 2016
 Small text changes in the doc.
 
 # v0.9.8 25 March 2016

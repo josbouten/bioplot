@@ -81,8 +81,8 @@ class Roc(Probability):
             truthValues[len(targetScores):] = 0
             fpr, tpr, thresholds = metrics.roc_curve(truthValues, allScores, pos_label=1)
             bla, = axes.plot(fpr, tpr, 'x-', label=legendText[metaValue], color=colors[metaValue])
-            #axes.set_title("Receiver Operating Characteristic for '%s'" % self.data.getTitle())
-            axes.set_title("ROC plot for '%s'" % self.data.getTitle())
+        #axes.set_title("Receiver Operating Characteristic for '%s'" % self.data.getTitle())
+        axes.set_title("ROC plot for '%s'" % self.data.getTitle())
         plt.xlabel('P(false positive)')
         plt.ylabel('P(true positive)')
         plt.grid()

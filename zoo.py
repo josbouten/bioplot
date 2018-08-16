@@ -1007,7 +1007,7 @@ class Zoo(Format, Probability):
             for thisMetaValue in sorted(colors.keys()):
                 for metaValue in eerObject.eerValue:
                     if thisMetaValue == metaValue:
-                        eerValue = eerObject.eerValue[metaValue] * 100
+                        eerValue = eerObject.eerValue[metaValue] 
                         if eerValue < 10.0:
                             eerStr = "Eer:  %5.2f%s" % (eerValue, '%')
                         else:

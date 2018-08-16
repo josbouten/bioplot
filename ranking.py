@@ -121,7 +121,7 @@ class Ranking:
         metaDataValues = self.data.getMetaDataValues()
         self.colors = assignColors2MetaDataValue(metaDataValues, metaColors)
         self.nrColors = len(self.colors.keys())
-        only_once = True
+        xlab = "Rank "
         for metaValue in metaDataValues:
             ranking, maxRank = self.computeRanking(metaValue)
             nr = len(ranking)
@@ -133,19 +133,25 @@ class Ranking:
                 y.append(float(self.getNrLabels(ranking, thisRank)) / float(nr) * 100.0)
                 x.append(thisRank)
             axes.plot(x, y, "o-", color=self.colors[metaValue], label=metaValue)
-            if only_once:
-                axes.set_xlim(0, maxRank * 1.05)
-                axes.set_ylim(0, 100)
-                axes.set_title("Ranking plot for '%s'" % self.title)
-                plt.xlabel("Rank %s" % self._mkPercentString(y))
-                only_once = False
-            print(metaValue)
+            # prepare x-label.
+            axes.set_xlim(0, maxRank * 1.05)
+            axes.set_ylim(0, 100)
+            axes.set_title("Ranking plot for '%s'" % self.title)
+            xlab += metaValue + ": " + self._mkPercentString(y) + "\n"
+            #print(metaValue)
+        # Add labels to the plot.
         plt.ylabel('Probability')
+        # Show the x-label without the last /n.
+        plt.xlabel(xlab[:-1])
+        # Add a legend to the plot.
         axes.legend(loc=5)
+        # Add a grid to the plot.
         plt.grid()
+        # If so desired, print the plot to a file.
         if self.config.getPrintToFile():
             filename = "%s_%s.%s" % (self._printToFilename, self.plotType, "png")
             print("Writing plot to %s" % filename)
             plt.savefig(filename, orientation='landscape', papertype='letter')
         else:
+            # Finally: show the plot.
             plt.show()

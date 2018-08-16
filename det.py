@@ -136,21 +136,6 @@ class Det(Probability):
         metaColors = self.config.getMetaColors()
         colors = assignColors2MetaDataValue(metaDataValues, metaColors)
 
-        # eerObject = Eer(self.data, self.config, self.data.getTitle(), self.debug)
-        # eerData = eerObject.computeProbabilities(self.eerFunc)
-        # eerValue = {}
-        # score = {}
-        # for thisMetaValue in sorted(colors.keys()):
-        #     for metaValue, PD, PP, X in eerData:
-        #         if thisMetaValue == metaValue:
-        #             try:
-        #                 eerValue[metaValue], score[metaValue] = eerObject.computeEer(PD, PP, X)
-        #             except Exception as e:
-        #                 print("Problem computing EER for %s: %s" % (thisMetaValue, e))
-        #             else:
-        #                 eerValue[metaValue] *= 100
-        #             break
-
         points = 100
         title = 'DET plot'
         figure = plt.gcf()
