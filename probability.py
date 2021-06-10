@@ -58,6 +58,8 @@ class Probability:
         # We want N steps on the score (horizontal) axis.
         N = self.config.getNrSamples4Probability()
         N = 1000
+        sortedTargetScores = sorted(targetScores)
+        sortedNonTargetScores = sorted(nonTargetScores)
 
         lt = len(targetScores) * 1.0
         lnt = len(nonTargetScores) * 1.0
@@ -68,9 +70,9 @@ class Probability:
         for j in np.arange(lx):
             if self.debug:
                 print(lx, j, X[j])
-            tmp = lu.findIndex2EqualOrBigger(targetScores, X[j])
+            tmp = lu.findIndex2EqualOrBigger(sortedTargetScores, X[j])
             ts = len(tmp) * 1.0
-            tmp = lu.findIndex2EqualOrBigger(nonTargetScores, X[j])
+            tmp = lu.findIndex2EqualOrBigger(sortedNonTargetScores, X[j])
             nts = len(tmp) * 1.0
             PP[j] = func(ts, lt)
             PD[j] = nts / lnt

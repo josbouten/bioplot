@@ -68,7 +68,7 @@ class Tippett(Probability):
         lt = LegendText(self.data, self._cllrObject, colors, self.config, self.config.getShowCllrInDet(),
                         self.config.getShowMinCllrInDet(), self.config.getShowEerInDet(),
                         self.config.getShowCountsInDet(),
-                        self._eerObject.eerValue, self.debug)
+                        self._eerObject.eerValue, self._eerObject.eerScore, self.debug)
 
         legendText = lt.make()
 

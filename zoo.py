@@ -442,8 +442,7 @@ class Zoo(Format, Probability):
             self.meanAgms[metaValue] = self.data.compAverageScore(theseAgmsValues)
             self.meanAims[metaValue] = self.data.compAverageScore(theseAimValues)
             if self.debug:
-                print("central point for %s will be at: %f %f" % (
-                    metaValue, self.meanAgms[metaValue], self.meanAims[metaValue]))
+                print("central point for {} will be at: {} {}".format(metaValue, self.meanAgms[metaValue], self.meanAims[metaValue]))
 
         # Normalize stdev of all subjects.
         # Note this makes stdev values to be centered around zero.
@@ -558,14 +557,14 @@ class Zoo(Format, Probability):
 
         if self.debug:
             for metaValue in self.data.getMetaDataValues():
-                print("agmStdDevMax[%s]: %f" % (metaValue, self.agmStdDevMax[metaValue]))
-                print("agmStdDevMin[%s]: %f" % (metaValue, self.agmStdDevMin[metaValue]))
-                print("aimStdDevMax[%s]: %f" % (metaValue, self.aimStdDevMax[metaValue]))
-                print("aimStdDevMin[%s]: %f" % (metaValue, self.aimStdDevMin[metaValue]))
-                print("agm_mi[%s]: %f" % (metaValue, self.agm_mi[metaValue]))
-                print("agm_ma[%s]: %f" % (metaValue, self.agm_ma[metaValue]))
-                print("aim_mi[%s]: %f" % (metaValue, self.aim_mi[metaValue]))
-                print("aim_ma[%s]: %f" % (metaValue, self.aim_ma[metaValue]))
+                print("agmStdDevMax[{}]: {}".format(metaValue, self.agmStdDevMax[metaValue]))
+                print("agmStdDevMin[{}]: {}".format(metaValue, self.agmStdDevMin[metaValue]))
+                print("aimStdDevMax[{}]: {}".format(metaValue, self.aimStdDevMax[metaValue]))
+                print("aimStdDevMin[{}]: {}".format(metaValue, self.aimStdDevMin[metaValue]))
+                print("agm_mi[{}]: {}".format(metaValue, self.agm_mi[metaValue]))
+                print("agm_ma[{}]: {}".format(metaValue, self.agm_ma[metaValue]))
+                print("aim_mi[{}]: {}".format(metaValue, self.aim_mi[metaValue]))
+                print("aim_ma[{}]: {}".format(metaValue, self.aim_ma[metaValue]))
 
     def isNear(self, x1, y1, xxx_todo_changeme, thresholdX, thresholdY):
         (x2, y2) = xxx_todo_changeme

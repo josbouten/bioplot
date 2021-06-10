@@ -27,7 +27,7 @@ from collections import defaultdict
 
 class LegendText:
     def __init__(self, thisData, thisCllrObject, theseColors, thisConfig, thisShowCllr, thisShowMinCllr, thisShowEer, thisShowCounts,
-                 thisEerValue, thisDebug=False):
+                 thisEerValue, thisEerScore, thisDebug=False):
         '''
         
         :param thisData: object: 
@@ -50,6 +50,7 @@ class LegendText:
         self._showEer = thisShowEer
         self._showCounts = thisShowCounts
         self._eerValue = thisEerValue
+        self._eerScore = thisEerScore
         self._debug = thisDebug
 
     # getShowCllr, getShowMinCllr, getShowEer
@@ -61,7 +62,7 @@ class LegendText:
             cllrData = self._cllrObject.getCllr()
             if self._debug:
                 print(cllrData)
-            for thisMetaValue in sorted(self._colors.keys()):
+            for thisMetaValue in sorted(self._colors):
                 for metaValue, cllrValue in cllrData:
                     if thisMetaValue == metaValue:
                         if type(cllrValue) is float:
@@ -76,7 +77,7 @@ class LegendText:
             minCllrData = self._cllrObject.getMinCllr()
             if self._debug:
                 print("minCllrData:", minCllrData)
-            for thisMetaValue in sorted(self._colors.keys()):
+            for thisMetaValue in sorted(self._colors):
                 for metaValue, minCllrValue in minCllrData:
                     if thisMetaValue == metaValue:
                         if type(minCllrValue) is float:
@@ -89,14 +90,14 @@ class LegendText:
         # Compute and show the EER value if so desired.
         if self._showEer:
             cllrData = self._cllrObject.getCllr()
-            for thisMetaValue in sorted(self._colors.keys()):
+            for thisMetaValue in sorted(self._colors):
                 for metaValue, x in cllrData:
                     if len(self._eerValue) > 0:
                         if thisMetaValue == metaValue:
                             if self._eerValue[metaValue] < 10.0:
-                                eerStr = "Eer:  %.2f%s" % (self._eerValue[metaValue], '%')
+                                eerStr = "Eer:  %.2f%s @ %.2f" % (self._eerValue[metaValue], '%', self._eerScore[metaValue])
                             else:
-                                eerStr = "Eer: %2.2f%s" % (self._eerValue[metaValue], '%')
+                                eerStr = "Eer: %2.2f%s @ %.2f" % (self._eerValue[metaValue], '%', self._eerScore[metaValue])
                             legendText[metaValue].append(eerStr)
                             break
                     else:
@@ -105,7 +106,7 @@ class LegendText:
         if self._showCounts:
             if self._debug:
                 print("Show target and non target counts in legend")
-            for thisMetaValue in sorted(self._colors.keys()):
+            for thisMetaValue in sorted(self._colors):
                 nrT = len(self._data.getTargetScores4MetaValue(thisMetaValue))
                 nrNt = len(self._data.getNonTargetScores4MetaValue(thisMetaValue))
                 countStr = "#t: %d, #nt: %d" % (nrT, nrNt)

@@ -82,8 +82,6 @@ class Histogram(Format):
 
     def plot(self):
         if self.useMeta:
-            self.plotHistogramWithMeta()
-        else:
             targetScores = self.data.getTargetScoreValues()
             nonTargetScores = self.data.getNonTargetScoreValues()
 
@@ -115,7 +113,7 @@ class Histogram(Format):
                     sigma2 = numpy.std(nonTargetScores)
                     y2 = mlab.normpdf(bins2, mu2, sigma2)
                     plt.plot(bins2, y2, 'b--')
-                    plt.title("Histogram for '{0:s}': mu, sigma = ({1:0.2f}, {2:0.2f}) ({3:0.2f}, {4:0.2f})".format(
+                    plt.title("Histogram for '{0:s}': mu, sigma = non-target:({1:0.2f}, {2:0.2f}) target:({3:0.2f}, {4:0.2f})".format(
                         self.title, mu1, sigma1, mu2, sigma2))
                 else:
                     plt.title("Histogram for '%s" % self.title)
@@ -133,6 +131,8 @@ class Histogram(Format):
                 plt.savefig(filename, orientation='landscape', papertype='letter')
             else:
                 plt.show()
+        else:
+            self.plotHistogramWithMeta()
 
     def plotHistogramWithMeta(self):
         self.plotType = "histogram_plot"

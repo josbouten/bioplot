@@ -325,9 +325,9 @@ class Config:
         except Exception:
             self._opacity4Ellipses = self._opacity4EllipsesDefault
 
-	# In stead of plotting on screen you can send plots to file.
-	# The name of the file will be <exp_name>_<plot_type>_plot.png
-	# E.g. test123_zoo_plot.png
+        # In stead of plotting on screen you can send plots to file.
+        # The name of the file will be <exp_name>_<plot_type>_plot.png
+        # E.g. test123_zoo_plot.png
         self._printToFileDefault = False
         try:
             self._printToFile = self.config.getboolean('cfg', 'printToFile')

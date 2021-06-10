@@ -21,9 +21,21 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-
 def findIndex2EqualOrBigger(li, value):
-    return [i for (i, val) in enumerate(li) if val >= value]
+    # Note: the values in li must be sorted in ascending order!
+    b = -1
+    e = len(li)
+    index = (b + e) // 2
+    index_old = index + 1
+    while index != index_old:
+        if value <= li[index]:
+            e = index
+            index_old = index
+        else:
+            b = index
+            index_old = index
+        index = (b + e) // 2
+    return list(range(index + 1, len(li)))
 
 
 def findEqual(li1, li2):
@@ -48,3 +60,20 @@ def findElementsBiggerInList(li1, li2):
             ret.append(cnt)
         cnt += 1
     return ret
+
+
+if __name__ == '__main__':
+    #
+    # Some test code.
+    #
+    thisList = [-4.3, -5, -6, -7, 0, 11, 12, 14, 15, 16, 18, 19, 22, 33, 44, 55, 66, 77, 86]
+    ret = findIndex2EqualOrBigger(thisList, 5)
+    print(type(ret))
+    print(5, ret)
+    ret = findIndex2EqualOrBigger(thisList, -3)
+    print(type(ret))
+    print(22, ret)
+    ret = findIndex2EqualOrBigger(thisList, 90)
+    print(type(ret))
+    print(90, ret)
+

@@ -2,7 +2,7 @@
 
 __author__ = 'drs. ing. Jos Bouten'
 
-'''
+"""
 
     bioplot.py
 
@@ -26,27 +26,29 @@ __author__ = 'drs. ing. Jos Bouten'
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-'''
+"""
+
 import argparse
 import sys
+from os.path import basename
 
-from config import Config
-from data import Data
+from accuracy import Accuracy
 from alexanderzoo import AlexanderZoo
 from boutenzoo import BoutenZoo
+from cllr import CllrWrapper
+from config import Config
+from data import Data
 from det import Det
 from eer import Eer
-from cllr import CllrWrapper
-from tippett import Tippett
 from histogram import Histogram
-from accuracy import Accuracy
+from license import License
+from matrix import MatrixPlot
 from ranking import Ranking
 from roc import Roc
-from matrix import MatrixPlot
-from version import Version
+from scoredistribution import ScoreDistribution
+from tippett import Tippett
 from utils import sanitize
-from license import License
-from os.path import basename
+from version import Version
 
 
 def printConfig(theseOptions, thisConfig):
@@ -74,10 +76,14 @@ def parseArguments():
     parser.add_argument('-A', '--accuracy', action="store_true", dest="plotAccuracy", help="show accuracy plot")
     parser.add_argument('-D', '--det', action="store_true", dest="plotDet", help="show Det plot")
     parser.add_argument('-E', '--eer', action="store_true", dest="plotEer", help="show EER plot")
+    parser.add_argument('-I', '--dist', action="store_true", dest="plotDist", help="show label distribution")
     parser.add_argument('-T', '--tippet', action="store_true", dest="plotTippet", help="show Tippett plot")
     parser.add_argument('-M', '--matrix', action="store_true", dest="plotMatrix", help="show matrix plot")
     parser.add_argument('-O', '--roc', action="store_true", dest="plotRoc", help="show roc plot")
     parser.add_argument('-R', '--ranking', action="store_true", dest="plotRanking", help="show ranking plot")
+    parser.add_argument('-r', '--restrict', action="store", dest="restrictedNrSubjectSamples", nargs='+',
+                        default=[40, 600],
+                        help="restrict number of target and non target samples of subject to a maximum (default = %(default)s)")
     parser.add_argument('-C', '--histogramc', action="store_true", dest="plotHistCum", help="show cumulative histogram")
     parser.add_argument('-H', '--histogram', action="store_true", dest="plotHist", help="show histogram")
     parser.add_argument('-k', '--kernel', action="store_true", dest="plotKernel",
@@ -91,7 +97,7 @@ def parseArguments():
     parser.add_argument('-t', '--type', action="store", dest="dataType", default='type3',
                         help="type of data, default = type3, use 'database' if you want to read data from a database.")
     parser.add_argument('-d', '--threshold', action="store", dest="threshold", type=float, default=0.7,
-                        help="system threshold for ranking plot, default = 0.7")
+                        help="system threshold for ranking plot, default = %(default)s")
     parser.add_argument('-c', '--config', action="store", dest="configFilename", default='bioplot.cfg',
                         help="use alternative config file")
     parser.add_argument('-l', '--license', action="store_true", dest="showLicense", help="show license")
@@ -106,6 +112,10 @@ def parseArguments():
 
 # Define command line parser and get cli arguments.
 args = parseArguments()
+
+# Use default or user provided maximum sample numbers
+maxNrTargetSamplesPerLabel = int(args.restrictedNrSubjectSamples[0])
+maxNrNonTargetSamplesPerLabel = int(args.restrictedNrSubjectSamples[1])
 
 # Let's handle any request for the license first.
 # We stop the program after that.
@@ -146,7 +156,7 @@ if args.showOptions:
 if config.getShowConfigInfo():
     printConfig(args, config)
 
-data = Data(config, expName, threshold, dataType, debug, filenames)
+data = Data(config, expName, threshold, dataType, maxNrTargetSamplesPerLabel, maxNrNonTargetSamplesPerLabel, debug, filenames)
 
 if args.plotDet or args.plotEer or args.plotRoc or args.plotTippet or args.plotZoo:
     compute_eer = True
@@ -174,6 +184,14 @@ if args.plotDet:
     if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
         det = Det(data, eerObject, cllrObject, config, expName, debug)
         det.plot()
+    else:
+        print("Not enough data.")
+
+if args.plotDist:
+    if (len(data.getTargetCnt()) > 0) and (len(data.getNonTargetCnt()) > 0):
+        dist = ScoreDistribution(data,eerObject, cllrObject, config, expName, debug)
+        #dist.plot()
+        dist.plotMeta()
     else:
         print("Not enough data.")
 

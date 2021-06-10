@@ -45,13 +45,15 @@ class Data(Format):
         Data object containing target and non target scores per test subject.
     """
 
-    def __init__(self, thisConfig, thisTitle, thisThreshold, thisDataType, thisDebug=True, thisSources='database'):
+    def __init__(self, thisConfig, thisTitle, thisThreshold, thisDataType, maxNrTargetSamplesPerLabel, maxNrNonTargetSamplesPerLabel, thisDebug=True, thisSources='database'):
         Format.__init__(self, thisDebug)
         self.config = thisConfig
         self._title = thisTitle
         self._defaultThreshold = thisThreshold
         self._dataType = thisDataType
         # Annotate _doves, _phantoms, _worms and _chameleons
+        self._maxNrTargetSamplesPerLabel = maxNrTargetSamplesPerLabel
+        self._maxNrNonTargetSamplesPerLabel = maxNrNonTargetSamplesPerLabel
         self.debug = thisDebug
         self._sources = thisSources
         self._format = Format(self.debug)
@@ -73,7 +75,10 @@ class Data(Format):
         self._nonTargetScores4Label = collections.defaultdict(list)
         self._nonTargetScores4MetaValue = collections.defaultdict(list)
         self._results = collections.defaultdict(list)
-        self._results4Subject = collections.defaultdict(list)
+        # Count which labels + condition exceed the maxNrTargetSamplesPerLabel
+        # and maxNrNonTargetSamplesPerLabel
+        self._targetScoresInExcess = collections.Counter()
+        self._nonTargetScoresInExcess = collections.Counter()
         self._nrDistinctMetaDataValues = 0
         # Contains: { speakerId: metaDataValue }
         self._metaDataValues = collections.defaultdict(set)
@@ -97,8 +102,8 @@ class Data(Format):
         if self._sources == 'database':
             print("You need to add some code for this to work!")
             # And remove the sys.exit(1) statement.
+            #res = self._readFromDatabase()
             sys.exit(1)
-            res = self._readFromDatabase()
         else:
             res = self._readFromFiles(self._sources)
         #
@@ -129,9 +134,6 @@ class Data(Format):
 
     def getResults(self):
         return self._results
-
-    def getResults4Subject(self):
-        return self._results4Subject
 
     def getTargetScores(self):
         """
@@ -177,10 +179,16 @@ class Data(Format):
     def getTargetScores4Label(self, label):
         return self._targetScores4Label[label]
 
+    def getTargetScores4AllLabels(self):
+        return self._targetScores4Label
+
     def getLabelsWithTargetScores(self):
         return self._targetScores4Label
 
     def getLabelsWithNonTargetScores(self):
+        return self._nonTargetScores4Label
+
+    def getNonTargetScores4AllLabels(self):
         return self._nonTargetScores4Label
 
     def getLabelsAndScoresForMetaValue(self, data, metaValue):
@@ -359,7 +367,8 @@ class Data(Format):
                 # We want to sort the data when choosing colors.
                 # Therefore we convert to numbers if possible
                 # otherwise we assume string values.
-                metaValue = convert(metaValue)
+                if type(metaValue) != str:
+                    metaValue = convert(metaValue)
 
                 # Keep track of distinct meta data values.
                 valuesCnt[metaValue] += 1
@@ -376,15 +385,10 @@ class Data(Format):
                     print('Error in', line)
                     print(e)
                 else:
-                    self._miAll = min(self._miAll, score)
-                    self._maAll = max(self._maAll, score)
-                    self._minimumScore[metaValue] = min(self._minimumScore[metaValue], score)
-                    self._maximumScore[metaValue] = max(self._maximumScore[metaValue], score)
-
                     if l1_0 == l2_0:
                         selfCnt += 1
                         # Selfies are not interesting and therefore skipped
-                        # continue
+                        continue
                     if not (l1_0, l2_0) in onlyOnce:
                         onlyOnce.add((l1_0, l2_0))
                     if not self._allowDups:
@@ -402,27 +406,55 @@ class Data(Format):
                     pattern = l1 + self.LABEL_SEPARATOR + metaValue
                     # Keep track of results for ranking purposes.
                     # print 'adding element to results[', l1 + self.LABEL_SEPARATOR + metaValue, ']'
-                    self._results[pattern].append((l2, score))
-                    self._results4Subject[metaValue, l1].append((l2, score))  # code is just for debugging
+                    #self._results4Subject[metaValue, l1].append((l2, score))  # code is just for debugging
 
                     self._metaDataValues[metaValue].add(l1)
                     self._metaDataValues[metaValue].add(l2)
                     totCnt += 1
                     if truth.lower() == 'true':
-                        self._targetScores[pattern].append(score)
-                        self._targetScores4Label[l1].append(score)
-                        self._targetScores4MetaValue[metaValue].append(score)
-                        self._targetCnt[metaValue] += 1
-                        self._targetLabels.add(l1)
+                        if len(self._targetScores[pattern]) < self._maxNrTargetSamplesPerLabel:
+                            self._targetScores[pattern].append(score)
+                            self._targetScores4Label[l1].append(score)
+                            self._targetScores4MetaValue[metaValue].append(score)
+                            self._targetCnt[metaValue] += 1
+                            self._targetLabels.add(l1)
+                            self._results[pattern].append((l2, score))
+                            self._miAll = min(self._miAll, score)
+                            self._maAll = max(self._maAll, score)
+                            self._minimumScore[metaValue] = min(self._minimumScore[metaValue], score)
+                            self._maximumScore[metaValue] = max(self._maximumScore[metaValue], score)
+                        else:
+                            self._targetScoresInExcess[pattern] += 1
+
                     else:
-                        self._nonTargetScores[pattern].append(score)
-                        self._nonTargetScores4Label[l1].append(score)
-                        self._nonTargetScores4MetaValue[metaValue].append(score)
-                        self._nonTargetCnt[metaValue] += 1
-                        self._nonTargetLabels.add(l1)
+                        if len(self._nonTargetScores[pattern]) < self._maxNrNonTargetSamplesPerLabel:
+                            self._nonTargetScores[pattern].append(score)
+                            self._nonTargetScores4Label[l1].append(score)
+                            self._nonTargetScores4MetaValue[metaValue].append(score)
+                            self._nonTargetCnt[metaValue] += 1
+                            self._nonTargetLabels.add(l1)
+                            self._results[pattern].append((l2, score))
+                            self._miAll = min(self._miAll, score)
+                            self._maAll = max(self._maAll, score)
+                            self._minimumScore[metaValue] = min(self._minimumScore[metaValue], score)
+                            self._maximumScore[metaValue] = max(self._maximumScore[metaValue], score)
+                        else:
+                            self._nonTargetScoresInExcess[pattern] += 1
+        # If there is too much data for a given label / metaValue, tell the user now that it was skipped
+        if len(self._targetScoresInExcess) > 0:
+            print("Skipped the following number of target samples because the number for the label exceeds {} ".format(
+                self._maxNrTargetSamplesPerLabel))
+            for key in sorted(self._targetScoresInExcess):
+                print("{:>5} {}".format(self._targetScoresInExcess[key], key))
+        if len(self._nonTargetScoresInExcess) > 0:
+            print("Skipped the following number of non target samples because the number for the label exceeds {} ".format(
+                self._maxNrNonTargetSamplesPerLabel))
+            for key in sorted(self._nonTargetScoresInExcess):
+                print("{:>5} {}".format(self._nonTargetScoresInExcess[key], key))
+
         if self.debug:
             print('Number of results in file:', resCnt)
-            print('Number of subjects:', len(self._results4Subject))
+            #print('Number of subjects:', len(self._results4Subject))
         print('Number of scores:', totCnt)
         if totCnt == 0:
             print('No scores were found. Maybe the dataType is not set correctly.')

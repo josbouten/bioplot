@@ -150,3 +150,10 @@ def write2file(filename, thisList):
     except Exception as e:
         print(e)
         exit(1)
+
+def isNumeric(someString):
+    try:
+        float(someString)
+        return True
+    except ValueError:
+        return False

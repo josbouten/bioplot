@@ -51,14 +51,14 @@ class Eer(Probability):
 
         self.eerData = self.computeProbabilities(self.eerFunc)
         self.eerValue = {}
-        self.score = {}
+        self.eerScore = {}
         for thisMetaValue in sorted(self.colors.keys()):
             for metaValue, PD, PP, X in self.eerData:
                 if thisMetaValue == metaValue:
                     try:
-                        self.eerValue[metaValue], self.score[metaValue] = self.computeEer(PD, PP, X)
+                        self.eerValue[metaValue], self.eerScore[metaValue] = self.computeEer(PD, PP, X)
                         print("EER: {:.4f} % at score: {:.4f} and meta value: {}".format(
-                            self.eerValue[metaValue] * 100, self.score[metaValue], metaValue)
+                            self.eerValue[metaValue] * 100, self.eerScore[metaValue], metaValue)
                         )
                     except Exception as e:
                         print("Problem computing EER for %s: %s" % (thisMetaValue, e))
@@ -118,7 +118,7 @@ class Eer(Probability):
         lt = LegendText(self.data, self.cllr, self.colors, self.config, self.config.getShowCllrInEer(),
                         self.config.getShowMinCllrInEer(), True,
                         self.config.getShowCountsInEer(),
-                        self.eerValue, self.debug)
+                        self.eerValue, self.eerScore, self.debug)
 
         legendText = lt.make()
 

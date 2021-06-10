@@ -73,7 +73,7 @@ class Accuracy:
 
         lt = self.data.compLen(self.targetScores)
         if lt > 0:
-            for k in self.targetScores.keys():
+            for k in self.targetScores:
                 for s in self.targetScores[k]:
                     if float(s) >= threshold:
                         nrTruePositives += 1
@@ -81,7 +81,7 @@ class Accuracy:
                         nrFalseNegatives += 1
         ln = self.data.compLen(self.nonTargetScores)
         if ln > 0:
-            for k in self.nonTargetScores.keys():
+            for k in self.nonTargetScores:
                 for s in self.nonTargetScores[k]:
                     if float(s) <= threshold:
                         nrTrueNegatives += 1

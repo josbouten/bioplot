@@ -37,7 +37,7 @@ class Anonimyzer():
     def __init__(self, thisDebug=False):
         self._debug = thisDebug
 
-    def anonymize(self, string):
+    def anonymise(self, string):
         m = hashlib.sha256()
         m.update(string)
         return m.hexdigest()
@@ -99,10 +99,10 @@ else:
 
         # The labels and filenames may contain private info,
         # therefore they are anonymized.
-        label1 = anonimizer.anonymize(label1)
-        label2 = anonimizer.anonymize(label2)
-        filename1Anon = anonimizer.anonymize(filename1)
-        filename2Anon = anonimizer.anonymize(filename2)
+        label1 = anonimizer.anonymise(label1)
+        label2 = anonimizer.anonymise(label2)
+        filename1Anon = anonimizer.anonymise(filename1)
+        filename2Anon = anonimizer.anonymise(filename2)
 
         # write plain and anonymized elements to file.
         fOut.write("%s %s %s %s %s %s %s\n" % (label1, filename1Anon, label2, filename2Anon, score, truth, metaValue))

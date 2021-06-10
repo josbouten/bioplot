@@ -1,3 +1,7 @@
+# v1.7 15. June 2020
+Added flag to restrict the number of target and non target samples for a subject to a maximum (2 values have to be
+supplied).
+
 # v1.6.2 10. July 2018
 Set allowDups to True.
 
@@ -18,7 +22,6 @@ eer and cllr values are calculated only once to speed up plotting.
 
 # v1.3 17. April 2018
 Optimized code and repaired some bugs: when offering multiple files as input now all are read.
-
 
 # V1.2.1 4. May 2017
 Added some more instructions to install bioplot on OSX.
